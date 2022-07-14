@@ -1,0 +1,9 @@
+[
+    {"message":"Your interview is cancelled for tomorrow","color":"alert-info"},
+    {"message":"Your profile is selected by abc pvt.ltd","color":"alert-warning"},
+    {"message":"Your account balance is empty! Recharge as soon as posible.....","color":"alert-success"},
+    {"message":"Your password changed 7 days before", "color":"alert-info"},
+    {"message":"Your Profile is viewed by 121 Comapnies", "color":"alert-warning"},
+    {"message":"Your Mobile No. is not verified", "color":"alert-success"},
+    {"message":"Your Email address is not verified", "color":"alert-info"}
+]

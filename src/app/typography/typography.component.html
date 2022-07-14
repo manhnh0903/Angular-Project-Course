@@ -1,0 +1,580 @@
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title text-center">Educational Qualification</h4>
+                           
+                    </div>
+                    <div class="content">
+                          <div class="row">
+                           <div class="row">
+                                <div class="col-sm-1"></div>
+                               <div class="col-sm-10">
+                                   
+                                    <div class="col-sm-5 well">
+                                            <h5 class="text-center">10th Class Details</h5>
+                                            <form [formGroup]="parentform" (ngSubmit)="pageValidate()">
+                                           <div class="row">
+                                            <div class="form-group">
+                                               
+                                                    <label>School Name</label>
+                                                    <input type="text" class="form-control input-sm" formControlName="schoolname">
+                                                    <div *ngIf="formsubmitted && parentform.controls.schoolname.errors"></div>
+                                                    <span *ngIf="parentform.controls.schoolname.errors.required">
+                                                    </span>
+                                            </div>
+                                            </div>
+                                            <div class="row">
+                                            <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                   
+                                                            <label>Board Name</label>
+                                                            <input type="text" class="form-control input-sm" formControlName="bname">
+                                                            <div *ngIf="formsubmitted && parentform.controls.bname.errors"></div>
+                                                            <span *ngIf="parentform.controls.bname.errors.required"></span>
+                                                    </div>
+                                             </div> 
+                                             <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                   
+                                                            <label>City</label>
+                                                            <input type="text" class="form-control input-sm" formControlName="city">
+                                                            <div *ngIf="formsubmitted && parentform.controls.city.errors"></div>
+                                                            <span *ngIf="parentform.controls.city.errors.required"></span>
+                                                    </div>
+                                       
+                                             </div> 
+                                            </div>
+                                            <div class="row">
+                                             <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                   
+                                                            <label>Total Marks</label>
+                                                            <input type="text" class="form-control input-sm" formControlName="tmark">
+                                                            <div *ngIf="formsubmitted && parentform.controls.tmark.errors"></div>
+                                                            <span *ngIf="parentform.controls.tmark.errors.required"></span>
+                                                    </div>
+                                             </div> 
+                                             <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                   
+                                                            <label>Obtained Marks</label>
+                                                            <input type="text" class="form-control input-sm" formControlName="marks">
+                                                            <div *ngIf="formsubmitted && parentform.controls.marks.errors"></div>
+                                                            <span *ngIf="parentform.controls.marks.errors.required"></span>
+                                                    </div>
+                                       
+                                             </div> 
+                                            </div>
+                                             <div class="row">
+                                             <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                   
+                                                            <label>Grade/Division</label>
+                                                            <input type="text" class="form-control input-sm" formControlName="grade">
+                                                            <div *ngIf="formsubmitted && parentform.controls.grade.errors"></div>
+                                                            <span *ngIf="parentform.controls.grade.errors.required"></span>
+                                                    </div>
+                                             </div> 
+                                             
+                                             <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                   
+                                                            <label>Year Of Passing</label>
+                                                            <input type="text" class="form-control input-sm" formControlName="yop">
+                                                            <div *ngIf="formsubmitted && parentform.controls.yop.errors"></div>
+                                                            <span *ngIf="parentform.controls.yop.errors.required"></span>
+                                                    </div>
+                                       
+                                             </div> 
+                                            </div>
+                                            <br>
+                                             <div class="form-group text-center">
+                                                 <button class="btn btn-success">Update</button>
+                                             </div>
+                                            </form>
+                                    </div> <!--10th details-->
+                                    
+                                    <div class="col-sm-2"></div>
+                                    <div class="col-sm-5 well">
+                                            
+                                            <h5 class="text-center">12th Class Details</h5>
+                                            <form [formGroup]="parentform" (ngSubmit)="pageValidate()">
+                                                        <div class="row">
+                                                                        <div class="form-group">
+                                                                           
+                                                                                <label>School Name</label>
+                                                                                <input type="text" class="form-control input-sm" formControlName="schoolname">
+                                                                                <div *ngIf="formsubmitted && parentform.controls.schoolname.errors"></div>
+                                                                                <span *ngIf="parentform.controls.schoolname.errors.required">
+                                                                                </span>
+                                                                        </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                        <div class="col-sm-6">
+                                                                                <div class="form-group">
+                                                                               
+                                                                                        <label>Board Name</label>
+                                                                                        <input type="text" class="form-control input-sm" formControlName="bname">
+                                                                                        <div *ngIf="formsubmitted && parentform.controls.bname.errors"></div>
+                                                                                        <span *ngIf="parentform.controls.bname.errors.required"></span>
+                                                                                </div>
+                                                                         </div> 
+                                                                         <div class="col-sm-6">
+                                                                                <div class="form-group">
+                                                                               
+                                                                                        <label>City</label>
+                                                                                        <input type="text" class="form-control input-sm" formControlName="city">
+                                                                                        <div *ngIf="formsubmitted && parentform.controls.city.errors"></div>
+                                                                                        <span *ngIf="parentform.controls.city.errors.required"></span>
+                                                                                </div>
+                                                                   
+                                                                         </div> 
+                                                                        </div>
+                                                                        <div class="row">
+                                                                         <div class="col-sm-6">
+                                                                                <div class="form-group">
+                                                                               
+                                                                                        <label>Total Marks</label>
+                                                                                        <input type="text" class="form-control input-sm" formControlName="tmark">
+                                                                                        <div *ngIf="formsubmitted && parentform.controls.tmark.errors"></div>
+                                                                                        <span *ngIf="parentform.controls.tmark.errors.required"></span>
+                                                                                </div>
+                                                                         </div> 
+                                                                         <div class="col-sm-6">
+                                                                                <div class="form-group">
+                                                                               
+                                                                                        <label>Obtained Marks</label>
+                                                                                        <input type="text" class="form-control input-sm" formControlName="marks">
+                                                                                        <div *ngIf="formsubmitted && parentform.controls.marks.errors"></div>
+                                                                                        <span *ngIf="parentform.controls.marks.errors.required"></span>
+                                                                                </div>
+                                                                   
+                                                                         </div> 
+                                                                        </div>
+                                                                         <div class="row">
+                                                                         <div class="col-sm-6">
+                                                                                <div class="form-group">
+                                                                               
+                                                                                        <label>Grade/Division</label>
+                                                                                        <input type="text" class="form-control input-sm" formControlName="grade">
+                                                                                        <div *ngIf="formsubmitted && parentform.controls.grade.errors"></div>
+                                                                                        <span *ngIf="parentform.controls.grade.errors.required"></span>
+                                                                                </div>
+                                                                         </div> 
+                                                                         
+                                                                         <div class="col-sm-6">
+                                                                                <div class="form-group">
+                                                                               
+                                                                                        <label>Year Of Passing</label>
+                                                                                        <input type="text" class="form-control input-sm" formControlName="yop">
+                                                                                        <div *ngIf="formsubmitted && parentform.controls.yop.errors"></div>
+                                                                                        <span *ngIf="parentform.controls.yop.errors.required"></span>
+                                                                                </div>
+                                                                   
+                                                                         </div> 
+                                                                        </div>
+                                                                        <br>
+                                                                         <div class="form-group text-center">
+                                                                             <button class="btn btn-success">Update</button>
+                                                                         </div>
+                                             </form>
+                                    </div> <!--12th details-->
+                               </div>
+                               <div class="col-sm-1"></div>
+                           </div><!--1st row-->
+                           <div class="row">
+                                <div class="col-sm-1"></div>
+                                        <div class="col-sm-10">
+                                    
+                                           
+                                           
+                                                <div class="col-sm-5 well">
+                                                        <h5 class="text-center">Graduation Details</h5>
+                                                        <form [formGroup]="parentform" (ngSubmit)="pageValidate()">
+                                                                        <div class="row">
+                                                                                <div class="col-sm-6">
+                                                                                        <div class="form-group">
+                                                                                           
+                                                                                                <label>College Name</label>
+                                                                                                <input type="text" class="form-control input-sm" formControlName="schoolname">
+                                                                                                <div *ngIf="formsubmitted && parentform.controls.schoolname.errors"></div>
+                                                                                                <span *ngIf="parentform.controls.schoolname.errors.required">
+                                                                                                </span>
+                                                                                        </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                                   
+                                                                                                        <label>Stream</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="subject">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.subject.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.subject.errors.required">
+                                                                                                        </span>
+                                                                                                </div>
+                                                                                        </div>
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                        <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                               
+                                                                                                        <label>University Name</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="bname">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.bname.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.bname.errors.required"></span>
+                                                                                                </div>
+                                                                                         </div> 
+                                                                                         <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                               
+                                                                                                        <label>City</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="city">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.city.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.city.errors.required"></span>
+                                                                                                </div>
+                                                                                   
+                                                                                         </div> 
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                         <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                               
+                                                                                                        <label>Total Marks</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="tmark">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.tmark.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.tmark.errors.required"></span>
+                                                                                                </div>
+                                                                                         </div> 
+                                                                                         <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                               
+                                                                                                        <label>Obtained Marks</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="marks">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.marks.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.marks.errors.required"></span>
+                                                                                                </div>
+                                                                                   
+                                                                                         </div> 
+                                                                                        </div>
+                                                                                         <div class="row">
+                                                                                         <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                               
+                                                                                                        <label>Grade/Division</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="grade">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.grade.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.grade.errors.required"></span>
+                                                                                                </div>
+                                                                                         </div> 
+                                                                                         
+                                                                                         <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                               
+                                                                                                        <label>Year Of Passing</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="yop">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.yop.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.yop.errors.required"></span>
+                                                                                                </div>
+                                                                                   
+                                                                                         </div> 
+                                                                                        </div>
+                                                                                        <br>
+                                                                                         <div class="form-group text-center">
+                                                                                             <button class="btn btn-success">Update</button>
+                                                                                         </div>
+                                                             </form>
+                                                </div><!--graduation details-->
+                                                <div class="col-sm-2"></div>
+                                        
+                                                <div class="col-sm-5 well">
+                                                        <h5 class="text-center">Post Graduation Details</h5>
+
+                                                        <form [formGroup]="parentform" (ngSubmit)="pageValidate()">
+                                                                        <div class="row">
+                                                                                <div class="col-sm-12">
+                                                                                        <div class="form-group">
+                                                                                           
+                                                                                                <label>University Name</label>
+                                                                                                <input type="text" class="form-control input-sm" formControlName="schoolname">
+                                                                                                <div *ngIf="formsubmitted && parentform.controls.schoolname.errors"></div>
+                                                                                                <span *ngIf="parentform.controls.schoolname.errors.required">
+                                                                                                </span>
+                                                                                        </div>
+                                                                                </div>
+                
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                                        <div class="col-sm-6">
+                                                                                                                        <div class="form-group">
+                                                                                                                           
+                                                                                                                                <label>Stream</label>
+                                                                                                                                <input type="text" class="form-control input-sm" formControlName="subject">
+                                                                                                                                <div *ngIf="formsubmitted && parentform.controls.subject.errors"></div>
+                                                                                                                                <span *ngIf="parentform.controls.subject.errors.required">
+                                                                                                                                </span>
+                                                                                                                        </div>
+                                                                                                                </div>
+                                                                                       
+                                                                                         <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                               
+                                                                                                        <label>City</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="city">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.city.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.city.errors.required"></span>
+                                                                                                </div>
+                                                                                   
+                                                                                         </div> 
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                         <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                               
+                                                                                                        <label>Total Marks</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="tmark">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.tmark.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.tmark.errors.required"></span>
+                                                                                                </div>
+                                                                                         </div> 
+                                                                                         <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                               
+                                                                                                        <label>Obtained Marks</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="marks">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.marks.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.marks.errors.required"></span>
+                                                                                                </div>
+                                                                                   
+                                                                                         </div> 
+                                                                                        </div>
+                                                                                         <div class="row">
+                                                                                         <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                               
+                                                                                                        <label>Grade/Division</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="grade">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.grade.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.grade.errors.required"></span>
+                                                                                                </div>
+                                                                                         </div> 
+                                                                                         
+                                                                                         <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                               
+                                                                                                        <label>Year Of Passing</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="yop">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.yop.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.yop.errors.required"></span>
+                                                                                                </div>
+                                                                                   
+                                                                                         </div> 
+                                                                                        </div>
+                                                                                        <br>
+                                                                                         <div class="form-group text-center">
+                                                                                             <button class="btn btn-success">Update</button>
+                                                                                         </div>
+                                                             </form>
+                                                </div><!--Post Graduation-->
+                                          
+                                    </div>
+                                <div class="col-sm-1"></div>
+                            </div><!--2nd row-->
+                            <div class="row">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-10">
+                                         <div class="col-sm-5 well">
+                                                <h5 class="text-center">PHD Details</h5>
+                                                 
+                                                <form [formGroup]="parentform" (ngSubmit)="pageValidate()">
+                                                                <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                                <div class="form-group">
+                                                                                   
+                                                                                        <label>University Name</label>
+                                                                                        <input type="text" class="form-control input-sm" formControlName="schoolname">
+                                                                                        <div *ngIf="formsubmitted && parentform.controls.schoolname.errors"></div>
+                                                                                        <span *ngIf="parentform.controls.schoolname.errors.required">
+                                                                                        </span>
+                                                                                </div>
+                                                                        </div>
+        
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                                <div class="col-sm-6">
+                                                                                                                <div class="form-group">
+                                                                                                                   
+                                                                                                                        <label>Spacilization</label>
+                                                                                                                        <input type="text" class="form-control input-sm" formControlName="subject">
+                                                                                                                        <div *ngIf="formsubmitted && parentform.controls.subject.errors"></div>
+                                                                                                                        <span *ngIf="parentform.controls.subject.errors.required">
+                                                                                                                        </span>
+                                                                                                                </div>
+                                                                                                        </div>
+                                                                               
+                                                                                 <div class="col-sm-6">
+                                                                                        <div class="form-group">
+                                                                                       
+                                                                                                <label>City</label>
+                                                                                                <input type="text" class="form-control input-sm" formControlName="city">
+                                                                                                <div *ngIf="formsubmitted && parentform.controls.city.errors"></div>
+                                                                                                <span *ngIf="parentform.controls.city.errors.required"></span>
+                                                                                        </div>
+                                                                           
+                                                                                 </div> 
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                 <div class="col-sm-6">
+                                                                                        <div class="form-group">
+                                                                                       
+                                                                                                <label>Total Marks</label>
+                                                                                                <input type="text" class="form-control input-sm" formControlName="tmark">
+                                                                                                <div *ngIf="formsubmitted && parentform.controls.tmark.errors"></div>
+                                                                                                <span *ngIf="parentform.controls.tmark.errors.required"></span>
+                                                                                        </div>
+                                                                                 </div> 
+                                                                                 <div class="col-sm-6">
+                                                                                        <div class="form-group">
+                                                                                       
+                                                                                                <label>Obtained Marks</label>
+                                                                                                <input type="text" class="form-control input-sm" formControlName="marks">
+                                                                                                <div *ngIf="formsubmitted && parentform.controls.marks.errors"></div>
+                                                                                                <span *ngIf="parentform.controls.marks.errors.required"></span>
+                                                                                        </div>
+                                                                           
+                                                                                 </div> 
+                                                                                </div>
+                                                                                 <div class="row">
+                                                                                 <div class="col-sm-6">
+                                                                                        <div class="form-group">
+                                                                                       
+                                                                                                <label>Grade/Division</label>
+                                                                                                <input type="text" class="form-control input-sm" formControlName="grade">
+                                                                                                <div *ngIf="formsubmitted && parentform.controls.grade.errors"></div>
+                                                                                                <span *ngIf="parentform.controls.grade.errors.required"></span>
+                                                                                        </div>
+                                                                                 </div> 
+                                                                                 
+                                                                                 <div class="col-sm-6">
+                                                                                        <div class="form-group">
+                                                                                       
+                                                                                                <label>Year Of Passing</label>
+                                                                                                <input type="text" class="form-control input-sm" formControlName="yop">
+                                                                                                <div *ngIf="formsubmitted && parentform.controls.yop.errors"></div>
+                                                                                                <span *ngIf="parentform.controls.yop.errors.required"></span>
+                                                                                        </div>
+                                                                           
+                                                                                 </div> 
+                                                                                </div>
+                                                                                <br>
+                                                                                 <div class="form-group text-center">
+                                                                                     <button class="btn btn-success">Update</button>
+                                                                                 </div>
+                                                     </form>
+                                         </div> <!--PHD Details-->
+                                         <div class="col-sm-2"></div> 
+                                         <div class="col-sm-5 well">
+                                                        <h5 class="text-center">Certifiaction Details</h5>
+                                                        <form [formGroup]="parentform" (ngSubmit)="pageValidate()">
+                                                                        <div class="row">
+                                                                                <div class="col-sm-6">
+                                                                                        <div class="form-group">
+                                                                                           
+                                                                                                <label>Institute Name</label>
+                                                                                                <input type="text" class="form-control input-sm" formControlName="schoolname">
+                                                                                                <div *ngIf="formsubmitted && parentform.controls.schoolname.errors"></div>
+                                                                                                <span *ngIf="parentform.controls.schoolname.errors.required">
+                                                                                                </span>
+                                                                                        </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                                   
+                                                                                                        <label>Course</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="subject">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.subject.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.subject.errors.required">
+                                                                                                        </span>
+                                                                                                </div>
+                                                                                        </div>
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                        <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                               
+                                                                                                        <label>Total Duration</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="duration">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.duration.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.duration.errors.required"></span>
+                                                                                                </div>
+                                                                                         </div> 
+                                                                                         <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                               
+                                                                                                        <label>City</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="city">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.city.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.city.errors.required"></span>
+                                                                                                </div>
+                                                                                   
+                                                                                         </div> 
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                         <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                               
+                                                                                                        <label>Total Marks</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="tmark">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.tmark.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.tmark.errors.required"></span>
+                                                                                                </div>
+                                                                                         </div> 
+                                                                                         <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                               
+                                                                                                        <label>Obtained Marks</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="marks">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.marks.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.marks.errors.required"></span>
+                                                                                                </div>
+                                                                                   
+                                                                                         </div> 
+                                                                                        </div>
+                                                                                         <div class="row">
+                                                                                         <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                               
+                                                                                                        <label>Grade/Division</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="grade">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.grade.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.grade.errors.required"></span>
+                                                                                                </div>
+                                                                                         </div> 
+                                                                                         
+                                                                                         <div class="col-sm-6">
+                                                                                                <div class="form-group">
+                                                                                               
+                                                                                                        <label>Year Of Passing</label>
+                                                                                                        <input type="text" class="form-control input-sm" formControlName="yop">
+                                                                                                        <div *ngIf="formsubmitted && parentform.controls.yop.errors"></div>
+                                                                                                        <span *ngIf="parentform.controls.yop.errors.required"></span>
+                                                                                                </div>
+                                                                                   
+                                                                                         </div> 
+                                                                                        </div>
+                                                                                        <br>
+                                                                                         <div class="form-group text-center">
+                                                                                             <button class="btn btn-success">Update</button>
+                                                                                         </div>
+                                                             </form>
+                                         </div> 
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div><!--3rd row-->
+                          </div><!--main row-->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>

@@ -1,0 +1,46 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <div class="row">
+                        <div class="col-sm-6">
+                                <h4 class="title text-center">Matching Jobs</h4>
+                        </div>
+                        <div class="col-sm-6">
+                                <input class="form-control" type="text" name="search" [(ngModel)]="term">
+                        </div>
+                    </div>
+                </div>
+                <div class="content table-responsive table-full-width">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Job Id</th>
+                                <th>Job Title</th>
+                                <th>Salary</th>
+                                <th>Location</th>
+                                <th>More</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let row of alljobs | filter:term  | paginate: { itemsPerPage: 4, currentPage: p }">
+                                <td>{{row.id}}</td>
+                                <td>{{row.title}}</td>
+                                <td>{{row.salary}}</td>
+                                <td>{{row.location}}</td>
+                                <td><button class="btn btn-warning btn-sm">More</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                           <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

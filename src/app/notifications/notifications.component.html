@@ -1,0 +1,19 @@
+    <div class="container-fluid">
+        <div class="card">
+            <div class="header">
+                <h4 class="title">Notifications</h4>
+               
+
+            </div>
+    <div class="content">
+       <div class="row">
+              <div class="col-sm-6 col-md-4 col-xs-12 form-group" *ngFor="let row of allnot">
+                  <div class="alert {{row.color}}">
+                      <span>{{row.message}}</span>
+                  </div>
+
+              </div>     
+                  
+                
+        </div>
+    </div>
