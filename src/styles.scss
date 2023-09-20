@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0 !important;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 100vw;
+  max-width: 100%;
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  --green: rgba(112, 230, 28, 1);
+  --lightBlue: rgba(28, 218, 230, 1);
+  --purple: rgba(151, 71, 255, 1);
+  --darkBlueBg: rgba(20, 29, 47, 1);
+  --darkBlueTransparent: rgba(20, 29, 47, 0.8);
+}

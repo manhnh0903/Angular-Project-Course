@@ -1,0 +1,28 @@
+section {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 37px 100px;
+  background-color: var(--darkBlueBg);
+
+  img {
+    height: 30px;
+  }
+}
+
+.nav-box {
+  display: flex;
+  gap: 29px;
+
+  a {
+    color: white;
+    text-decoration: none;
+    font-size: 23px;
+    transition: color ease-in-out 125ms;
+
+    &:hover {
+      color: var(--green);
+    }
+  }
+}
