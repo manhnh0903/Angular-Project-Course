@@ -1,1 +1,26 @@
-<p>portfolio works!</p>
+<section>
+  <div class="portfolio-head">
+    <div class="headline">
+      <div class="seperator left"></div>
+      <h2>Portfolio</h2>
+      <div class="seperator right"></div>
+    </div>
+    <span
+      >This page is a sample of my work - please feel free to try them
+      out.</span
+    >
+  </div>
+  <div class="projects-wrapper">
+    <ng-container *ngFor="let headline of headlines; let i = index">
+      <app-project
+        [headline]="'Join'"
+        [technologies]="technologies[i]"
+        [description]="descriptions[i]"
+        [img]="images[i]"
+        [githubLink]="githubLinks[i]"
+        [projectLink]="projectLinks[i]"
+        [index]="i"
+      ></app-project>
+    </ng-container>
+  </div>
+</section>

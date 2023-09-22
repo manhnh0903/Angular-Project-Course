@@ -1,0 +1,64 @@
+section {
+  display: flex;
+  gap: 34px;
+  align-items: center;
+
+  .right-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+
+    .text-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      h3 {
+        color: var(--purple);
+      }
+
+      span {
+        color: var(--green);
+        font-size: 23px;
+      }
+
+      p {
+        font-size: 16px;
+      }
+    }
+
+    .buttons-wrapper {
+      display: flex;
+      gap: 34px;
+
+      .button {
+        text-decoration: none;
+        padding: 15px 30px;
+        color: white;
+        border-radius: 10px;
+        font-size: 23px;
+        transition: all ease-in-out 300ms;
+      }
+
+      .project-button {
+        background-color: var(--purple);
+
+        &:hover {
+          background-color: var(--green);
+        }
+      }
+
+      .github-button {
+        border: 1px solid var(--green);
+
+        &:hover {
+          background-color: var(--green);
+        }
+      }
+    }
+  }
+}
+
+.row-reverse {
+  flex-direction: row-reverse;
+}

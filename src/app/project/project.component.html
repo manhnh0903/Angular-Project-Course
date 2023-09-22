@@ -1,0 +1,22 @@
+<section [ngClass]="{ 'row-reverse': reverse }">
+  <div class="left-wrapper">
+    <img src="{{ img }}" alt="" />
+  </div>
+  <div class="right-wrapper">
+    <div class="text-wrapper">
+      <h3>{{ headline }}</h3>
+      <span>{{ technologies }} </span>
+      <p>
+        {{ description }}
+      </p>
+    </div>
+    <div class="buttons-wrapper">
+      <a target="_blank" class="button project-button" href="{{ projectLink }}"
+        >Live test</a
+      >
+      <a target="_blank" class="button github-button" href="{{ githubLink }}"
+        >Github</a
+      >
+    </div>
+  </div>
+</section>
