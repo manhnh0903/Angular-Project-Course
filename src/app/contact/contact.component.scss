@@ -1,0 +1,40 @@
+section {
+  padding: 150px 100px;
+  background-color: var(--darkBlueBg);
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.bottom-wrapper {
+  display: flex;
+
+  .left-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    color: white;
+  }
+}
+
+.right-wrapper {
+  form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+    }
+
+    textarea {
+      width: 100%;
+    }
+  }
+
+  div {
+    display: flex;
+  }
+}
