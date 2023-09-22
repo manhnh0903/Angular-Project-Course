@@ -1,0 +1,67 @@
+section {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--darkBlueBg);
+  padding: 150px 100px;
+  color: white;
+}
+
+.right-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 34px;
+  position: relative;
+  max-width: 40vw;
+
+  > div {
+    display: flex;
+    align-items: center;
+    .my-skills-seperator {
+      position: absolute;
+      border: 2px solid var(--green);
+      width: 100px;
+      right: -100px;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    font-size: 23px;
+    color: white;
+    border: unset;
+    border-radius: 10px;
+    background-color: var(--green);
+    padding: 15px 30px;
+    width: fit-content;
+    cursor: pointer;
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    transition: all ease-in-out 300ms;
+    transform-origin: top center;
+
+    &:hover {
+      background-color: var(--purple);
+      scale: 1.2;
+    }
+  }
+}
+
+.left-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 34px;
+
+  .skill {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+
+    width: 88px;
+    height: 100px;
+
+    > img {
+      height: 60px;
+    }
+  }
+}

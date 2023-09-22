@@ -1,0 +1,19 @@
+<section>
+  <div class="left-wrapper">
+    <div *ngFor="let icon of icons; let i = index" class="skill">
+      <img src="../../assets/img/icons/{{ icon }}.svg" alt="" />
+      <p>{{ descriptions[i] }}</p>
+    </div>
+  </div>
+  <div class="right-wrapper">
+    <div>
+      <h2>My skills</h2>
+      <div class="my-skills-seperator"></div>
+    </div>
+    <p>
+      I have gained experience in building projects with various front end
+      technologies and concepts.
+    </p>
+    <a href="#">Get in touch</a>
+  </div>
+</section>

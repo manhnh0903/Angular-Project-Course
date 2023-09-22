@@ -4,7 +4,6 @@ section {
   justify-content: space-between;
   align-items: center;
   padding: 150px 100px;
-  border: 1px solid white;
 }
 
 .left-wrapper {
@@ -32,6 +31,7 @@ section {
   justify-content: center;
   align-items: center;
   position: relative;
+  max-width: 40vw;
 
   > .img-wrapper {
     display: flex;
