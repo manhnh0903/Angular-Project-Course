@@ -13,18 +13,46 @@
       <p>Need a Frontend developer? <b>Contact me!</b></p>
     </div>
     <div class="right-wrapper">
-      <form action="" method="post">
-        <input type="text" />
-        <input type="email" />
-        <textarea name="" id="" cols="30" rows="10"></textarea>
-        <div>
-          <input type="checkbox" />
-          <p>
-            I've read the <a href="#">privacy policy</a> and agree to the
-            processing of my data as outlined.
-          </p>
+      <form ngNativeValidate (submit)="sendMail()" #contactForm="ngForm">
+        <input
+          placeholder="Your name"
+          required
+          [disabled]="sending"
+          type="text"
+          name="name"
+          ngModel
+        />
+
+        <input
+          placeholder="Your email"
+          required
+          [disabled]="sending"
+          type="email"
+          name="email"
+          ngModel
+        />
+
+        <textarea
+          placeholder="Your  message"
+          required
+          [disabled]="sending"
+          name="message"
+          ngModel
+          cols="30"
+          rows="10"
+        ></textarea>
+
+        <div class="privacy-and-butto-wrapper">
+          <div>
+            <input required type="checkbox" />
+            <p>
+              I've read the <a href="#">privacy policy</a> and agree to the
+              processing of my data as outlined.
+            </p>
+          </div>
+
+          <button type="submit" [disabled]="sending">Send message!</button>
         </div>
-        <button>Send message!</button>
       </form>
     </div>
   </div>
