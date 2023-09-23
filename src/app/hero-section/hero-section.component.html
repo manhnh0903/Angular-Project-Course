@@ -17,14 +17,7 @@
 
   <div class="socials">
     <div class="socials-seperator"></div>
-    <a
-      class="socials-icon"
-      *ngFor="let url of urls; let i = index"
-      target="_blank"
-      [href]="url"
-    >
-      <img [src]="imgs[i]" alt="" />
-    </a>
+    <app-socials></app-socials>
     <a class="socials-mail" href="#">tbayer2@gmx.de</a>
   </div>
 

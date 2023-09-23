@@ -1,0 +1,10 @@
+<section>
+  <a
+    class="socials-icon"
+    *ngFor="let url of urls; let i = index"
+    target="_blank"
+    [href]="url"
+  >
+    <img [src]="imgs[i]" alt="" />
+  </a>
+</section>

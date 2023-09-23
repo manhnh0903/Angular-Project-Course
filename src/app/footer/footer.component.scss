@@ -1,0 +1,28 @@
+section {
+  padding: 100px 100px;
+  border-top: 2px solid var(--green);
+  background-color: var(--darkBlueBg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+
+  .left-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    a {
+      text-decoration: none;
+      color: white;
+      font-size: 16px;
+    }
+
+    img {
+      width: 200px;
+    }
+  }
+
+  .copy-right {
+    font-size: 23px;
+  }
+}
