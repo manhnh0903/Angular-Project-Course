@@ -4,6 +4,7 @@ section {
   display: flex;
   flex-direction: column;
   gap: 50px;
+  position: relative;
 }
 
 .bottom-wrapper {
@@ -106,6 +107,34 @@ section {
 
       cursor: pointer;
       box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+  }
+}
+
+.scroll-up-button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+    border-radius: 50%;
+    padding: 8px;
+    transition: all ease-in-out 225ms;
+
+    &:hover {
+      border-color: var(--green);
+    }
+
+    &:hover svg {
+      fill: var(--green);
+    }
+
+    svg {
+      fill: white;
+      transition: fill ease-in-out 225ms;
     }
   }
 }

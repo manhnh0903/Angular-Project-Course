@@ -4,6 +4,15 @@ section {
   background-color: var(--darkBlueBg);
   padding: 150px 100px;
   color: white;
+  position: relative;
+
+  .shadow {
+    position: absolute;
+    rotate: -90deg;
+    left: -490px;
+    z-index: 1;
+    pointer-events: none;
+  }
 }
 
 .right-wrapper {
@@ -52,6 +61,8 @@ section {
   display: flex;
   flex-wrap: wrap;
   gap: 34px;
+  position: relative;
+  z-index: 100;
 
   .skill {
     display: flex;

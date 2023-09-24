@@ -2,4 +2,16 @@ section {
   display: flex;
   align-items: center;
   gap: 42px;
+
+  .socials-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: scale ease-in-out 125ms;
+
+    &:hover {
+      transform-origin: left;
+      scale: 1.3;
+    }
+  }
 }
