@@ -2,6 +2,8 @@ section {
   display: flex;
   gap: 34px;
   align-items: center;
+  position: relative;
+  z-index: 100;
 
   .right-wrapper {
     display: flex;

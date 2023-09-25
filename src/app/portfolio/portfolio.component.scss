@@ -4,6 +4,13 @@ section {
   color: white;
   position: relative;
 
+  .shadow {
+    position: absolute;
+    left: -150px;
+    top: 150px;
+    pointer-events: none;
+  }
+
   .portfolio-head {
     display: flex;
     flex-direction: column;
@@ -30,5 +37,10 @@ section {
         width: 110px;
       }
     }
+  }
+
+  .projects-wrapper {
+    position: relative;
+    z-index: 100;
   }
 }

@@ -4,6 +4,7 @@ section {
   justify-content: space-between;
   align-items: center;
   padding: 150px 100px;
+
   position: relative;
 
   .purple-shadow-1 {
@@ -11,6 +12,7 @@ section {
     rotate: -46deg;
     right: -500px;
     bottom: -100px;
+    z-index: 1;
   }
 }
 
