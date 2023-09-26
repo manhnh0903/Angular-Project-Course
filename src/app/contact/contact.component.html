@@ -19,33 +19,42 @@
     </div>
     <div class="right-wrapper">
       <form ngNativeValidate (submit)="sendMail()" #contactForm="ngForm">
-        <input
-          placeholder="Your name"
-          required
-          [disabled]="sending"
-          type="text"
-          name="name"
-          ngModel
-        />
+        <div class="input-wrapper">
+          <img src="./assets/img/checkmark.svg" alt="checkmark.svg" />
+          <input
+            placeholder="Your name"
+            required
+            [disabled]="sending"
+            type="text"
+            name="name"
+            ngModel
+          />
+        </div>
 
-        <input
-          placeholder="Your email"
-          required
-          [disabled]="sending"
-          type="email"
-          name="email"
-          ngModel
-        />
+        <div class="input-wrapper">
+          <img src="./assets/img/checkmark.svg" alt="checkmark.svg" />
+          <input
+            placeholder="Your email"
+            required
+            [disabled]="sending"
+            type="email"
+            name="email"
+            ngModel
+          />
+        </div>
 
-        <textarea
-          placeholder="Your  message"
-          required
-          [disabled]="sending"
-          name="message"
-          ngModel
-          cols="30"
-          rows="10"
-        ></textarea>
+        <div class="input-wrapper">
+          <img src="./assets/img/checkmark.svg" alt="checkmark.svg" />
+          <textarea
+            placeholder="Your  message"
+            required
+            [disabled]="sending"
+            name="message"
+            ngModel
+            cols="30"
+            rows="10"
+          ></textarea>
+        </div>
 
         <div class="privacy-and-butto-wrapper">
           <div>

@@ -28,13 +28,18 @@ section {
       }
 
       .left {
+        transform-origin: left;
+        rotate: 180deg;
         width: 110px;
-        left: calc(-110px + -34px);
+
+        left: -32px;
       }
 
       .right {
-        right: calc(-110px + -34px);
-        width: 110px;
+        transform-origin: right;
+        rotate: 180deg;
+        right: -32px;
+        width: 100vh;
       }
     }
   }

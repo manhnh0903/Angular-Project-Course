@@ -28,3 +28,14 @@ h3 {
   --darkBlueBg: rgba(20, 29, 47, 1);
   --darkBlueTransparent: rgba(20, 29, 47, 0.8);
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--darkBlueBg) inset !important;
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: white !important;
+}
