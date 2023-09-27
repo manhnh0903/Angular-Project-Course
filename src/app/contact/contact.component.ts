@@ -8,7 +8,9 @@ import { NgForm } from '@angular/forms';
 })
 export class ContactComponent {
   @ViewChild('contactForm') contactForm!: NgForm;
+
   sending: boolean = false;
+  nameEntered: boolean = false;
 
   async sendMail() {
     this.sending = true;
@@ -23,6 +25,7 @@ export class ContactComponent {
     // );
 
     this.sending = false;
+    this.nameEntered = true;
   }
 
   getFormData() {

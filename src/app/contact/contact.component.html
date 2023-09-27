@@ -19,7 +19,10 @@
     </div>
     <div class="right-wrapper">
       <form ngNativeValidate (submit)="sendMail()" #contactForm="ngForm">
-        <div class="input-wrapper">
+        <div
+          class="input-wrapper max-height-input"
+          [ngClass]="{ 'max-height': nameEntered }"
+        >
           <img src="./assets/img/checkmark.svg" alt="checkmark.svg" />
           <input
             placeholder="Your name"
@@ -29,9 +32,13 @@
             name="name"
             ngModel
           />
+          <span *ngIf="nameEntered">Your name is required</span>
         </div>
 
-        <div class="input-wrapper">
+        <div
+          class="input-wrapper max-height-input"
+          [ngClass]="{ 'max-height': nameEntered }"
+        >
           <img src="./assets/img/checkmark.svg" alt="checkmark.svg" />
           <input
             placeholder="Your email"
@@ -41,9 +48,13 @@
             name="email"
             ngModel
           />
+          <span *ngIf="nameEntered">Your email is required</span>
         </div>
 
-        <div class="input-wrapper">
+        <div
+          class="input-wrapper max-height-textarea"
+          [ngClass]="{ 'max-height': nameEntered }"
+        >
           <img src="./assets/img/checkmark.svg" alt="checkmark.svg" />
           <textarea
             placeholder="Your  message"
@@ -54,17 +65,20 @@
             cols="30"
             rows="10"
           ></textarea>
+          <span *ngIf="nameEntered">Your message is required</span>
         </div>
 
         <div class="privacy-and-butto-wrapper">
-          <div>
-            <input required type="checkbox" />
-            <p>
-              I've read the <a href="#">privacy policy</a> and agree to the
-              processing of my data as outlined.
-            </p>
+          <div class="privacy-wrapper">
+            <div>
+              <input required type="checkbox" />
+              <p>
+                I've read the <a href="#">privacy policy</a> and agree to the
+                processing of my data as outlined.
+              </p>
+            </div>
+            <span *ngIf="nameEntered">Please accept the privacy policy.</span>
           </div>
-
           <button type="submit" [disabled]="sending">Send message!</button>
         </div>
       </form>

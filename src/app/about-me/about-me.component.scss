@@ -7,12 +7,13 @@ section {
 
   position: relative;
 
-  .purple-shadow-1 {
+  .shadow {
     position: absolute;
     rotate: -46deg;
     right: -500px;
     bottom: -100px;
     z-index: 1;
+
     pointer-events: none;
   }
 }
@@ -23,6 +24,8 @@ section {
   gap: 35px;
   color: white;
   max-width: 40vw;
+  position: relative;
+  z-index: 10;
 
   > div {
     display: flex;
@@ -42,6 +45,7 @@ section {
   justify-content: center;
   align-items: center;
   position: relative;
+  z-index: 10;
   width: 40vw;
 
   .img-wrapper {
