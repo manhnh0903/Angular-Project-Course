@@ -21,57 +21,112 @@
       <form ngNativeValidate (submit)="sendMail()" #contactForm="ngForm">
         <div
           class="input-wrapper max-height-input"
-          [ngClass]="{ 'max-height': nameEntered }"
+          [ngClass]="{ 'max-height': name.length <= 0 && nameFormInteraction }"
         >
-          <img src="./assets/img/checkmark.svg" alt="checkmark.svg" />
+          <img
+            *ngIf="name.length >= 3 && nameFormInteraction"
+            src="./assets/img/checkmark.svg"
+            alt="checkmark.svg"
+          />
+          <img
+            *ngIf="name.length <= 2 && nameFormInteraction"
+            src="./assets/img/warning.svg"
+            alt="warning.svg"
+          />
           <input
             placeholder="Your name"
             required
             [disabled]="sending"
             type="text"
             name="name"
-            ngModel
+            [(ngModel)]="name"
+            (ngModelChange)="formInteraction('name')"
           />
-          <span *ngIf="nameEntered">Your name is required</span>
+          <span *ngIf="name.length <= 0 && nameFormInteraction"
+            >Your name is required</span
+          >
         </div>
 
         <div
           class="input-wrapper max-height-input"
-          [ngClass]="{ 'max-height': nameEntered }"
+          [ngClass]="{
+            'max-height': emailFormInteraction && email.length <= 0
+          }"
         >
-          <img src="./assets/img/checkmark.svg" alt="checkmark.svg" />
+          <img
+            *ngIf="email.length >= 1 && emailFormInteraction && emailIsValid"
+            src="./assets/img/checkmark.svg"
+            alt="checkmark.svg"
+          />
+          <img
+            *ngIf="emailFormInteraction && !emailIsValid"
+            src="./assets/img/warning.svg"
+            alt="warning.svg"
+          />
           <input
             placeholder="Your email"
             required
             [disabled]="sending"
             type="email"
             name="email"
-            ngModel
+            [(ngModel)]="email"
+            (ngModelChange)="formInteraction('email')"
           />
-          <span *ngIf="nameEntered">Your email is required</span>
+          <span *ngIf="emailFormInteraction && email.length <= 0"
+            >Your email is required</span
+          >
         </div>
 
         <div
           class="input-wrapper max-height-textarea"
-          [ngClass]="{ 'max-height': nameEntered }"
+          [ngClass]="{
+            'max-height': message.length <= 0 && messageFormInteraction
+          }"
         >
-          <img src="./assets/img/checkmark.svg" alt="checkmark.svg" />
+          <img
+            *ngIf="message.length >= 1 && messageFormInteraction"
+            src="./assets/img/checkmark.svg"
+            alt="checkmark.svg"
+          />
+          <img
+            *ngIf="message.length <= 0 && messageFormInteraction"
+            src="./assets/img/warning.svg"
+            alt="warning.svg"
+          />
           <textarea
             placeholder="Your  message"
             required
             [disabled]="sending"
             name="message"
-            ngModel
+            [(ngModel)]="message"
+            (ngModelChange)="formInteraction('message')"
             cols="30"
             rows="10"
           ></textarea>
-          <span *ngIf="nameEntered">Your message is required</span>
+          <span *ngIf="message.length <= 0 && messageFormInteraction"
+            >Your message is required</span
+          >
         </div>
 
         <div class="privacy-and-butto-wrapper">
           <div class="privacy-wrapper">
             <div>
-              <input required type="checkbox" />
+              <img
+                class="checkbox"
+                (mouseenter)="privacyHover = true"
+                (mouseleave)="privacyHover = false"
+                (click)="togglePrivacy()"
+                [src]="
+                  privacyAccepted && privacyHover
+                    ? './assets/img/icons/checkbox-checked-hover.svg'
+                    : privacyAccepted && !privacyHover
+                    ? './assets/img/icons/checkbox-checked.svg'
+                    : !privacyAccepted && privacyHover
+                    ? './assets/img/icons/checkbox-hover.svg'
+                    : './assets/img/icons/checkbox.svg'
+                "
+                alt="checkbox.svg"
+              />
               <p>
                 I've read the <a href="#">privacy policy</a> and agree to the
                 processing of my data as outlined.

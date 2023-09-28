@@ -11,6 +11,10 @@ body {
   overflow-x: hidden;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 h2 {
   color: white;
   font-size: 75px;
@@ -23,10 +27,10 @@ h3 {
 
 :root {
   --green: rgba(112, 230, 28, 1);
-  --lightBlue: rgba(28, 218, 230, 1);
+  --lightBlue: rgba(28, 218, 230, 1); // delete?
   --purple: rgba(151, 71, 255, 1);
   --darkBlueBg: rgba(20, 29, 47, 1);
-  --darkBlueTransparent: rgba(20, 29, 47, 0.8);
+  --darkBlueTransparent: rgba(20, 29, 47, 0.8); //delete??
 }
 
 input:-webkit-autofill,
