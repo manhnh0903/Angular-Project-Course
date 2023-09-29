@@ -43,3 +43,7 @@ input:-webkit-autofill:active {
 input:-webkit-autofill {
   -webkit-text-fill-color: white !important;
 }
+
+.no-pointer-events {
+  pointer-events: none;
+}

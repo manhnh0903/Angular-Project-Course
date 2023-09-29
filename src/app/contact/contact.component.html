@@ -1,6 +1,6 @@
 <section id="contact">
   <img
-    class="shadow"
+    class="shadow no-pointer-events"
     src="./assets/img/shadows/purple-shadow-contact.svg"
     alt="shadow-contact"
   />
@@ -134,7 +134,19 @@
             </div>
             <span *ngIf="nameEntered">Please accept the privacy policy.</span>
           </div>
-          <button type="submit" [disabled]="sending">Send message!</button>
+          <button
+            type="submit"
+            [disabled]="
+              sending || !privacyAccepted || !formReadyToSend || mailSend
+            "
+            [ngClass]="{
+              'button-disabled':
+                sending || !privacyAccepted || !formReadyToSend,
+              'no-pointer-events': mailSend
+            }"
+          >
+            {{ mailSend ? "Thank you!" : "Send message!" }}
+          </button>
         </div>
       </form>
     </div>

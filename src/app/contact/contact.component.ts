@@ -10,6 +10,7 @@ export class ContactComponent {
   @ViewChild('contactForm') contactForm!: NgForm;
 
   sending: boolean = false;
+  mailSend: boolean = false;
   nameEntered: boolean = false;
   nameFormInteraction: boolean = false;
   emailFormInteraction: boolean = false;
@@ -38,6 +39,7 @@ export class ContactComponent {
     // );
 
     this.sending = false;
+    this.mailSend = true;
   }
 
   getFormData() {
@@ -56,6 +58,7 @@ export class ContactComponent {
       this.emailFormInteraction = true;
       this.validateEmail();
     } else if (formType === 'message') this.messageFormInteraction = true;
+    this.checkIfFormValid();
   }
 
   validateEmail() {
@@ -65,8 +68,17 @@ export class ContactComponent {
 
   togglePrivacy() {
     this.privacyAccepted = !this.privacyAccepted;
-    console.log(this.privacyAccepted);
+    this.checkIfFormValid();
   }
 
-  hoverImg() {}
+  checkIfFormValid() {
+    if (
+      this.name.length > 0 &&
+      this.emailIsValid &&
+      this.message.length > 0 &&
+      this.privacyAccepted
+    )
+      this.formReadyToSend = true;
+    else this.formReadyToSend = false;
+  }
 }
