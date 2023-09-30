@@ -2,8 +2,11 @@ section {
   height: calc(100vh - 108px /*header height*/);
   margin-top: 108px !important;
   background-color: var(--darkBlueBg);
-  padding: 0 100px;
+  padding: 100px 100px 0 100px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .introduction {
@@ -66,8 +69,12 @@ section {
     }
 
     .hero-img {
-      width: 550px;
+      width: 450px;
       z-index: 1;
+
+      @media screen and (max-width: 1250px) {
+        width: 350px;
+      }
     }
   }
 
@@ -81,16 +88,18 @@ section {
 }
 
 .socials {
-  position: absolute;
-  left: 0;
-  bottom: 32px;
+  position: relative;
   display: flex;
   align-items: center;
   gap: 42px;
   z-index: 100;
+  padding-left: 42px;
+  padding-bottom: 32px;
 
   .socials-seperator {
+    position: absolute;
     height: 0px;
+    left: -100px;
     width: 100px;
     border: 2px solid var(--purple);
     border-top-right-radius: 2px;
@@ -129,4 +138,8 @@ section {
   height: 700px;
 
   z-index: 1;
+
+  @media screen and (max-width: 1250px) {
+    top: 24%;
+  }
 }
