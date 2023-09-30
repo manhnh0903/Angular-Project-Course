@@ -3,8 +3,23 @@
     <img src="./assets/img/tobias_bayer_web_developer_logo.svg" alt="" />
   </div>
   <div class="nav-box">
-    <a href="#about-me">About me</a>
-    <a href="#skills">Skills</a>
-    <a href="#portfolio">Portfolio</a>
+    <a
+      (click)="setActiveLink('#about-me')"
+      [class.active]="activeLink === '#about-me'"
+      href="#about-me"
+      >About me</a
+    >
+    <a
+      (click)="setActiveLink('#skills')"
+      [class.active]="activeLink === '#skills'"
+      href="#skills"
+      >Skills</a
+    >
+    <a
+      (click)="setActiveLink('#portfolio')"
+      [class.active]="activeLink === '#portfolio'"
+      href="#portfolio"
+      >Portfolio</a
+    >
   </div>
 </section>

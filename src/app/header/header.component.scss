@@ -26,3 +26,8 @@ section {
     }
   }
 }
+
+.active {
+  color: var(--green) !important;
+  border-bottom: 2px solid var(--purple);
+}

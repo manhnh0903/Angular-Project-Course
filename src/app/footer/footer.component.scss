@@ -13,18 +13,29 @@ section {
     display: flex;
     flex-direction: column;
 
-    a {
+    .imprint-link {
       text-decoration: none;
       color: white;
       font-size: 16px;
+      position: relative;
+
+      &:hover::before {
+        content: " ";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 25px;
+
+        border-bottom: 2px solid var(--lightBlue);
+      }
     }
 
     img {
       width: 200px;
     }
-  }
 
-  .copyright {
-    font-size: 23px;
+    .copyright {
+      font-size: 23px;
+    }
   }
 }

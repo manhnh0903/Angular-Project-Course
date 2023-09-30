@@ -14,6 +14,8 @@ import { ContactComponent } from './contact/contact.component';
 import { FormsModule } from '@angular/forms';
 import { FooterComponent } from './footer/footer.component';
 import { SocialsComponent } from './socials/socials.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { ImprintComponent } from './imprint/imprint.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { SocialsComponent } from './socials/socials.component';
     ContactComponent,
     FooterComponent,
     SocialsComponent,
+    PrivacyPolicyComponent,
+    ImprintComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],

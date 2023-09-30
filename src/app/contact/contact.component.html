@@ -17,6 +17,7 @@
       </p>
       <p>Need a Frontend developer? <b>Contact me!</b></p>
     </div>
+
     <div class="right-wrapper">
       <form ngNativeValidate (submit)="sendMail()" #contactForm="ngForm">
         <div
@@ -128,8 +129,9 @@
                 alt="checkbox.svg"
               />
               <p>
-                I've read the <a href="#">privacy policy</a> and agree to the
-                processing of my data as outlined.
+                I've read the
+                <a target="_blank" href="./privacy-policy">privacy policy</a>
+                and agree to the processing of my data as outlined.
               </p>
             </div>
             <span *ngIf="nameEntered">Please accept the privacy policy.</span>
