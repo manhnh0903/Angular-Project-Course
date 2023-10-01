@@ -122,14 +122,20 @@ section {
 }
 
 .hide-mobile {
-  @media screen and (max-width: 900px) {
-    display: none;
-  }
+  display: block;
 }
 
 .hide-desktop {
-  @media screen and (min-width: 900px) {
+  display: none;
+}
+
+@media screen and (max-width: 900px) {
+  .hide-mobile {
     display: none;
+  }
+
+  .hide-desktop {
+    display: block;
   }
 }
 
