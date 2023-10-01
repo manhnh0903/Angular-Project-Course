@@ -4,14 +4,18 @@
   </div>
   <div class="right-wrapper">
     <div class="text-wrapper">
-      <h3>{{ headline }}</h3>
-      <span>{{ technologies }} </span>
-      <p>
+      <h3 translate>{{ headline }}</h3>
+      <span translate>{{ technologies }} </span>
+      <p translate>
         {{ description }}
       </p>
     </div>
     <div class="buttons-wrapper">
-      <a target="_blank" class="button project-button" href="{{ projectLink }}"
+      <a
+        translate
+        target="_blank"
+        class="button project-button"
+        href="{{ projectLink }}"
         >Live test</a
       >
       <a target="_blank" class="button github-button" href="{{ githubLink }}"

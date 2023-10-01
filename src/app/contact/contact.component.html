@@ -5,17 +5,17 @@
     alt="shadow-contact"
   />
   <div class="headline">
-    <h2>Contact</h2>
+    <h2 translate>Contact</h2>
     <div class="contact-seperator"></div>
   </div>
   <div class="bottom-wrapper">
     <div class="left-wrapper">
-      <h3>Got a problem to solve?</h3>
-      <p>
+      <h3 translate>Got a problem to solve?</h3>
+      <p translate>
         Contact me through this form, I am interested in hearing you, knowing
         your ideas and contributing to your projects with my work.
       </p>
-      <p>Need a Frontend developer? <b>Contact me!</b></p>
+      <p translate>Need a Frontend developer? <b>Contact me!</b></p>
     </div>
 
     <div class="right-wrapper">
@@ -43,7 +43,7 @@
             [(ngModel)]="name"
             (ngModelChange)="formInteraction('name')"
           />
-          <span *ngIf="name.length <= 0 && nameFormInteraction"
+          <span translate *ngIf="name.length <= 0 && nameFormInteraction"
             >Your name is required</span
           >
         </div>
@@ -73,7 +73,7 @@
             [(ngModel)]="email"
             (ngModelChange)="formInteraction('email')"
           />
-          <span *ngIf="emailFormInteraction && email.length <= 0"
+          <span translate *ngIf="emailFormInteraction && email.length <= 0"
             >Your email is required</span
           >
         </div>
@@ -104,7 +104,7 @@
             cols="30"
             rows="10"
           ></textarea>
-          <span *ngIf="message.length <= 0 && messageFormInteraction"
+          <span translate *ngIf="message.length <= 0 && messageFormInteraction"
             >Your message is required</span
           >
         </div>
@@ -128,13 +128,17 @@
                 "
                 alt="checkbox.svg"
               />
-              <p>
+              <p translate>
                 I've read the
-                <a target="_blank" href="./privacy-policy">privacy policy</a>
+                <a translate target="_blank" href="./privacy-policy"
+                  >privacy policy</a
+                >
                 and agree to the processing of my data as outlined.
               </p>
             </div>
-            <span *ngIf="nameEntered">Please accept the privacy policy.</span>
+            <span translate *ngIf="nameEntered"
+              >Please accept the privacy policy.</span
+            >
           </div>
           <button
             type="submit"

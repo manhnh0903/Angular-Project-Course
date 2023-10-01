@@ -11,15 +11,21 @@
 
     <div class="hero-wrapper">
       <div>
-        <div class="intro-rotate">
+        <div
+          [class.intro-rotate-DE]="translate.store.currentLang === 'de'"
+          class="intro-rotate"
+        >
           <span translate>I am</span>
         </div>
-        <div class="intro-text-wrapper">
+        <div
+          [class.intro-text-wrapper-DE]="translate.store.currentLang === 'de'"
+          class="intro-text-wrapper"
+        >
           <h2>Tobias Bayer</h2>
           <span translate>Frontend developer</span>
         </div>
       </div>
-      <a href="#contact">Let&rsquo;s talk!</a>
+      <a translate href="#contact">Let&rsquo;s talk!</a>
     </div>
   </div>
 
@@ -30,7 +36,7 @@
   </div>
 
   <div class="scroll-down-wrapper">
-    <span>Scroll down</span>
+    <span translate>Scroll down</span>
     <img src="./assets/img/icons/arrow-down-icon.png" alt="" />
   </div>
 

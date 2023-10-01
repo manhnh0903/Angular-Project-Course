@@ -21,6 +21,16 @@ section {
 
     > span {
       font-size: 52px;
+      line-height: 58px;
+      padding-top: 5px;
+    }
+  }
+
+  .intro-rotate-DE {
+    > span {
+      font-size: 35px;
+      line-height: normal;
+      line-height: 40px;
     }
   }
 
@@ -82,7 +92,14 @@ section {
     span {
       font-size: 43px;
       text-transform: uppercase;
+      letter-spacing: 2.5px;
       color: var(--purple);
+    }
+  }
+
+  .intro-text-wrapper-DE {
+    > span {
+      letter-spacing: 1px;
     }
   }
 }

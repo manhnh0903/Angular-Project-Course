@@ -11,6 +11,21 @@ section {
   }
 }
 
+.right-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 29px;
+
+  .language-selector {
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--green);
+    }
+  }
+}
+
 .nav-box {
   display: flex;
   gap: 29px;
