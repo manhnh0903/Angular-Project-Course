@@ -5,10 +5,19 @@ section {
   position: relative;
   z-index: 100;
 
+  .left-wrapper {
+    max-width: 40vw;
+
+    > img {
+      width: 100%;
+    }
+  }
+
   .right-wrapper {
     display: flex;
     flex-direction: column;
     gap: 35px;
+    max-width: 40vw;
 
     .text-wrapper {
       display: flex;
@@ -44,6 +53,7 @@ section {
 
       .project-button {
         background-color: var(--purple);
+        text-align: center;
 
         &:hover {
           background-color: var(--green);
@@ -51,6 +61,9 @@ section {
       }
 
       .github-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         border: 1px solid var(--green);
 
         &:hover {

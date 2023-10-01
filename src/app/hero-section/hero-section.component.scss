@@ -1,5 +1,5 @@
 section {
-  height: calc(100vh - 108px /*header height*/);
+  min-height: calc(100vh - 108px /*header height*/);
   margin-top: 108px !important;
   background-color: var(--darkBlueBg);
   padding: 100px 100px 0 100px;
@@ -7,6 +7,16 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  @media screen and (max-width: 1250px) {
+    padding: 100px 50px 0 50px;
+  }
+
+  @media screen and (max-width: 900px) {
+    padding: 50px 12px 0 12px;
+    min-height: calc(100vh - 101px /*header height*/);
+    margin-top: 101px !important;
+  }
 }
 
 .introduction {
@@ -14,6 +24,11 @@ section {
   align-items: center;
   color: white;
   justify-content: space-between;
+
+  @media screen and (max-width: 900px) {
+    flex-direction: column;
+    gap: 32px;
+  }
 
   .intro-rotate {
     writing-mode: vertical-lr;
@@ -23,6 +38,13 @@ section {
       font-size: 52px;
       line-height: 58px;
       padding-top: 5px;
+
+      @media screen and (max-width: 1250px) {
+        font-size: 44px;
+        line-height: 50px;
+        padding-top: 0;
+        letter-spacing: 2px;
+      }
     }
   }
 
@@ -31,6 +53,22 @@ section {
       font-size: 35px;
       line-height: normal;
       line-height: 40px;
+
+      @media screen and (max-width: 1250px) {
+        font-size: 28px;
+        line-height: normal;
+        padding-top: 5px;
+        letter-spacing: 1.7px;
+        margin-top: -5px !important;
+      }
+
+      @media screen and (max-width: 600px) {
+        font-size: 16px;
+        line-height: 16px;
+        padding-top: 5px;
+        letter-spacing: normal;
+        margin-top: -5px !important;
+      }
     }
   }
 
@@ -41,6 +79,10 @@ section {
     flex-direction: column;
     align-items: center;
     gap: 75px;
+
+    @media screen and (max-width: 900px) {
+      gap: 36px;
+    }
 
     > div {
       display: flex;
@@ -65,6 +107,31 @@ section {
         scale: 1.2;
       }
     }
+
+    .intro-text-wrapper {
+      span {
+        font-size: 43px;
+        text-transform: uppercase;
+        letter-spacing: 2.5px;
+        color: var(--purple);
+
+        @media screen and (max-width: 1250px) {
+          font-size: 36px;
+          letter-spacing: normal;
+        }
+
+        @media screen and (max-width: 600px) {
+          font-size: 20px;
+          letter-spacing: normal;
+        }
+      }
+    }
+
+    .intro-text-wrapper-DE {
+      > span {
+        letter-spacing: 1px;
+      }
+    }
   }
 
   .hero-img-wrapper {
@@ -76,6 +143,10 @@ section {
     .shadow-hero-img {
       position: absolute;
       width: 160%;
+
+      @media screen and (max-width: 900px) {
+        width: 80%;
+      }
     }
 
     .hero-img {
@@ -83,23 +154,12 @@ section {
       z-index: 1;
 
       @media screen and (max-width: 1250px) {
-        width: 350px;
+        width: 320px;
       }
-    }
-  }
 
-  .intro-text-wrapper {
-    span {
-      font-size: 43px;
-      text-transform: uppercase;
-      letter-spacing: 2.5px;
-      color: var(--purple);
-    }
-  }
-
-  .intro-text-wrapper-DE {
-    > span {
-      letter-spacing: 1px;
+      @media screen and (max-width: 900px) {
+        width: 50%;
+      }
     }
   }
 }
@@ -113,20 +173,32 @@ section {
   padding-left: 42px;
   padding-bottom: 32px;
 
+  @media screen and (max-width: 900px) {
+    justify-content: center;
+    padding-left: 0;
+  }
+
   .socials-seperator {
     position: absolute;
-    height: 0px;
     left: -100px;
     width: 100px;
     border: 2px solid var(--purple);
     border-top-right-radius: 2px;
     border-bottom-right-radius: 2px;
+
+    @media screen and (max-width: 900px) {
+      left: -50px;
+    }
   }
 
   .socials-mail {
     text-decoration: none;
     font-size: 23px;
     color: white;
+
+    @media screen and (max-width: 600px) {
+      display: none;
+    }
   }
 }
 
@@ -145,6 +217,14 @@ section {
     writing-mode: vertical-rl;
     font-size: 23px;
   }
+
+  @media screen and (max-width: 1250px) {
+    right: 50px;
+  }
+
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
 }
 
 .vector {
@@ -157,6 +237,10 @@ section {
   z-index: 1;
 
   @media screen and (max-width: 1250px) {
-    top: 24%;
+    top: 20%;
+  }
+
+  @media screen and (max-width: 900px) {
+    display: none;
   }
 }

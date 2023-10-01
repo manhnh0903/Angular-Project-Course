@@ -3,17 +3,26 @@ section {
   padding: 150px 100px;
   color: white;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+
+  @media screen and (max-width: 1250px) {
+    padding: 100px 50px;
+  }
 
   .shadow {
     position: absolute;
     left: -150px;
     top: 150px;
+    z-index: 1;
   }
 
   .portfolio-head {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 16px;
 
     .headline {
       display: flex;
@@ -46,5 +55,8 @@ section {
   .projects-wrapper {
     position: relative;
     z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
   }
 }

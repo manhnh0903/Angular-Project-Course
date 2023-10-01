@@ -15,10 +15,29 @@ html {
   overflow-x: hidden;
 }
 
+h1 {
+  color: white;
+  font-size: 75px;
+  line-height: 75px;
+
+  @media screen and (max-width: 1250px) {
+    font-size: 64px;
+  }
+
+  @media screen and (max-width: 600px) {
+    font-size: 36px;
+    line-height: 36px;
+  }
+}
+
 h2 {
   color: white;
   font-size: 75px;
   line-height: 75px;
+
+  @media screen and (max-width: 1250px) {
+    font-size: 50px;
+  }
 }
 
 h3 {

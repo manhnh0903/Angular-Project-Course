@@ -4,8 +4,15 @@ section {
   justify-content: space-between;
   align-items: center;
   padding: 150px 100px;
-
   position: relative;
+
+  @media screen and (max-width: 1250px) {
+    padding: 100px 50px;
+  }
+
+  @media screen and (max-width: 900px) {
+    padding: 50px 12px 0 12px;
+  }
 
   .shadow {
     position: absolute;
@@ -21,7 +28,7 @@ section {
   flex-direction: column;
   gap: 35px;
   color: white;
-  max-width: 40vw;
+  max-width: 45vw;
   position: relative;
   z-index: 10;
 
@@ -44,7 +51,7 @@ section {
   align-items: center;
   position: relative;
   z-index: 10;
-  width: 40vw;
+  width: 30vw;
 
   .img-wrapper {
     position: relative;
@@ -57,6 +64,10 @@ section {
 
     > img {
       width: 350px;
+
+      @media screen and (max-width: 1250px) {
+        width: 100%;
+      }
     }
   }
 

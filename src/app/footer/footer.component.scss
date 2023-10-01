@@ -9,6 +9,10 @@ section {
   position: relative;
   z-index: 999;
 
+  @media screen and (max-width: 1250px) {
+    padding: 100px 50px;
+  }
+
   .left-wrapper {
     display: flex;
     flex-direction: column;
