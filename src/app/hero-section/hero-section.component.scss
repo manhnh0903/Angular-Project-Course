@@ -45,6 +45,13 @@ section {
         padding-top: 0;
         letter-spacing: 2px;
       }
+
+      @media screen and (max-width: 600px) {
+        font-size: 23px;
+        line-height: 30px;
+        padding-top: 5px;
+        letter-spacing: 2px;
+      }
     }
   }
 
