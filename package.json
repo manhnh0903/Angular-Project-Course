@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "i18n:init": "ngx-translate-extract --input ./src --output ./src/assets/i18n/en.json ./src/assets/i18n/de.json --key-as-default-value --replace --format json",
+    "i18n:extract": "ngx-translate-extract --input ./src --output ./src/assets/i18n/en.json ./src/assets/i18n/de.json --clean --format json"
   },
   "private": true,
   "dependencies": {
@@ -18,6 +20,8 @@
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
+    "@ngx-translate/core": "^15.0.0",
+    "@ngx-translate/http-loader": "^8.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
@@ -26,6 +30,7 @@
     "@angular-devkit/build-angular": "^16.2.0",
     "@angular/cli": "~16.2.0",
     "@angular/compiler-cli": "^16.2.0",
+    "@bartholomej/ngx-translate-extract": "^8.0.2",
     "@types/jasmine": "~4.3.0",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",

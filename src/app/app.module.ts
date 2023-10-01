@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainPageComponent } from './main-page/main-page.component';
@@ -16,6 +15,15 @@ import { FooterComponent } from './footer/footer.component';
 import { SocialsComponent } from './socials/socials.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { ImprintComponent } from './imprint/imprint.component';
+
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -33,7 +41,20 @@ import { ImprintComponent } from './imprint/imprint.component';
     PrivacyPolicyComponent,
     ImprintComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      defaultLanguage: 'de',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
