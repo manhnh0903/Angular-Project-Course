@@ -32,6 +32,10 @@ section {
   position: relative;
   z-index: 10;
 
+  @media screen and (max-width: 900px) {
+    max-width: 100%;
+  }
+
   > div {
     display: flex;
     flex-direction: column;
@@ -52,6 +56,10 @@ section {
   position: relative;
   z-index: 10;
   width: 30vw;
+
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
 
   .img-wrapper {
     position: relative;

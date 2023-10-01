@@ -11,6 +11,11 @@ section {
     padding: 100px 50px;
   }
 
+  @media screen and (max-width: 900px) {
+    padding: 50px 12px;
+    flex-direction: column-reverse;
+  }
+
   .shadow {
     position: absolute;
     rotate: -90deg;
@@ -23,10 +28,15 @@ section {
 .right-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   gap: 34px;
   position: relative;
   max-width: 40vw;
+
+  @media screen and (max-width: 900px) {
+    justify-content: flex-end;
+    max-width: 100%;
+  }
 
   > div {
     display: flex;
@@ -38,36 +48,38 @@ section {
       border-bottom-left-radius: 2px;
       width: 100px;
       right: -100px;
+
+      @media screen and (max-width: 900px) {
+        right: -105px;
+      }
     }
   }
 
-  a {
-    text-decoration: none;
-    font-size: 23px;
-    color: white;
-    border: unset;
-    border-radius: 10px;
-    background-color: var(--green);
-    padding: 15px 30px;
-    width: fit-content;
-    cursor: pointer;
-    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    transition: all ease-in-out 300ms;
-    transform-origin: top center;
-
-    &:hover {
-      background-color: var(--purple);
-      scale: 1.2;
-    }
+  p {
+    text-align: end;
   }
 }
 
 .left-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 34px;
   position: relative;
   z-index: 100;
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (max-width: 900px) {
+    align-items: center;
+    gap: 36px;
+  }
+
+  > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 34px;
+
+    @media screen and (max-width: 900px) {
+      justify-content: center;
+    }
+  }
 
   .skill {
     display: flex;
@@ -85,6 +97,38 @@ section {
         animation: jumpingSkill ease-in-out 225ms;
       }
     }
+  }
+}
+
+.contact-button {
+  text-decoration: none;
+  font-size: 23px;
+  color: white;
+  border: unset;
+  border-radius: 10px;
+  background-color: var(--green);
+  padding: 15px 30px;
+  width: fit-content;
+  cursor: pointer;
+  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  transition: all ease-in-out 300ms;
+  transform-origin: top center;
+
+  &:hover {
+    background-color: var(--purple);
+    scale: 1.2;
+  }
+}
+
+.hide-mobile {
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
+}
+
+.hide-desktop {
+  @media screen and (min-width: 900px) {
+    display: none;
   }
 }
 

@@ -5,10 +5,15 @@
     alt="green-shadow-1.svg"
   />
   <div class="left-wrapper">
-    <div *ngFor="let icon of icons; let i = index" class="skill">
-      <img src="../../assets/img/icons/{{ icon }}.svg" alt="" />
-      <p>{{ descriptions[i] }}</p>
+    <div>
+      <div *ngFor="let icon of icons; let i = index" class="skill">
+        <img src="../../assets/img/icons/{{ icon }}.svg" alt="" />
+        <p>{{ descriptions[i] }}</p>
+      </div>
     </div>
+    <a class="contact-button hide-desktop" translate href="#contact"
+      >Get in touch</a
+    >
   </div>
   <div class="right-wrapper">
     <div>
@@ -19,6 +24,8 @@
       I have gained experience in building projects with various front end
       technologies and concepts.
     </p>
-    <a translate href="#contact">Get in touch</a>
+    <a class="contact-button hide-mobile" translate href="#contact"
+      >Get in touch</a
+    >
   </div>
 </section>
