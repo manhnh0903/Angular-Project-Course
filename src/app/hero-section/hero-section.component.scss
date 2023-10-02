@@ -14,8 +14,8 @@ section {
 
   @media screen and (max-width: 900px) {
     padding: 50px 12px 0 12px;
-    min-height: calc(100vh - 101px /*header height*/);
-    margin-top: 101px !important;
+    min-height: calc(100vh - 100px /*header height*/);
+    margin-top: 100px !important;
   }
 }
 
