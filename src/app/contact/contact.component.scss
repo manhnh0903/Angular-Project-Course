@@ -11,11 +11,46 @@ section {
     padding: 100px 50px;
   }
 
+  @media screen and (max-width: 900px) {
+    padding: 50px 12px;
+  }
+
   .shadow {
     position: absolute;
     left: -400px;
     bottom: -400px;
     rotate: 45deg;
+
+    @media screen and (max-width: 900px) {
+      width: 500px;
+    }
+  }
+}
+
+.headline {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .contact-seperator {
+    border: 2px solid var(--purple);
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    position: absolute;
+    transform-origin: left;
+    rotate: 180deg;
+    width: 50px;
+    left: -50px;
+
+    @media screen and (max-width: 1250px) {
+      left: -25px;
+      width: 25px;
+    }
+
+    @media screen and (max-width: 900px) {
+      width: 10px;
+      left: -2px;
+    }
   }
 }
 
@@ -26,12 +61,20 @@ section {
   position: relative;
   z-index: 100;
 
+  @media screen and (max-width: 900px) {
+    flex-direction: column;
+  }
+
   .left-wrapper {
     display: flex;
     flex-direction: column;
     gap: 35px;
     color: white;
     max-width: 40vw;
+
+    @media screen and (max-width: 900px) {
+      max-width: 100%;
+    }
   }
 }
 
@@ -42,6 +85,10 @@ section {
     flex-direction: column;
     gap: 15px;
     max-width: 40vw;
+
+    @media screen and (max-width: 900px) {
+      max-width: 100%;
+    }
 
     .input-wrapper {
       width: 100%;
