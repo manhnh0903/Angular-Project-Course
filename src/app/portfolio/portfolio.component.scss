@@ -17,9 +17,20 @@ section {
 
   .shadow {
     position: absolute;
-    left: -150px;
-    top: 150px;
+    left: -200px;
+    bottom: 0px;
     z-index: 1;
+    width: 600px;
+    rotate: -25deg;
+
+    @media screen and (max-width: 900px) {
+      bottom: 200px;
+    }
+
+    @media screen and (max-width: 400px) {
+      width: 400px;
+      bottom: 300px;
+    }
   }
 
   .portfolio-head {

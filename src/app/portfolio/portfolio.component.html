@@ -18,7 +18,7 @@
   <div class="projects-wrapper">
     <ng-container *ngFor="let headline of headlines; let i = index">
       <app-project
-        [headline]="'Join'"
+        [headline]="headlines[i]"
         [technologies]="technologies[i]"
         [description]="descriptions[i]"
         [img]="images[i]"

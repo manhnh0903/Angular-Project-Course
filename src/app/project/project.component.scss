@@ -6,8 +6,16 @@ section {
   position: relative;
   z-index: 100;
 
+  @media screen and (max-width: 900px) {
+    flex-direction: column !important;
+  }
+
   .left-wrapper {
     max-width: 40vw;
+
+    @media screen and (max-width: 900px) {
+      max-width: 100%;
+    }
 
     > img {
       width: 100%;
@@ -19,6 +27,12 @@ section {
     flex-direction: column;
     gap: 35px;
     max-width: 40vw;
+
+    @media screen and (max-width: 900px) {
+      max-width: 100%;
+      align-items: center;
+      text-align: center;
+    }
 
     .text-wrapper {
       display: flex;

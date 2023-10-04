@@ -13,6 +13,10 @@ section {
     padding: 100px 50px;
   }
 
+  .mobile {
+    display: none;
+  }
+
   @media screen and (max-width: 900px) {
     padding: 50px 12px;
     flex-direction: column;

@@ -6,25 +6,30 @@ import { Component } from '@angular/core';
   styleUrls: ['./portfolio.component.scss'],
 })
 export class PortfolioComponent {
-  headlines: string[] = ['Join', 'Sharkie'];
+  headlines: string[] = ['Join', 'Space-Shooter', 'Ring-of-Fire'];
   technologies: string[] = [
-    'Angular | TypeScript | HTML | CSS | Firebase',
     'JavaScript | HTML | CSS',
+    'JavaScript | HTML | CSS',
+    'Angular | TypeScript | HTML | CSS | Firebase',
   ];
   descriptions: string[] = [
-    'Task manager inspired by the Kanban System. Create and organize tasks using drag and drop functions, assign users and categories. ',
-    'A simple Jump-and-Run game based on an object-oriented approach. Help sharkie to find coins and poison bottles to fight against the killer whale.',
+    'Task manager inspired by the Kanban System. Create and organize tasks using drag and drop functions, assign users and categories.',
+    'A side-scrolling space shooter game based on an object-oriented approach. Navigate your spacecraft through the vast expanse of outer space, confronting space pirates and ultimately vanquishing their leader at the end of your galactic journey.',
+    'The popular drinking game has been developed using Angular and seamlessly integrated with a Google Firebase database, allowing for online multiplayer functionality.',
   ];
   projectLinks: string[] = [
-    'https://www.google.com/',
-    'https://www.google.com/',
+    'https://join.tobias-bayer.dev/',
+    'https://space-shooter.tobias-bayer.dev/',
+    'https://ring-of-fire.tobias-bayer.dev/',
   ];
   githubLinks: string[] = [
-    'https://www.google.com/',
-    'https://www.google.com/',
+    'https://github.com/BayerTobias/join',
+    'https://github.com/BayerTobias/SpaceGame',
+    'https://github.com/BayerTobias/Ring-of-Fire',
   ];
   images: string[] = [
     './assets/img/joinphoto.png',
     './assets/img/sharkiephoto.png',
+    './assets/img/joinphoto.png',
   ];
 }
