@@ -41,5 +41,15 @@
         >Portfolio</a
       >
     </div>
+    <div (click)="toggleMenue()" class="burger-menue">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </div>
+  <app-mobile-overlay
+    [ngClass]="{ 'show-overlay': mobileOverlay }"
+    class="mobile-overlay"
+    (closeOverlayEvent)="closeOverlay()"
+  ></app-mobile-overlay>
 </section>

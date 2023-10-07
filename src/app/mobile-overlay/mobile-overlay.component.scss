@@ -1,0 +1,39 @@
+section {
+  width: 100vw;
+  max-width: 100%;
+  height: calc(100vh - 101px);
+  background: rgba(65, 72, 86);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .nav-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 29px;
+
+    a {
+      text-decoration: none;
+      color: white;
+      font-size: 23px;
+      position: relative;
+
+      &:active {
+        color: var(--green);
+      }
+
+      &:active::before {
+        content: " ";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 50px;
+
+        border-bottom: 2px solid var(--purple);
+      }
+    }
+  }
+}

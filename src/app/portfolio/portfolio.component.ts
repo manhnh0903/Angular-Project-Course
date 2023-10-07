@@ -28,8 +28,8 @@ export class PortfolioComponent {
     'https://github.com/BayerTobias/Ring-of-Fire',
   ];
   images: string[] = [
-    './assets/img/joinphoto.png',
-    './assets/img/sharkiephoto.png',
-    './assets/img/joinphoto.png',
+    './assets/img/portfolio_join.png',
+    './assets/img/spaceshooter.png',
+    './assets/img/ringoffire.png',
   ];
 }
