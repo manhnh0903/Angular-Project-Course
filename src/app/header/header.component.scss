@@ -67,12 +67,30 @@ section {
   justify-content: space-between;
 
   > div {
-    border-top: 1px solid white;
+    border: 1px solid white;
     transition: all 225ms ease-in-out;
+    transform-origin: left;
+    width: 20px;
   }
 
   @media screen and (max-width: 900px) {
     display: flex;
+  }
+}
+
+.burger-active {
+  :nth-child(1) {
+    transform: rotate(45deg);
+    width: 25px;
+  }
+
+  :nth-child(2) {
+    opacity: 0;
+  }
+
+  :nth-child(3) {
+    transform: rotate(-45deg);
+    width: 25px;
   }
 }
 

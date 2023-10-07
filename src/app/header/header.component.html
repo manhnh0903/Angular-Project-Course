@@ -41,7 +41,11 @@
         >Portfolio</a
       >
     </div>
-    <div (click)="toggleMenue()" class="burger-menue">
+    <div
+      [ngClass]="{ 'burger-active': mobileOverlay }"
+      (click)="toggleMenue()"
+      class="burger-menue"
+    >
       <div></div>
       <div></div>
       <div></div>
