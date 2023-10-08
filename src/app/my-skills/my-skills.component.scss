@@ -3,16 +3,16 @@ section {
   justify-content: space-between;
   gap: 36px;
   background-color: var(--darkBlueBg);
-  padding: 150px 100px 0px 100px;
+  padding: 150px 100px 50px 100px;
   color: white;
   position: relative;
 
   @media screen and (max-width: 1250px) {
-    padding: 150px 50px 0px 50px;
+    padding: 150px 50px 50px 50px;
   }
 
   @media screen and (max-width: 900px) {
-    padding: 150px 12px 0px 12px;
+    padding: 150px 12px 50px 12px;
     flex-direction: column-reverse;
   }
 

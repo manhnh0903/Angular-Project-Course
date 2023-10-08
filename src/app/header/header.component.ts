@@ -17,7 +17,6 @@ export class HeaderComponent {
 
   setActiveLink(link: string) {
     this.activeLink = link;
-    console.log(this.translate.store.currentLang);
   }
 
   toggleMenue() {
