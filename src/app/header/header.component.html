@@ -1,6 +1,6 @@
 <section>
   <div>
-    <img src="./assets/img/tobias_bayer_web_developer_logo.svg" alt="" />
+    <img src="./assets/img/tobias_bayer_web_developer_logo.png" alt="" />
   </div>
   <div class="right-wrapper">
     <div>
@@ -18,7 +18,7 @@
         >EN</a
       >
     </div>
-    <div class="nav-box">
+    <div *ngIf="navMenue" class="nav-box">
       <a
         translate
         (click)="setActiveLink('#about-me')"
@@ -42,6 +42,7 @@
       >
     </div>
     <div
+      *ngIf="navMenue"
       [ngClass]="{ 'burger-active': mobileOverlay }"
       (click)="toggleMenue()"
       class="burger-menue"

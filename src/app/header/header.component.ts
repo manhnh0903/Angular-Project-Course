@@ -1,4 +1,4 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component, Input, Renderer2 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -9,6 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class HeaderComponent {
   activeLink: string | null = null;
   mobileOverlay: boolean = false;
+  @Input() navMenue!: boolean;
 
   constructor(public translate: TranslateService, private renderer: Renderer2) {
     // the lang to use, if the lang isn't available, it will use the current loader to get them
