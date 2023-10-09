@@ -22,6 +22,12 @@ section {
     top: 0;
     left: -490px;
     z-index: 1;
+
+    @media screen and (max-width: 900px) {
+      top: 300px;
+      width: 600px;
+      left: -300px;
+    }
   }
 }
 
