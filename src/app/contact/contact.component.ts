@@ -28,15 +28,13 @@ export class ContactComponent {
 
   async sendMail() {
     this.sending = true;
+
     const formData = this.getFormData();
 
-    // await fetch(
-    //   'https://tobias-bayer.developerakademie.net/portfolio/send_mail/send_mail.php',
-    //   {
-    //     method: 'POST',
-    //     body: formData,
-    //   }
-    // );
+    // await fetch('https://tobias-bayer.dev/send_mail.php', {
+    //   method: 'POST',
+    //   body: formData,
+    // });
 
     this.sending = false;
     this.mailSend = true;
