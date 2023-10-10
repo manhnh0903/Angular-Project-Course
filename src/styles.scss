@@ -6,13 +6,16 @@
 
 body {
   width: 100vw;
-  max-width: 100%;
+  max-width: 1960px;
   font-family: "Poppins", sans-serif;
   overflow-x: hidden;
 }
 
 html {
   overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  background-color: var(--darkBlueBg);
 }
 
 h1 {
@@ -47,8 +50,9 @@ h3 {
 .header {
   position: fixed;
   top: 0;
-  left: 0;
+
   width: 100%;
+  max-width: 1960px;
   z-index: 1000;
 }
 
