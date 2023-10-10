@@ -36,4 +36,8 @@ export class HeaderComponent {
     this.renderer.removeStyle(document.body, 'overflow-y');
     this.renderer.removeStyle(document.documentElement, 'overflow-y');
   }
+
+  selectLanguage(language: string) {
+    this.translate.use(language);
+  }
 }
