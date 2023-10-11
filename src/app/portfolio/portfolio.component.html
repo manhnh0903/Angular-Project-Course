@@ -1,10 +1,10 @@
-<section id="portfolio">
+<section id="portfolio" (appear)="inVision()">
   <img
     class="shadow no-pointer-events"
     src="./assets/img/shadows/purple-shadow-portfolio.svg"
     alt="shadow-portfolio-contact"
   />
-  <div class="portfolio-head">
+  <div class="portfolio-head" [ngClass]="{ scrolledBy: scrolledBy }">
     <div class="headline">
       <div class="seperator left"></div>
       <h2>Portfolio</h2>

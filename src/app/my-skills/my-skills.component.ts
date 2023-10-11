@@ -6,6 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./my-skills.component.scss'],
 })
 export class MySkillsComponent {
+  scrolledBy: boolean = false;
+
   icons: string[] = [
     'angular',
     'typescript',
@@ -30,4 +32,8 @@ export class MySkillsComponent {
     'Scrum',
     ' Material Design',
   ];
+
+  inVision() {
+    this.scrolledBy = true;
+  }
 }

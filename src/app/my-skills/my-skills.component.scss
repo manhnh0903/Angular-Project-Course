@@ -3,16 +3,16 @@ section {
   justify-content: space-between;
   gap: 36px;
   background-color: var(--darkBlueBg);
-  padding: 150px 100px 50px 100px;
+  padding: 150px 100px 0px 100px;
   color: white;
   position: relative;
 
   @media screen and (max-width: 1250px) {
-    padding: 150px 50px 50px 50px;
+    padding: 150px 50px 0px 50px;
   }
 
   @media screen and (max-width: 900px) {
-    padding: 150px 12px 50px 12px;
+    padding: 150px 12px 0px 12px;
     flex-direction: column-reverse;
   }
 
@@ -38,6 +38,7 @@ section {
   gap: 34px;
   position: relative;
   max-width: 40vw;
+  scale: 0;
 
   @media screen and (max-width: 900px) {
     justify-content: flex-end;
@@ -78,6 +79,7 @@ section {
   z-index: 100;
   display: flex;
   flex-direction: column;
+  scale: 0;
 
   @media screen and (max-width: 900px) {
     align-items: center;
@@ -162,5 +164,21 @@ section {
 
   100% {
     transform: translateY(0px);
+  }
+}
+
+.scrolledBy {
+  animation: fadeIn 400ms ease-in-out;
+  scale: 1;
+}
+
+@keyframes fadeIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
 }

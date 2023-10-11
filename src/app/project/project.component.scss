@@ -5,6 +5,7 @@ section {
   align-items: center;
   position: relative;
   z-index: 100;
+  scale: 0;
 
   @media screen and (max-width: 900px) {
     flex-direction: column !important;
@@ -91,4 +92,20 @@ section {
 
 .row-reverse {
   flex-direction: row-reverse;
+}
+
+.scrolledBy {
+  animation: fadeIn 400ms ease-in-out;
+  scale: 1 !important;
+}
+
+@keyframes fadeIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

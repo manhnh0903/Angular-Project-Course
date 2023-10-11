@@ -31,6 +31,7 @@ section {
   max-width: 45vw;
   position: relative;
   z-index: 10;
+  scale: 0;
 
   @media screen and (max-width: 900px) {
     max-width: 100%;
@@ -56,6 +57,7 @@ section {
   position: relative;
   z-index: 10;
   width: 30vw;
+  scale: 0;
 
   @media screen and (max-width: 900px) {
     display: none;
@@ -95,5 +97,22 @@ section {
       width: 50vw;
       z-index: 10;
     }
+  }
+}
+
+.scrolledBy {
+  animation: fadeIn 400ms ease-in-out;
+  scale: 1;
+}
+
+@keyframes fadeIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
 }

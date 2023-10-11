@@ -15,6 +15,7 @@ export class ProjectComponent {
   @Input() index!: Number;
 
   reverse: boolean = false;
+  scrolledBy: boolean = false;
 
   ngOnInit() {
     this.checkIfReverse();
@@ -27,5 +28,9 @@ export class ProjectComponent {
 
   isEven(n: any) {
     return n % 2 == 0;
+  }
+
+  inVision() {
+    this.scrolledBy = true;
   }
 }

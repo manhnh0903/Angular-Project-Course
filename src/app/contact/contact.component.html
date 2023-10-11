@@ -1,15 +1,15 @@
-<section id="contact">
+<section id="contact" (appear)="inVision()">
   <img
     class="shadow no-pointer-events"
     src="./assets/img/shadows/purple-shadow-contact.svg"
     alt="shadow-contact"
   />
-  <div class="headline">
+  <div class="headline" [ngClass]="{ scrolledBy: scrolledBy }">
     <h2 translate>Contact</h2>
     <div class="contact-seperator"></div>
   </div>
   <div class="bottom-wrapper">
-    <div class="left-wrapper">
+    <div class="left-wrapper" [ngClass]="{ scrolledBy: scrolledBy }">
       <h3 translate>Got a problem to solve?</h3>
       <p translate>
         Contact me through this form, I am interested in hearing you, knowing
@@ -18,7 +18,7 @@
       <p translate>Need a Frontend developer? <b translate>Contact me!</b></p>
     </div>
 
-    <div class="right-wrapper">
+    <div class="right-wrapper" [ngClass]="{ scrolledBy: scrolledBy }">
       <form ngNativeValidate (submit)="sendMail()" #contactForm="ngForm">
         <div
           class="input-wrapper max-height-input"

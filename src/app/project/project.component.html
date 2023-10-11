@@ -1,4 +1,7 @@
-<section [ngClass]="{ 'row-reverse': reverse }">
+<section
+  [ngClass]="{ 'row-reverse': reverse, scrolledBy: scrolledBy }"
+  (appear)="inVision()"
+>
   <div class="left-wrapper">
     <img src="{{ img }}" alt="" />
   </div>

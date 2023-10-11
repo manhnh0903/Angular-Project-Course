@@ -9,6 +9,8 @@ import { NgForm } from '@angular/forms';
 export class ContactComponent {
   @ViewChild('contactForm') contactForm!: NgForm;
 
+  scrolledBy: boolean = false;
+
   sending: boolean = false;
   mailSend: boolean = false;
   nameEntered: boolean = false;
@@ -78,5 +80,9 @@ export class ContactComponent {
     )
       this.formReadyToSend = true;
     else this.formReadyToSend = false;
+  }
+
+  inVision() {
+    this.scrolledBy = true;
   }
 }

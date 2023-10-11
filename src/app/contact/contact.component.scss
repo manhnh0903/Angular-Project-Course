@@ -31,6 +31,7 @@ section {
   display: flex;
   align-items: center;
   position: relative;
+  scale: 0;
 
   .contact-seperator {
     border: 2px solid var(--purple);
@@ -71,6 +72,7 @@ section {
     gap: 35px;
     color: white;
     max-width: 40vw;
+    scale: 0;
 
     @media screen and (max-width: 900px) {
       max-width: 100%;
@@ -79,6 +81,7 @@ section {
 }
 
 .right-wrapper {
+  scale: 0;
   form {
     display: flex;
     align-items: center;
@@ -257,4 +260,20 @@ section {
 
 .max-height {
   max-height: 800px !important;
+}
+
+.scrolledBy {
+  animation: fadeIn 400ms ease-in-out;
+  scale: 1 !important;
+}
+
+@keyframes fadeIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

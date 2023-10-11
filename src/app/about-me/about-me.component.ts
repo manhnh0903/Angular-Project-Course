@@ -5,4 +5,10 @@ import { Component } from '@angular/core';
   templateUrl: './about-me.component.html',
   styleUrls: ['./about-me.component.scss'],
 })
-export class AboutMeComponent {}
+export class AboutMeComponent {
+  scrolledBy: boolean = false;
+
+  inVision() {
+    this.scrolledBy = true;
+  }
+}
