@@ -40,6 +40,10 @@ export class PortfolioComponent {
     './assets/img/ringoffire.png',
   ];
 
+  /**
+   * This function signals that the element is in view.
+   * It sets the 'scrolledBy' flag to 'true'.
+   */
   inVision() {
     this.scrolledBy = true;
   }

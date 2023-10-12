@@ -33,6 +33,10 @@ export class MySkillsComponent {
     ' Material Design',
   ];
 
+  /**
+   * This function signals that the element is in view.
+   * It sets the 'scrolledBy' flag to 'true'.
+   */
   inVision() {
     this.scrolledBy = true;
   }

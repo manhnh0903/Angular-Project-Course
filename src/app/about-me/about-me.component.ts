@@ -8,6 +8,10 @@ import { Component } from '@angular/core';
 export class AboutMeComponent {
   scrolledBy: boolean = false;
 
+  /**
+   * This function signals that the element is in view.
+   * It sets the 'scrolledBy' flag to 'true'.
+   */
   inVision() {
     this.scrolledBy = true;
   }
