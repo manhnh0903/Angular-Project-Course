@@ -11,7 +11,7 @@ export class ContactComponent {
   @ViewChild('contactForm') contactForm!: NgForm;
 
   scrolledBy: boolean = false;
-
+  lang!: string;
   sending: boolean = false;
   buttonText: string = 'Send message!';
   mailSend: boolean = false;
@@ -35,6 +35,8 @@ export class ContactComponent {
   ngOnInit() {
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.updateButtonText();
+      this.lang = event.lang;
+      console.log(this.lang);
     });
   }
 
