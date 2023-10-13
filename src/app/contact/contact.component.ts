@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-contact',
@@ -12,6 +13,7 @@ export class ContactComponent {
   scrolledBy: boolean = false;
 
   sending: boolean = false;
+  buttonText: string = 'Send message!';
   mailSend: boolean = false;
   nameEntered: boolean = false;
   nameFormInteraction: boolean = false;
@@ -28,6 +30,31 @@ export class ContactComponent {
 
   formReadyToSend: boolean = false;
 
+  constructor(public translate: TranslateService) {}
+
+  ngOnInit() {
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updateButtonText();
+    });
+  }
+
+  ngOnDestroy() {
+    this.translate.onLangChange.unsubscribe();
+  }
+
+  /**
+   * Updates the text displayed on the button based on the current language and email send status.
+   * If the email has been sent (mailSend is true), the button text is set to 'Thank you!' in the current language.
+   * Otherwise, if the email has not been sent, the button text is set to 'Send message!' in the current language.
+   */
+  updateButtonText() {
+    if (this.mailSend) {
+      this.buttonText = this.translate.instant('Thank you!');
+    } else {
+      this.buttonText = this.translate.instant('Send message!');
+    }
+  }
+
   /**
    * Sends an email using the collected form data.
    * It sets the 'sending' flag to true to indicate that the email sending process has started.
@@ -40,13 +67,26 @@ export class ContactComponent {
     this.sending = true;
     const formData = this.getFormData();
 
-    await fetch('https://tobias-bayer.dev/send_mail.php', {
-      method: 'POST',
-      body: formData,
-    });
+    // await fetch('https://tobias-bayer.dev/send_mail.php', {
+    //   method: 'POST',
+    //   body: formData,
+    // });
 
     this.sending = false;
     this.mailSend = true;
+    this.updateButtonText();
+
+    setTimeout(() => {
+      this.resetForm();
+    }, 5000);
+  }
+
+  /**
+   * resets the mailSend variable
+   */
+  resetForm() {
+    this.mailSend = false;
+    this.updateButtonText();
   }
 
   /**

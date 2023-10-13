@@ -51,7 +51,7 @@
         <div
           class="input-wrapper max-height-input"
           [ngClass]="{
-            'max-height': emailFormInteraction && email.length <= 0
+            'max-height': emailFormInteraction && !emailIsValid
           }"
         >
           <img
@@ -73,8 +73,8 @@
             [(ngModel)]="email"
             (ngModelChange)="formInteraction('email')"
           />
-          <span translate *ngIf="emailFormInteraction && email.length <= 0"
-            >Your email is required</span
+          <span translate *ngIf="emailFormInteraction && !emailIsValid"
+            >Your email is required: john@example.com</span
           >
         </div>
 
@@ -151,7 +151,7 @@
               'no-pointer-events': mailSend
             }"
           >
-            {{ mailSend ? "Thank you!" : "Send message!" }}
+            {{ buttonText }}
           </button>
         </div>
       </form>

@@ -9,7 +9,7 @@
   "Need a Frontend developer?": "Need a Frontend developer?",
   "Contact me!": "Contact me!",
   "Your name is required": "Your name is required",
-  "Your email is required": "Your email is required",
+  "Your email is required: john@example.com": "Your email is required: john@example.com",
   "Your message is required": "Your message is required",
   "I've read the": "I've read the",
   "and agree to the processing of my data as outlined.": "and agree to the processing of my data as outlined.",
@@ -92,5 +92,7 @@
   "Live test": "Live test",
   "Task manager inspired by the Kanban System. Create and organize tasks using drag and drop functions, assign users and categories.": "Task manager inspired by the Kanban System. Create and organize tasks using drag and drop functions, assign users and categories.",
   "A side-scrolling space shooter game based on an object-oriented approach. Navigate your spacecraft through the vast expanse of outer space, confronting space pirates and ultimately vanquishing their leader at the end of your galactic journey.": "A side-scrolling space shooter game based on an object-oriented approach. Navigate your spacecraft through the vast expanse of outer space, confronting space pirates and ultimately vanquishing their leader at the end of your galactic journey.",
-  "The popular drinking game has been developed using Angular and seamlessly integrated with a Google Firebase database, allowing for online multiplayer functionality.": "The popular drinking game has been developed using Angular and seamlessly integrated with a Google Firebase database, allowing for online multiplayer functionality."
+  "The popular drinking game has been developed using Angular and seamlessly integrated with a Google Firebase database, allowing for online multiplayer functionality.": "The popular drinking game has been developed using Angular and seamlessly integrated with a Google Firebase database, allowing for online multiplayer functionality.",
+  "Send message!": "Send message!",
+  "Thank you!": "Thank you!"
 }
