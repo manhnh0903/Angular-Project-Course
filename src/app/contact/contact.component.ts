@@ -67,10 +67,10 @@ export class ContactComponent {
     this.sending = true;
     const formData = this.getFormData();
 
-    // await fetch('https://tobias-bayer.dev/send_mail.php', {
-    //   method: 'POST',
-    //   body: formData,
-    // });
+    await fetch('https://tobias-bayer.dev/send_mail.php', {
+      method: 'POST',
+      body: formData,
+    });
 
     this.sending = false;
     this.mailSend = true;
