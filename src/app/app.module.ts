@@ -5,10 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './components/login/login.component';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, HeaderComponent],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule, provideFirebaseApp(() => initializeApp({"projectId":"dabubble-de1a3","appId":"1:3645296665:web:85ac636f919bcf47d79a88","storageBucket":"dabubble-de1a3.appspot.com","apiKey":"AIzaSyC9vZPnGbh_fchGf6rmA55XgeZLsDbbGQU","authDomain":"dabubble-de1a3.firebaseapp.com","messagingSenderId":"3645296665"})), provideAuth(() => getAuth()), provideFirestore(() => getFirestore())],
   providers: [],
   bootstrap: [AppComponent],
 })
