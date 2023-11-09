@@ -1,1 +1,23 @@
-<p>avatar-selection works!</p>
+<section>
+  <img class="arrow-back" src="./assets/img/arrow_back.svg" alt="arrow_back" />
+  <h2>Wähle deinen Avatar</h2>
+  <img
+    class="focus-img"
+    src="./assets/img/blank-avatar.svg"
+    alt="blank-avatar"
+  />
+  <div class="choose-wrapper">
+    <h3>Frederik Beck</h3>
+    <span>Aus der Liste wählen</span>
+    <div class="character-img-wrapper">
+      <img
+        *ngFor="let profilePic of profilePictures"
+        src="./assets/img/{{ profilePic }}"
+        alt="character-img"
+      />
+    </div>
+  </div>
+  <div class="button-wrapper">
+    <button>Weiter</button>
+  </div>
+</section>

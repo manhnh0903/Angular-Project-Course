@@ -18,6 +18,11 @@ form {
     left: 30px;
     padding: 8px;
     border-radius: 50%;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--main-bg-color);
+    }
   }
 
   h2 {
