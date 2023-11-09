@@ -1,0 +1,74 @@
+.profileContainer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.profileContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    position: absolute;
+    top: 100px;
+    right: 40px;
+    height: 80%;
+    width: 30%;
+    border-radius: 30px 0px 30px 30px;
+    background-color: #FFFFFF;
+
+    .menuSpan {
+        font-size: 22px;
+        cursor: pointer;
+    }
+}
+
+.profileFlex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%
+}
+
+.closeIcon {
+    height: 10px
+}
+
+.profilePic {
+    height: 110px;
+    width: 110px;
+    border-radius: 50%;
+}
+
+.status {
+    height: 25px;
+    align-self: flex-start;
+    margin-left: 10%;
+}
+
+.emailContainer {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .adresseSpan {
+        margin-left: 10px;
+    }
+
+}
+
+.email {
+    align-self: flex-start;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
