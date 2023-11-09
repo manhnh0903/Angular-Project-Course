@@ -2,4 +2,132 @@ section {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-evenly;
+  background-color: white;
+  padding: 30px;
+  border-radius: 30px;
+
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
+
+  height: 800px;
+  width: 600px;
+
+  h2 {
+    color: var(--main-dark-blue);
+    font-size: 46px;
+    font-weight: 700;
+  }
+
+  p {
+    font-size: 20px;
+  }
+
+  .input-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    position: relative;
+
+    img {
+      position: absolute;
+      left: calc((60px - 24px) / 2);
+    }
+
+    input {
+      width: 100%;
+      height: 60px;
+      font-size: 18px;
+      border-radius: 30px;
+      padding-left: 60px;
+      border: none;
+      background-color: var(--main-bg-color);
+    }
+  }
+
+  a {
+    padding: 5px 15px;
+    border-radius: 14px;
+    text-decoration: none;
+    &:hover {
+      background-color: var(--main-bg-color);
+    }
+  }
+
+  .seperator-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 36px;
+    width: 100%;
+
+    span {
+      text-transform: uppercase;
+    }
+
+    div {
+      width: 100%;
+      border-bottom: 1px solid rgb(173, 176, 217);
+    }
+  }
+
+  .button-with-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    font-size: 18px;
+    width: 100%;
+    height: 60px;
+    border: none;
+    border-radius: 30px;
+    background-color: var(--main-bg-color);
+    color: var(--main-dark-blue);
+    padding: 11px 32px;
+    cursor: pointer;
+
+    &:hover {
+      border: 1px solid var(--main-dark-blue);
+      font-weight: 700;
+    }
+  }
+
+  .login-button-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+    align-items: center;
+    width: 100%;
+
+    button {
+      font-size: 18px;
+      font-weight: 700;
+      padding: 12px 25px;
+      min-height: 50px;
+      border: unset;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 225ms ease-in-out;
+    }
+
+    .login-button {
+      background-color: var(--main-dark-blue);
+      color: white;
+
+      &:hover {
+        filter: brightness(1.5);
+      }
+    }
+
+    .guest-login-button {
+      background-color: white;
+      color: var(--main-dark-blue);
+      border: 1px solid var(--main-dark-blue);
+
+      &:hover {
+        background-color: var(--main-dark-blue);
+        color: white;
+      }
+    }
+  }
 }
