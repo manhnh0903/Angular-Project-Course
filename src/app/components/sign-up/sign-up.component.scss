@@ -1,4 +1,5 @@
-section {
+form {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,6 +12,14 @@ section {
   height: 800px;
   width: 600px;
 
+  .arrow-back {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    padding: 8px;
+    border-radius: 50%;
+  }
+
   h2 {
     color: var(--main-dark-blue);
     font-size: 46px;
@@ -19,6 +28,15 @@ section {
 
   p {
     font-size: 20px;
+  }
+
+  .input-with-error-wrapper {
+    width: 100%;
+
+    span {
+      color: rgb(237, 29, 119);
+      font-size: 14px;
+    }
   }
 
   .input-wrapper {
@@ -45,7 +63,33 @@ section {
   }
 
   .privacy-wrapper {
+    width: 100%;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      font-size: 18px;
+      font-weight: 700;
+      padding: 12px 25px;
+      min-height: 50px;
+      border: unset;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 225ms ease-in-out;
+      background-color: var(--main-dark-blue);
+      color: white;
+
+      &:hover {
+        filter: brightness(1.5);
+      }
+    }
   }
 }

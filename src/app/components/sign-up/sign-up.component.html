@@ -1,25 +1,36 @@
-<section>
+<form>
+  <img class="arrow-back" src="./assets/img/arrow_back.svg" alt="arrow_back" />
   <h2>Konto erstellen</h2>
   <p>
     Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues
     DABubble-Konto.
   </p>
-
-  <div class="input-wrapper">
-    <img src="./assets/img/account.svg" alt="mail-icon" />
-    <input type="text" />
+  <div class="input-with-error-wrapper">
+    <div class="input-wrapper">
+      <img src="./assets/img/account.svg" alt="account-icon" />
+      <input type="text" />
+    </div>
+    <span *ngIf="nameError">Bitte schreiben Sie einen Namen.</span>
   </div>
-  <div class="input-wrapper">
-    <img src="./assets/img/mail.svg" alt="mail-icon" />
-    <input type="email" />
+  <div class="input-with-error-wrapper">
+    <div class="input-wrapper">
+      <img src="./assets/img/mail.svg" alt="mail-icon" />
+      <input type="email" />
+    </div>
+    <span>Diese E-Mail-Adresse ist leider ungültig.</span>
   </div>
-  <div class="input-wrapper">
-    <img src="./assets/img/lock.svg" alt="lock-icon" />
-    <input type="password" />
+  <div class="input-with-error-wrapper">
+    <div class="input-wrapper">
+      <img src="./assets/img/lock.svg" alt="lock-icon" />
+      <input type="password" />
+    </div>
+    <span>Bitte geben Sie ein Passwort ein.</span>
   </div>
   <div class="privacy-wrapper">
     <img src="./assets/img/checkbox.svg" alt="checkbox" />
     <p>Ich stimme der <span>Datenschutzerklärung</span> zu.</p>
   </div>
-  <button>Weiter</button>
-</section>
+  <div class="button-wrapper">
+    <button>Weiter</button>
+  </div>
+</form>

@@ -1,6 +1,5 @@
-
 body {
-  background-color: rgb(236, 238, 254);
+  background-color: var(--main-bg-color);
 }
 
 html,
@@ -21,5 +20,4 @@ body {
 :root {
   --main-bg-color: rgb(236, 238, 254);
   --main-dark-blue: rgb(68, 77, 242);
-
 }

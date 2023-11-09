@@ -11,6 +11,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore'; */
 // import { environment } from 'src/environments/environment';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { AvatarSelectionComponent } from './components/avatar-selection/avatar-selection.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
     DialogEditProfileComponent,
     LoginComponent,
     SignUpComponent,
+    AvatarSelectionComponent,
   ],
   imports: [
     BrowserModule,
