@@ -19,6 +19,6 @@ export class ProfileDialogComponent {
   }
 
   closeDialog() {
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/home');
   }
 }

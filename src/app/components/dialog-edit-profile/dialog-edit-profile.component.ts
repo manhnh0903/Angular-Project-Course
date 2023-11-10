@@ -18,6 +18,6 @@ export class DialogEditProfileComponent {
   }
 
   closeDialog() {
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/home');
   }
 }

@@ -12,6 +12,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { AvatarSelectionComponent } from './components/avatar-selection/avatar-selection.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { AvatarSelectionComponent } from './components/avatar-selection/avatar-s
     LoginComponent,
     SignUpComponent,
     AvatarSelectionComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

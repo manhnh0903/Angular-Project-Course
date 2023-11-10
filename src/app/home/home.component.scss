@@ -1,0 +1,69 @@
+.homeContainer {
+    width: 100%
+}
+
+.sideMenuButton {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    left: -110px;
+    bottom: 30%;
+    transform: rotate(270deg);
+    border-radius: 0px 0px 30px 30px;
+    background: var(--White, #FFF);
+    box-shadow: 4px 4px 7px 0px rgba(0, 0, 0, 0.20);
+    padding: 12px;
+}
+
+.showMenuIcon {
+    transform: rotate(90deg);
+    height: 30px;
+    margin-left: 8px;
+}
+
+.sideMenu {
+    margin-left: 50px;
+    width: 25%;
+    min-height: 80vh;
+    border-radius: 30px;
+    background: var(--White, #FFF);
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+}
+
+.sideMenuContent {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    flex-shrink: 0;
+}
+
+.logoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+
+    h1 {
+        color: var(--Black, #000);
+        font-family: Nunito;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+}
+
+.logoMenu {
+    height: 60px
+}
+
+.edit_square {
+    height: 15px
+}
