@@ -1,4 +1,4 @@
-<form>
+<form [formGroup]="registrationForm" (ngSubmit)="submitForm()">
   <img class="arrow-back" src="./assets/img/arrow_back.svg" alt="arrow_back" />
   <h2>Konto erstellen</h2>
   <p>
@@ -8,26 +8,53 @@
   <div class="input-with-error-wrapper">
     <div class="input-wrapper">
       <img src="./assets/img/account.svg" alt="account-icon" />
-      <input type="text" />
+      <input type="text" formControlName="name" />
     </div>
-    <span *ngIf="nameError">Bitte schreiben Sie einen Namen.</span>
+    <span *ngIf="name.touched && name.hasError('required')"
+      >Bitte schreiben Sie einen Namen.</span
+    >
   </div>
   <div class="input-with-error-wrapper">
     <div class="input-wrapper">
       <img src="./assets/img/mail.svg" alt="mail-icon" />
-      <input type="email" />
+      <input type="email" formControlName="email" />
     </div>
-    <span>Diese E-Mail-Adresse ist leider ungültig.</span>
+    <span
+      *ngIf="
+        email.touched && (email.hasError('required') || email.hasError('email'))
+      "
+      >Diese E-Mail-Adresse ist leider ungültig.</span
+    >
   </div>
   <div class="input-with-error-wrapper">
     <div class="input-wrapper">
       <img src="./assets/img/lock.svg" alt="lock-icon" />
-      <input type="password" />
+      <input type="password" formControlName="password" />
     </div>
-    <span>Bitte geben Sie ein Passwort ein.</span>
+    <span
+      *ngIf="
+        password.touched &&
+        (password.hasError('required') || password.hasError('password'))
+      "
+      >Bitte geben Sie ein Passwort ein.</span
+    >
   </div>
   <div class="privacy-wrapper">
-    <img src="./assets/img/checkbox.svg" alt="checkbox" />
+    <img
+      (mouseenter)="this.privacyHover = true"
+      (mouseleave)="this.privacyHover = false"
+      [src]="
+        this.privacy.value && privacyHover
+          ? './assets/img/checkbox-checked-hover.svg'
+          : !this.privacy.value && privacyHover
+          ? './assets/img/checkbox-hover.svg'
+          : this.privacy.value
+          ? './assets/img/checkbox-checked.svg'
+          : './assets/img/checkbox.svg'
+      "
+      alt="checkbox"
+      (click)="togglePrivacy()"
+    />
     <p>Ich stimme der <span>Datenschutzerklärung</span> zu.</p>
   </div>
   <div class="button-wrapper">
