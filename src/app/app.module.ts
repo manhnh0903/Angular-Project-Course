@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { AvatarSelectionComponent } from './components/avatar-selection/avatar-selection.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
     SignUpComponent,
     AvatarSelectionComponent,
     ForgotPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,
