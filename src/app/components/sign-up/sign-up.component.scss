@@ -1,4 +1,5 @@
 form {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,6 +12,19 @@ form {
   height: 800px;
   width: 600px;
 
+  .arrow-back {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--main-bg-color);
+    }
+  }
+
   h2 {
     color: var(--main-dark-blue);
     font-size: 46px;
@@ -19,6 +33,15 @@ form {
 
   p {
     font-size: 20px;
+  }
+
+  .input-with-error-wrapper {
+    width: 100%;
+
+    span {
+      color: rgb(237, 29, 119);
+      font-size: 14px;
+    }
   }
 
   .input-wrapper {
@@ -44,59 +67,18 @@ form {
     }
   }
 
-  a {
-    padding: 5px 15px;
-    border-radius: 14px;
-    text-decoration: none;
-    &:hover {
-      background-color: var(--main-bg-color);
-    }
-  }
-
-  .seperator-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 36px;
+  .privacy-wrapper {
     width: 100%;
-
-    span {
-      text-transform: uppercase;
-    }
-
-    div {
-      width: 100%;
-      border-bottom: 1px solid rgb(173, 176, 217);
-    }
-  }
-
-  .button-with-icon {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 36px;
-    font-size: 18px;
-    width: 100%;
-    height: 60px;
-    border: none;
-    border-radius: 30px;
-    background-color: var(--main-bg-color);
-    color: var(--main-dark-blue);
-    padding: 11px 32px;
-    cursor: pointer;
-
-    &:hover {
-      border: 1px solid var(--main-dark-blue);
-      font-weight: 700;
-    }
+    justify-content: flex-start;
+    gap: 8px;
   }
 
-  .login-button-wrapper {
-    display: flex;
-    justify-content: center;
-    gap: 36px;
-    align-items: center;
+  .button-wrapper {
     width: 100%;
+    display: flex;
+    justify-content: flex-end;
 
     button {
       font-size: 18px;
@@ -107,25 +89,11 @@ form {
       border-radius: 25px;
       cursor: pointer;
       transition: all 225ms ease-in-out;
-    }
-
-    .login-button {
       background-color: var(--main-dark-blue);
       color: white;
 
       &:hover {
         filter: brightness(1.5);
-      }
-    }
-
-    .guest-login-button {
-      background-color: white;
-      color: var(--main-dark-blue);
-      border: 1px solid var(--main-dark-blue);
-
-      &:hover {
-        background-color: var(--main-dark-blue);
-        color: white;
       }
     }
   }

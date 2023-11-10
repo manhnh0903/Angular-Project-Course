@@ -10,6 +10,8 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { AvatarSelectionComponent } from './components/avatar-selection/avatar-selection.component';
 
 @NgModule({
   declarations: [
@@ -18,16 +20,15 @@ import { environment } from 'src/environments/environment';
     ProfileDialogComponent,
     DialogEditProfileComponent,
     LoginComponent,
+    SignUpComponent,
+    AvatarSelectionComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-
-    provideFirebaseApp(() => initializeApp({ "projectId": "dabubble-de1a3", "appId": "1:3645296665:web:85ac636f919bcf47d79a88", "storageBucket": "dabubble-de1a3.appspot.com", "apiKey": "AIzaSyC9vZPnGbh_fchGf6rmA55XgeZLsDbbGQU", "authDomain": "dabubble-de1a3.firebaseapp.com", "messagingSenderId": "3645296665" })),
-    provideFirestore(() => getFirestore()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
   ],
   providers: [],
   bootstrap: [AppComponent],
