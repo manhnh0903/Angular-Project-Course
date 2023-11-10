@@ -6,10 +6,10 @@ import { HeaderComponent } from './components/header/header.component';
 import { ProfileDialogComponent } from './components/profile-dialog/profile-dialog.component';
 import { DialogEditProfileComponent } from './dialog-edit-profile/dialog-edit-profile.component';
 import { LoginComponent } from './components/login/login.component';
-/* import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore'; */
-// import { environment } from 'src/environments/environment';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { environment } from 'src/environments/environment';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { AvatarSelectionComponent } from './components/avatar-selection/avatar-selection.component';
 
@@ -26,9 +26,9 @@ import { AvatarSelectionComponent } from './components/avatar-selection/avatar-s
   imports: [
     BrowserModule,
     AppRoutingModule,
-    /*     provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()) */
+    provideFirestore(() => getFirestore()),
   ],
   providers: [],
   bootstrap: [AppComponent],
