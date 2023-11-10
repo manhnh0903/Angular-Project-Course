@@ -1,13 +1,12 @@
 import { Component, ElementRef } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-profile-dialog',
-  templateUrl: './profile-dialog.component.html',
-  styleUrls: ['./profile-dialog.component.scss']
+  selector: 'app-dialog-edit-profile',
+  templateUrl: './dialog-edit-profile.component.html',
+  styleUrls: ['./dialog-edit-profile.component.scss']
 })
-export class ProfileDialogComponent {
+export class DialogEditProfileComponent {
   constructor(private router: Router, private el: ElementRef) { }
 
   ngAfterViewInit() {
