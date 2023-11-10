@@ -38,7 +38,18 @@ export class SignUpComponent {
 
   togglePrivacy() {
     this.privacy.setValue(!this.privacy.value);
-    console.log(this.privacy.value);
+  }
+
+  getImageSource(): string {
+    if (this.privacyHover) {
+      return this.privacy.value
+        ? './assets/img/checkbox-checked-hover.svg'
+        : './assets/img/checkbox-hover.svg';
+    } else {
+      return this.privacy.value
+        ? './assets/img/checkbox-checked.svg'
+        : './assets/img/checkbox.svg';
+    }
   }
 
   async submitForm() {

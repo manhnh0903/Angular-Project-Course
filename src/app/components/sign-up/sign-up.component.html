@@ -43,15 +43,7 @@
     <img
       (mouseenter)="this.privacyHover = true"
       (mouseleave)="this.privacyHover = false"
-      [src]="
-        this.privacy.value && privacyHover
-          ? './assets/img/checkbox-checked-hover.svg'
-          : !this.privacy.value && privacyHover
-          ? './assets/img/checkbox-hover.svg'
-          : this.privacy.value
-          ? './assets/img/checkbox-checked.svg'
-          : './assets/img/checkbox.svg'
-      "
+      [src]="getImageSource()"
       alt="checkbox"
       (click)="togglePrivacy()"
     />

@@ -73,6 +73,10 @@ form {
     align-items: center;
     justify-content: flex-start;
     gap: 8px;
+
+    img {
+      cursor: pointer;
+    }
   }
 
   .button-wrapper {
