@@ -1,3 +1,6 @@
+app-dialog-edit-profile{
+overflow-y: hidden;
+}
 .profileContainer {
     position: absolute;
     top: 0;
@@ -5,6 +8,7 @@
     bottom: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.5);
+    overflow-y: hidden;
 }
 
 .profileContent {
@@ -16,7 +20,7 @@
     top: 100px;
     right: 40px;
     height: 80%;
-    width: 30%;
+    width: 27%;
     border-radius: 30px 0px 30px 30px;
     background-color: #FFFFFF;
 
@@ -30,14 +34,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
     width: 80%
 }
 
 .closeIcon {
-    height: 10px
+    height: 10px;
+    cursor: pointer;
 }
 
 .profilePic {
@@ -56,6 +60,10 @@
     margin-left: auto;
     margin-right: auto;
     width: 80%;
+}
+
+.emailDiv {
+    width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -71,4 +79,54 @@
     margin-left: auto;
     margin-right: auto;
     width: 80%;
+}
+
+.cancel {
+    color: #797EF3;
+    border: solid 2px #797EF3;
+    border-radius: 20px;
+    background-color: white;
+    padding: 12px 25px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.save {
+    color: rgb(255, 255, 255);
+    border-radius: 20px;
+    background-color: #444DF2;
+    padding: 12px 25px;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+.editInput {
+    width: 100%;
+    height: 44px;
+    padding: 15px 20px;
+    border-radius: 30px;
+    border: 1px solid #797EF3;
+    gap: 10px;
+    outline: none;
+    margin-top: 10px;
+    color: #686868;
+    font-family: 'nunito';
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21.6px;
+
+    &:focus {
+        border: 2px solid #797EF3;
+        height: 47px;
+    }
+
 }
