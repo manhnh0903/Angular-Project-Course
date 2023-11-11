@@ -9,6 +9,7 @@ import {
   signOut,
   onAuthStateChanged,
   User,
+  sendPasswordResetEmail,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 
@@ -48,6 +49,15 @@ export class FirebaseAuthService {
       );
 
       console.log('login successfull:', userCredential);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async sendForgotPasswordMail(email: string) {
+    try {
+      //evtl validieren ob email von angemeldeten user
+      await sendPasswordResetEmail(this.auth, email);
     } catch (err) {
       console.error(err);
     }
