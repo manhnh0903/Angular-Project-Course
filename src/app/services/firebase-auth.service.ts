@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import {
+  Auth,
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-} from 'firebase/auth';
-import { Auth } from '@angular/fire/auth';
+} from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseAuthService {
-  constructor(private auth: Auth) {}
+  constructor(private auth: Auth, private provider: GoogleAuthProvider) {}
 
   async registerWithEmailAndPassword(email: string, password: string) {
     try {
