@@ -55,9 +55,14 @@ export class SignUpComponent {
   async submitForm() {
     const email = this.email.value;
     const password = this.password.value;
+    const name = this.name.value;
 
     if (this.registrationForm.valid) {
-      await this.authService.registerWithEmailAndPassword(email, password);
+      await this.authService.registerWithEmailAndPassword(
+        email,
+        password,
+        name
+      );
     } else {
       this.registrationForm.markAllAsTouched();
     }

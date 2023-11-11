@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 
 @Component({
@@ -12,7 +13,8 @@ export class LoginComponent {
 
   constructor(
     private authService: FirebaseAuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -36,7 +38,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       await this.authService.loginWithEmailAndPassword(email, password);
       // play animation
-      // redirect
+      this.router.navigate(['home']);
     } else {
       this.loginForm.markAllAsTouched();
     }
@@ -45,7 +47,7 @@ export class LoginComponent {
   async loginWithGoogle() {
     await this.authService.loginWithGoogle();
     // play animation
-    // redirect
+    this.router.navigate(['home']);
   }
 
   async guestLogin() {
@@ -54,6 +56,6 @@ export class LoginComponent {
       'test123'
     );
     // play animation
-    // redirect
+    this.router.navigate(['home']);
   }
 }

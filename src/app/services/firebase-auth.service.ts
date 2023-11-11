@@ -5,26 +5,34 @@ import {
   signInWithPopup,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
   signOut,
   onAuthStateChanged,
   User,
 } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseAuthService {
-  constructor(private auth: Auth) {}
+  constructor(private auth: Auth, private router: Router) {}
 
   provider = new GoogleAuthProvider();
 
-  async registerWithEmailAndPassword(email: string, password: string) {
+  async registerWithEmailAndPassword(
+    email: string,
+    password: string,
+    name: string
+  ) {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         this.auth,
         email,
         password
       );
+      await updateProfile(userCredential.user, { displayName: name });
+      this.router.navigate(['login']); // ändern Profilbild wählen etc
       console.log('user created', userCredential);
     } catch (err) {
       console.error(err);
@@ -32,8 +40,6 @@ export class FirebaseAuthService {
   }
 
   async loginWithEmailAndPassword(email: string, password: string) {
-    console.log(email, password);
-
     try {
       const userCredential = await signInWithEmailAndPassword(
         this.auth,
@@ -42,17 +48,6 @@ export class FirebaseAuthService {
       );
 
       console.log('login successfull:', userCredential);
-
-      setTimeout(() => {
-        this.checkAuth();
-      }, 5000);
-      setTimeout(() => {
-        this.logout();
-      }, 7000);
-
-      setTimeout(() => {
-        this.checkAuth();
-      }, 9000);
     } catch (err) {
       console.error(err);
     }
@@ -93,7 +88,7 @@ export class FirebaseAuthService {
       } else {
         // Benutzer ist nicht angemeldet
         console.log('Benutzer ist nicht angemeldet');
-        //route login
+        this.router.navigate(['login']);
       }
     });
   }
