@@ -8,7 +8,11 @@
   <div class="input-with-error-wrapper">
     <div class="input-wrapper">
       <img src="./assets/img/account.svg" alt="account-icon" />
-      <input type="text" formControlName="name" />
+      <input
+        type="text"
+        placeholder="Name und Nachname"
+        formControlName="name"
+      />
     </div>
     <span *ngIf="name.touched && name.hasError('required')"
       >Bitte schreiben Sie einen Namen.</span
@@ -17,7 +21,11 @@
   <div class="input-with-error-wrapper">
     <div class="input-wrapper">
       <img src="./assets/img/mail.svg" alt="mail-icon" />
-      <input type="email" formControlName="email" />
+      <input
+        type="email"
+        placeholder="beispielname@email.com"
+        formControlName="email"
+      />
     </div>
     <span
       *ngIf="
@@ -29,7 +37,11 @@
   <div class="input-with-error-wrapper">
     <div class="input-wrapper">
       <img src="./assets/img/lock.svg" alt="lock-icon" />
-      <input type="password" formControlName="password" />
+      <input
+        type="password"
+        placeholder="Passwort"
+        formControlName="password"
+      />
     </div>
     <span
       *ngIf="
