@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  User,
 } from '@angular/fire/auth';
 
 @Injectable({
@@ -39,7 +40,19 @@ export class FirebaseAuthService {
         email,
         password
       );
+
       console.log('login successfull:', userCredential);
+
+      setTimeout(() => {
+        this.checkAuth();
+      }, 5000);
+      setTimeout(() => {
+        this.logout();
+      }, 7000);
+
+      setTimeout(() => {
+        this.checkAuth();
+      }, 9000);
     } catch (err) {
       console.error(err);
     }
@@ -62,5 +75,26 @@ export class FirebaseAuthService {
       console.error(err.code);
       console.error(err.message);
     }
+  }
+
+  async logout() {
+    try {
+      await signOut(this.auth);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  checkAuth(): void {
+    onAuthStateChanged(this.auth, (user: User | null) => {
+      if (user) {
+        // Benutzer ist angemeldet
+        console.log('Benutzer ist angemeldet:', user);
+      } else {
+        // Benutzer ist nicht angemeldet
+        console.log('Benutzer ist nicht angemeldet');
+        //route login
+      }
+    });
   }
 }
