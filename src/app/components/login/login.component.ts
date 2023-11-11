@@ -47,4 +47,13 @@ export class LoginComponent {
     // play animation
     // redirect
   }
+
+  async guestLogin() {
+    await this.authService.loginWithEmailAndPassword(
+      'testuser@test.com',
+      'test123'
+    );
+    // play animation
+    // redirect
+  }
 }
