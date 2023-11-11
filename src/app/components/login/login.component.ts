@@ -41,4 +41,10 @@ export class LoginComponent {
       this.loginForm.markAllAsTouched();
     }
   }
+
+  async loginWithGoogle() {
+    await this.authService.loginWithGoogle();
+    // play animation
+    // redirect
+  }
 }
