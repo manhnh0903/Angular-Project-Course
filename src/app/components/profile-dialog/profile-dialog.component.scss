@@ -5,6 +5,7 @@
     bottom: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10; 
 }
 
 .profileContent {
@@ -44,6 +45,9 @@
     height: 110px;
     width: 110px;
     border-radius: 50%;
+    &:hover {
+        fill: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
+    }
 }
 
 .status {
