@@ -34,7 +34,7 @@ export class SideMenuComponent {
     const dialogRef = this.dialog.open(CreateChannelComponent, {
       height: '400px',
       width: '600px',
-      panelClass: 'custom-dialog-container'
+      panelClass: 'createChannelDialog'
     });
   }
 }

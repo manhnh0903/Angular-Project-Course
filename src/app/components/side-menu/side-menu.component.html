@@ -14,7 +14,7 @@
                     <span class="forHover">Channels</span>
                 </div>
                 <div *ngIf="channelsClicked" class="dropDownContent">
-                    <div class="dropDownSubDiv">
+                    <div (click)="openCreateChannelDialog()" class="dropDownSubDiv">
                         <img class="subIcon" src="assets/img/add_circle.png">
                         <p>Channel hinzufügen</p>
                     </div>

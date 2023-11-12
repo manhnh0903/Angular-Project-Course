@@ -7,9 +7,16 @@ import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  constructor(private authService: FirebaseAuthService) {}
-
-  ngOnInit() {
-    // this.authService.checkAuth(); //cecks if user is loged in
+  constructor(private authService: FirebaseAuthService) { }
+  showMenu = true
+  /*   ngOnInit() {
+      // this.authService.checkAuth(); //cecks if user is loged in
+    } */
+  hideMenu() {
+    if(this.showMenu==true){
+      this.showMenu=false
+    }else{
+      this.showMenu=true
+    }
   }
 }

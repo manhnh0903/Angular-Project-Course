@@ -17,9 +17,13 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SideMenuComponent } from './side-menu/side-menu.component';
-import { CreateChannelComponent } from './create-channel/create-channel.component';
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
+import { CreateChannelComponent } from './components/create-channel/create-channel.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import { PeopleToChannelComponent } from './components/people-to-channel/people-to-channel.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {FormsModule} from '@angular/forms';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -36,8 +40,13 @@ import {MatDialogModule} from '@angular/material/dialog';
     ResetPasswordComponent,
     SideMenuComponent,
     CreateChannelComponent,
+    PeopleToChannelComponent,
+    
   ],
   imports: [
+    MatRadioModule,
+    FormsModule,
+    MatCheckboxModule,
     MatDialogModule,
     BrowserModule,
     AppRoutingModule,
