@@ -1,5 +1,10 @@
 <section>
-  <img class="arrow-back" src="./assets/img/arrow_back.svg" alt="arrow_back" />
+  <img
+    class="arrow-back"
+    src="./assets/img/arrow_back.svg"
+    alt="arrow_back"
+    [routerLink]="'/sign-up'"
+  />
   <h2>Wähle deinen Avatar</h2>
   <img
     class="focus-img"
@@ -14,10 +19,11 @@
         *ngFor="let profilePic of profilePictures"
         src="./assets/img/{{ profilePic }}"
         alt="character-img"
+        (click)="setProfileImg(profilePic)"
       />
     </div>
   </div>
   <div class="button-wrapper">
-    <button>Weiter</button>
+    <button (click)="createUser()">Weiter</button>
   </div>
 </section>

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,7 +15,8 @@ export class SignUpComponent {
 
   constructor(
     private authService: FirebaseAuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.registrationForm = this.fb.group({
       name: ['', Validators.required],
@@ -58,11 +61,9 @@ export class SignUpComponent {
     const name = this.name.value;
 
     if (this.registrationForm.valid) {
-      await this.authService.registerWithEmailAndPassword(
-        email,
-        password,
-        name
-      );
+      this.router.navigate(['/select-avatar'], {
+        state: { email, password, name },
+      });
     } else {
       this.registrationForm.markAllAsTouched();
     }
