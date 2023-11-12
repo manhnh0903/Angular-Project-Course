@@ -41,7 +41,6 @@ import {MatRadioModule} from '@angular/material/radio';
     SideMenuComponent,
     CreateChannelComponent,
     PeopleToChannelComponent,
-    
   ],
   imports: [
     MatRadioModule,

@@ -2,12 +2,12 @@
     <h2>Leute hinzufügen</h2>
     <section class="example-section">
         <mat-radio-group class="inputs" color="primary" [(ngModel)]="labelPosition">
-            <mat-radio-button  (click)="checkAllPeople()" value="after">Alle Mitglieder von OfficeTeam
+            <mat-radio-button (click)="checkAllPeople()" value="after">Alle Mitglieder von OfficeTeam
                 hinzufügen</mat-radio-button>
             <mat-radio-button (click)="checkCertainPeople()" value="before">Bestimmte
                 Leute hinzufügen</mat-radio-button>
         </mat-radio-group>
-        <input *ngIf="certainPeopleisChecked">
+        <input (click)=" readUsers()" *ngIf="certainPeopleisChecked">
     </section>
     <button class="createButton">Erstellen</button>
 </div>

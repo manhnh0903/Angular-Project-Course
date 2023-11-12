@@ -9,9 +9,13 @@ import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 export class HomeComponent {
   constructor(private authService: FirebaseAuthService) { }
   showMenu = true
+
+  
   /*   ngOnInit() {
       // this.authService.checkAuth(); //cecks if user is loged in
     } */
+
+
   hideMenu() {
     if(this.showMenu==true){
       this.showMenu=false

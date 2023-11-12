@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Firestore, addDoc, collection, doc, onSnapshot, query } from '@angular/fire/firestore';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions } from '@angular/material/checkbox';
 
 @Component({
@@ -10,10 +11,15 @@ import { MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions } from '@angula
   ]
 })
 export class PeopleToChannelComponent {
+  firestore = inject(Firestore)
   allPeopleIsChecked = false;
   certainPeopleisChecked = false;
   labelPosition: 'before' | 'after' = 'after';
   disabled = false;
+  currentChannel
+  currentChannelUsers = []
+
+
 
 
   checkAllPeople() {
@@ -21,10 +27,27 @@ export class PeopleToChannelComponent {
     this.certainPeopleisChecked = false;
     console.log('allPeopleIsChecked', this.allPeopleIsChecked, ' certainPeopleisChecked', this.certainPeopleisChecked);
   }
+
+
+
   checkCertainPeople() {
     this.certainPeopleisChecked = true;
     this.allPeopleIsChecked = false;
     console.log('allPeopleIsChecked', this.allPeopleIsChecked, ' certainPeopleisChecked', this.certainPeopleisChecked);
+  }
+
+
+  getCollectionRef() {
+    return collection(this.firestore, 'users')
+  }
+
+  readUsers() {
+    const q = query(this.getCollectionRef());
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        console.log(doc.data())
+      })
+    })
   }
 }
 
