@@ -1,27 +1,10 @@
 <div class="homeContainer">
-    <div class="sideMenuButton">
-        <span>Workspace menu schliesen</span>
-        <img class="showMenuIcon" src="assets/img/show_side_menu.png">
-    </div>
-    <div class="sideMenu">
-        <div class="sideMenuContent">
-            <div class="logoContainer">
-                <img class="logoMenu" src="assets/img/menu_logo.png">
-                <h1>Code learning</h1>
-                <img class="edit_square" src="assets/img/edit_square.png">
-            </div>
-            <div class="channels">
-                <div class="channelsSubDiv">
-                    <img class="dropDownImg" src="assets/img/arrow_drop_down.png">
-                    <img src="assets/img/workspaces.png">
-                    <span>Channels</span>
-                </div>
-                <img src="assets/img/add.png">
-            </div>
-            <div>
-                <span>Direktnachrichten</span>
-            </div>
 
-        </div>
+    <div (click)="hideMenu()" class="sideMenuButton">
+        <span>Workspace menu schliesen</span>
+        <img class="showMenuIcon" src="assets/img/Hide-navigation.svg">
+    </div>
+    <div [ngClass]="{'hideMenu': !showMenu,'showMenu': showMenu}">
+        <app-side-menu></app-side-menu>
     </div>
 </div>

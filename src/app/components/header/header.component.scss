@@ -8,6 +8,7 @@
 .logo {
     margin-left: 50px;
     margin-right: 70px;
+    
 }
 
 .searchBarContainer {
@@ -82,6 +83,10 @@
 
 .arrowDown {
     margin-left: 12px;
+    cursor: pointer;
+    &:hover {
+        filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
+    }
 }
 
 .menuProfileContainer {
@@ -91,6 +96,7 @@
     bottom: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9;
 }
 
 .menuProfileContent {
