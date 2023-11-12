@@ -12,6 +12,7 @@ import {
   sendPasswordResetEmail,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { DabubbleUser } from '../classes/user.class';
 
 @Injectable({
   providedIn: 'root',
@@ -21,19 +22,13 @@ export class FirebaseAuthService {
 
   provider = new GoogleAuthProvider();
 
-  async registerWithEmailAndPassword(
-    email: string,
-    password: string,
-    name: string
-  ) {
+  async registerWithEmailAndPassword(user: DabubbleUser) {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         this.auth,
-        email,
-        password
+        user.email,
+        user.password
       );
-      await updateProfile(userCredential.user, { displayName: name });
-      this.router.navigate(['login']); // ändern Profilbild wählen etc
       console.log('user created', userCredential);
     } catch (err) {
       console.error(err);
