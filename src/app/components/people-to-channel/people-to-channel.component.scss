@@ -24,7 +24,7 @@
     flex-direction: column;
 }
 
-input {
+.choosePeopleInput {
     border-radius: 40px;
     border: 1px solid var(--ligth-purple-lines, #ADB0D9);
     display: flex;
@@ -37,4 +37,18 @@ input {
     outline: none;
     margin-top: 20px;
     width: 100%;
+
+}
+
+.inputContainer {
+    position: relative;
+}
+
+.peopleToAdd {
+    background-color: #444DF2;
+    position: absolute;
+    top: 30px;
+    right: 50%;
+    left: 10px;
+    height: 30px;
 }

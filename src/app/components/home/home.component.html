@@ -5,6 +5,11 @@
         <img class="showMenuIcon" src="assets/img/Hide-navigation.svg">
     </div>
     <div [ngClass]="{'hideMenu': !showMenu,'showMenu': showMenu}">
-        <app-side-menu></app-side-menu>
+        <app-side-menu [channels]="channels"></app-side-menu>
     </div>
 </div>
+<!-- <div class="message">
+    <label>type a message</label>
+    <input>
+    <div></div>
+</div> -->

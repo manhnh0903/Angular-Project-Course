@@ -2,12 +2,18 @@
     <h2>Leute hinzufügen</h2>
     <section class="example-section">
         <mat-radio-group class="inputs" color="primary" [(ngModel)]="labelPosition">
-            <mat-radio-button (click)="checkAllPeople()" value="after">Alle Mitglieder von OfficeTeam
+            <mat-radio-button (click)="checkAllPeople();" value="after">Alle Mitglieder von OfficeTeam
                 hinzufügen</mat-radio-button>
             <mat-radio-button (click)="checkCertainPeople()" value="before">Bestimmte
                 Leute hinzufügen</mat-radio-button>
         </mat-radio-group>
-        <input (click)=" readUsers()" *ngIf="certainPeopleisChecked">
+        <div class="inputContainer">
+            <input class="choosePeopleInput" *ngIf="certainPeopleisChecked" [(ngModel)]="usersName"
+                (ngModelChange)="showFilteredUsers()">
+            <div class="peopleToAdd">
+                <!--     <div>{{person}}</div> -->
+            </div>
+        </div>
     </section>
-    <button class="createButton">Erstellen</button>
+    <button (click)="addDocumentToCollection()" class="createButton">Erstellen</button>
 </div>

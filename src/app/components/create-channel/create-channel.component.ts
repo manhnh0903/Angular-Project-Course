@@ -27,12 +27,6 @@ export class CreateChannelComponent {
   }
 
 
-  async addDocumentToCollection() {
-    await addDoc(this.getCollectionRef(),
-      this.channel.toJSON()
-    );
-  }
-
   openPeopleToChannelDialog(): void {
     const dialog = this.dialog.open(PeopleToChannelComponent, {
       height: '400px',
@@ -40,8 +34,7 @@ export class CreateChannelComponent {
       panelClass: 'createChannelDialog'
     });
     dialog.componentInstance.currentChannel = new Channel(this.channel.toJSON())
-    console.log( dialog.componentInstance.currentChannel);
-    
+
   }
 
 

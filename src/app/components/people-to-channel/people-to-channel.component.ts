@@ -1,6 +1,8 @@
-import { Component, inject } from '@angular/core';
-import { Firestore, addDoc, collection, doc, onSnapshot, query } from '@angular/fire/firestore';
+import { Component, ElementRef, OnInit, inject } from '@angular/core';
+import { Firestore, addDoc, collection, doc, getDocs, onSnapshot, query, where } from '@angular/fire/firestore';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions } from '@angular/material/checkbox';
+import { Router } from '@angular/router';
+import { Channel } from 'src/app/classes/channel.class';
 
 @Component({
   selector: 'app-people-to-channel',
@@ -10,44 +12,80 @@ import { MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions } from '@angula
     { provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: { clickAction: 'noop' } as MatCheckboxDefaultOptions }
   ]
 })
+
 export class PeopleToChannelComponent {
   firestore = inject(Firestore)
-  allPeopleIsChecked = false;
+  allPeopleIsChecked = true;
   certainPeopleisChecked = false;
   labelPosition: 'before' | 'after' = 'after';
   disabled = false;
-  currentChannel
-  currentChannelUsers = []
-
-
-
+  currentChannel = new Channel()
+  allUsers = []
+  filteredUsers = []
+  userFound = false
+  usersName
+  constructor(private router: Router, private el: ElementRef) { this.readAllUsers(); }
 
   checkAllPeople() {
     this.allPeopleIsChecked = true;
     this.certainPeopleisChecked = false;
-    console.log('allPeopleIsChecked', this.allPeopleIsChecked, ' certainPeopleisChecked', this.certainPeopleisChecked);
   }
-
 
 
   checkCertainPeople() {
     this.certainPeopleisChecked = true;
     this.allPeopleIsChecked = false;
-    console.log('allPeopleIsChecked', this.allPeopleIsChecked, ' certainPeopleisChecked', this.certainPeopleisChecked);
   }
 
 
-  getCollectionRef() {
+  getUsersRef() {
     return collection(this.firestore, 'users')
   }
 
-  readUsers() {
-    const q = query(this.getCollectionRef());
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        console.log(doc.data())
-      })
-    })
+
+  getChannelsRef() {
+    return collection(this.firestore, 'channels')
   }
+
+
+  async addDocumentToCollection() {
+    await this.addUsers()
+    await addDoc(this.getChannelsRef(),
+      this.currentChannel.toJSON()
+      
+    )
+  }
+
+
+  async readAllUsers() {
+
+    const querySnapshot = await getDocs(collection(this.firestore, "users"));
+    querySnapshot.forEach((user) => {
+      this.allUsers.push(user.data())
+    });
+  }
+
+
+  async addUsers() {
+    if (this.allPeopleIsChecked) {
+      this.currentChannel.users = this.allUsers
+
+    } else {
+      /*   this.showFilteredUsers() */
+    }
+
+  }
+
+
+  async showFilteredUsers() {
+    /*   this.filteredUsers = this.allUsers.filter(user => {
+  
+        user.name.toLowerCase().includes(this.usersName)
+  
+      })
+      console.log(this.filteredUsers); */
+  }
+
 }
+
 

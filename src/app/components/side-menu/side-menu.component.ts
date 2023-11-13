@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateChannelComponent } from '../create-channel/create-channel.component';
+import { Firestore, collection, onSnapshot, query } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-side-menu',
@@ -8,12 +9,15 @@ import { CreateChannelComponent } from '../create-channel/create-channel.compone
   styleUrls: ['./side-menu.component.scss']
 })
 export class SideMenuComponent {
-
-
   constructor(public dialog: MatDialog) { }
+  firestore = inject(Firestore)
 
   channelsClicked = true
   PMclicked = true
+  @Input() channels
+
+
+
   openChannels() {
     if (this.channelsClicked == false) {
       this.channelsClicked = true
@@ -21,6 +25,7 @@ export class SideMenuComponent {
       this.channelsClicked = false
     }
   }
+
 
   openPM() {
     if (this.PMclicked == false) {
@@ -30,6 +35,7 @@ export class SideMenuComponent {
     }
   }
 
+
   openCreateChannelDialog(): void {
     const dialogRef = this.dialog.open(CreateChannelComponent, {
       height: '400px',
@@ -37,4 +43,9 @@ export class SideMenuComponent {
       panelClass: 'createChannelDialog'
     });
   }
+
+
+
+
+
 }
