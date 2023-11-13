@@ -40,12 +40,11 @@ export class AvatarSelectionComponent {
   setProfileImg(img: string) {
     this.user.profileImg = img;
     console.log(this.user);
-    // neue collection im firestore mit allen infos
   }
 
   async createUser() {
     await this.authService.registerWithEmailAndPassword(this.user);
-    await this.firestoreService.newUser(this.user.asJson());
+    await this.firestoreService.newUser(this.user.toJson());
 
     //animation triggern
     console.log('Ende');
