@@ -3,7 +3,7 @@ interface UserData {
   email: string;
   profileImg: string;
   onlineStatus: boolean;
-  directMasseges: [{}];
+  directMessages: [{}];
   chanels: [];
   password: string;
 }
@@ -13,7 +13,7 @@ export class DabubbleUser {
   email: string;
   profileImg: string;
   onlineStatus: boolean;
-  directMasseges: [{}];
+  directMessages: [{}];
   chanels: [];
 
   password: string;
@@ -23,7 +23,7 @@ export class DabubbleUser {
     this.email = data?.email || '';
     this.profileImg = data?.profileImg || '';
     this.onlineStatus = data?.onlineStatus || false;
-    this.directMasseges = data?.directMasseges || [
+    this.directMessages = data?.directMessages || [
       { user: 'Test', profileImg: 'img1' },
     ];
     this.chanels = data?.chanels || [];
@@ -37,7 +37,7 @@ export class DabubbleUser {
       email: this.email,
       profileImg: this.profileImg,
       onlineStatus: this.onlineStatus,
-      directMasseges: this.directMasseges,
+      directMessages: this.directMessages,
       chanels: this.chanels,
 
       password: this.password, //passwort besser nicht abspeichern??
