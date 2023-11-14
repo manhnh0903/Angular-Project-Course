@@ -42,9 +42,10 @@ export class AvatarSelectionComponent {
     const userCredential = await this.authService.registerWithEmailAndPassword(
       this.user
     );
-    this.user.userId = userCredential.user.uid;
+    const userId = userCredential.user.uid;
+    this.user.userId = userId;
 
-    await this.firestoreService.newUser(this.user.toJson());
+    await this.firestoreService.newUser(this.user.toJson(), userId);
 
     //animation triggern
     console.log('Ende');
