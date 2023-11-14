@@ -32,16 +32,17 @@ export class LoginComponent {
   async submitFomrEmailAndPassword() {
     const email = this.email.value;
     const password = this.password.value;
-
     console.log(this.loginForm);
 
     if (this.loginForm.valid) {
-      await this.authService.loginWithEmailAndPassword(email, password);
-      // play animation
-      this.router.navigate(['home']);
-    } else {
-      this.loginForm.markAllAsTouched();
-    }
+      try {
+        await this.authService.loginWithEmailAndPassword(email, password);
+        // play animation
+        this.router.navigate(['home']);
+      } catch (err) {
+        console.log(err);
+      }
+    } else this.loginForm.markAllAsTouched();
   }
 
   async loginWithGoogle() {

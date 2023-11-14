@@ -14,6 +14,8 @@ import {
 export class FirestoreService {
   constructor(private firestore: Firestore) {}
 
+  async getLogedInUserData() {}
+
   async newUser(data: {}) {
     await addDoc(this.getRef('users'), data);
   }
