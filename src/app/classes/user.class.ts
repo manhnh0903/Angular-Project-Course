@@ -1,6 +1,7 @@
 interface UserData {
   name: string;
   email: string;
+  userId: string;
   profileImg: string;
   onlineStatus: boolean;
   directMessages: [{}];
@@ -11,6 +12,7 @@ interface UserData {
 export class DabubbleUser {
   name: string;
   email: string;
+  userId: string;
   profileImg: string;
   onlineStatus: boolean;
   directMessages: [{}];
@@ -21,6 +23,7 @@ export class DabubbleUser {
   constructor(data?: UserData) {
     this.name = data?.name || '';
     this.email = data?.email || '';
+    this.userId = data?.userId || '';
     this.profileImg = data?.profileImg || '';
     this.onlineStatus = data?.onlineStatus || false;
     this.directMessages = data?.directMessages || [
@@ -35,6 +38,7 @@ export class DabubbleUser {
     return {
       name: this.name,
       email: this.email,
+      userId: this.userId,
       profileImg: this.profileImg,
       onlineStatus: this.onlineStatus,
       directMessages: this.directMessages,

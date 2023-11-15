@@ -1,5 +1,14 @@
 import { Component, inject } from '@angular/core';
-import { Firestore, collection, doc, getDoc, getDocs, onSnapshot, query, where } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+} from '@angular/fire/firestore';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 
 @Component({
@@ -8,57 +17,55 @@ import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  constructor(private fireService: FirebaseAuthService) {
-    console.log(this.channels);
+  constructor(private authService: FirebaseAuthService) {
+    this.authService.checkAuth();
   }
-  showMenu = true
-  channels = []
-  firestore = inject(Firestore)
+  showMenu = true;
+  channels = [];
+  firestore = inject(Firestore);
   /*  loggedUser = */
 
+
   ngOnInit(): void {
-    this.readChannels()
-
+    this.readChannels();
+    this.getLoggedUser();
   }
-
 
   hideMenu() {
     if (this.showMenu == true) {
-      this.showMenu = false
+      this.showMenu = false;
     } else {
-      this.showMenu = true
+      this.showMenu = true;
     }
   }
 
   getChannelsRef() {
-    return collection(this.firestore, 'channels')
+    return collection(this.firestore, 'channels');
   }
 
   readChannels() {
-    const q = query(this.getChannelsRef())
+    const q = query(this.getChannelsRef());
     const unsubscribe = onSnapshot(q, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
-        if (change.type === "added") {
+        if (change.type === 'added') {
           this.channels.push(change.doc.data());
-        }
-        if (change.type === "removed") {
-          this.ifChannelRemoved(change)
         }
       });
     });
   }
 
-
   getUsersRef() {
-    return collection(this.firestore, 'users')
+    return collection(this.firestore, 'users');
   }
 
-
-  ifChannelRemoved(change) {
-    let indexOfRemoved = this.channels.findIndex(channel => channel.name === change.doc.data()['name'])
-    this.channels.splice(indexOfRemoved, 1)
+  async getLoggedUser() {
+    const q = query(
+      collection(this.firestore, 'users'),
+      where('email', '==', 'katrin@test.de')
+    );
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      /*     console.log(doc.id, " => ", doc.data()); */
+    });
   }
 }
-
-
-

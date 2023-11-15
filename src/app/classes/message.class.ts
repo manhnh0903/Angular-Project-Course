@@ -1,9 +1,15 @@
-export class Message {
+interface MessageData {
   sender: string;
   profileImg: string;
   content: string;
-  thread = {}
-  constructor(data?) {
+}
+
+export class message {
+  sender: string;
+  profileImg: string;
+  content: string;
+
+  constructor(data: MessageData) {
     this.sender = data?.sender || '';
     this.content = data?.content || '';
     this.profileImg = data?.profileImg || '';

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { user } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { DabubbleUser } from 'src/app/classes/user.class';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
@@ -11,11 +12,6 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 })
 export class AvatarSelectionComponent {
   user = new DabubbleUser();
-
-  email: string;
-  password: string;
-  name: string;
-  profileImg: string;
 
   profilePictures: string[] = [
     '0character.png',
@@ -43,8 +39,13 @@ export class AvatarSelectionComponent {
   }
 
   async createUser() {
-    await this.authService.registerWithEmailAndPassword(this.user);
-    await this.firestoreService.newUser(this.user.toJson());
+    const userCredential = await this.authService.registerWithEmailAndPassword(
+      this.user
+    );
+    const userId = userCredential.user.uid;
+    this.user.userId = userId;
+
+    await this.firestoreService.newUser(this.user.toJson(), userId);
 
     //animation triggern
     console.log('Ende');

@@ -13,13 +13,19 @@ import {
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { DabubbleUser } from '../classes/user.class';
+import { FirestoreService } from './firestore.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseAuthService {
-
-  constructor(private auth: Auth, private router: Router) { }
+  constructor(
+    private auth: Auth,
+    private router: Router,
+    private firestoreService: FirestoreService,
+    private userService: UserService
+  ) {}
 
   provider = new GoogleAuthProvider();
 
@@ -31,8 +37,10 @@ export class FirebaseAuthService {
         user.password
       );
       console.log('user created', userCredential);
+      return userCredential;
     } catch (err) {
       console.error(err);
+      return err;
     }
   }
 
@@ -43,10 +51,11 @@ export class FirebaseAuthService {
         email,
         password
       );
-
-      console.log('login successfull:', userCredential);
+      this.userService.getUserData(userCredential);
+      console.log('login successfull:', userCredential.user.uid);
     } catch (err) {
       console.error(err);
+      throw err;
     }
   }
 
