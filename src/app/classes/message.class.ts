@@ -1,12 +1,13 @@
-export class message {
+export class Message {
   sender: string;
   profileImg: string;
   content: string;
-
-  constructor(data) {
+  thread = {}
+  constructor(data?) {
     this.sender = data?.sender || '';
     this.content = data?.content || '';
     this.profileImg = data?.profileImg || '';
+    this.thread = data?.thread || undefined;
   }
 
   toJson() {
@@ -14,6 +15,7 @@ export class message {
       name: this.sender,
       profileImg: this.profileImg,
       content: this.content,
+      thread: this.thread
     };
   }
 }

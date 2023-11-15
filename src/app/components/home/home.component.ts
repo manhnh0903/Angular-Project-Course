@@ -8,7 +8,9 @@ import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  constructor(private authService: FirebaseAuthService) { }
+  constructor(private fireService: FirebaseAuthService) {
+    console.log(this.channels);
+  }
   showMenu = true
   channels = []
   firestore = inject(Firestore)
@@ -16,7 +18,7 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.readChannels()
-    this.getLoggedUser()
+
   }
 
 
@@ -39,6 +41,9 @@ export class HomeComponent {
         if (change.type === "added") {
           this.channels.push(change.doc.data());
         }
+        if (change.type === "removed") {
+          this.ifChannelRemoved(change)
+        }
       });
     });
   }
@@ -49,12 +54,11 @@ export class HomeComponent {
   }
 
 
-  async getLoggedUser() {
-    const q = query(collection(this.firestore, "users"), where("email", "==", "katrin@test.de"));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      /*     console.log(doc.id, " => ", doc.data()); */
-    });
-
+  ifChannelRemoved(change) {
+    let indexOfRemoved = this.channels.findIndex(channel => channel.name === change.doc.data()['name'])
+    this.channels.splice(indexOfRemoved, 1)
   }
 }
+
+
+

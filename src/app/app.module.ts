@@ -24,6 +24,7 @@ import { PeopleToChannelComponent } from './components/people-to-channel/people-
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {FormsModule} from '@angular/forms';
 import {MatRadioModule} from '@angular/material/radio';
+import { ChannelsChatComponent } from './components/channels-chat/channels-chat.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import {MatRadioModule} from '@angular/material/radio';
     SideMenuComponent,
     CreateChannelComponent,
     PeopleToChannelComponent,
+    ChannelsChatComponent,
   ],
   imports: [
     MatRadioModule,

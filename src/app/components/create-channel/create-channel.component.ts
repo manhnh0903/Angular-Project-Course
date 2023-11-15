@@ -19,9 +19,6 @@ export class CreateChannelComponent {
   firestore = inject(Firestore)
   channel = new Channel()
 
-
-
-
   getCollectionRef() {
     return collection(this.firestore, 'channels')
   }

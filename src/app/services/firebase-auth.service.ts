@@ -18,7 +18,8 @@ import { DabubbleUser } from '../classes/user.class';
   providedIn: 'root',
 })
 export class FirebaseAuthService {
-  constructor(private auth: Auth, private router: Router) {}
+
+  constructor(private auth: Auth, private router: Router) { }
 
   provider = new GoogleAuthProvider();
 
@@ -97,4 +98,7 @@ export class FirebaseAuthService {
       }
     });
   }
+
+
+
 }

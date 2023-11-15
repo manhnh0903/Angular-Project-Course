@@ -7,5 +7,5 @@
     <input [(ngModel)]="channel.name">
     <h3>Beschreibung</h3>
     <input [(ngModel)]="channel.description">
-    <button (click)="openPeopleToChannelDialog()" class="createButton">Erstellen</button>
+    <button [mat-dialog-close] (click)="openPeopleToChannelDialog()" class="createButton">Erstellen</button>
 </div>
