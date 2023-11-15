@@ -1,4 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
+import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -8,7 +9,14 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class HeaderComponent {
   menuOpen = false;
-  constructor(private el: ElementRef, public userService: UserService) {}
+  constructor(
+    private el: ElementRef,
+    public userService: UserService,
+    private authService: FirebaseAuthService
+  ) {
+    this.authService.checkAuth();
+  }
+
   openMenu() {
     this.menuOpen = true;
   }
@@ -20,7 +28,17 @@ export class HeaderComponent {
       }
     });
   }
+
   closeMenu() {
     this.menuOpen = false;
+  }
+
+  async logout() {
+    try {
+      await this.authService.logout();
+      this.closeMenu();
+    } catch (err) {
+      console.error(err);
+    }
   }
 }
