@@ -13,23 +13,12 @@ export class UserService {
   async getUserData(userCredential) {
     const userId = userCredential.user.uid;
 
-    // Direkter Zugriff auf das Observable
-    const userData$ = this.firestoreService.getLogedInUserData(userId);
-
-    // Verwenden Sie async/await, um auf den Wert des Observables zu warten
-    const userData = await userData$.toPromise();
-
-    console.log('User Service Data', userData);
-
-    this.user = new DabubbleUser(userData);
+    const userDataObservable = await this.firestoreService.getLogedInUserData(
+      userId
+    );
+    userDataObservable.subscribe((data) => {
+      this.user = new DabubbleUser(data);
+      console.log('User service data:', this.user);
+    });
   }
-
-  // async getUserData(userCredential) {
-  //   const userId = userCredential.user.uid;
-
-  //   const userData = await this.firestoreService.getLogedInUserData(userId);
-  //   console.log('User Service Data', userData);
-
-  //   this.user = new DabubbleUser();
-  // }
 }

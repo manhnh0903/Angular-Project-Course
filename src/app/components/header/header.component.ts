@@ -1,16 +1,17 @@
 import { Component, ElementRef } from '@angular/core';
-
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-
 })
 export class HeaderComponent {
-  menuOpen = false
-  constructor(private el: ElementRef) { }
-  openMenu() { this.menuOpen = true }
+  menuOpen = false;
+  constructor(private el: ElementRef, public userService: UserService) {}
+  openMenu() {
+    this.menuOpen = true;
+  }
 
   ngAfterViewInit() {
     this.el.nativeElement.addEventListener('click', (event) => {
@@ -19,5 +20,7 @@ export class HeaderComponent {
       }
     });
   }
-  closeMenu() { this.menuOpen = false }
+  closeMenu() {
+    this.menuOpen = false;
+  }
 }
