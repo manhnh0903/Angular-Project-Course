@@ -11,6 +11,7 @@ import {
 } from '@angular/fire/firestore';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -20,10 +21,14 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class HomeComponent {
   constructor(
     private authService: FirebaseAuthService,
-    public fireService: FirestoreService
+    public fireService: FirestoreService,
+    private userService: UserService
   ) {
-    // this.authService.checkAuth();
+
+
+    this.authService.checkAuth();
     /*   this.fireService.ifChangesOnChannels(); */
+
   }
   showMenu = true;
 
@@ -31,8 +36,8 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.getLoggedUser();
+   
 
-    
   }
 
   hideMenu() {

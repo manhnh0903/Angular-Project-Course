@@ -3,6 +3,7 @@ import { Firestore, addDoc, arrayUnion, doc, onSnapshot, query, setDoc, updateDo
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Message } from 'src/app/classes/message.class';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-channels-chat',
@@ -11,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ChannelsChatComponent {
   firestore = inject(Firestore)
-  constructor(public fireService: FirestoreService, public route: ActivatedRoute) {
+  constructor(public fireService: FirestoreService, public route: ActivatedRoute, public userService: UserService) {
   }
   messages
   message

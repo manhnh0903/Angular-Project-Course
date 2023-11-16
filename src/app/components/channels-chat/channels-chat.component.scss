@@ -1,15 +1,63 @@
 .channelsContainer {
     height: 100%;
-    width: 100%;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-bottom: 20px
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    border-bottom: 1px solid rgb(228, 224, 224);
+}
+
+.headerLeft {
+    display: flex;
+    align-items: center;
+
+    .tagImg {
+        height: 20px
+    }
+
+    .arrowImg {
+        height: 20px
+    }
+}
+
+.headerRight {
+    display: flex;
+    align-items: center;
+
+    p {
+        margin-left: 7px;
+    }
+}
+
+
+.usersImg {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
 
 }
 
+.messageUsersImg {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.addUserIcon {
+    margin-left: 17px;
+    height: 22px
+}
+
 footer {
-    position: absolute;
-    bottom: 5%;
-    left: 20px;
-    right: 20px;
     height: 20%;
     border: 1px solid blue;
     border-radius: 40px;
@@ -25,6 +73,31 @@ footer {
 
 .sendIcon {
     position: absolute;
-    bottom: 2%;
+    bottom: 5%;
     right: 20px;
+}
+
+.messagesSection {
+    display: flex;
+    width: 100%;
+    margin-bottom: 60px;
+
+
+}
+
+.nameContentDiv {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+
+    .nameOfSender {
+        font-weight: bold;
+    }
+
+    .messageContent {
+        margin-left: 10px;
+        background-color: #ECEEFE;
+        padding: 5px 10px;
+        margin-top: 10px;
+    }
 }
