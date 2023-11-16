@@ -31,3 +31,17 @@ input {
     align-self: stretch;
     outline: none;
 }
+
+.nameInput {
+    position: relative;
+}
+
+.warning {
+    position: absolute;
+    top: -7px;
+    left: 5px;
+    font-size: 12px;
+    background: white;
+    color: #de0505;
+
+}

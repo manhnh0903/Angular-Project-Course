@@ -1,0 +1,30 @@
+.channelsContainer {
+    height: 100%;
+    width: 100%;
+    position: relative;
+
+}
+
+footer {
+    position: absolute;
+    bottom: 5%;
+    left: 20px;
+    right: 20px;
+    height: 20%;
+    border: 1px solid blue;
+    border-radius: 40px;
+    padding: 20px;
+
+    input {
+        width: 100%;
+        height: 50%;
+        outline: none;
+        border: none;
+    }
+}
+
+.sendIcon {
+    position: absolute;
+    bottom: 2%;
+    right: 20px;
+}

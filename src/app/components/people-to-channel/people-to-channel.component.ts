@@ -1,8 +1,9 @@
 import { Component, ElementRef, OnInit, inject } from '@angular/core';
-import { Firestore, addDoc, collection, doc, getDocs, onSnapshot, query, where } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, doc, getDocs, onSnapshot, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions } from '@angular/material/checkbox';
 import { Router } from '@angular/router';
 import { Channel } from 'src/app/classes/channel.class';
+import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
   selector: 'app-people-to-channel',
@@ -22,9 +23,10 @@ export class PeopleToChannelComponent {
   currentChannel = new Channel()
   allUsers = []
   filteredUsers = []
-  userFound = false
   usersName
-  constructor(private router: Router, private el: ElementRef) { this.readAllUsers(); }
+  selectedUsers = []
+
+  constructor(private router: Router, private el: ElementRef, public fireService: FirestoreService) { this.readAllUsers(); }
 
   checkAllPeople() {
     this.allPeopleIsChecked = true;
@@ -48,12 +50,18 @@ export class PeopleToChannelComponent {
   }
 
 
-  async addDocumentToCollection() {
+  async addChannelToCollection() {
     await this.addUsers()
-    await addDoc(this.getChannelsRef(),
+    let createdChannel = await addDoc(this.getChannelsRef(),
       this.currentChannel.toJSON()
-      
     )
+    const createdChannelRef = doc(this.firestore, "channels", createdChannel.id);
+    console.log(createdChannelRef);
+    await updateDoc(createdChannelRef, {
+      id: createdChannel.id
+    });
+
+
   }
 
 
@@ -71,19 +79,24 @@ export class PeopleToChannelComponent {
       this.currentChannel.users = this.allUsers
 
     } else {
-      /*   this.showFilteredUsers() */
+      this.currentChannel.users = this.selectedUsers
     }
 
   }
 
 
   async showFilteredUsers() {
-    /*   this.filteredUsers = this.allUsers.filter(user => {
-  
-        user.name.toLowerCase().includes(this.usersName)
-  
-      })
-      console.log(this.filteredUsers); */
+    this.filteredUsers = this.allUsers.filter(user => {
+      return user.name.toLowerCase().includes(this.usersName.toLowerCase())
+    })
+
+  }
+
+
+  addToSelectedUsers(filteredUser) {
+    if (!this.selectedUsers.includes(filteredUser)) {
+      this.selectedUsers.push(filteredUser);
+    }
   }
 
 }

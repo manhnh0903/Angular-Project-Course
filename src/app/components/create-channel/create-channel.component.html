@@ -4,7 +4,10 @@
         Beispiel.
     </span>
     <h3>Channel-Name</h3>
-    <input [(ngModel)]="channel.name">
+    <div class="nameInput">
+        <input [(ngModel)]="channel.name" (ngModelChange)="checkIfNameExists()">
+        <span class="warning" *ngIf="nameExists">Channel with this name exists</span>
+    </div>
     <h3>Beschreibung</h3>
     <input [(ngModel)]="channel.description">
     <button (click)="openPeopleToChannelDialog()" class="createButton">Erstellen</button>

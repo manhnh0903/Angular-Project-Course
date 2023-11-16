@@ -19,12 +19,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { CreateChannelComponent } from './components/create-channel/create-channel.component';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { PeopleToChannelComponent } from './components/people-to-channel/people-to-channel.component';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {FormsModule} from '@angular/forms';
-import {MatRadioModule} from '@angular/material/radio';
-
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
+import { MatRadioModule } from '@angular/material/radio';
+import { ChannelsChatComponent } from './components/channels-chat/channels-chat.component';
+import { MatInputModule } from '@angular/material/input'
 @NgModule({
   declarations: [
 
@@ -41,6 +42,7 @@ import {MatRadioModule} from '@angular/material/radio';
     SideMenuComponent,
     CreateChannelComponent,
     PeopleToChannelComponent,
+    ChannelsChatComponent,
   ],
   imports: [
     MatRadioModule,
@@ -54,6 +56,7 @@ import {MatRadioModule} from '@angular/material/radio';
     provideFirestore(() => getFirestore()),
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent],

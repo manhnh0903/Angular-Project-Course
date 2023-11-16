@@ -10,6 +10,7 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
   selector: 'app-home',
@@ -17,16 +18,18 @@ import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  constructor(private authService: FirebaseAuthService) {
+  constructor(
+    private authService: FirebaseAuthService,
+    public fireService: FirestoreService
+  ) {
     // this.authService.checkAuth();
+    /*   this.fireService.ifChangesOnChannels(); */
   }
   showMenu = true;
-  channels = [];
+
   firestore = inject(Firestore);
-  /*  loggedUser = */
 
   ngOnInit(): void {
-    this.readChannels();
     this.getLoggedUser();
   }
 
@@ -40,17 +43,6 @@ export class HomeComponent {
 
   getChannelsRef() {
     return collection(this.firestore, 'channels');
-  }
-
-  readChannels() {
-    const q = query(this.getChannelsRef());
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        if (change.type === 'added') {
-          this.channels.push(change.doc.data());
-        }
-      });
-    });
   }
 
   getUsersRef() {

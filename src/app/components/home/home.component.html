@@ -1,15 +1,12 @@
 <div class="homeContainer">
-
     <div (click)="hideMenu()" class="sideMenuButton">
         <span>Workspace menu schliesen</span>
         <img class="showMenuIcon" src="assets/img/Hide-navigation.svg">
     </div>
     <div [ngClass]="{'hideMenu': !showMenu,'showMenu': showMenu}">
-        <app-side-menu [channels]="channels"></app-side-menu>
+        <app-side-menu></app-side-menu>
+    </div>
+    <div class="chatContainer">
+        <app-channels-chat></app-channels-chat>
     </div>
 </div>
-<!-- <div class="message">
-    <label>type a message</label>
-    <input>
-    <div></div>
-</div> -->

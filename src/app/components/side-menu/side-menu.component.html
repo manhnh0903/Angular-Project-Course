@@ -18,7 +18,8 @@
                         <img class="subIcon" src="assets/img/add_circle.png">
                         <p>Channel hinzufügen</p>
                     </div>
-                    <div *ngFor="let channel of channels" class="dropDownSubDiv">
+                    <div *ngFor="let channel of fireService.channels"
+                        (click)="fireService.getCurrentChannel('channels', channel.id)" class="dropDownSubDiv">
                         <img class="subIcon" src="assets/img/tag.png">
                         <p>{{channel.name}}</p>
                     </div>
