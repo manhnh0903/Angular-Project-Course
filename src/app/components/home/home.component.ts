@@ -18,7 +18,7 @@ import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 })
 export class HomeComponent {
   constructor(private authService: FirebaseAuthService) {
-    this.authService.checkAuth();
+    // this.authService.checkAuth();
   }
   showMenu = true;
   channels = [];
