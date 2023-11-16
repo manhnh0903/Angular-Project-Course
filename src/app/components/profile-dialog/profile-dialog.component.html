@@ -1,19 +1,26 @@
 <div class="profileContainer">
-    <div class="profileContent">
-        <div class="profileFlex">
-            <span class="menuSpan">Profil</span>
-            <img class="closeIcon" src="assets/img/close.png">
-        </div>
-        <img class="profilePic" src="assets/img/profile_man1.png">
-        <div class="profileFlex">
-            <span class="menuSpan">Frederic Beck</span>
-            <span class="editButton" routerLink="/edit_user">Bearbeiten</span>
-        </div>
-        <img class="status" src="assets/img/online_with_text.png">
-        <div class="emailContainer">
-            <img src="assets/img/mail_icon.png">
-            <span class="adresseSpan">E-Mail-Adresse</span>
-        </div>
-        <span class="email">fred.back&#64;gmail.com</span>
+  <div class="profileContent">
+    <div class="profileFlex">
+      <span class="menuSpan">Profil</span>
+      <img
+        class="closeIcon"
+        (click)="closeDialog()"
+        src="assets/img/close.png"
+      />
     </div>
+    <img
+      class="profilePic"
+      src="assets/img/{{ userService.user.profileImg }}"
+    />
+    <div class="profileFlex">
+      <span class="menuSpan">{{ userService.user.name }}</span>
+      <span class="editButton" routerLink="/edit_user">Bearbeiten</span>
+    </div>
+    <img class="status" src="assets/img/online_with_text.png" />
+    <div class="emailContainer">
+      <img src="assets/img/mail_icon.png" />
+      <span class="adresseSpan">E-Mail-Adresse</span>
+    </div>
+    <span class="email">{{ userService.user.email }}</span>
+  </div>
 </div>

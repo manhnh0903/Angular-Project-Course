@@ -92,6 +92,7 @@ export class FirebaseAuthService {
       await signOut(this.auth);
     } catch (err) {
       console.error(err);
+      throw err;
     }
   }
 

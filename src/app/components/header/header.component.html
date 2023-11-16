@@ -1,25 +1,32 @@
 <div class="container">
-    <div class="logoSearchBar">
-        <img class="logo" src="assets/img/logo.png">
-        <div class="searchBarContainer">
-            <input class="searchBar" placeholder="code learning durchsuchen">
-            <img class="search_icon" src="assets/img/search_icon.png">
-        </div>
+  <div class="logoSearchBar">
+    <img class="logo" src="assets/img/logo.png" />
+    <div class="searchBarContainer">
+      <input class="searchBar" placeholder="code learning durchsuchen" />
+      <img class="search_icon" src="assets/img/search_icon.png" />
     </div>
+  </div>
 
-    <div class="user">
-        <span class="userName">Frederic</span>
-        <span class="userName">Beck</span>
-        <div class="usersPicDiv">
-            <img class="usersPic" src="assets/img/profile_man1.png">
-            <img class="status" src="assets/img/online.png">
-        </div>
-        <img (click)="openMenu()" class="arrowDown" src="assets/img/arrow_down.png">
-        <div *ngIf="menuOpen" class="menuProfileContainer">
-            <div class="menuProfileContent">
-                <span routerLink="/profile"  class="menuSpan">Profil</span>
-                <span routerLink="/log_out" (click)="closeMenu()" class="menuSpan">Log out</span>
-            </div>
-        </div>
+  <div class="user">
+    <span class="userName">{{ userService.user.name }}</span>
+    <div class="usersPicDiv">
+      <img
+        class="usersPic"
+        src="assets/img/{{ userService.user.profileImg }}"
+      />
+      <img class="status" src="assets/img/online.png" />
+      <!-- onlinestatus noch über userService machen -->
     </div>
+    <img
+      (click)="openMenu()"
+      class="arrowDown"
+      src="assets/img/arrow_down.png"
+    />
+    <div *ngIf="menuOpen" class="menuProfileContainer">
+      <div class="menuProfileContent">
+        <span routerLink="/profile" class="menuSpan">Profil</span>
+        <span (click)="logout()" class="menuSpan">Log out</span>
+      </div>
+    </div>
+  </div>
 </div>
