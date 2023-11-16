@@ -2,23 +2,24 @@ interface MessageData {
   sender: string;
   profileImg: string;
   content: string;
+  thread: string;
 }
 
-export class message {
+export class Message {
   sender: string;
   profileImg: string;
   content: string;
-
-  constructor(data: MessageData) {
+  thread: string;
+  constructor(data?: MessageData) {
     this.sender = data?.sender || '';
     this.content = data?.content || '';
     this.profileImg = data?.profileImg || '';
-    this.thread = data?.thread || undefined;
+    this.thread = data?.thread 
   }
 
-  toJson() {
+  toJSON() {
     return {
-      name: this.sender,
+      sender: this.sender,
       profileImg: this.profileImg,
       content: this.content,
       thread: this.thread

@@ -2,13 +2,14 @@
     <header>
         <span *ngIf="fireService.currentChannel">{{fireService.currentChannel.name}}</span>
     </header>
+    <div *ngIf="fireService.messages.length>0">
+        <div class="messagesSection" *ngFor="let message of fireService.messages">
+            <span>{{message.content}}</span>
+        </div>
 
-    <div class="messagesSection">
-        <span></span>
     </div>
-
     <footer>
-        <input placeholder="Type your message" [(ngModel)]="message.content">
+        <input placeholder="Type your message" [(ngModel)]="content">
         <img (click)="addMessageToChannel()" class="sendIcon" src="assets/img/send_icon.png">
     </footer>
 </div>

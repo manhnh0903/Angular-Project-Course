@@ -1,8 +1,9 @@
 import { Component, ElementRef, OnInit, inject } from '@angular/core';
-import { Firestore, addDoc, collection, doc, getDocs, onSnapshot, query, updateDoc, where } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, doc, getDocs, onSnapshot, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions } from '@angular/material/checkbox';
 import { Router } from '@angular/router';
 import { Channel } from 'src/app/classes/channel.class';
+import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
   selector: 'app-people-to-channel',
@@ -25,7 +26,7 @@ export class PeopleToChannelComponent {
   usersName
   selectedUsers = []
 
-  constructor(private router: Router, private el: ElementRef) { this.readAllUsers(); }
+  constructor(private router: Router, private el: ElementRef, public fireService: FirestoreService) { this.readAllUsers(); }
 
   checkAllPeople() {
     this.allPeopleIsChecked = true;
@@ -54,9 +55,12 @@ export class PeopleToChannelComponent {
     let createdChannel = await addDoc(this.getChannelsRef(),
       this.currentChannel.toJSON()
     )
-    await updateDoc(createdChannel, {
+    const createdChannelRef = doc(this.firestore, "channels", createdChannel.id);
+    console.log(createdChannelRef);
+    await updateDoc(createdChannelRef, {
       id: createdChannel.id
     });
+
 
   }
 

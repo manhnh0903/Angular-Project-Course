@@ -17,7 +17,7 @@ export class UserService {
     const userData$ = this.firestoreService.getLogedInUserData(userId);
 
     // Verwenden Sie async/await, um auf den Wert des Observables zu warten
-    const userData = await userData$.toPromise();
+    const userData = await (await userData$).toPromise();
 
     console.log('User Service Data', userData);
 
