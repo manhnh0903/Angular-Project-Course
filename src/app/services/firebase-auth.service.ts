@@ -101,9 +101,12 @@ export class FirebaseAuthService {
       if (user) {
         // Benutzer ist angemeldet
         console.log('Benutzer ist angemeldet:', user);
+        return true;
       } else {
         // Benutzer ist nicht angemeldet
         console.log('Benutzer ist nicht angemeldet');
+        console.log('Route login');
+        return false;
         this.router.navigate(['login']);
       }
     });

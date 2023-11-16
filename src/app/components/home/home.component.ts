@@ -18,15 +18,16 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  constructor(private authService: FirebaseAuthService, public fireService: FirestoreService) {
-    this.authService.checkAuth();
-  /*   this.fireService.ifChangesOnChannels(); */
+  constructor(
+    private authService: FirebaseAuthService,
+    public fireService: FirestoreService
+  ) {
+    // this.authService.checkAuth();
+    /*   this.fireService.ifChangesOnChannels(); */
   }
   showMenu = true;
 
   firestore = inject(Firestore);
-
-
 
   ngOnInit(): void {
     this.getLoggedUser();
@@ -45,7 +46,6 @@ export class HomeComponent {
   getChannelsRef() {
     return collection(this.firestore, 'channels');
   }
-
 
   getUsersRef() {
     return collection(this.firestore, 'users');
