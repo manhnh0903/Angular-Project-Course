@@ -29,10 +29,9 @@ export class HomeComponent {
 
 
   ngOnInit(): void {
-
     this.getLoggedUser();
 
-
+    
   }
 
   hideMenu() {

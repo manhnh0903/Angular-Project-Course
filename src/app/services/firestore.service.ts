@@ -79,29 +79,6 @@ export class FirestoreService {
   }
 
 
-  readCurrentChannelFromFirestore(docId) {
-    return onSnapshot(this.getDocRef('channels', docId), (document: any) => {
-      {
-        this.currentChannel.name = document.data().name;
-        this.currentChannel.messages = document.data().messages;
-        this.currentChannel.thread = document.data().thread;
-        this.currentChannel.description = document.data().description;
-        this.currentChannel.users = document.data().users;
-        this.currentChannel.id = document.data().id;
-
-      }
-    }
-    )
-  }
-
-
-  async addChannelToCollection() {
-    await addDoc(this.getColRef('channels'),
-      this.currentChannel.toJson()
-    );
-  }
-
-
   async updateDocumentInFirebase() {
     await updateDoc(this.getDocRef('channels', this.currentChannel.id), this.currentChannel.toJson())
   }
@@ -113,16 +90,17 @@ export class FirestoreService {
     const unsubscribe = onSnapshot(q, (snapshot) => {
 
       snapshot.docChanges().forEach((change) => {
+        let channelToModifyIndex = this.channels.findIndex(channel => channel.name === change.doc.data()['name'])
         if (change.type === 'added') {
-          this.channels.push(change.doc.data())
+          if (channelToModifyIndex === -1)
+            this.channels.push(change.doc.data())
         }
         if (change.type === 'modified') {
-          let channelToModifyIndex = this.channels.findIndex(channel => channel.name === change.doc.data()['name'])
-          this.channels[channelToModifyIndex] = change.doc.data()
+          if (channelToModifyIndex !== -1)
+            this.channels[channelToModifyIndex] = change.doc.data()
         }
         if (change.type === 'removed') {
-          let channelToRemoveIndex = this.channels.findIndex(channel => channel.id === change.doc.data()['id'])
-          this.channels.splice(channelToRemoveIndex, 1)
+          this.channels.splice(channelToModifyIndex, 1)
         }
       });
     });
@@ -133,8 +111,12 @@ export class FirestoreService {
     const q = query(collection(this.firestore, "channels"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        this.channels.push(doc.data());
+        let channelToModifyIndex = this.channels.findIndex(channel => channel.name === doc.data()['name'])
+        if (channelToModifyIndex === -1)
+          this.channels.push(doc.data());
       });
+      console.log('channels:', this.channels);
+
     });
   }
 
