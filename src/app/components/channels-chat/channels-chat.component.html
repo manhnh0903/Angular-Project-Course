@@ -1,14 +1,34 @@
 <div class="channelsContainer">
     <header>
-        <span *ngIf="fireService.currentChannel">{{fireService.currentChannel.name}}</span>
+        <div class="headerLeft">
+            <img class="tagImg" src="assets/img/tag.png">
+            <span *ngIf="fireService.currentChannel">{{fireService.currentChannel.name}}</span>
+            <img class="arrowImg" src="assets/img/arrow_drop_down.png">
+        </div>
+        <div *ngIf="fireService.currentChannel" class="headerRight">
+            <div class="userPicsDiv">
+                <img [ngStyle]="{'margin-left': 0 + -i * 20 + 'px' }" class="usersImg"
+                    *ngFor="let user of fireService.currentChannel.users let i=index"
+                    src="assets/img/{{user.profileImg}}">
+            </div>
+            <p>{{fireService.currentChannel.users.length}}</p>
+            <img class="addUserIcon" src="assets/img/person_add.png">
+        </div>
     </header>
+
     <div *ngIf="fireService.messages.length>0">
         <div class="messagesSection" *ngFor="let message of fireService.messages">
-            <span>{{message.content}}</span>
+            <img class="messageUsersImg" src="assets/img/{{message.profileImg}}">
+            <div class="nameContentDiv">
+                <span class="nameOfSender">{{message.sender}}</span>
+                <span class="messageContent">{{message.content}}</span>
+            </div>
         </div>
-
     </div>
+
+
     <footer>
+
         <input placeholder="Type your message" [(ngModel)]="content">
         <img (click)="addMessageToChannel()" class="sendIcon" src="assets/img/send_icon.png">
     </footer>
