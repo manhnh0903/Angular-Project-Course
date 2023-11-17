@@ -28,7 +28,6 @@ export class HomeComponent {
     this.fireService.readAllUsers();
     this.authService.checkAuth();
     /*   this.fireService.ifChangesOnChannels(); */
-
   }
   showMenu = true;
 
@@ -36,8 +35,6 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.getLoggedUser();
-
-
   }
 
   hideMenu() {

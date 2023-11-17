@@ -38,7 +38,7 @@ export class LoginComponent {
       try {
         await this.authService.loginWithEmailAndPassword(email, password);
         // play animation
-        this.router.navigate(['home']);
+        this.router.navigate(['/home']);
       } catch (err) {
         console.log(err);
       }
@@ -48,7 +48,7 @@ export class LoginComponent {
   async loginWithGoogle() {
     await this.authService.loginWithGoogle();
     // play animation
-    this.router.navigate(['home']);
+    this.router.navigate(['/home']);
   }
 
   async guestLogin() {
@@ -57,6 +57,6 @@ export class LoginComponent {
       'test123'
     );
     // play animation
-    this.router.navigate(['home']);
+    this.router.navigate(['/home']);
   }
 }

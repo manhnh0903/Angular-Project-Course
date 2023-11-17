@@ -1,4 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -12,7 +13,8 @@ export class HeaderComponent {
   constructor(
     private el: ElementRef,
     public userService: UserService,
-    private authService: FirebaseAuthService
+    private authService: FirebaseAuthService,
+    private router: Router
   ) {
     this.authService.checkAuth();
   }
@@ -36,6 +38,7 @@ export class HeaderComponent {
   async logout() {
     try {
       await this.authService.logout();
+      this.router.navigate(['/login']);
       this.closeMenu();
     } catch (err) {
       console.error(err);

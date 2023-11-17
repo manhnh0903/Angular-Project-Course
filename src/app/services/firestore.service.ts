@@ -21,9 +21,14 @@ export class FirestoreService {
   unsubUsers;
   unsubUserData;
   currentChannel;
+<<<<<<< HEAD
   channels = []
   messages = [];
   allUsers = []
+=======
+  channels = [];
+  messages = [];
+>>>>>>> 62afac846136cfbb42609358732f127899a690af
   constructor(private firestore: Firestore) {
     this.unsubUsers = this.subUsers();
   }
@@ -35,9 +40,7 @@ export class FirestoreService {
 
   subUsers() {
     return onSnapshot(this.getColRef('users'), (querySnapshot) => {
-      querySnapshot.forEach((singleUser) => {
-        console.log('USER???', singleUser.data());
-      });
+      querySnapshot.forEach((singleUser) => {});
     });
   }
 
@@ -67,68 +70,70 @@ export class FirestoreService {
     return doc(this.getColRef(colName), docId);
   }
 
-
   async getCurrentChannel(colName: string, docId: string) {
     const channelRef = await getDoc(this.getDocRef(colName, docId));
     if (channelRef.exists()) {
-      this.messages = channelRef.data()['messages']
-      return this.currentChannel = channelRef.data();
+      this.messages = channelRef.data()['messages'];
+      return (this.currentChannel = channelRef.data());
     } else {
       console.error('Document does not exist');
       return null;
     }
   }
 
-
   async updateDocumentInFirebase() {
-    await updateDoc(this.getDocRef('channels', this.currentChannel.id), this.currentChannel.toJson())
+    await updateDoc(
+      this.getDocRef('channels', this.currentChannel.id),
+      this.currentChannel.toJson()
+    );
   }
-
-
 
   ifChangesOnChannels() {
     const q = query(this.getColRef('channels'));
     const unsubscribe = onSnapshot(q, (snapshot) => {
-
       snapshot.docChanges().forEach((change) => {
-        let channelToModifyIndex = this.channels.findIndex(channel => channel.name === change.doc.data()['name'])
+        let channelToModifyIndex = this.channels.findIndex(
+          (channel) => channel.name === change.doc.data()['name']
+        );
         if (change.type === 'added') {
           if (channelToModifyIndex === -1)
-            this.channels.push(change.doc.data())
+            this.channels.push(change.doc.data());
         }
         if (change.type === 'modified') {
           if (channelToModifyIndex !== -1)
-            this.channels[channelToModifyIndex] = change.doc.data()
+            this.channels[channelToModifyIndex] = change.doc.data();
         }
         if (change.type === 'removed') {
-          this.channels.splice(channelToModifyIndex, 1)
+          this.channels.splice(channelToModifyIndex, 1);
         }
       });
     });
   }
 
-
   readChannels() {
-    const q = query(collection(this.firestore, "channels"));
+    const q = query(collection(this.firestore, 'channels'));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        let channelToModifyIndex = this.channels.findIndex(channel => channel.name === doc.data()['name'])
-        if (channelToModifyIndex === -1)
-          this.channels.push(doc.data());
+        let channelToModifyIndex = this.channels.findIndex(
+          (channel) => channel.name === doc.data()['name']
+        );
+        if (channelToModifyIndex === -1) this.channels.push(doc.data());
       });
       console.log('channels:', this.channels);
-
     });
   }
-
 
   async readMessagesOfChannels() {
     if (this.currentChannel.id) {
-      const unsub = onSnapshot(doc(this.firestore, "channels", this.currentChannel.id), (doc) => {
-        this.messages = doc.data()['messages']
-      });
+      const unsub = onSnapshot(
+        doc(this.firestore, 'channels', this.currentChannel.id),
+        (doc) => {
+          this.messages = doc.data()['messages'];
+        }
+      );
     }
   }
+<<<<<<< HEAD
 
 
 
@@ -138,5 +143,6 @@ export class FirestoreService {
       this.allUsers.push(user.data())
     });
   }
+=======
+>>>>>>> 62afac846136cfbb42609358732f127899a690af
 }
-

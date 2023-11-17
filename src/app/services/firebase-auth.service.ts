@@ -5,11 +5,11 @@ import {
   signInWithPopup,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  updateProfile,
   signOut,
   onAuthStateChanged,
   User,
   sendPasswordResetEmail,
+  updateEmail,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { DabubbleUser } from '../classes/user.class';
@@ -20,14 +20,10 @@ import { UserService } from './user.service';
   providedIn: 'root',
 })
 export class FirebaseAuthService {
-  constructor(
-    private auth: Auth,
-    private router: Router,
-    private firestoreService: FirestoreService,
-    private userService: UserService
-  ) {}
+  constructor(private auth: Auth, private userService: UserService) {}
 
   provider = new GoogleAuthProvider();
+  currentUser: User;
 
   async registerWithEmailAndPassword(user: DabubbleUser) {
     try {
@@ -36,7 +32,7 @@ export class FirebaseAuthService {
         user.email,
         user.password
       );
-      console.log('user created', userCredential);
+      console.log('user created user credentials:', userCredential);
       return userCredential;
     } catch (err) {
       console.error(err);
@@ -51,11 +47,21 @@ export class FirebaseAuthService {
         email,
         password
       );
-      this.userService.getUserData(userCredential);
+
       console.log('login successfull:', userCredential.user.uid);
     } catch (err) {
       console.error(err);
       throw err;
+    }
+  }
+
+  async updateEmailInFirebaseAuth(email: string) {
+    try {
+      await updateEmail(this.currentUser, email);
+
+      console.log('E-Mail-Adresse erfolgreich aktualisiert');
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -96,22 +102,20 @@ export class FirebaseAuthService {
     }
   }
 
-  checkAuth(): void {
-    onAuthStateChanged(this.auth, (user: User | null) => {
-      if (user) {
-        // Benutzer ist angemeldet
-        console.log('Benutzer ist angemeldet:', user);
-        return true;
-      } else {
-        // Benutzer ist nicht angemeldet
-        console.log('Benutzer ist nicht angemeldet');
-        console.log('Route login');
-        return false;
-        this.router.navigate(['login']);
-      }
+  async checkAuth() {
+    return new Promise<boolean>((resolve, reject) => {
+      onAuthStateChanged(this.auth, (user: User | null) => {
+        if (user) {
+          console.log('user is logged in check auth user data:', user.uid);
+          this.currentUser = user;
+          this.userService.getUserData(user.uid);
+          resolve(true);
+        } else {
+          console.log('user is not logged in');
+
+          resolve(false);
+        }
+      });
     });
   }
-
-
-
 }

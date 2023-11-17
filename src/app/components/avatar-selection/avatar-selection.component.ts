@@ -49,6 +49,6 @@ export class AvatarSelectionComponent {
 
     //animation triggern
     console.log('Ende');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/Home']);
   }
 }
