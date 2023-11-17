@@ -65,7 +65,9 @@ export class DialogEditProfileComponent {
       this.userService.user.toJson(),
       this.userService.user.userId
     );
-    await this.authService.updateEmailInFirebaseAuth(email);
+    if (this.userService.user.email !== 'testuser@test.com') {
+      await this.authService.updateEmailInFirebaseAuth(email);
+    }
   }
 
   closeDialog() {
