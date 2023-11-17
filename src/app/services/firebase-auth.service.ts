@@ -5,7 +5,6 @@ import {
   signInWithPopup,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  updateProfile,
   signOut,
   onAuthStateChanged,
   User,
@@ -96,22 +95,20 @@ export class FirebaseAuthService {
     }
   }
 
-  checkAuth(): void {
-    onAuthStateChanged(this.auth, (user: User | null) => {
-      if (user) {
-        // Benutzer ist angemeldet
-        console.log('Benutzer ist angemeldet:', user);
-        return true;
-      } else {
-        // Benutzer ist nicht angemeldet
-        console.log('Benutzer ist nicht angemeldet');
-        console.log('Route login');
-        return false;
-        this.router.navigate(['login']);
-      }
+  async checkAuth() {
+    return new Promise<boolean>((resolve, reject) => {
+      onAuthStateChanged(this.auth, (user: User | null) => {
+        if (user) {
+          console.log('user is logged in: ', user);
+          console.log('User Daten', this.userService.user);
+
+          resolve(true);
+        } else {
+          console.log('user is not logged in');
+
+          resolve(false);
+        }
+      });
     });
   }
-
-
-
 }
