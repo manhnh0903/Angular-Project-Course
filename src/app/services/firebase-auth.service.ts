@@ -9,6 +9,7 @@ import {
   onAuthStateChanged,
   User,
   sendPasswordResetEmail,
+  updateEmail,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { DabubbleUser } from '../classes/user.class';
@@ -19,14 +20,10 @@ import { UserService } from './user.service';
   providedIn: 'root',
 })
 export class FirebaseAuthService {
-  constructor(
-    private auth: Auth,
-    private router: Router,
-    private firestoreService: FirestoreService,
-    private userService: UserService
-  ) {}
+  constructor(private auth: Auth, private userService: UserService) {}
 
   provider = new GoogleAuthProvider();
+  currentUser: User;
 
   async registerWithEmailAndPassword(user: DabubbleUser) {
     try {
@@ -55,6 +52,16 @@ export class FirebaseAuthService {
     } catch (err) {
       console.error(err);
       throw err;
+    }
+  }
+
+  async updateEmailInFirebaseAuth(email: string) {
+    try {
+      await updateEmail(this.currentUser, email);
+
+      console.log('E-Mail-Adresse erfolgreich aktualisiert');
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -100,6 +107,7 @@ export class FirebaseAuthService {
       onAuthStateChanged(this.auth, (user: User | null) => {
         if (user) {
           console.log('user is logged in check auth user data:', user.uid);
+          this.currentUser = user;
           this.userService.getUserData(user.uid);
           resolve(true);
         } else {

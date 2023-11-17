@@ -10,7 +10,7 @@ export class UserService {
 
   constructor(private firestoreService: FirestoreService) {}
 
-  async getUserData(userId) {
+  async getUserData(userId: string) {
     const userDataObservable = await this.firestoreService.getLogedInUserData(
       userId
     );

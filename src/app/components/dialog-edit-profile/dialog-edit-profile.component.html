@@ -1,30 +1,53 @@
 <div class="profileContainer">
-    <div class="profileContent">
-        <div class="profileFlex">
-            <span class="menuSpan">Dein Profil bearbeiten</span>
-            <img routerLink="/home" class="closeIcon" src="assets/img/close.png">
-        </div>
-        <img class="profilePic" src="assets/img/profile_man1.png">
-
-        <div class="emailContainer">
-            <div class="emailDiv">
-                <img src="assets/img/account_icon.png">
-                <span class="adresseSpan">Vollständiger Name</span>
-            </div>
-            <input class="editInput">
-        </div>
-
-        <div class="emailContainer">
-            <div class="emailDiv">
-                <img src="assets/img/mail_icon.png">
-                <span class="adresseSpan">E-Mail-Adresse</span>
-            </div>
-            <input class="editInput">
-        </div>
-
-        <div class="buttons">
-            <button class="cancel">Abbrechen</button>
-            <button class="save">Speichern</button>
-        </div>
+  <form [formGroup]="editProfileForm" (ngSubmit)="editProfile()">
+    <div class="profileFlex">
+      <span class="menuSpan">Dein Profil bearbeiten</span>
+      <img routerLink="/home" class="closeIcon" src="assets/img/close.png" />
     </div>
+    <img
+      class="profilePic"
+      src="assets/img/{{ userService.user.profileImg }}"
+    />
+
+    <div class="emailContainer">
+      <div class="emailDiv">
+        <img src="assets/img/account_icon.png" />
+        <span class="adresseSpan">Vollständiger Name</span>
+      </div>
+      <div class="input-with-error-wrapper">
+        <input
+          formControlName="name"
+          placeholder="{{ userService.user.name }}"
+          class="editInput"
+        />
+        <span *ngIf="name.touched && name.hasError('required')"
+          >Bitte schreiben Sie einen Namen.</span
+        >
+      </div>
+    </div>
+
+    <div class="emailContainer">
+      <div class="emailDiv">
+        <img src="assets/img/mail_icon.png" />
+        <span class="adresseSpan">E-Mail-Adresse</span>
+      </div>
+      <div class="input-with-error-wrapper">
+        <input
+          formControlName="email"
+          placeholder="{{ userService.user.email }}"
+          class="editInput"
+        />
+        <span *ngIf="email.touched && email.hasError('required')"
+          >Diese E-Mail-Adresse ist leider ungültig.</span
+        >
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button type="button" (click)="closeDialog()" class="cancel">
+        Abbrechen
+      </button>
+      <button type="submit" class="save">Speichern</button>
+    </div>
+  </form>
 </div>

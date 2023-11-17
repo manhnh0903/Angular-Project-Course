@@ -24,7 +24,6 @@ export class HomeComponent {
     public fireService: FirestoreService,
     private userService: UserService
   ) {
-    // this.userService.getUserData()
     /*   this.fireService.ifChangesOnChannels(); */
   }
   showMenu = true;
