@@ -24,11 +24,8 @@ export class HomeComponent {
     public fireService: FirestoreService,
     private userService: UserService
   ) {
-
-
-    this.authService.checkAuth();
+    // this.userService.getUserData()
     /*   this.fireService.ifChangesOnChannels(); */
-
   }
   showMenu = true;
 
@@ -36,8 +33,6 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.getLoggedUser();
-   
-
   }
 
   hideMenu() {

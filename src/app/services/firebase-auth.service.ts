@@ -35,7 +35,7 @@ export class FirebaseAuthService {
         user.email,
         user.password
       );
-      console.log('user created', userCredential);
+      console.log('user created user credentials:', userCredential);
       return userCredential;
     } catch (err) {
       console.error(err);
@@ -50,7 +50,7 @@ export class FirebaseAuthService {
         email,
         password
       );
-      this.userService.getUserData(userCredential);
+
       console.log('login successfull:', userCredential.user.uid);
     } catch (err) {
       console.error(err);
@@ -99,9 +99,8 @@ export class FirebaseAuthService {
     return new Promise<boolean>((resolve, reject) => {
       onAuthStateChanged(this.auth, (user: User | null) => {
         if (user) {
-          console.log('user is logged in: ', user);
-          console.log('User Daten', this.userService.user);
-
+          console.log('user is logged in check auth user data:', user.uid);
+          this.userService.getUserData(user.uid);
           resolve(true);
         } else {
           console.log('user is not logged in');
