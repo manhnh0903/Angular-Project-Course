@@ -25,7 +25,7 @@ export class HomeComponent {
     private userService: UserService
   ) {
 
-
+    this.fireService.readAllUsers();
     this.authService.checkAuth();
     /*   this.fireService.ifChangesOnChannels(); */
 
@@ -36,7 +36,7 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.getLoggedUser();
-   
+
 
   }
 

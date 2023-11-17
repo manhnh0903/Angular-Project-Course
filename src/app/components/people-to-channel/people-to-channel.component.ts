@@ -21,12 +21,11 @@ export class PeopleToChannelComponent {
   labelPosition: 'before' | 'after' = 'after';
   disabled = false;
   currentChannel = new Channel()
-  allUsers = []
   filteredUsers = []
   usersName
   selectedUsers = []
 
-  constructor(private router: Router, private el: ElementRef, public fireService: FirestoreService) { this.readAllUsers(); }
+  constructor(private router: Router, private el: ElementRef, public fireService: FirestoreService) { }
 
   checkAllPeople() {
     this.allPeopleIsChecked = true;
@@ -65,18 +64,10 @@ export class PeopleToChannelComponent {
   }
 
 
-  async readAllUsers() {
-
-    const querySnapshot = await getDocs(collection(this.firestore, "users"));
-    querySnapshot.forEach((user) => {
-      this.allUsers.push(user.data())
-    });
-  }
-
 
   async addUsers() {
     if (this.allPeopleIsChecked) {
-      this.currentChannel.users = this.allUsers
+      this.currentChannel.users = this.fireService.allUsers
 
     } else {
       this.currentChannel.users = this.selectedUsers
@@ -86,7 +77,7 @@ export class PeopleToChannelComponent {
 
 
   async showFilteredUsers() {
-    this.filteredUsers = this.allUsers.filter(user => {
+    this.filteredUsers = this.fireService.allUsers.filter(user => {
       return user.name.toLowerCase().includes(this.usersName.toLowerCase())
     })
 

@@ -1,3 +1,22 @@
+<div *ngIf="addPeople" class="addPeopleDialog">
+    <div class="addPeopleDialogContent">
+        <div class="inputContainer">
+            <span>Leute hinzufügen</span>
+            <span class="channelsName">#{{fireService.currentChannel.name}}</span>
+            <input placeholder="Name eingeben" class="choosePeopleInput" [(ngModel)]="usersName"
+                (ngModelChange)="showFilteredUsers()">
+            <div *ngIf="filteredUsers.length>0" class="peopleToAdd">
+                <div *ngFor="let filteredUser of filteredUsers" class="filteredUser"
+                    (click)="addToSelectedUsers(filteredUser)">
+                    <img class="profileImg" src="assets/img/{{filteredUser.profileImg}}">
+                    <p>{{filteredUser.name}}</p>
+                </div>
+            </div>
+            <button (click)="addUsersToCurrentChannel()" [disabled]="isButtonDisabled"
+                [ngStyle]="{ 'background-color': buttonColor }" class="createButton">Hinzufügen</button>
+        </div>
+    </div>
+</div>
 <div class="channelsContainer">
     <header>
         <div class="headerLeft">
@@ -6,13 +25,12 @@
             <img class="arrowImg" src="assets/img/arrow_drop_down.png">
         </div>
         <div *ngIf="fireService.currentChannel" class="headerRight">
-            <div class="userPicsDiv">
-                <img [ngStyle]="{'margin-left': 0 + -i * 20 + 'px' }" class="usersImg"
-                    *ngFor="let user of fireService.currentChannel.users let i=index"
-                    src="assets/img/{{user.profileImg}}">
-            </div>
+
+            <img [ngStyle]="{'left':-28- i * 10 + 'px' }" class="usersImg"
+                *ngFor="let user of fireService.currentChannel.users let i=index" src="assets/img/{{user.profileImg}}">
+
             <p>{{fireService.currentChannel.users.length}}</p>
-            <img class="addUserIcon" src="assets/img/person_add.png">
+            <img (click)="openAddPeople()" class="addUserIcon" src="assets/img/person_add.png">
         </div>
     </header>
 
@@ -28,7 +46,6 @@
 
 
     <footer>
-
         <input placeholder="Type your message" [(ngModel)]="content">
         <img (click)="addMessageToChannel()" class="sendIcon" src="assets/img/send_icon.png">
     </footer>

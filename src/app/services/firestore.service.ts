@@ -9,6 +9,7 @@ import {
   setDoc,
   getDoc,
   query,
+  getDocs,
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 
@@ -17,12 +18,12 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 export class FirestoreService {
   private loggedInUserDataSubject = new BehaviorSubject<any>(null);
-
   unsubUsers;
   unsubUserData;
   currentChannel;
   channels = []
-  messages = []
+  messages = [];
+  allUsers = []
   constructor(private firestore: Firestore) {
     this.unsubUsers = this.subUsers();
   }
@@ -130,5 +131,12 @@ export class FirestoreService {
   }
 
 
+
+  async readAllUsers() {
+    const querySnapshot = await getDocs(collection(this.firestore, "users"));
+    querySnapshot.forEach((user) => {
+      this.allUsers.push(user.data())
+    });
+  }
 }
 
