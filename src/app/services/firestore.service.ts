@@ -21,14 +21,9 @@ export class FirestoreService {
   unsubUsers;
   unsubUserData;
   currentChannel;
-<<<<<<< HEAD
   channels = []
   messages = [];
   allUsers = []
-=======
-  channels = [];
-  messages = [];
->>>>>>> 62afac846136cfbb42609358732f127899a690af
   constructor(private firestore: Firestore) {
     this.unsubUsers = this.subUsers();
   }
@@ -133,7 +128,6 @@ export class FirestoreService {
       );
     }
   }
-<<<<<<< HEAD
 
 
 
@@ -143,6 +137,4 @@ export class FirestoreService {
       this.allUsers.push(user.data())
     });
   }
-=======
->>>>>>> 62afac846136cfbb42609358732f127899a690af
 }

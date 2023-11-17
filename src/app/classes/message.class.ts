@@ -3,6 +3,7 @@ interface MessageData {
   profileImg: string;
   content: string;
   thread: string;
+  reactions: {}
 }
 
 export class Message {
@@ -10,11 +11,13 @@ export class Message {
   profileImg: string;
   content: string;
   thread: string;
+  reactions: {}
   constructor(data?: MessageData) {
     this.sender = data?.sender || '';
     this.content = data?.content || '';
     this.profileImg = data?.profileImg || '';
-    this.thread = data?.thread 
+    this.thread = data?.thread;
+    this.reactions = data?.reactions;
   }
 
   toJSON() {
@@ -22,7 +25,8 @@ export class Message {
       sender: this.sender,
       profileImg: this.profileImg,
       content: this.content,
-      thread: this.thread
+      thread: this.thread,
+      reactions: {}
     };
   }
 }

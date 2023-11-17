@@ -28,10 +28,11 @@ export class ChannelsChatComponent {
   async addMessageToChannel() {
     const docReference = this.fireService.getDocRef('channels', this.fireService.currentChannel.id);
     this.message = new Message({
-      sender: this.fireService.currentChannel.users[0].name,
-      profileImg: this.fireService.currentChannel.users[0].profileImg,
+      sender: this.userService.user.name,
+      profileImg: this.userService.user.profileImg,
       content: this.content,
       thread: '',
+      reactions: {}
     });
     this.fireService.messages.push(this.message.toJSON())
     await updateDoc(docReference, {
@@ -53,8 +54,14 @@ export class ChannelsChatComponent {
 
 
   async showFilteredUsers() {
-    this.filteredUsers = this.fireService.allUsers.filter(user => {
-      return user.name.toLowerCase().includes(this.usersName.toLowerCase())
+
+    console.log(this.fireService.currentChannel.users);
+
+    this.filteredUsers = this.fireService.allUsers.filter(filteredUser => {
+      let indexOfUser = this.fireService.currentChannel.users.findIndex(user => user.email === filteredUser.email)
+      if (indexOfUser === -1) {
+        return filteredUser.name.toLowerCase().includes(this.usersName.toLowerCase())
+      }
     })
 
   }
