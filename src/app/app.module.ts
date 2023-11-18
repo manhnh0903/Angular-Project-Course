@@ -25,7 +25,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { ChannelsChatComponent } from './components/channels-chat/channels-chat.component';
-import { MatInputModule } from '@angular/material/input'
+import { MatInputModule } from '@angular/material/input';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { ReactionsComponent } from './reactions/reactions.component';
 @NgModule({
   declarations: [
 
@@ -43,8 +45,10 @@ import { MatInputModule } from '@angular/material/input'
     CreateChannelComponent,
     PeopleToChannelComponent,
     ChannelsChatComponent,
+    ReactionsComponent,
   ],
   imports: [
+    PickerComponent,
     MatRadioModule,
     FormsModule,
     MatCheckboxModule,

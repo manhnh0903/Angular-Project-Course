@@ -12,8 +12,9 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 50px;
+    padding: 20px;
     border-bottom: 1px solid rgb(228, 224, 224);
+    margin-bottom: 20px;
 }
 
 .headerLeft {
@@ -83,9 +84,10 @@ footer {
 
 .messagesSection {
     display: flex;
+    justify-content: space-between;
     width: 100%;
     margin-bottom: 60px;
-
+    position: relative;
 
 }
 
@@ -215,4 +217,8 @@ footer {
     width: fit-content;
     cursor: pointer;
     align-self: flex-end;
+}
+
+.messagesInfo {
+    display: flex;
 }

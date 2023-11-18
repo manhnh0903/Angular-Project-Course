@@ -1,0 +1,8 @@
+<div class="reactionDiv" >
+    <img (click)="openEmoji()" src="assets/img/add_reaction.png">
+    <img src="assets/img/comment.png">
+    <img src="assets/img/more_vert.png">
+    <emoji-mart [style]="{ position: 'absolute', bottom: '20px', right: '20px' }" *ngIf="emojiOpened" class="emojis"
+        (emojiClick)="addEmoji($event)" (tooltip)=false>
+    </emoji-mart>
+</div>

@@ -63,6 +63,9 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.createChannelDialog .mat-mdc-dialog-container .mdc-dialog__surface{
+.createChannelDialog .mat-mdc-dialog-container .mdc-dialog__surface {
   border-radius: 50px;
 }
+
+@import '@ctrl/ngx-emoji-mart/picker'
+

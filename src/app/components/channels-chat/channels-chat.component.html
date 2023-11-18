@@ -36,10 +36,13 @@
 
     <div *ngIf="fireService.messages.length>0">
         <div class="messagesSection" *ngFor="let message of fireService.messages">
-            <img class="messageUsersImg" src="assets/img/{{message.profileImg}}">
-            <div class="nameContentDiv">
-                <span class="nameOfSender">{{message.sender}}</span>
-                <span class="messageContent">{{message.content}}</span>
+            <app-reactions [currentMessage]="message"></app-reactions>
+            <div class="messagesInfo">
+                <img class="messageUsersImg" src="assets/img/{{message.profileImg}}">
+                <div class="nameContentDiv">
+                    <span class="nameOfSender">{{message.sender}}</span>
+                    <span class="messageContent">{{message.content}}</span>
+                </div>
             </div>
         </div>
     </div>

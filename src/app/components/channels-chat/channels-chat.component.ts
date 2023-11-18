@@ -14,8 +14,8 @@ export class ChannelsChatComponent {
   firestore = inject(Firestore)
   constructor(public fireService: FirestoreService, public route: ActivatedRoute, public userService: UserService, private el: ElementRef,) {
   }
-  messages
-  message
+
+  newMessage
   channelId
   content
   filteredUsers = []
@@ -25,16 +25,18 @@ export class ChannelsChatComponent {
   isButtonDisabled = true;
   buttonColor = 'gray';
 
+
+
   async addMessageToChannel() {
     const docReference = this.fireService.getDocRef('channels', this.fireService.currentChannel.id);
-    this.message = new Message({
+    this.newMessage = new Message({
       sender: this.userService.user.name,
       profileImg: this.userService.user.profileImg,
       content: this.content,
       thread: '',
-      reactions: {}
+      reactions: []
     });
-    this.fireService.messages.push(this.message.toJSON())
+    this.fireService.messages.push(this.newMessage.toJSON())
     await updateDoc(docReference, {
       messages: this.fireService.messages,
     });
@@ -103,6 +105,9 @@ export class ChannelsChatComponent {
       }
     });
   }
+
+
+
 }
 
 
