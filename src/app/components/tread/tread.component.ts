@@ -3,8 +3,12 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-tread',
   templateUrl: './tread.component.html',
-  styleUrls: ['./tread.component.scss']
+  styleUrls: ['./tread.component.scss'],
 })
 export class TreadComponent {
+  constructor() {}
 
+  closeThread() {
+    console.log('close');
+  }
 }

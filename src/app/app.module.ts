@@ -26,15 +26,11 @@ import { FormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { ChannelsChatComponent } from './components/channels-chat/channels-chat.component';
 import { MatInputModule } from '@angular/material/input';
-<<<<<<< HEAD
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { ReactionsComponent } from './reactions/reactions.component';
-=======
-import { TreadComponent } from './components/tread/tread.component'
->>>>>>> e01817ae5750d430bde60ca0895f195ba54eea39
+import { TreadComponent } from './components/tread/tread.component';
 @NgModule({
   declarations: [
-
     AppComponent,
     HeaderComponent,
     ProfileDialogComponent,
@@ -49,11 +45,8 @@ import { TreadComponent } from './components/tread/tread.component'
     CreateChannelComponent,
     PeopleToChannelComponent,
     ChannelsChatComponent,
-<<<<<<< HEAD
     ReactionsComponent,
-=======
     TreadComponent,
->>>>>>> e01817ae5750d430bde60ca0895f195ba54eea39
   ],
   imports: [
     PickerComponent,
@@ -68,9 +61,9 @@ import { TreadComponent } from './components/tread/tread.component'
     provideFirestore(() => getFirestore()),
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatInputModule
+    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
