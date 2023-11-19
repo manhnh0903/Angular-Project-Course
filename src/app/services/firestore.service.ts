@@ -21,23 +21,14 @@ export class FirestoreService {
   unsubUsers;
   unsubUserData;
   currentChannel;
-  channels = []
+  channels = [];
   messages = [];
-  allUsers = []
-  emailsForReactions = []
-  constructor(private firestore: Firestore) {
-    this.unsubUsers = this.subUsers();
-  }
+  allUsers = [];
+  emailsForReactions = [];
+  constructor(private firestore: Firestore) {}
 
   ngOnDestroy() {
-    this.unsubUsers();
     this.unsubUserData();
-  }
-
-  subUsers() {
-    return onSnapshot(this.getColRef('users'), (querySnapshot) => {
-      querySnapshot.forEach((singleUser) => { });
-    });
   }
 
   async getLogedInUserData(userId: string) {
@@ -130,13 +121,12 @@ export class FirestoreService {
     }
   }
 
-
-
   async readAllUsers() {
-    const querySnapshot = await getDocs(collection(this.firestore, "users"));
+    this.allUsers = [];
+    const querySnapshot = await getDocs(collection(this.firestore, 'users'));
+
     querySnapshot.forEach((user) => {
-      this.allUsers.push(user.data())
+      this.allUsers.push(user.data());
     });
   }
-
 }
