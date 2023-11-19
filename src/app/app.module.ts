@@ -28,11 +28,7 @@ import { ChannelsChatComponent } from './components/channels-chat/channels-chat.
 import { MatInputModule } from '@angular/material/input';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { ReactionsComponent } from './reactions/reactions.component';
-<<<<<<< HEAD
-import { TreadComponent } from './components/tread/tread.component'
-=======
 import { TreadComponent } from './components/tread/tread.component';
->>>>>>> 7b63df1d7bbf96fe8be719297522026e1427336f
 @NgModule({
   declarations: [
     AppComponent,

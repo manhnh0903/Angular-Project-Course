@@ -15,7 +15,7 @@ export class ReactionsComponent {
   emojiOpened = false
   @Input() currentMessage
   emoji
-  emojiAlreadyGiven = {}
+
 
   openEmoji() {
     if (this.emojiOpened === false) {
@@ -31,8 +31,7 @@ export class ReactionsComponent {
     this.createEmoji(event)
     let indexOfEmoji = this.currentMessage.reactions.findIndex(reaction => reaction.id === this.emoji.id);//I check if the selected emoji already exists on the message
     let indexOfCurrentMessage = this.fireService.messages.indexOf(this.currentMessage);//to find the message to change
-    let newIndexOfEmoji//to find the index of freshly added emoji
-    this.checkForEmoji(indexOfEmoji, newIndexOfEmoji)
+    this.checkForEmoji(indexOfEmoji)
     this.fireService.messages[indexOfCurrentMessage] = this.currentMessage;//I change the selected message
     await updateDoc(docReference, {
       messages: this.fireService.messages
@@ -50,33 +49,36 @@ export class ReactionsComponent {
       skin: event.emoji.skin,
       native: event.emoji.native,
       counter: 1,
-
     })
   }
 
 
-  checkForEmoji(indexOfEmoji, newIndexOfEmoji) {
+  checkForEmoji(indexOfEmoji) {
     if (indexOfEmoji === -1) {
-      this.ifEmojiIsNotOnMessage(newIndexOfEmoji)
-      this.currentMessage.reactions[indexOfEmoji].userIDs.push(this.userService.user.userId)
+      this.ifEmojiIsNotOnMessage(indexOfEmoji)
     } else if (this.currentMessage.reactions[indexOfEmoji].counter !== 0) {
-
-      if (this.checkForUsersIdForEmoji(indexOfEmoji))
-        this.currentMessage.reactions[indexOfEmoji].userIDs.push(this.userService.user.userId)
-      if (this.currentMessage.reactions[indexOfEmoji].userId !== this.userService.user.userId) {
-        this.increaseCounterOfExistingEmoji(indexOfEmoji)
-      } else {
-        this.decreaseCounterOfExistingEmoji(indexOfEmoji)
-        if (this.currentMessage.reactions[indexOfEmoji].counter === 0)
-          this.removeEmojiIfCounter0(indexOfEmoji)
-      }
+      this.ifEmojiIsOnMessage(indexOfEmoji)
     }
   }
 
 
-  ifEmojiIsNotOnMessage(newIndexOfEmoji) {
+  ifEmojiIsNotOnMessage(indexOfEmoji) {
     this.currentMessage.reactions.push(this.emoji.toJSON());
-    newIndexOfEmoji = this.currentMessage.reactions.findIndex(reaction => reaction.id === this.emoji.id)
+    indexOfEmoji = this.currentMessage.reactions.findIndex(reaction => reaction.id === this.emoji.id)
+    this.currentMessage.reactions[indexOfEmoji].userIDs.push(this.userService.user.userId)
+  }
+
+
+  ifEmojiIsOnMessage(indexOfEmoji) {
+    if (this.checkForUsersIdForEmoji(indexOfEmoji) === -1) {
+      this.increaseCounterOfExistingEmoji(indexOfEmoji)
+      this.currentMessage.reactions[indexOfEmoji].userIDs.push(this.userService.user.userId)
+    } else {
+      this.currentMessage.reactions[indexOfEmoji].userIDs.splice(this.checkForUsersIdForEmoji(indexOfEmoji), 1)
+      this.decreaseCounterOfExistingEmoji(indexOfEmoji)
+      if (this.currentMessage.reactions[indexOfEmoji].counter === 0)
+        this.removeEmojiIfCounter0(indexOfEmoji)
+    }
   }
 
 
@@ -96,7 +98,7 @@ export class ReactionsComponent {
 
 
   checkForUsersIdForEmoji(indexOfEmoji) {
-    return this.currentMessage.reactions[indexOfEmoji].userIDs.findIndex(userID => userID === this.userService.user.userId)
+    return this.currentMessage.reactions[indexOfEmoji].userIDs.findIndex(id => id === this.userService.user.userId)
   }
 
 

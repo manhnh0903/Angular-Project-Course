@@ -233,8 +233,14 @@ footer {
     align-items: center;
 }
 
+.messagesSection:nth-child(odd) {
+    flex-direction: row-reverse;
+}
+
 .reaction {
     display: flex;
     align-items: center;
     margin-left: 4px;
+
+
 }
