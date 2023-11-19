@@ -24,6 +24,7 @@ export class FirestoreService {
   channels = []
   messages = [];
   allUsers = []
+  emailsForReactions = []
   constructor(private firestore: Firestore) {
     this.unsubUsers = this.subUsers();
   }
@@ -35,7 +36,7 @@ export class FirestoreService {
 
   subUsers() {
     return onSnapshot(this.getColRef('users'), (querySnapshot) => {
-      querySnapshot.forEach((singleUser) => {});
+      querySnapshot.forEach((singleUser) => { });
     });
   }
 
@@ -137,4 +138,5 @@ export class FirestoreService {
       this.allUsers.push(user.data())
     });
   }
+
 }

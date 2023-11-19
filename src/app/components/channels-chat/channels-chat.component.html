@@ -34,7 +34,7 @@
         </div>
     </header>
 
-    <div *ngIf="fireService.messages.length>0">
+    <div *ngIf="fireService.messages">
         <div class="messagesSection" *ngFor="let message of fireService.messages">
             <app-reactions [currentMessage]="message"></app-reactions>
             <div class="messagesInfo">
@@ -42,6 +42,13 @@
                 <div class="nameContentDiv">
                     <span class="nameOfSender">{{message.sender}}</span>
                     <span class="messageContent">{{message.content}}</span>
+                    <div class="reactions" *ngIf="message.reactions.length>0 ">
+                        <div class="reaction" *ngFor="let emoji of message.reactions">
+                            <div>{{ emoji.native}}</div>
+                            <div *ngIf="emoji.counter">{{
+                                emoji.counter}}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

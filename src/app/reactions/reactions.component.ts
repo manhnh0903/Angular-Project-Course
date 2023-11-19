@@ -1,7 +1,8 @@
 import { Component, Input, inject } from '@angular/core';
-import { Firestore, updateDoc } from '@angular/fire/firestore';
+import { Firestore, loadBundle, updateDoc } from '@angular/fire/firestore';
 import { FirestoreService } from '../services/firestore.service';
 import { Reaction } from '../classes/reaction.class';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-reactions',
@@ -10,12 +11,11 @@ import { Reaction } from '../classes/reaction.class';
 })
 export class ReactionsComponent {
   firestore = inject(Firestore)
-  constructor(public fireService: FirestoreService) { }
+  constructor(public fireService: FirestoreService, public userService: UserService) { }
   emojiOpened = false
   @Input() currentMessage
-  reactions = []
   emoji
-
+  emojiAlreadyGiven = {}
 
   openEmoji() {
     if (this.emojiOpened === false) {
@@ -27,8 +27,20 @@ export class ReactionsComponent {
 
 
   async addEmoji(event) {
-
     const docReference = this.fireService.getDocRef('channels', this.fireService.currentChannel.id);
+    this.createEmoji(event)
+    let indexOfEmoji = this.currentMessage.reactions.findIndex(reaction => reaction.id === this.emoji.id);//I check if the selected emoji already exists on the message
+    let indexOfCurrentMessage = this.fireService.messages.indexOf(this.currentMessage);//to find the message to change
+    let newIndexOfEmoji//to find the index of freshly added emoji
+    this.checkForEmoji(indexOfEmoji, newIndexOfEmoji)
+    this.fireService.messages[indexOfCurrentMessage] = this.currentMessage;//I change the selected message
+    await updateDoc(docReference, {
+      messages: this.fireService.messages
+    });
+  }
+
+
+  createEmoji(event) {
     this.emoji = new Reaction({
       id: event.emoji.id,
       name: event.emoji.name,
@@ -36,13 +48,58 @@ export class ReactionsComponent {
       text: event.emoji.text,
       emoticons: event.emoji.emoticons,
       skin: event.emoji.skin,
-      native: event.emoji.native
-    })
-    this.reactions.push(this.emoji.toJSON())
-    this.currentMessage.reactions = this.reactions
+      native: event.emoji.native,
+      counter: 1,
 
-    await updateDoc(docReference, {
-      messages: this.fireService.messages
-    });
+    })
   }
+
+
+  checkForEmoji(indexOfEmoji, newIndexOfEmoji) {
+    if (indexOfEmoji === -1) {
+      this.ifEmojiIsNotOnMessage(newIndexOfEmoji)
+      this.currentMessage.reactions[indexOfEmoji].userIDs.push(this.userService.user.userId)
+    } else if (this.currentMessage.reactions[indexOfEmoji].counter !== 0) {
+
+      if (this.checkForUsersIdForEmoji(indexOfEmoji))
+        this.currentMessage.reactions[indexOfEmoji].userIDs.push(this.userService.user.userId)
+      if (this.currentMessage.reactions[indexOfEmoji].userId !== this.userService.user.userId) {
+        this.increaseCounterOfExistingEmoji(indexOfEmoji)
+      } else {
+        this.decreaseCounterOfExistingEmoji(indexOfEmoji)
+        if (this.currentMessage.reactions[indexOfEmoji].counter === 0)
+          this.removeEmojiIfCounter0(indexOfEmoji)
+      }
+    }
+  }
+
+
+  ifEmojiIsNotOnMessage(newIndexOfEmoji) {
+    this.currentMessage.reactions.push(this.emoji.toJSON());
+    newIndexOfEmoji = this.currentMessage.reactions.findIndex(reaction => reaction.id === this.emoji.id)
+  }
+
+
+  increaseCounterOfExistingEmoji(indexOfEmoji) {
+    return this.currentMessage.reactions[indexOfEmoji].counter++;
+  }
+
+
+  decreaseCounterOfExistingEmoji(indexOfEmoji) {
+    return this.currentMessage.reactions[indexOfEmoji].counter--;
+  }
+
+
+  removeEmojiIfCounter0(indexOfEmoji) {
+    this.currentMessage.reactions.splice(indexOfEmoji, 1)
+  }
+
+
+  checkForUsersIdForEmoji(indexOfEmoji) {
+    return this.currentMessage.reactions[indexOfEmoji].userIDs.findIndex(userID => userID === this.userService.user.userId)
+  }
+
+
 }
+
+

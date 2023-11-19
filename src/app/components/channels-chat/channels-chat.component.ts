@@ -13,6 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 export class ChannelsChatComponent {
   firestore = inject(Firestore)
   constructor(public fireService: FirestoreService, public route: ActivatedRoute, public userService: UserService, private el: ElementRef,) {
+
   }
 
   newMessage
@@ -50,22 +51,16 @@ export class ChannelsChatComponent {
     await updateDoc(docReference, {
       users: this.fireService.currentChannel.users
     });
-
   }
 
 
-
   async showFilteredUsers() {
-
-    console.log(this.fireService.currentChannel.users);
-
     this.filteredUsers = this.fireService.allUsers.filter(filteredUser => {
       let indexOfUser = this.fireService.currentChannel.users.findIndex(user => user.email === filteredUser.email)
       if (indexOfUser === -1) {
         return filteredUser.name.toLowerCase().includes(this.usersName.toLowerCase())
       }
     })
-
   }
 
 
@@ -77,9 +72,6 @@ export class ChannelsChatComponent {
         this.buttonColor = 'blue';
       }
     }
-
-    console.log(this.selectedUsers);
-
   }
 
 
@@ -88,7 +80,6 @@ export class ChannelsChatComponent {
     if (this.addPeople == false) {
       this.addPeople = true
     } else { this.addPeople = true }
-
   }
 
 

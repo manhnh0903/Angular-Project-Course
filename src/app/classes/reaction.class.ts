@@ -6,6 +6,8 @@ export class Reaction {
     emoticons;
     skin;
     native;
+    counter;
+    userIDs
     constructor(data?) {
         this.id = data?.id || '';
         this.name = data?.name || '';
@@ -14,7 +16,8 @@ export class Reaction {
         this.emoticons = data?.emoticons || [];
         this.skin = data?.skin || '';
         this.native = data?.native || '';
-
+        this.counter = data?.counter || '';
+        this.userIDs = data?.userIDs || []
     }
 
     toJSON() {
@@ -25,7 +28,9 @@ export class Reaction {
             text: this.text,
             emoticons: this.emoticons,
             skin: this.skin,
-            native: this.native
+            native: this.native,
+            counter: this.counter,
+            userIDs: this.userIDs
         };
     }
 }
