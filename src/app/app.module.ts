@@ -27,8 +27,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { ChannelsChatComponent } from './components/channels-chat/channels-chat.component';
 import { MatInputModule } from '@angular/material/input';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
-import { ReactionsComponent } from './reactions/reactions.component';
+import { ReactionsComponent } from './components/reactions/reactions.component';
 import { TreadComponent } from './components/tread/tread.component';
+
 @NgModule({
   declarations: [
     AppComponent,

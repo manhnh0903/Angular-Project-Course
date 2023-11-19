@@ -79,7 +79,11 @@ footer {
     }
 }
 
-.footerDiv {}
+.footerDiv {
+    position: fixed;
+    right: 0;
+    top: 0
+}
 
 .sendIcon {
     position: absolute;

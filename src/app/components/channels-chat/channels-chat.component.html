@@ -56,7 +56,9 @@
 
 
     <footer>
-        <input placeholder="Type your message" [(ngModel)]="content">
-        <img (click)="addMessageToChannel()" class="sendIcon" src="assets/img/send_icon.png">
+        <div class="footerDiv">
+            <input placeholder="Type your message" [(ngModel)]="content">
+            <img (click)="addMessageToChannel()" class="sendIcon" src="assets/img/send_icon.png">
+        </div>
     </footer>
 </div>

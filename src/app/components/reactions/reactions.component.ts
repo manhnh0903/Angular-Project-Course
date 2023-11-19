@@ -1,8 +1,8 @@
 import { Component, Input, inject } from '@angular/core';
 import { Firestore, loadBundle, updateDoc } from '@angular/fire/firestore';
-import { FirestoreService } from '../services/firestore.service';
-import { Reaction } from '../classes/reaction.class';
-import { UserService } from '../services/user.service';
+import { FirestoreService } from '../../services/firestore.service';
+import { Reaction } from '../../classes/reaction.class';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-reactions',
