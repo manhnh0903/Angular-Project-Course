@@ -2,6 +2,7 @@ import { AfterViewInit, Component, Input, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateChannelComponent } from '../create-channel/create-channel.component';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -9,7 +10,11 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./side-menu.component.scss'],
 })
 export class SideMenuComponent {
-  constructor(public dialog: MatDialog, public fireService: FirestoreService) {
+  constructor(
+    public dialog: MatDialog,
+    public fireService: FirestoreService,
+    private navService: HomeNavigationService
+  ) {
     this.fireService.ifChangesOnChannels();
   }
 
@@ -22,6 +27,11 @@ export class SideMenuComponent {
     } else {
       this.channelsClicked = false;
     }
+  }
+
+  openChanelChat(id: string) {
+    this.navService.setChatPath('chanel');
+    this.fireService.getCurrentChannel('channels', id);
   }
 
   openPM() {
@@ -40,7 +50,8 @@ export class SideMenuComponent {
     });
   }
 
-  openPmChat(email) {
-    console.log(email);
+  openPmChat(userId: string) {
+    this.navService.setChatPath('pm');
+    console.log(userId);
   }
 }

@@ -20,7 +20,7 @@
           </div>
           <div
             *ngFor="let channel of fireService.channels"
-            (click)="fireService.getCurrentChannel('channels', channel.id)"
+            (click)="openChanelChat(channel.id)"
             class="dropDownSubDiv"
           >
             <img class="subIcon" src="assets/img/tag.png" />
@@ -46,7 +46,7 @@
               <div
                 *ngFor="let user of fireService.allUsers"
                 class="dropDownSubDiv"
-                (click)="openPmChat(user.email)"
+                (click)="openPmChat(user.userId)"
               >
                 <img
                   class="profilePic"

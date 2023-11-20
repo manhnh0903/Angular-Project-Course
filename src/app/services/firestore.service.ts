@@ -10,6 +10,7 @@ import {
   getDoc,
   query,
   getDocs,
+  QuerySnapshot,
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 
@@ -19,7 +20,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 export class FirestoreService {
   private loggedInUserDataSubject = new BehaviorSubject<any>(null);
   unsubUsers;
-  unsubUserData;
+  unsubUserData: Function;
   currentChannel;
   channels = [];
   messages = [];
