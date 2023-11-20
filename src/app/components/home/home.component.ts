@@ -11,6 +11,7 @@ import {
 } from '@angular/fire/firestore';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -22,9 +23,9 @@ export class HomeComponent {
   constructor(
     private authService: FirebaseAuthService,
     public fireService: FirestoreService,
-    private userService: UserService
+    private userService: UserService,
+    public navService: HomeNavigationService
   ) {
-
     this.fireService.readAllUsers();
     this.authService.checkAuth();
     /*   this.fireService.ifChangesOnChannels(); */

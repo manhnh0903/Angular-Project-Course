@@ -29,6 +29,7 @@ import { MatInputModule } from '@angular/material/input';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { ReactionsComponent } from './components/reactions/reactions.component';
 import { TreadComponent } from './components/tread/tread.component';
+import { PmChatComponent } from './components/pm-chat/pm-chat.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { TreadComponent } from './components/tread/tread.component';
     ChannelsChatComponent,
     ReactionsComponent,
     TreadComponent,
+    PmChatComponent,
   ],
   imports: [
     PickerComponent,

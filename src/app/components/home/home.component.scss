@@ -59,6 +59,11 @@
   box-sizing: content-box;
 }
 
+app-pm-chat {
+  display: flex;
+  flex: 1;
+}
+
 /* .fullWidth {
     animation: expandChannelContainer 4s ease-in-out !important;
 }

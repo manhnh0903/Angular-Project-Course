@@ -6,8 +6,9 @@
   <div [ngClass]="{ hideMenu: !showMenu, showMenu: showMenu }">
     <app-side-menu></app-side-menu>
   </div>
-  <div class="chatContainer">
+  <div *ngIf="navService.mainChatPath === 'chanel'" class="chatContainer">
     <app-channels-chat></app-channels-chat>
   </div>
-  <app-tread></app-tread>
+  <app-pm-chat *ngIf="navService.mainChatPath === 'pm'"></app-pm-chat>
+  <app-tread *ngIf="navService.threadOpen"></app-tread>
 </div>

@@ -1,0 +1,14 @@
+section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  width: 100%;
+
+  background-color: white;
+  border-radius: 30px;
+
+  .header {
+    padding: 20px 45px;
+  }
+}
