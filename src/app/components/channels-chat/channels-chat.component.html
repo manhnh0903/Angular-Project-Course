@@ -17,7 +17,10 @@
         </div>
     </div>
 </div>
+
+
 <div class="channelsContainer">
+
     <header>
         <div class="headerLeft">
             <img class="tagImg" src="assets/img/tag.png">
@@ -33,6 +36,11 @@
             <img (click)="openAddPeople()" class="addUserIcon" src="assets/img/person_add.png">
         </div>
     </header>
+
+    <div class="dateDiv">
+        <div class="dateContent">{{fireService.getCurrentDate()}}
+        </div>
+    </div>
 
     <div *ngIf="fireService.messages">
         <div class="messagesSection" *ngFor="let message of fireService.messages">
@@ -56,9 +64,8 @@
 
 
     <footer>
-        <div class="footerDiv">
-            <input placeholder="Type your message" [(ngModel)]="content">
-            <img (click)="addMessageToChannel()" class="sendIcon" src="assets/img/send_icon.png">
-        </div>
+        <input placeholder="Type your message" [(ngModel)]="content">
+        <img (click)="addMessageToChannel()" class="sendIcon" src="assets/img/send_icon.png">
     </footer>
+
 </div>

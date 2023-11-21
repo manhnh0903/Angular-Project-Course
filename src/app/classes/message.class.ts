@@ -11,13 +11,15 @@ export class Message {
   profileImg: string;
   content: string;
   thread: string;
-  reactions: []
+  reactions: [];
+  timeWhenCreated
   constructor(data?: MessageData) {
     this.sender = data?.sender || '';
     this.content = data?.content || '';
     this.profileImg = data?.profileImg || '';
     this.thread = data?.thread;
     this.reactions = data?.reactions || [];
+    
   }
 
   toJSON() {

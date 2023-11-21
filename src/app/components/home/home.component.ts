@@ -28,6 +28,7 @@ export class HomeComponent {
     this.fireService.readAllUsers();
     this.authService.checkAuth();
     /*   this.fireService.ifChangesOnChannels(); */
+    this.fireService.getCurrentDate()
   }
   showMenu = true;
 
@@ -63,4 +64,7 @@ export class HomeComponent {
       /*     console.log(doc.id, " => ", doc.data()); */
     });
   }
+
+
+
 }

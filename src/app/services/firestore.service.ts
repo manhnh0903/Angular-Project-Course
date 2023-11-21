@@ -25,7 +25,35 @@ export class FirestoreService {
   messages = [];
   allUsers = [];
   emailsForReactions = [];
-  constructor(private firestore: Firestore) {}
+
+  currentDate
+  today
+
+
+  getCurrentDate() {
+    let datetime = new Date();
+    this.currentDate = this.getDaysName() + "," + datetime.getDate() + " "
+      + this.getsMonthName() + ","
+      + datetime.getFullYear()
+    return this.currentDate
+  }
+
+
+  getDaysName() {
+    const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const d = new Date();
+    let day = weekday[d.getDay()];
+    return day
+  }
+
+
+  getsMonthName() {
+    const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const d = new Date();
+    let name = month[d.getMonth()];
+    return name
+  }
+  constructor(private firestore: Firestore) { }
 
   ngOnDestroy() {
     this.unsubUserData();
@@ -61,6 +89,8 @@ export class FirestoreService {
     const channelRef = await getDoc(this.getDocRef(colName, docId));
     if (channelRef.exists()) {
       this.messages = channelRef.data()['messages'];
+      console.log(this.messages);
+      
       return (this.currentChannel = channelRef.data());
     } else {
       console.error('Document does not exist');
