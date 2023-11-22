@@ -1,12 +1,12 @@
 <section>
   <div class="header">
-    <div (click)="openUserDetails()" class="user-info">
+    <div *ngIf="recipient.name" (click)="openUserDetails()" class="user-info">
       <img
         class="profilePic"
-        src="./assets/img/0character.png"
+        src="./assets/img/{{ recipient.profileImg }}"
         alt="profileImg"
       />
-      <span>Tobias Bayer</span>
+      <span>{{ recipient.name }}</span>
     </div>
   </div>
   <div class="chat-area"></div>

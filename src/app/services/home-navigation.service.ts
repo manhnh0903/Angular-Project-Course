@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class HomeNavigationService {
-  mainChatPath: string = 'pm';
+  mainChatPath: string = 'chanel';
   pmRecipient: string;
   threadOpen: boolean = false;
 
