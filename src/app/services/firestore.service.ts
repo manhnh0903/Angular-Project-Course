@@ -12,13 +12,19 @@ import {
   getDocs,
   QuerySnapshot,
 } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirestoreService {
   private loggedInUserDataSubject = new BehaviorSubject<any>(null);
+  private subscribedDocDataSubject = new BehaviorSubject<any>(null);
+  subscribedDocData$: Observable<any> =
+    this.subscribedDocDataSubject.asObservable();
+  private destroy$ = new Subject<void>();
+
   unsubUsers;
   unsubUserData: Function;
   currentChannel;
@@ -43,6 +49,29 @@ export class FirestoreService {
     });
 
     return this.loggedInUserDataSubject.asObservable();
+  }
+
+  subscribeToDocData(colName: string, docId: string) {
+    const docRef = this.getDocRef(colName, docId);
+
+    // Wenn ein "Update" angefordert wurde, führe die Aktion aus
+    onSnapshot(docRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const docData = snapshot.data();
+        this.subscribedDocDataSubject.next(docData);
+      } else {
+        this.subscribedDocDataSubject.next(null);
+      }
+    });
+
+    // Rückgabewert für die Subscription
+    return this.subscribedDocData$.pipe(takeUntil(this.destroy$));
+  }
+
+  // Funktion zum Beenden der Subscription
+  unsubscribeFromDocData() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   async newUser(data: {}, userId: string) {
