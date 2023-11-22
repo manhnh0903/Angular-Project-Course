@@ -3,7 +3,7 @@ interface MessageData {
   profileImg: string;
   content: string;
   thread: string;
-  reactions: []
+  reactions: [];
 }
 
 export class Message {
@@ -11,12 +11,12 @@ export class Message {
   profileImg: string;
   content: string;
   thread: string;
-  reactions: []
+  reactions: [];
   constructor(data?: MessageData) {
     this.sender = data?.sender || '';
     this.content = data?.content || '';
     this.profileImg = data?.profileImg || '';
-    this.thread = data?.thread;
+    this.thread = data?.thread || '';
     this.reactions = data?.reactions || [];
   }
 
@@ -26,7 +26,7 @@ export class Message {
       profileImg: this.profileImg,
       content: this.content,
       thread: this.thread,
-      reactions: this.reactions
+      reactions: this.reactions,
     };
   }
 }

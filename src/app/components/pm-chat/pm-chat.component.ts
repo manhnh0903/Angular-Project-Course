@@ -4,8 +4,9 @@ import { DabubbleUser } from 'src/app/classes/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 import { UserService } from 'src/app/services/user.service';
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Message } from 'src/app/classes/message.class';
 
 @Component({
   selector: 'app-pm-chat',
@@ -27,15 +28,7 @@ export class PmChatComponent {
       message: ['', [Validators.required]],
     });
     this.subRecipientData();
-  }
-
-  subRecipientData() {
-    this.firestoreService.subscribedDocData$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
-        this.recipient = new DabubbleUser(data);
-        console.log(this.recipient);
-      });
+    this.getConversation();
   }
 
   ngOnDestroy() {
@@ -47,11 +40,33 @@ export class PmChatComponent {
     return this.sendMessageForm.get('message');
   }
 
+  subRecipientData() {
+    this.firestoreService.subscribedDocData$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.recipient = new DabubbleUser(data);
+        console.log(this.recipient);
+      });
+  }
+
+  getConversation() {
+    const conversations = this.userService.user.directMessages;
+
+    conversations.forEach((conversation) => {
+      console.log('Conversation', conversation);
+    });
+  }
+
   openUserDetails() {
-    console.log('Test Log', this.navService.pmRecipient);
+    console.log('Test Log', this.recipient);
   }
 
   sendPm() {
-    console.log(this.sendMessageForm.value.message);
+    const msg = new Message();
+
+    msg.content = this.sendMessageForm.value.message;
+    msg.profileImg = this.userService.user.profileImg;
+    msg.sender = this.userService.user.name;
+    console.log(msg);
   }
 }
