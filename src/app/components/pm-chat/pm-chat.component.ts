@@ -50,11 +50,10 @@ export class PmChatComponent {
   }
 
   getConversation() {
-    const conversations = this.userService.user.directMessages;
-
-    conversations.forEach((conversation) => {
-      console.log('Conversation', conversation);
-    });
+    // const conversations = this.userService.user.directMessages;
+    // conversations.forEach((conversation) => {
+    //   console.log('Conversation', conversation);
+    // });
   }
 
   openUserDetails() {
@@ -70,7 +69,7 @@ export class PmChatComponent {
     msg.profileImg = this.userService.user.profileImg;
     msg.sender = this.userService.user.name;
 
-    this.userService.user.directMessages.push();
+    // this.userService.user.directMessages.push();
     console.log(msg);
   }
 }
