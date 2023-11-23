@@ -64,9 +64,13 @@ export class PmChatComponent {
   sendPm() {
     const msg = new Message();
 
+    const name = this.recipient.name;
+
     msg.content = this.sendMessageForm.value.message;
     msg.profileImg = this.userService.user.profileImg;
     msg.sender = this.userService.user.name;
+
+    this.userService.user.directMessages.push();
     console.log(msg);
   }
 }

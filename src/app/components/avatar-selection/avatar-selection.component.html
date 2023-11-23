@@ -1,29 +1,39 @@
 <section>
-  <img
-    class="arrow-back"
-    src="./assets/img/arrow_back.svg"
-    alt="arrow_back"
-    [routerLink]="'/sign-up'"
-  />
-  <h2>Wähle deinen Avatar</h2>
-  <img
-    class="focus-img"
-    src="./assets/img/blank-avatar.svg"
-    alt="blank-avatar"
-  />
-  <div class="choose-wrapper">
-    <h3>Frederik Beck</h3>
-    <span>Aus der Liste wählen</span>
-    <div class="character-img-wrapper">
-      <img
-        *ngFor="let profilePic of profilePictures"
-        src="./assets/img/{{ profilePic }}"
-        alt="character-img"
-        (click)="setProfileImg(profilePic)"
-      />
+  <div class="header">
+    <img src="./assets/img/logo.png" alt="logo" />
+  </div>
+
+  <div class="avatar-selection-wrapper">
+    <img
+      class="arrow-back"
+      src="./assets/img/arrow_back.svg"
+      alt="arrow_back"
+      [routerLink]="'/sign-up'"
+    />
+    <h2>Wähle deinen Avatar</h2>
+    <img
+      class="focus-img"
+      src="./assets/img/blank-avatar.svg"
+      alt="blank-avatar"
+    />
+    <div class="choose-wrapper">
+      <h3>Frederik Beck</h3>
+      <span>Aus der Liste wählen</span>
+      <div class="character-img-wrapper">
+        <img
+          *ngFor="let profilePic of profilePictures"
+          src="./assets/img/{{ profilePic }}"
+          alt="character-img"
+          (click)="setProfileImg(profilePic)"
+        />
+      </div>
+    </div>
+    <div class="button-wrapper">
+      <button (click)="createUser()">Weiter</button>
     </div>
   </div>
-  <div class="button-wrapper">
-    <button (click)="createUser()">Weiter</button>
+  <div class="legal-wrapper">
+    <a class="link">Impressum</a>
+    <a class="link">Datenschutz</a>
   </div>
 </section>

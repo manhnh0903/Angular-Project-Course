@@ -1,55 +1,69 @@
-<form [formGroup]="loginForm" (ngSubmit)="submitFomrEmailAndPassword()">
-  <h2>Anmeldung</h2>
-  <p>
-    Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit
-    verwendest.
-  </p>
-  <div class="input-with-error-wrapper">
-    <div class="input-wrapper">
-      <img src="./assets/img/mail.svg" alt="mail-icon" />
-      <input
-        type="email"
-        placeholder="beispielname@email.com"
-        formControlName="email"
-      />
+<section>
+  <div class="login-header">
+    <img src="./assets/img/logo.png" alt="logo" />
+    <div class="register-wrapper">
+      <span>Neu bei DABubble?</span>
+      <a class="link" [routerLink]="'/sign-up'">Konto erstellen</a>
     </div>
-    <span
-      *ngIf="
-        email.touched && (email.hasError('required') || email.hasError('email'))
-      "
-      >Diese E-Mail-Adresse ist leider ungültig.</span
-    >
   </div>
-  <div class="input-with-error-wrapper">
-    <div class="input-wrapper">
-      <img src="./assets/img/lock.svg" alt="lock-icon" />
-      <input
-        type="password"
-        placeholder="Passwort"
-        formControlName="password"
-      />
+  <form [formGroup]="loginForm" (ngSubmit)="submitFomrEmailAndPassword()">
+    <h2>Anmeldung</h2>
+    <p>
+      Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit
+      verwendest.
+    </p>
+    <div class="input-with-error-wrapper">
+      <div class="input-wrapper">
+        <img src="./assets/img/mail.svg" alt="mail-icon" />
+        <input
+          type="email"
+          placeholder="beispielname@email.com"
+          formControlName="email"
+        />
+      </div>
+      <span
+        *ngIf="
+          email.touched &&
+          (email.hasError('required') || email.hasError('email'))
+        "
+        >Diese E-Mail-Adresse ist leider ungültig.</span
+      >
     </div>
-    <span
-      *ngIf="
-        password.touched &&
-        (password.hasError('required') || password.hasError('password'))
-      "
-      >Bitte geben Sie ein Passwort ein.</span
-    >
-  </div>
-  <a [routerLink]="'/forgot-password'">Passwort vergessen?</a>
-  <div class="seperator-wrapper">
-    <div></div>
-    <span class="seperator">Oder</span>
-    <div></div>
-  </div>
-  <button type="button" (click)="loginWithGoogle()" class="button-with-icon">
-    <img src="./assets/img/google.svg" alt="google-logo" />Anmelden mit Google
-  </button>
-  <div class="login-button-wrapper">
-    <button type="submit" class="login-button">Anmelden</button>
-    <button type="button" (click)="guestLogin()" class="guest-login-button">
-      Gäste-Login
+    <div class="input-with-error-wrapper">
+      <div class="input-wrapper">
+        <img src="./assets/img/lock.svg" alt="lock-icon" />
+        <input
+          type="password"
+          placeholder="Passwort"
+          formControlName="password"
+        />
+      </div>
+      <span
+        *ngIf="
+          password.touched &&
+          (password.hasError('required') || password.hasError('password'))
+        "
+        >Bitte geben Sie ein Passwort ein.</span
+      >
+    </div>
+    <a [routerLink]="'/forgot-password'">Passwort vergessen?</a>
+    <div class="seperator-wrapper">
+      <div></div>
+      <span class="seperator">Oder</span>
+      <div></div>
+    </div>
+    <button type="button" (click)="loginWithGoogle()" class="button-with-icon">
+      <img src="./assets/img/google.svg" alt="google-logo" />Anmelden mit Google
     </button>
+    <div class="login-button-wrapper">
+      <button type="submit" class="login-button">Anmelden</button>
+      <button type="button" (click)="guestLogin()" class="guest-login-button">
+        Gäste-Login
+      </button>
+    </div>
+  </form>
+  <div class="legal-wrapper">
+    <a class="link">Impressum</a>
+    <a class="link">Datenschutz</a>
   </div>
-</form>
+</section>
