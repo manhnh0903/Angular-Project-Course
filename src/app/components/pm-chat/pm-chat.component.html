@@ -25,7 +25,7 @@
     </div>
   </div>
   <div class="input-area">
-    <form [formGroup]="sendMessageForm" (ngSubmit)="setNewConversation()">
+    <form [formGroup]="sendMessageForm" (ngSubmit)="sendPm()">
       <textarea formControlName="message" cols="30" rows="10"></textarea>
       <button type="submit">Send</button>
     </form>

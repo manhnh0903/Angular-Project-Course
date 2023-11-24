@@ -29,7 +29,6 @@ export class PmChatComponent {
       message: ['', [Validators.required]],
     });
     this.subRecipientData();
-    this.getConversation();
     this.getConversationData();
   }
 
@@ -47,15 +46,9 @@ export class PmChatComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         this.recipient = new DabubbleUser(data);
+        this.getConversationData();
         console.log(this.recipient);
       });
-  }
-
-  getConversation() {
-    // const conversations = this.userService.user.directMessages;
-    // conversations.forEach((conversation) => {
-    //   console.log('Conversation', conversation);
-    // });
   }
 
   openUserDetails() {
