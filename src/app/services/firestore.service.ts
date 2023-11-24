@@ -11,6 +11,7 @@ import {
   query,
   getDocs,
   QuerySnapshot,
+  docData,
 } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -19,9 +20,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class FirestoreService {
   private loggedInUserDataSubject = new BehaviorSubject<any>(null);
-  private subscribedDocDataSubject = new BehaviorSubject<any>(null);
-  subscribedDocData$: Observable<any> =
-    this.subscribedDocDataSubject.asObservable();
+  private subscribedRecipientDataSubject = new BehaviorSubject<any>(null);
+  public subscribedRecipientData$: Observable<any> =
+    this.subscribedRecipientDataSubject.asObservable();
+  private conversationDataDataSubject = new BehaviorSubject<any>(null);
+  public conversationData$: Observable<any> =
+    this.conversationDataDataSubject.asObservable();
 
   unsubUsers;
   unsubUserData: Function;
@@ -55,9 +59,22 @@ export class FirestoreService {
     onSnapshot(docRef, (snapshot) => {
       if (snapshot.exists()) {
         const docData = snapshot.data();
-        this.subscribedDocDataSubject.next(docData);
+        this.subscribedRecipientDataSubject.next(docData);
       } else {
-        this.subscribedDocDataSubject.next(null);
+        this.subscribedRecipientDataSubject.next(null);
+      }
+    });
+  }
+
+  async subscribeToPMConversation(conversationID: string): Promise<void> {
+    const docRef = this.getDocRef('pms', conversationID);
+
+    onSnapshot(docRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const convData = snapshot.data();
+        this.conversationDataDataSubject.next(convData);
+      } else {
+        this.conversationDataDataSubject.next(null);
       }
     });
   }

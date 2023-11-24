@@ -4,7 +4,7 @@ import { DabubbleUser } from 'src/app/classes/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 import { UserService } from 'src/app/services/user.service';
-import { Subject } from 'rxjs';
+import { Subject, lastValueFrom } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Message } from 'src/app/classes/message.class';
 import { Conversation } from 'src/app/classes/conversation.class';
@@ -15,9 +15,11 @@ import { Conversation } from 'src/app/classes/conversation.class';
   styleUrls: ['./pm-chat.component.scss'],
 })
 export class PmChatComponent {
-  sendMessageForm: FormGroup;
+  public sendMessageForm: FormGroup;
   public recipient: DabubbleUser;
   private destroy$ = new Subject<void>();
+  private conversationId: string;
+  public messages: any[];
 
   constructor(
     private fb: FormBuilder,
@@ -42,7 +44,7 @@ export class PmChatComponent {
   }
 
   subRecipientData() {
-    this.firestoreService.subscribedDocData$
+    this.firestoreService.subscribedRecipientData$
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         this.recipient = new DabubbleUser(data);
@@ -102,10 +104,28 @@ export class PmChatComponent {
         (userId1 === logedInUserId && userId2 === recipientUserId) ||
         (userId1 === recipientUserId && userId2 === logedInUserId)
       ) {
-        console.log(doc.id);
+        this.conversationId = doc.id;
+        console.log('pm ID', this.conversationId);
+        this.subConversationData(this.conversationId);
       } else {
         console.log('Die Benutzer sind nicht in der Konversation');
       }
     });
+  }
+
+  async subConversationData(conversationId: string) {
+    await this.firestoreService.subscribeToPMConversation(conversationId);
+
+    this.firestoreService.conversationData$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.messages = [];
+        if (data && data.messages) {
+          data.messages.forEach((msg: string) => {
+            console.log(msg);
+            this.messages.push(msg);
+          });
+        }
+      });
   }
 }

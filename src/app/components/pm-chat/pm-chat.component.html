@@ -10,7 +10,7 @@
     </div>
   </div>
   <div class="chat-area">
-    <div class="msg-wrapper">
+    <div *ngFor="let message of messages" class="msg-wrapper">
       <img src="./assets/img/0character.png" alt="profileImg" />
       <div>
         <div class="msg-header">
@@ -18,7 +18,7 @@
           <p>14:25 Uhr</p>
         </div>
         <div class="msg-content">
-          <p>Hallo</p>
+          <p>{{ message }}</p>
         </div>
         <div class="thread-info"></div>
       </div>
