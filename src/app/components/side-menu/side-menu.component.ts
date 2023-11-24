@@ -53,7 +53,6 @@ export class SideMenuComponent {
   openPmChat(userId: string) {
     this.navService.pmRecipient = userId;
     this.navService.setChatPath('pm');
-
     this.fireService.subscribeToPmRecipient(userId);
   }
 }

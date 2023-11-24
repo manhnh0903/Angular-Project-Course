@@ -9,7 +9,7 @@ export class Conversation {
   userId2: string;
   messages: [];
 
-  constructor(data: ConversationData) {
+  constructor(data?: ConversationData) {
     this.userId1 = data?.userId1 || '';
     this.userId2 = data?.userId2 || '';
     this.messages = data?.messages || [];

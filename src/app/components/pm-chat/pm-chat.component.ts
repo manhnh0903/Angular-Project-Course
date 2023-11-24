@@ -7,6 +7,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Message } from 'src/app/classes/message.class';
+import { Conversation } from 'src/app/classes/conversation.class';
 
 @Component({
   selector: 'app-pm-chat',
@@ -29,6 +30,7 @@ export class PmChatComponent {
     });
     this.subRecipientData();
     this.getConversation();
+    this.getConversationData();
   }
 
   ngOnDestroy() {
@@ -71,5 +73,46 @@ export class PmChatComponent {
 
     // this.userService.user.directMessages.push();
     console.log(msg);
+  }
+
+  async setNewConversation() {
+    const conversation = new Conversation();
+
+    conversation.userId1 = this.userService.user.userId;
+    conversation.userId2 = this.recipient.userId;
+
+    await this.firestoreService.addNewConversation(conversation.toJson());
+
+    console.log('new conversation', conversation);
+  }
+
+  async getConversationData() {
+    const ConversationsSnapshot = await this.firestoreService.getPmsSnapshot();
+
+    ConversationsSnapshot.forEach((doc) => {
+      const docData = doc.data();
+
+      const userId1 = docData['userId1'];
+      const userId2 = docData['userId2'];
+      const logedInUserId = this.userService.user.userId;
+      const recipientUserId = this.recipient.userId;
+
+      console.log('user1', userId1, 'user2', userId2);
+      console.log(
+        'loged in user:',
+        logedInUserId,
+        'recipient user:',
+        recipientUserId
+      );
+
+      if (
+        (userId1 === logedInUserId && userId2 === recipientUserId) ||
+        (userId1 === recipientUserId && userId2 === logedInUserId)
+      ) {
+        console.log(doc.id);
+      } else {
+        console.log('Die Benutzer sind nicht in der Konversation');
+      }
+    });
   }
 }
