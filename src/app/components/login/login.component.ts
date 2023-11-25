@@ -32,7 +32,7 @@ export class LoginComponent {
   async submitFomrEmailAndPassword() {
     const email = this.email.value;
     const password = this.password.value;
-    console.log(this.loginForm);
+/*     console.log(this.loginForm); */
 
     if (this.loginForm.valid) {
       try {

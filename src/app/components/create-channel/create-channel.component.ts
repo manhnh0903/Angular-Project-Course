@@ -4,7 +4,7 @@ import { PeopleToChannelComponent } from '../people-to-channel/people-to-channel
 import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 import { Channel } from 'src/app/classes/channel.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
-
+import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 @Component({
   selector: 'app-create-channel',
   templateUrl: './create-channel.component.html',
@@ -16,7 +16,10 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 `]
 })
 export class CreateChannelComponent {
-  constructor(public dialog: MatDialog, public fireService: FirestoreService, public dialogRef: MatDialogRef<CreateChannelComponent>) { }
+
+  constructor(public dialog: MatDialog, public fireService: FirestoreService, public dialogRef: MatDialogRef<CreateChannelComponent>) {
+
+  }
   firestore = inject(Firestore)
   channel = new Channel()
   nameExists = false
@@ -50,5 +53,9 @@ export class CreateChannelComponent {
   }
 
 
+  onSubmit() {
 
+    this.openPeopleToChannelDialog();
+
+  }
 }

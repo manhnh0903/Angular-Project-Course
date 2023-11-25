@@ -16,7 +16,7 @@ export class UserService {
     );
     userDataObservable.subscribe((data) => {
       this.user = new DabubbleUser(data);
-      console.log('User service data:', this.user);
+/*       console.log('User service data:', this.user); */
     });
   }
 }

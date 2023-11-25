@@ -4,27 +4,29 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { Message } from 'src/app/classes/message.class';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 
 @Component({
   selector: 'app-channels-chat',
   templateUrl: './channels-chat.component.html',
   styleUrls: ['./channels-chat.component.scss']
 })
-export class ChannelsChatComponent {
+export class ChannelsChatComponent{
   firestore = inject(Firestore)
-  constructor(public fireService: FirestoreService, public route: ActivatedRoute, public userService: UserService, private el: ElementRef,) {
-
+  constructor(public fireService: FirestoreService, public navService: HomeNavigationService, public route: ActivatedRoute, public userService: UserService, private el: ElementRef,) {
+    this.fireService.readMessagesOfChannels()
   }
 
-  newMessage
-  channelId
-  content
-  filteredUsers = []
-  selectedUsers = []
-  usersName
-  addPeople = false
-  isButtonDisabled = true;
-  buttonColor = 'gray';
+
+  private newMessage
+  private channelId
+  public content
+  public filteredUsers = []
+  private selectedUsers = []
+  public usersName
+  public addPeople = false
+  public isButtonDisabled = true;
+  public buttonColor = 'gray';
 
 
 
@@ -35,12 +37,15 @@ export class ChannelsChatComponent {
       profileImg: this.userService.user.profileImg,
       content: this.content,
       thread: '',
-      reactions: []
+      reactions: [],
+      creationDate: this.fireService.getCurrentDate(),
+      id: this.addMessageId()
     });
-    this.fireService.messages.push(this.newMessage.toJSON())
+    this.fireService.currentChannel.messages.push(this.newMessage.toJSON())
     await updateDoc(docReference, {
-      messages: this.fireService.messages,
+      messages: this.fireService.currentChannel.messages,
     });
+    this.fireService.readMessagesOfChannels()
   }
 
 
@@ -98,9 +103,16 @@ export class ChannelsChatComponent {
   }
 
 
-
+  addMessageId() {
+    let id
+    if (this.fireService.currentChannel.messages.length > 0) {
+      id = this.fireService.currentChannel.messages[this.fireService.currentChannel.messages.length - 1].id + 1
+    } else {
+      id = 0
+    }
+    return id
+  }
 }
-
 
 
 

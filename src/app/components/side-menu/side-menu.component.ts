@@ -29,9 +29,13 @@ export class SideMenuComponent {
     }
   }
 
-  openChanelChat(id: string) {
+  async openChanelChat(id: string) {
+
+    await this.fireService.getCurrentChannel('channels', id);
+    this.fireService.getCurrentDate()
+    this.fireService.sortDates()
     this.navService.setChatPath('chanel');
-    this.fireService.getCurrentChannel('channels', id);
+    
   }
 
   openPM() {
@@ -52,6 +56,6 @@ export class SideMenuComponent {
 
   openPmChat(userId: string) {
     this.navService.setChatPath('pm');
-    console.log(userId);
+    /*     console.log(userId); */
   }
 }

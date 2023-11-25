@@ -18,11 +18,8 @@
             <img class="subIcon" src="assets/img/add_circle.png" />
             <p>Channel hinzufügen</p>
           </div>
-          <div
-            *ngFor="let channel of fireService.channels"
-            (click)="openChanelChat(channel.id)"
-            class="dropDownSubDiv"
-          >
+          <div *ngFor="let channel of fireService.channels"
+            (click)="openChanelChat(channel.id)" class="dropDownSubDiv">
             <img class="subIcon" src="assets/img/tag.png" />
             <p>{{ channel.name }}</p>
           </div>
@@ -43,15 +40,8 @@
               <span class="forHover">Direktnachrichten</span>
             </div>
             <div *ngIf="PMclicked" class="dropDownContent">
-              <div
-                *ngFor="let user of fireService.allUsers"
-                class="dropDownSubDiv"
-                (click)="openPmChat(user.userId)"
-              >
-                <img
-                  class="profilePic"
-                  src="./assets/img/{{ user.profileImg }}"
-                />
+              <div *ngFor="let user of fireService.allUsers" class="dropDownSubDiv" (click)="openPmChat(user.userId)">
+                <img class="profilePic" src="./assets/img/{{ user.profileImg }}" />
                 <p>{{ user.name }}</p>
               </div>
             </div>

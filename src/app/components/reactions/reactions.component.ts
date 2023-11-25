@@ -27,14 +27,14 @@ export class ReactionsComponent {
 
 
   async addEmoji(event) {
+    let indexOfCurrentMessage = this.fireService.currentChannel.messages.findIndex(message => message.id === this.currentMessage.id);//to find the message to change
     const docReference = this.fireService.getDocRef('channels', this.fireService.currentChannel.id);
     this.createEmoji(event)
     let indexOfEmoji = this.currentMessage.reactions.findIndex(reaction => reaction.id === this.emoji.id);//I check if the selected emoji already exists on the message
-    let indexOfCurrentMessage = this.fireService.messages.indexOf(this.currentMessage);//to find the message to change
     this.checkForEmoji(indexOfEmoji)
-    this.fireService.messages[indexOfCurrentMessage] = this.currentMessage;//I change the selected message
+    this.fireService.currentChannel.messages[indexOfCurrentMessage] = this.currentMessage;//I change the selected message
     await updateDoc(docReference, {
-      messages: this.fireService.messages
+      messages: this.fireService.currentChannel.messages
     });
   }
 

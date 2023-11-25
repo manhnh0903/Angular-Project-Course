@@ -20,6 +20,10 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
+  currentDate
+  today
+  public showMenu = true;
+  firestore = inject(Firestore);
   constructor(
     private authService: FirebaseAuthService,
     public fireService: FirestoreService,
@@ -31,9 +35,7 @@ export class HomeComponent {
     /*   this.fireService.ifChangesOnChannels(); */
     this.fireService.getCurrentDate()
   }
-  showMenu = true;
 
-  firestore = inject(Firestore);
 
   ngOnInit(): void {
     this.getLoggedUser();
@@ -62,10 +64,30 @@ export class HomeComponent {
     );
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      /*     console.log(doc.id, " => ", doc.data()); */
     });
   }
 
 
 
+
+
+
+
+
+
+
+  getDaysName() {
+    const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const d = new Date();
+    let day = weekday[d.getDay()];
+    return day
+  }
+
+
+  getsMonthName() {
+    const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const d = new Date();
+    let name = month[d.getMonth()];
+    return name
+  }
 }

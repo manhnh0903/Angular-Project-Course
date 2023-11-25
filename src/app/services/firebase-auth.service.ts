@@ -59,7 +59,7 @@ export class FirebaseAuthService {
     try {
       await updateEmail(this.currentUser, email);
 
-      console.log('E-Mail-Adresse erfolgreich aktualisiert');
+  /*     console.log('E-Mail-Adresse erfolgreich aktualisiert'); */
     } catch (err) {
       console.error(err);
     }
@@ -75,18 +75,18 @@ export class FirebaseAuthService {
   }
 
   async loginWithGoogle() {
-    console.log(this.provider);
+/*     console.log(this.provider); */
 
     try {
       const result = await signInWithPopup(this.auth, this.provider);
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       const user = result.user;
-
+/* 
       console.log('Result:', result);
       console.log('credential:', credential);
       console.log('token:', token);
-      console.log('user:', user);
+      console.log('user:', user); */
     } catch (err) {
       console.error(err.code);
       console.error(err.message);
@@ -106,12 +106,12 @@ export class FirebaseAuthService {
     return new Promise<boolean>((resolve, reject) => {
       onAuthStateChanged(this.auth, (user: User | null) => {
         if (user) {
-          console.log('user is logged in check auth user data:', user.uid);
+/*           console.log('user is logged in check auth user data:', user.uid); */
           this.currentUser = user;
           this.userService.getUserData(user.uid);
           resolve(true);
         } else {
-          console.log('user is not logged in');
+   /*        console.log('user is not logged in'); */
 
           resolve(false);
         }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import {
   Firestore,
   addDoc,
@@ -11,6 +11,7 @@ import {
   query,
   getDocs,
   QuerySnapshot,
+  where,
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 
@@ -23,42 +24,21 @@ export class FirestoreService {
   unsubUserData: Function;
   currentChannel;
   channels = [];
-  messages = [];
+  /*   messages: any[] = []; */
   allUsers = [];
   emailsForReactions = [];
-
   currentDate
-  today
-
-
-  getCurrentDate() {
-    let datetime = new Date();
-    this.currentDate = this.getDaysName() + "," + datetime.getDate() + " "
-      + this.getsMonthName() + ","
-      + datetime.getFullYear()
-    return this.currentDate
-  }
-
-
-  getDaysName() {
-    const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const d = new Date();
-    let day = weekday[d.getDay()];
-    return day
-  }
-
-
-  getsMonthName() {
-    const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    const d = new Date();
-    let name = month[d.getMonth()];
-    return name
-  }
+  sorted = []
   constructor(private firestore: Firestore) { }
+
+
+
+
 
   ngOnDestroy() {
     this.unsubUserData();
   }
+
 
   async getLogedInUserData(userId: string) {
     const docRef = this.getDocRef('users', userId);
@@ -73,31 +53,35 @@ export class FirestoreService {
     return this.loggedInUserDataSubject.asObservable();
   }
 
+
   async newUser(data: {}, userId: string) {
     const userRef = this.getDocRef('users', userId);
     await setDoc(userRef, data);
   }
 
+
   getColRef(colName: string) {
     return collection(this.firestore, colName);
   }
+
 
   getDocRef(colName: string, docId: string) {
     return doc(this.getColRef(colName), docId);
   }
 
+
   async getCurrentChannel(colName: string, docId: string) {
     const channelRef = await getDoc(this.getDocRef(colName, docId));
     if (channelRef.exists()) {
-      this.messages = channelRef.data()['messages'];
-      console.log(this.messages);
-      
-      return (this.currentChannel = channelRef.data());
+
+      this.currentChannel = channelRef.data()
+      this.currentChannel.messages = channelRef.data()['messages'];
     } else {
       console.error('Document does not exist');
       return null;
     }
   }
+
 
   async updateDocumentInFirebase() {
     await updateDoc(
@@ -105,6 +89,7 @@ export class FirestoreService {
       this.currentChannel.toJson()
     );
   }
+
 
   ifChangesOnChannels() {
     const q = query(this.getColRef('channels'));
@@ -128,36 +113,93 @@ export class FirestoreService {
     });
   }
 
-  readChannels() {
-    const q = query(collection(this.firestore, 'channels'));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        let channelToModifyIndex = this.channels.findIndex(
-          (channel) => channel.name === doc.data()['name']
-        );
-        if (channelToModifyIndex === -1) this.channels.push(doc.data());
+
+  /*   readChannels() {
+      const q = query(collection(this.firestore, 'channels'));
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          let channelToModifyIndex = this.channels.findIndex(
+            (channel) => channel.name === doc.data()['name']
+          );
+          if (channelToModifyIndex === -1) this.channels.push(doc.data());
+        });
       });
-      console.log('channels:', this.channels);
-    });
-  }
+    } */
+
 
   async readMessagesOfChannels() {
-    if (this.currentChannel.id) {
-      const unsub = onSnapshot(
-        doc(this.firestore, 'channels', this.currentChannel.id),
-        (doc) => {
-          this.messages = doc.data()['messages'];
-        }
-      );
-    }
+    const unsub = onSnapshot(
+      doc(this.firestore, "channels", this.currentChannel.id),
+      { includeMetadataChanges: true },
+      (doc) => {
+        this.currentChannel.messages = doc.data()['messages']
+
+
+      });
+    this.sortDates()
+    console.log('sorted:', this.sorted, 'messages:', this.currentChannel.messages);
+
   }
+
 
   async readAllUsers() {
     this.allUsers = [];
     const querySnapshot = await getDocs(collection(this.firestore, 'users'));
-
     querySnapshot.forEach((user) => {
       this.allUsers.push(user.data());
     });
   }
+
+
+  dateNameChecker(message) {
+    if (message.creationDate !== this.getCurrentDate()) {
+      return message.creationDate
+    } else {
+      return 'today'
+    }
+  }
+
+  sortDates() {
+    if (this.currentChannel && this.currentChannel.messages) {
+      this.sorted = this.currentChannel.messages.sort((a, b) => {
+        let dateA = new Date(a.creationDate.split('.').reverse().join('.')).getTime();
+        let dateB = new Date(b.creationDate.split('.').reverse().join('.')).getTime();
+        return dateA - dateB;
+      });
+    }
+  }
+
+
+  isDifferentDate(message: any, i: number): boolean {
+    if (message && i > 0) {
+      return message.creationDate !== this.sorted[i - 1].creationDate
+    }
+    return true;
+  }
+
+
+  getCurrentDate() {
+    let datetime = new Date();
+    this.currentDate = datetime.getDate() + '.' + (datetime.getMonth() + 1) + '.' + datetime.getFullYear();
+    return this.currentDate;
+  }
+
+
+
+  getDaysName() {
+    const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const d = new Date();
+    let day = weekday[d.getDay()];
+    return day
+  }
+
+
+  getsMonthName() {
+    const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const d = new Date();
+    let name = month[d.getMonth()];
+    return name
+  }
+
+
 }

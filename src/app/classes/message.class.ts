@@ -3,7 +3,9 @@ interface MessageData {
   profileImg: string;
   content: string;
   thread: string;
-  reactions: []
+  reactions: [];
+  creationDate: number;
+  id: number
 }
 
 export class Message {
@@ -12,14 +14,18 @@ export class Message {
   content: string;
   thread: string;
   reactions: [];
-  timeWhenCreated
+  timeWhenCreated;
+  creationDate;
+  id;
+
   constructor(data?: MessageData) {
     this.sender = data?.sender || '';
     this.content = data?.content || '';
     this.profileImg = data?.profileImg || '';
     this.thread = data?.thread;
     this.reactions = data?.reactions || [];
-    
+    this.creationDate = data?.creationDate;
+    this.id = data?.id;
   }
 
   toJSON() {
@@ -28,7 +34,9 @@ export class Message {
       profileImg: this.profileImg,
       content: this.content,
       thread: this.thread,
-      reactions: this.reactions
+      reactions: this.reactions,
+      creationDate: this.creationDate,
+      id: this.id
     };
   }
 }
