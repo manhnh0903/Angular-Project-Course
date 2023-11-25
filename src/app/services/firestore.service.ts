@@ -12,14 +12,22 @@ import {
   getDocs,
   QuerySnapshot,
   where,
+  docData,
 } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirestoreService {
   private loggedInUserDataSubject = new BehaviorSubject<any>(null);
+  private subscribedRecipientDataSubject = new BehaviorSubject<any>(null);
+  public subscribedRecipientData$: Observable<any> =
+    this.subscribedRecipientDataSubject.asObservable();
+  private conversationDataDataSubject = new BehaviorSubject<any>(null);
+  public conversationData$: Observable<any> =
+    this.conversationDataDataSubject.asObservable();
+
   unsubUsers;
   unsubUserData: Function;
   currentChannel;
@@ -53,6 +61,43 @@ export class FirestoreService {
     return this.loggedInUserDataSubject.asObservable();
   }
 
+  subscribeToPmRecipient(userId: string) {
+    const docRef = this.getDocRef('users', userId);
+
+    onSnapshot(docRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const docData = snapshot.data();
+        this.subscribedRecipientDataSubject.next(docData);
+      } else {
+        this.subscribedRecipientDataSubject.next(null);
+      }
+    });
+  }
+
+  async subscribeToPMConversation(conversationID: string): Promise<void> {
+    const docRef = this.getDocRef('pms', conversationID);
+
+    onSnapshot(docRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const convData = snapshot.data();
+        this.conversationDataDataSubject.next(convData);
+      } else {
+        this.conversationDataDataSubject.next(null);
+      }
+    });
+  }
+
+  async addNewConversation(data: {}) {
+    const colRef = this.getColRef('pms');
+
+    await addDoc(colRef, data);
+  }
+
+  async getPmsSnapshot() {
+    const colRef = this.getColRef('pms');
+
+    return await getDocs(colRef);
+  }
 
   async newUser(data: {}, userId: string) {
     const userRef = this.getDocRef('users', userId);

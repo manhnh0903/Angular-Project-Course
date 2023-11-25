@@ -4,8 +4,8 @@ interface UserData {
   userId: string;
   profileImg: string;
   onlineStatus: boolean;
-  directMessages: [{}];
   chanels: [];
+
   password: string;
 }
 
@@ -15,7 +15,6 @@ export class DabubbleUser {
   userId: string;
   profileImg: string;
   onlineStatus: boolean;
-  directMessages: [{}];
   chanels: [];
 
   password: string;
@@ -26,9 +25,6 @@ export class DabubbleUser {
     this.userId = data?.userId || '';
     this.profileImg = data?.profileImg || '';
     this.onlineStatus = data?.onlineStatus || false;
-    this.directMessages = data?.directMessages || [
-      { user: 'Test', profileImg: 'img1' },
-    ];
     this.chanels = data?.chanels || [];
 
     this.password = data?.password || '';
@@ -41,7 +37,6 @@ export class DabubbleUser {
       userId: this.userId,
       profileImg: this.profileImg,
       onlineStatus: this.onlineStatus,
-      directMessages: this.directMessages,
       chanels: this.chanels,
 
       password: this.password, //passwort besser nicht abspeichern??

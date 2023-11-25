@@ -1,15 +1,29 @@
 <section>
   <div class="header">
-    <div (click)="openUserDetails()" class="user-info">
+    <div *ngIf="recipient.name" (click)="openUserDetails()" class="user-info">
       <img
         class="profilePic"
-        src="./assets/img/0character.png"
+        src="./assets/img/{{ recipient.profileImg }}"
         alt="profileImg"
       />
-      <span>Tobias Bayer</span>
+      <span>{{ recipient.name }}</span>
     </div>
   </div>
-  <div class="chat-area"></div>
+  <div class="chat-area">
+    <div *ngFor="let message of messages" class="msg-wrapper">
+      <img src="./assets/img/0character.png" alt="profileImg" />
+      <div>
+        <div class="msg-header">
+          <span>Tobias Bayer</span>
+          <p>14:25 Uhr</p>
+        </div>
+        <div class="msg-content">
+          <p>{{ message }}</p>
+        </div>
+        <div class="thread-info"></div>
+      </div>
+    </div>
+  </div>
   <div class="input-area">
     <form [formGroup]="sendMessageForm" (ngSubmit)="sendPm()">
       <textarea formControlName="message" cols="30" rows="10"></textarea>

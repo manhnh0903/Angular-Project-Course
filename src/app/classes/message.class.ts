@@ -22,7 +22,7 @@ export class Message {
     this.sender = data?.sender || '';
     this.content = data?.content || '';
     this.profileImg = data?.profileImg || '';
-    this.thread = data?.thread;
+    this.thread = data?.thread || '';
     this.reactions = data?.reactions || [];
     this.creationDate = data?.creationDate;
     this.id = data?.id;
