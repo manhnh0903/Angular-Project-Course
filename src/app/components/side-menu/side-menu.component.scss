@@ -1,11 +1,12 @@
 .sideMenu {
-  margin-left: 50px;
-  width: 420px;
-  min-height: 80vh;
-  border-radius: 30px;
-  background: var(--White, #fff);
-  padding-top: 20px;
-  padding-bottom: 20px;
+    margin-left: 50px;
+    width: 420px;
+    height: 100%;
+    border-radius: 30px;
+    background: var(--White, #FFF);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    overflow-y: auto;
 }
 
 .sideMenuContent {

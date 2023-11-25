@@ -8,7 +8,7 @@ export class HomeNavigationService {
   pmRecipient: string;
   threadOpen: boolean = false;
 
-  constructor() {}
+  constructor() { }
 
   setChatPath(path: string) {
     this.mainChatPath = path;
@@ -17,4 +17,9 @@ export class HomeNavigationService {
   toggleThread() {
     this.threadOpen = !this.threadOpen;
   }
+
+
+  
+
+
 }

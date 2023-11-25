@@ -4,7 +4,8 @@ interface MessageData {
   content: string;
   thread: string;
   reactions: [];
-  // sendTime: number;
+  creationDate: number;
+  id: number;
 }
 
 export class Message {
@@ -13,7 +14,9 @@ export class Message {
   content: string;
   thread: string;
   reactions: [];
-  // sendTime: number;
+  timeWhenCreated;
+  creationDate;
+  id;
 
   constructor(data?: MessageData) {
     this.sender = data?.sender || '';
@@ -21,7 +24,8 @@ export class Message {
     this.profileImg = data?.profileImg || '';
     this.thread = data?.thread || '';
     this.reactions = data?.reactions || [];
-    // this.sendTime = new Date().getTime();
+    this.creationDate = data?.creationDate;
+    this.id = data?.id;
   }
 
   toJSON() {
@@ -31,7 +35,8 @@ export class Message {
       content: this.content,
       thread: this.thread,
       reactions: this.reactions,
-      // sendTime: this.sendTime,
+      creationDate: this.creationDate,
+      id: this.id,
     };
   }
 }

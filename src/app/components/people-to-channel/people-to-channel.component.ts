@@ -55,7 +55,6 @@ export class PeopleToChannelComponent {
       this.currentChannel.toJSON()
     )
     const createdChannelRef = doc(this.firestore, "channels", createdChannel.id);
-    console.log(createdChannelRef);
     await updateDoc(createdChannelRef, {
       id: createdChannel.id
     });

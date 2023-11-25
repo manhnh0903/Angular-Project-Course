@@ -67,5 +67,8 @@ body {
   border-radius: 50px;
 }
 
-@import '@ctrl/ngx-emoji-mart/picker'
+app-home {
+  height: 100%
+}
 
+@import '@ctrl/ngx-emoji-mart/picker'
