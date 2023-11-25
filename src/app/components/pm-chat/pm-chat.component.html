@@ -10,15 +10,15 @@
     </div>
   </div>
   <div class="chat-area">
-    <div *ngFor="let message of messages" class="msg-wrapper">
-      <img src="./assets/img/0character.png" alt="profileImg" />
+    <div *ngFor="let message of conversation.messages" class="msg-wrapper">
+      <img src="./assets/img/{{ message.profileImg }}" alt="profileImg" />
       <div>
         <div class="msg-header">
-          <span>Tobias Bayer</span>
+          <span>{{ message.sender }}</span>
           <p>14:25 Uhr</p>
         </div>
         <div class="msg-content">
-          <p>{{ message }}</p>
+          <p>{{ message.content }}</p>
         </div>
         <div class="thread-info"></div>
       </div>

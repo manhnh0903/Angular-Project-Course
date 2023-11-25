@@ -15,6 +15,8 @@ import { Conversation } from 'src/app/classes/conversation.class';
   styleUrls: ['./pm-chat.component.scss'],
 })
 export class PmChatComponent {
+  public conversation: Conversation = new Conversation();
+
   public sendMessageForm: FormGroup;
   public recipient: DabubbleUser;
   private destroy$ = new Subject<void>();
@@ -60,14 +62,17 @@ export class PmChatComponent {
   sendPm() {
     const msg = new Message();
 
-    const name = this.recipient.name;
-
     msg.content = this.sendMessageForm.value.message;
     msg.profileImg = this.userService.user.profileImg;
     msg.sender = this.userService.user.name;
 
-    // this.userService.user.directMessages.push();
-    console.log(msg);
+    this.conversation.messages.push(msg);
+    console.log('send conversation', this.conversation.toJson());
+
+    this.firestoreService.updateConversation(
+      this.conversationId,
+      this.conversation.toJson()
+    );
   }
 
   async setNewConversation() {
@@ -105,6 +110,8 @@ export class PmChatComponent {
         (userId1 === recipientUserId && userId2 === logedInUserId)
       ) {
         this.conversationId = doc.id;
+        this.conversation.userId1 = userId1;
+        this.conversation.userId2 = userId2;
         console.log('pm ID', this.conversationId);
         this.subConversationData(this.conversationId);
       } else {
@@ -119,11 +126,13 @@ export class PmChatComponent {
     this.firestoreService.conversationData$
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
-        this.messages = [];
+        this.conversation.messages = [];
         if (data && data.messages) {
-          data.messages.forEach((msg: string) => {
-            console.log(msg);
-            this.messages.push(msg);
+          data.messages.forEach((msg: Message) => {
+            const message = new Message(msg);
+            this.conversation.messages.push(message);
+
+            console.log(this.conversation.messages[0].sender);
           });
         }
       });

@@ -85,6 +85,12 @@ export class FirestoreService {
     await addDoc(colRef, data);
   }
 
+  async updateConversation(conversationID: string, data: {}) {
+    const docRef = this.getDocRef('pms', conversationID);
+
+    await setDoc(docRef, data);
+  }
+
   async getPmsSnapshot() {
     const colRef = this.getColRef('pms');
 
