@@ -12,9 +12,8 @@ import {
   getDocs,
   QuerySnapshot,
   where,
-  docData,
 } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -27,16 +26,15 @@ export class FirestoreService {
   private conversationDataDataSubject = new BehaviorSubject<any>(null);
   public conversationData$: Observable<any> =
     this.conversationDataDataSubject.asObservable();
-
   unsubUsers;
   unsubUserData: Function;
-  currentChannel;
-  channels = [];
-  /*   messages: any[] = []; */
-  allUsers = [];
-  emailsForReactions = [];
-  currentDate
-  sorted = []
+  public currentChannel;
+  public channels = [];
+  /*  private messages: any[] = []; */
+  public allUsers = [];
+  public emailsForReactions = [];
+  private currentDate
+  public sorted = []
   constructor(private firestore: Firestore) { }
 
 
@@ -105,6 +103,7 @@ export class FirestoreService {
   }
 
 
+
   getColRef(colName: string) {
     return collection(this.firestore, colName);
   }
@@ -159,32 +158,19 @@ export class FirestoreService {
   }
 
 
-  /*   readChannels() {
-      const q = query(collection(this.firestore, 'channels'));
-      const unsubscribe = onSnapshot(q, (querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          let channelToModifyIndex = this.channels.findIndex(
-            (channel) => channel.name === doc.data()['name']
-          );
-          if (channelToModifyIndex === -1) this.channels.push(doc.data());
-        });
-      });
-    } */
-
-
   async readMessagesOfChannels() {
-    const unsub = onSnapshot(
-      doc(this.firestore, "channels", this.currentChannel.id),
-      { includeMetadataChanges: true },
-      (doc) => {
-        this.currentChannel.messages = doc.data()['messages']
-
-
-      });
-    this.sortDates()
-    console.log('sorted:', this.sorted, 'messages:', this.currentChannel.messages);
-
+    if (this.currentChannel && this.currentChannel.id) {
+      const unsub = onSnapshot(
+        doc(this.firestore, "channels", this.currentChannel.id),
+        { includeMetadataChanges: true },
+        (doc) => {
+          this.currentChannel.messages = doc.data()['messages'];
+          this.sortDates();
+        }
+      )
+    }
   }
+
 
 
   async readAllUsers() {

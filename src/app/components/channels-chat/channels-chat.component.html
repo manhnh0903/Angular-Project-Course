@@ -39,7 +39,7 @@
 
 
 
-    <div *ngIf="fireService.currentChannel.messages">
+    <div *ngIf="fireService.currentChannel">
         <div *ngFor="let message of fireService.sorted let i=index">
             <div class="dateDiv" *ngIf="fireService.isDifferentDate(message, i) || i===0">
                 <div class="dateContent">

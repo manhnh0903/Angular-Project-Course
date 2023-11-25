@@ -58,6 +58,6 @@ export class SideMenuComponent {
     this.navService.pmRecipient = userId;
     this.navService.setChatPath('pm');
     /*     console.log(userId); */
-    this.fireService.subscribeToPmRecipient(userId);
+ /*    this.fireService.subscribeToPmRecipient(userId); */
   }
 }
