@@ -14,9 +14,9 @@ export class Message {
   content: string;
   thread: string;
   reactions: [];
-  timeWhenCreated;
-  creationDate;
-  id;
+  timeWhenCreated: string;
+  creationDate: number;
+  id: number;
 
   constructor(data?: MessageData) {
     this.sender = data?.sender || '';
@@ -24,8 +24,8 @@ export class Message {
     this.profileImg = data?.profileImg || '';
     this.thread = data?.thread || '';
     this.reactions = data?.reactions || [];
-    this.creationDate = data?.creationDate;
-    this.id = data?.id;
+    this.creationDate = data?.creationDate || 0;
+    this.id = data?.id || 0;
   }
 
   toJSON() {

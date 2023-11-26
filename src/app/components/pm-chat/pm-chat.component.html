@@ -10,6 +10,9 @@
     </div>
   </div>
   <div class="chat-area">
+    <div *ngIf="conversation.messages.length === 0">
+      NOCH KEINE NACHRICHTEN WRAPPER
+    </div>
     <div *ngFor="let message of conversation.messages" class="msg-wrapper">
       <img src="./assets/img/{{ message.profileImg }}" alt="profileImg" />
       <div>

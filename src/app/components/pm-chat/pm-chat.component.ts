@@ -4,7 +4,7 @@ import { DabubbleUser } from 'src/app/classes/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 import { UserService } from 'src/app/services/user.service';
-import { Subject, lastValueFrom } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Message } from 'src/app/classes/message.class';
 import { Conversation } from 'src/app/classes/conversation.class';
@@ -19,9 +19,11 @@ export class PmChatComponent {
 
   public sendMessageForm: FormGroup;
   public recipient: DabubbleUser;
-  private destroy$ = new Subject<void>();
+
   private conversationId: string;
   public messages: any[];
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -33,7 +35,6 @@ export class PmChatComponent {
       message: ['', [Validators.required]],
     });
     this.subRecipientData();
-    this.getConversationData();
   }
 
   ngOnDestroy() {
@@ -50,8 +51,9 @@ export class PmChatComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         this.recipient = new DabubbleUser(data);
+        this.conversation = new Conversation();
+
         this.getConversationData();
-        console.log(this.recipient);
       });
   }
 
@@ -67,7 +69,6 @@ export class PmChatComponent {
     msg.sender = this.userService.user.name;
 
     this.conversation.messages.push(msg);
-    console.log('send conversation', this.conversation.toJson());
 
     this.firestoreService.updateConversation(
       this.conversationId,
@@ -88,36 +89,45 @@ export class PmChatComponent {
 
   async getConversationData() {
     const ConversationsSnapshot = await this.firestoreService.getPmsSnapshot();
+    let conversationFound = false;
 
-    ConversationsSnapshot.forEach((doc) => {
+    ConversationsSnapshot.forEach(async (doc) => {
       const docData = doc.data();
-
       const userId1 = docData['userId1'];
       const userId2 = docData['userId2'];
-      const logedInUserId = this.userService.user.userId;
-      const recipientUserId = this.recipient.userId;
+      this.conversationId = doc.id;
 
-      console.log('user1', userId1, 'user2', userId2);
-      console.log(
-        'loged in user:',
-        logedInUserId,
-        'recipient user:',
-        recipientUserId
-      );
+      if (this.userInConversation(userId1, userId2)) {
+        this.setupConversation(userId1, userId2);
+        conversationFound = true;
+        return;
+      }
 
-      if (
-        (userId1 === logedInUserId && userId2 === recipientUserId) ||
-        (userId1 === recipientUserId && userId2 === logedInUserId)
-      ) {
-        this.conversationId = doc.id;
-        this.conversation.userId1 = userId1;
-        this.conversation.userId2 = userId2;
-        console.log('pm ID', this.conversationId);
-        this.subConversationData(this.conversationId);
-      } else {
+      if (!conversationFound) {
         console.log('Die Benutzer sind nicht in der Konversation');
+        // await this.setNewConversation();
       }
     });
+  }
+
+  async setupConversation(userId1: string, userId2: string) {
+    this.conversation = new Conversation();
+
+    this.conversation.userId1 = userId1;
+    this.conversation.userId2 = userId2;
+    await this.subConversationData(this.conversationId);
+
+    console.log(this.conversation);
+  }
+
+  userInConversation(userId1: string, userId2: string) {
+    const logedInUserId = this.userService.user.userId;
+    const recipientUserId = this.recipient.userId;
+
+    return (
+      (userId1 === logedInUserId && userId2 === recipientUserId) ||
+      (userId1 === recipientUserId && userId2 === logedInUserId)
+    );
   }
 
   async subConversationData(conversationId: string) {
@@ -131,8 +141,6 @@ export class PmChatComponent {
           data.messages.forEach((msg: Message) => {
             const message = new Message(msg);
             this.conversation.messages.push(message);
-
-            console.log(this.conversation.messages[0].sender);
           });
         }
       });
