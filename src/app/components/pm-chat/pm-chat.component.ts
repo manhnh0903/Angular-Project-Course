@@ -34,7 +34,11 @@ export class PmChatComponent {
     this.sendMessageForm = this.fb.group({
       message: ['', [Validators.required]],
     });
-    this.subRecipientData();
+    this.initializeAsync();
+  }
+
+  async initializeAsync() {
+    await this.subRecipientData();
   }
 
   ngOnDestroy() {
@@ -46,14 +50,16 @@ export class PmChatComponent {
     return this.sendMessageForm.get('message');
   }
 
-  subRecipientData() {
+  async subRecipientData() {
     this.firestoreService.subscribedRecipientData$
       .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
-        this.recipient = new DabubbleUser(data);
-        this.conversation = new Conversation();
+      .subscribe(async (data) => {
+        if (data !== null) {
+          this.recipient = new DabubbleUser(data);
+          this.conversation = new Conversation();
 
-        this.getConversationData();
+          await this.getConversationData();
+        }
       });
   }
 
@@ -79,6 +85,8 @@ export class PmChatComponent {
   async setNewConversation() {
     const conversation = new Conversation();
 
+    this.conversationId = undefined;
+
     conversation.userId1 = this.userService.user.userId;
     conversation.userId2 = this.recipient.userId;
 
@@ -95,9 +103,11 @@ export class PmChatComponent {
       const docData = doc.data();
       const userId1 = docData['userId1'];
       const userId2 = docData['userId2'];
-      this.conversationId = doc.id;
 
       if (this.userInConversation(userId1, userId2)) {
+        this.conversationId = doc.id;
+        console.log(this.conversationId);
+
         this.setupConversation(userId1, userId2);
         conversationFound = true;
         return;
@@ -105,9 +115,13 @@ export class PmChatComponent {
 
       if (!conversationFound) {
         console.log('Die Benutzer sind nicht in der Konversation');
-        // await this.setNewConversation();
       }
     });
+
+    if (!conversationFound) {
+      await this.setNewConversation();
+      await this.getConversationData();
+    }
   }
 
   async setupConversation(userId1: string, userId2: string) {

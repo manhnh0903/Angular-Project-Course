@@ -1,6 +1,6 @@
 <section>
   <div class="header">
-    <div *ngIf="recipient.name" (click)="openUserDetails()" class="user-info">
+    <div *ngIf="recipient" (click)="openUserDetails()" class="user-info">
       <img
         class="profilePic"
         src="./assets/img/{{ recipient.profileImg }}"
