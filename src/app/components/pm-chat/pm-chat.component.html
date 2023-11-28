@@ -9,9 +9,30 @@
       <span>{{ recipient.name }}</span>
     </div>
   </div>
-  <div class="chat-area">
-    <div *ngIf="conversation.messages.length === 0">
-      NOCH KEINE NACHRICHTEN WRAPPER
+  <div #chatArea id="chat-area">
+    <div
+      class="no-msg-wrapper"
+      *ngIf="conversation.messages.length === 0 && !loading"
+    >
+      <div class="no-msg-header">
+        <img src="./assets/img/{{ recipient.profileImg }}" alt="profileImg" />
+        <span
+          >{{ recipient.name }}
+          <span *ngIf="recipient.name === userService.user.name"
+            >(Du)</span
+          ></span
+        >
+      </div>
+      <p *ngIf="recipient.name !== userService.user.name">
+        Diese Unterhaltung findet nur zwischen
+        <span (click)="openUserDetails()">&commat;{{ recipient.name }}</span>
+        und dir statt.
+      </p>
+      <p *ngIf="recipient.name === userService.user.name">
+        Dieser Raum ist nur für dich da. Mache dir Notizen, liste deine To-dos
+        auf oder bewahre Links und Dateien griffbereit auf. Du kannst hier auch
+        gerne Dinge mit dir selbst besprechen.
+      </p>
     </div>
     <div *ngFor="let message of conversation.messages" class="msg-wrapper">
       <img src="./assets/img/{{ message.profileImg }}" alt="profileImg" />

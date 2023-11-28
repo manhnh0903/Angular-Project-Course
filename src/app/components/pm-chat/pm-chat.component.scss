@@ -37,9 +37,14 @@ section {
     }
   }
 
-  .chat-area {
+  #chat-area {
     flex: 1;
-    padding: 0px 45px;
+    padding: 16px 45px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: flex-end;
 
     .msg-wrapper {
       display: flex;
@@ -88,5 +93,44 @@ section {
   .input-area {
     height: 200px;
     padding: 20px 45px;
+  }
+
+  .no-msg-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    .no-msg-header {
+      display: flex;
+
+      gap: 24px;
+
+      align-items: flex-end;
+
+      img {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+      }
+
+      span {
+        font-size: 24px;
+        font-weight: 700;
+      }
+    }
+
+    > p {
+      font-size: 20px;
+      color: rgba(104, 104, 104, 1);
+
+      span {
+        color: rgba(83, 90, 241, 1);
+        cursor: pointer;
+
+        &:hover {
+          font-weight: 700;
+        }
+      }
+    }
   }
 }
