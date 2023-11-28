@@ -52,6 +52,7 @@ import { PmChatComponent } from './components/pm-chat/pm-chat.component';
     PmChatComponent,
   ],
   imports: [
+    
     PickerComponent,
     MatRadioModule,
     FormsModule,

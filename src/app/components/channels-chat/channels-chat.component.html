@@ -39,15 +39,17 @@
 
 
 
-    <div *ngIf="fireService.currentChannel">
-        <div *ngFor="let message of fireService.sorted let i=index">
-            <div class="dateDiv" *ngIf="fireService.isDifferentDate(message, i) || i===0">
+    <div style="padding-bottom: 76px;" *ngIf="fireService.currentChannel">
+        <div *ngFor="let message of fireService.sorted let i=index" [ngClass]="{'even-message': getSide(i)}">
+            <div *ngIf="fireService.isDifferentDate(message, i) || i===0">
+                <div class="dateDiv" *ngIf="fireService.dateNameChecker(message)==='today'">
+                </div>
                 <div class="dateContent">
                     {{ fireService.dateNameChecker(message)}}
                 </div>
             </div>
             <div class="messagesSection">
-                <app-reactions [currentMessage]="message"></app-reactions>
+                <app-reactions [index]="i" [currentMessage]="message"></app-reactions>
                 <div class="messagesInfo">
                     <img class="messageUsersImg" src="assets/img/{{message.profileImg}}">
                     <div class="nameContentDiv">
