@@ -1,0 +1,42 @@
+.msg-wrapper {
+  display: flex;
+  gap: 30px;
+
+  img {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+  }
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .msg-header {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+
+      span {
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      p {
+        font-size: 14px;
+        color: rgba(104, 104, 104, 1);
+      }
+    }
+
+    .msg-content {
+      padding: 15px;
+      background-color: var(--main-bg-color);
+      border-radius: 0px 30px 30px 30px;
+
+      p {
+        font-size: 18px;
+      }
+    }
+  }
+}

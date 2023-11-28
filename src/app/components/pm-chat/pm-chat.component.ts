@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DabubbleUser } from 'src/app/classes/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { HomeNavigationService } from 'src/app/services/home-navigation.service';
+
 import { UserService } from 'src/app/services/user.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -16,20 +16,18 @@ import { Conversation } from 'src/app/classes/conversation.class';
 })
 export class PmChatComponent {
   public conversation: Conversation = new Conversation();
-
   public sendMessageForm: FormGroup;
   public recipient: DabubbleUser;
-
   private conversationId: string;
-  public messages: any[];
-
   private destroy$ = new Subject<void>();
+  public loading: boolean = true;
+
+  @ViewChild('chatArea', { static: false }) chatArea: ElementRef;
 
   constructor(
     private fb: FormBuilder,
     public firestoreService: FirestoreService,
-    private navService: HomeNavigationService,
-    private userService: UserService
+    public userService: UserService
   ) {
     this.sendMessageForm = this.fb.group({
       message: ['', [Validators.required]],
@@ -58,6 +56,7 @@ export class PmChatComponent {
           this.recipient = new DabubbleUser(data);
           this.conversation = new Conversation();
 
+          this.loading = true;
           await this.getConversationData();
         }
       });
@@ -156,7 +155,19 @@ export class PmChatComponent {
             const message = new Message(msg);
             this.conversation.messages.push(message);
           });
+
+          this.loading = false;
+          setTimeout(() => {
+            this.scrollToBottom();
+          }, 1);
         }
       });
+  }
+
+  scrollToBottom() {
+    if (this.chatArea && this.chatArea.nativeElement) {
+      this.chatArea.nativeElement.scrollTop =
+        this.chatArea.nativeElement.scrollHeight;
+    }
   }
 }
