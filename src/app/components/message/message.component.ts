@@ -15,7 +15,7 @@ export class MessageComponent {
   @Input() content: string;
   @Input() thread: string;
   @Input() reactions: [];
-  @Input() creationDate: number;
+  @Input() creationDate: string;
   @Input() creationTime: number;
   @Input() id: number;
   @Input() type: 'private' | 'channel' = 'private';

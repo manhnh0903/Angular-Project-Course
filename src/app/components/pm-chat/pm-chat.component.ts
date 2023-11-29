@@ -170,4 +170,5 @@ export class PmChatComponent {
         this.chatArea.nativeElement.scrollHeight;
     }
   }
+  
 }
