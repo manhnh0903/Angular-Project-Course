@@ -11,11 +11,8 @@ import { HomeNavigationService } from 'src/app/services/home-navigation.service'
   templateUrl: './channels-chat.component.html',
   styleUrls: ['./channels-chat.component.scss']
 })
-export class ChannelsChatComponent{
+export class ChannelsChatComponent {
   firestore = inject(Firestore)
-  constructor(public fireService: FirestoreService, public navService: HomeNavigationService, public route: ActivatedRoute, public userService: UserService, private el: ElementRef,) {
-    this.fireService.readMessagesOfChannels()
-  }
 
 
   private newMessage
@@ -27,8 +24,13 @@ export class ChannelsChatComponent{
   public addPeople = false
   public isButtonDisabled = true;
   public buttonColor = 'gray';
+  onRightSide
 
 
+  constructor(public fireService: FirestoreService, public navService: HomeNavigationService, public route: ActivatedRoute, public userService: UserService, private el: ElementRef,) {
+    this.fireService.readMessagesOfChannels()
+
+  }
 
   async addMessageToChannel() {
     const docReference = this.fireService.getDocRef('channels', this.fireService.currentChannel.id);
@@ -112,8 +114,14 @@ export class ChannelsChatComponent{
     }
     return id
   }
+
+  getSide(index: number): boolean {
+    let isEven = index % 2 === 0;
+    this.onRightSide = !isEven;
+
+    return !isEven;
+  }
+
+
 }
-
-
-
 

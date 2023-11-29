@@ -1,8 +1,9 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, inject } from '@angular/core';
 import { Firestore, loadBundle, updateDoc } from '@angular/fire/firestore';
 import { FirestoreService } from '../../services/firestore.service';
 import { Reaction } from '../../classes/reaction.class';
 import { UserService } from '../../services/user.service';
+
 
 @Component({
   selector: 'app-reactions',
@@ -11,18 +12,22 @@ import { UserService } from '../../services/user.service';
 })
 export class ReactionsComponent {
   firestore = inject(Firestore)
-  constructor(public fireService: FirestoreService, public userService: UserService) { }
+  constructor(public fireService: FirestoreService, public userService: UserService, private el: ElementRef) { }
   emojiOpened = false
   @Input() currentMessage
+  @Input() index
   emoji
 
 
   openEmoji() {
+
     if (this.emojiOpened === false) {
       this.emojiOpened = true
     } else {
       this.emojiOpened = false
     }
+    this.heightCounter()
+
   }
 
 
@@ -102,6 +107,43 @@ export class ReactionsComponent {
   }
 
 
+  heightCounter() {
+    const innerHeight = window.innerHeight;
+    const boundingBox = this.el.nativeElement.getBoundingClientRect();
+    const distanceToTop = boundingBox.top;
+    const distanceToBottom = innerHeight - boundingBox.bottom;
+
+    console.log("Space from top to window top:", distanceToTop);
+    console.log("Space from bottom to window bottom:", distanceToBottom);
+
+    // Return the distances or any other condition you want to check
+    return distanceToTop < distanceToBottom
+  }
+
+
+  /* getEmojiStyle() {
+
+    const topValue = '500'; // Replace with the actual value for 'top'
+    const bottomValue = '500'
+    if (this.heightCounter()) {
+      return {
+        position: 'absolute',
+        'top': 0,
+        'z-index': 99999
+      }
+    } else {
+      return {
+        position: 'absolute',
+        'bottom': 0,
+        'z-index': 99999
+      }
+    }
+  } */
+
+
 }
+
+
+
 
 
