@@ -41,6 +41,7 @@ export class ChannelsChatComponent {
       thread: '',
       reactions: [],
       creationDate: this.fireService.getCurrentDate(),
+      creationTime: this.fireService.getCurrentTime(),
       id: this.addMessageId()
     });
     this.fireService.currentChannel.messages.push(this.newMessage.toJSON())
@@ -121,7 +122,6 @@ export class ChannelsChatComponent {
 
     return !isEven;
   }
-
 
 }
 

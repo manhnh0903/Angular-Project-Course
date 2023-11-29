@@ -36,7 +36,7 @@ export class FirestoreService {
   private currentDate;
   public sorted = [];
 
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore) { }
 
   ngOnDestroy() {
     this.unsubUserData();
@@ -183,11 +183,11 @@ export class FirestoreService {
     });
   }
 
-  dateNameChecker(message) {
-    if (message.creationDate !== this.getCurrentDate()) {
-      return message.creationDate;
+  dateNameChecker(creationDate) {
+    if (creationDate !== this.getCurrentDate()) {
+      return `${this.getDaysName()}, ` + `${creationDate}`;
     } else {
-      return 'today';
+      return 'heute';
     }
   }
 
@@ -205,9 +205,9 @@ export class FirestoreService {
     }
   }
 
-  isDifferentDate(message: any, i: number): boolean {
-    if (message && i > 0) {
-      return message.creationDate !== this.sorted[i - 1].creationDate;
+  isDifferentDate(creationDate, i: number): boolean {
+    if (creationDate && i > 0) {
+      return creationDate !== this.sorted[i - 1].creationDate;
     }
     return true;
   }
@@ -223,15 +223,24 @@ export class FirestoreService {
     return this.currentDate;
   }
 
+  getCurrentTime() {
+    let datetime = new Date();
+    let hours = datetime.getHours();
+    let minutes = datetime.getMinutes();
+    let formattedMinutes = (minutes < 10) ? '0' + minutes : minutes;
+    let currentTime = `${hours}:${formattedMinutes}`;
+    return currentTime;
+  }
+
   getDaysName() {
     const weekday = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
+      'Sonntag',
+      'Montag',
+      'Dienstag',
+      'Mittwoch',
+      'Donnerstag',
+      'Freitag',
+      'Samstag',
     ];
     const d = new Date();
     let day = weekday[d.getDay()];

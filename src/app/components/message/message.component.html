@@ -1,15 +1,50 @@
-<div class="msg-wrapper">
-  <img src="./assets/img/{{ profileImg }}" alt="profileImg" />
-  <div>
-    <div class="msg-header">
-      <span>{{ sender }}</span>
-      <p>14:25 Uhr</p>
+<!-- <div *ngIf="type==='private'">
+  <div class="msg-wrapper">
+    <img src="./assets/img/{{ profileImg }}" alt="profileImg" />
+    <div>
+      <div class="msg-header">
+        <span>{{ sender }}</span>
+        <p>14:25 Uhr</p>
+      </div>
+      <div class="msg-content">
+        <p>{{ content }}</p>
+      </div>
+      <div class="thread-info">
+
+      </div>
     </div>
-    <div class="msg-content">
-      <p>{{ content }}</p>
-    </div>
-    <div class="thread-info">
-      <!-- if thread dann antworten anzahl anzeigen und zeit von letzter nachticht  -->
+  </div>
+</div> -->
+<div *ngIf="type==='channel'">
+  <div style="padding-bottom: 76px;">
+    <div [ngClass]="{'odd-message': getSide(index)}">
+      <div *ngIf="fireService.isDifferentDate(creationDate, index) || index===0">
+        <div class="dateDiv" *ngIf="fireService.dateNameChecker(creationDate)==='heute'">
+        </div>
+        <div class="dateContent">
+          {{ fireService.dateNameChecker(creationDate)}}
+        </div>
+      </div>
+      <div class="messagesSection">
+        <!--      <app-reactions [index]="index" [currentMessage]="message"></app-reactions> -->
+        <div class="messagesInfo" [ngClass]="{'odd-message': !getSide(index)}">
+          <img class="messageUsersImg" src="assets/img/{{profileImg}}">
+          <div class="nameContentDiv">
+            <div>
+              <span class="nameOfSender">{{sender}}</span>
+              <span class="time">{{ creationTime}} Uhr</span>
+            </div>
+            <span class="messageContent">{{content}}</span>
+            <!-- <div class="reactions" *ngIf="reactions.length>0 ">
+             <div class="reaction" *ngFor="let emoji of reactions">
+                <div>{{ emoji.native}}</div>
+                <div *ngIf="emoji.counter">{{
+                  emoji.counter}}</div>
+              </div> -->
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+<!-- </div> -->

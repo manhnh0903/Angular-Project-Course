@@ -1,27 +1,16 @@
 <section>
   <div class="header">
     <div *ngIf="recipient" (click)="openUserDetails()" class="user-info">
-      <img
-        class="profilePic"
-        src="./assets/img/{{ recipient.profileImg }}"
-        alt="profileImg"
-      />
+      <img class="profilePic" src="./assets/img/{{ recipient.profileImg }}" alt="profileImg" />
       <span>{{ recipient.name }}</span>
     </div>
   </div>
   <div #chatArea id="chat-area">
-    <div
-      class="no-msg-wrapper"
-      *ngIf="conversation.messages.length === 0 && !loading"
-    >
+    <div class="no-msg-wrapper" *ngIf="conversation.messages.length === 0 && !loading">
       <div class="no-msg-header">
         <img src="./assets/img/{{ recipient.profileImg }}" alt="profileImg" />
-        <span
-          >{{ recipient.name }}
-          <span *ngIf="recipient.name === userService.user.name"
-            >(Du)</span
-          ></span
-        >
+        <span>{{ recipient.name }}
+          <span *ngIf="recipient.name === userService.user.name">(Du)</span></span>
       </div>
       <p *ngIf="recipient.name !== userService.user.name">
         Diese Unterhaltung findet nur zwischen
@@ -34,12 +23,8 @@
         gerne Dinge mit dir selbst besprechen.
       </p>
     </div>
-    <app-message
-      *ngFor="let message of conversation.messages"
-      [sender]="message.sender"
-      [profileImg]="message.profileImg"
-      [content]="message.content"
-    ></app-message>
+    <app-message *ngFor="let message of conversation.messages" [sender]="message.sender"
+      [profileImg]="message.profileImg" [content]="message.content" type="channel"></app-message>
   </div>
   <div class="input-area">
     <form [formGroup]="sendMessageForm" (ngSubmit)="sendPm()">

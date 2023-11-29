@@ -8,7 +8,7 @@
     border-radius: 50%;
   }
 
-  > div {
+  >div {
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -39,4 +39,10 @@
       }
     }
   }
+}
+
+.messageUsersImg {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
 }
