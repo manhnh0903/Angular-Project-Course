@@ -35,12 +35,13 @@
       </p>
     </div>
     <app-message
-      *ngFor="let message of conversation.messages"
+      *ngFor="let message of conversation.messages.reverse()"
       [sender]="message.sender"
       [profileImg]="message.profileImg"
       [content]="message.content"
     ></app-message>
   </div>
+
   <div class="input-area">
     <form [formGroup]="sendMessageForm" (ngSubmit)="sendPm()">
       <textarea formControlName="message" cols="30" rows="10"></textarea>
