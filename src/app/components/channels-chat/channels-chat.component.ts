@@ -41,6 +41,7 @@ export class ChannelsChatComponent {
       thread: '',
       reactions: [],
       creationDate: this.fireService.getCurrentDate(),
+      creationTime: this.fireService.getCurrentTime(),
       id: this.addMessageId()
     });
     this.fireService.currentChannel.messages.push(this.newMessage.toJSON())
@@ -115,13 +116,12 @@ export class ChannelsChatComponent {
     return id
   }
 
-  getSide(index: number): boolean {
+/*   getSide(index: number): boolean {
     let isEven = index % 2 === 0;
     this.onRightSide = !isEven;
 
     return !isEven;
-  }
-
+  } */
 
 }
 

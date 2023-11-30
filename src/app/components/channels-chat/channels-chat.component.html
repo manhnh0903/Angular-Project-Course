@@ -38,8 +38,10 @@
     </header>
 
 
-
-    <div style="padding-bottom: 76px;" *ngIf="fireService.currentChannel">
+    <app-message *ngFor="let message of fireService.sorted let i=index" [sender]="message.sender"
+        [profileImg]="message.profileImg" [content]="message.content" [creationDate]="message.creationDate"
+        [creationTime]="message.creationTime" [currentMessage]="message" [reactions]="message.reactions" type="channel" [index]="i"></app-message>
+    <!--   <div style="padding-bottom: 76px;" *ngIf="fireService.currentChannel">
         <div *ngFor="let message of fireService.sorted let i=index" [ngClass]="{'odd-message': getSide(i)}">
             <div *ngIf="fireService.isDifferentDate(message, i) || i===0">
                 <div class="dateDiv" *ngIf="fireService.dateNameChecker(message)==='heute'">
@@ -52,10 +54,10 @@
                 <app-reactions [index]="i" [currentMessage]="message"></app-reactions>
                 <div class="messagesInfo" [ngClass]="{'odd-message': !getSide(i)}">
                     <img class="messageUsersImg" src="assets/img/{{message.profileImg}}">
-                    <div [ngStyle]="{'margin-right': getSide(i) ? '20px' : '0'}" class="nameContentDiv">
+                    <div class="nameContentDiv">
                         <div>
                             <span class="nameOfSender">{{message.sender}}</span>
-                            <span class="time">{{ message.creationTime}}</span>
+                            <span class="time">{{ message.creationTime}} Uhr</span>
                         </div>
                         <span class="messageContent">{{message.content}}</span>
                         <div class="reactions" *ngIf="message.reactions.length>0 ">
@@ -70,7 +72,7 @@
             </div>
         </div>
     </div>
-
+ -->
 
     <footer>
         <input placeholder="Type your message" [(ngModel)]="content">

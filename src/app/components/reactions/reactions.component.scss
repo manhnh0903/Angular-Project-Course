@@ -1,3 +1,7 @@
+.reactionContainer {
+    position: relative;
+}
+
 .reactionDiv {
     border: 1px solid var(--ligth-purple-lines, #ADB0D9);
     padding: 5px 10px;
@@ -6,6 +10,7 @@
     align-items: center;
     width: fit-content;
     justify-content: flex-end;
+
 
     img {
         height: 20px;
@@ -23,4 +28,16 @@ emoji-mart {
 .ifRightSide {
     position: absolute;
     right: 0px
+}
+
+.editMessage {
+    border: 1px solid var(--ligth-purple-lines, #ADB0D9);
+    padding: 5px 10px;
+    border-radius: 40px 40px 40px 0;
+    position: absolute;
+    top: -45px;
+    right: 20px;
+    left: 77px;
+    width: fit-content;
+    background-color: white;
 }

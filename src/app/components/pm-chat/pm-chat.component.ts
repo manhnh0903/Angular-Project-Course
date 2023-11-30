@@ -72,7 +72,7 @@ export class PmChatComponent {
     msg.content = this.sendMessageForm.value.message;
     msg.profileImg = this.userService.user.profileImg;
     msg.sender = this.userService.user.name;
-
+    msg.creationTime = this.firestoreService.getCurrentTime()
     this.conversation.messages.push(msg);
 
     this.firestoreService.updateConversation(
@@ -170,4 +170,5 @@ export class PmChatComponent {
         this.chatArea.nativeElement.scrollHeight;
     }
   }
+
 }

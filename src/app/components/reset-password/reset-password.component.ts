@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 
@@ -12,12 +13,22 @@ export class ResetPasswordComponent {
 
   constructor(
     private authService: FirebaseAuthService,
+    private route: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder
   ) {
     this.resetPasswordForm = this.fb.group({
       password: ['', Validators.required],
       passwordRepeat: ['', [Validators.required]],
     });
+  }
+
+  ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      this.authService.oobCode = params['oobCode'];
+    });
+
+    console.log(this.authService.oobCode);
   }
 
   ngAfterViewInit() {
@@ -46,7 +57,8 @@ export class ResetPasswordComponent {
     return password === passwordRepeat ? null : { passwordMismath: true };
   }
 
-  async resetPassword() {
-    console.log(this.resetPasswordForm);
+  async sendResetPasswordForm() {
+    await this.authService.resetPassword(this.password.value);
+    this.router.navigate(['/login']);
   }
 }

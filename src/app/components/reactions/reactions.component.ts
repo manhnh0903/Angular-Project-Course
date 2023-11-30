@@ -17,8 +17,8 @@ export class ReactionsComponent {
   @Input() currentMessage
   @Input() index
   emoji
-
-
+  openEdit = false
+  editMessage = false
   openEmoji() {
 
     if (this.emojiOpened === false) {
@@ -26,7 +26,7 @@ export class ReactionsComponent {
     } else {
       this.emojiOpened = false
     }
-    this.heightCounter()
+
 
   }
 
@@ -107,40 +107,13 @@ export class ReactionsComponent {
   }
 
 
-  heightCounter() {
-    const innerHeight = window.innerHeight;
-    const boundingBox = this.el.nativeElement.getBoundingClientRect();
-    const distanceToTop = boundingBox.top;
-    const distanceToBottom = innerHeight - boundingBox.bottom;
-
-    console.log("Space from top to window top:", distanceToTop);
-    console.log("Space from bottom to window bottom:", distanceToBottom);
-
-    // Return the distances or any other condition you want to check
-    return distanceToTop < distanceToBottom
+  openEditMessage() {
+    this.openEdit = !this.openEdit
   }
 
-
-  /* getEmojiStyle() {
-
-    const topValue = '500'; // Replace with the actual value for 'top'
-    const bottomValue = '500'
-    if (this.heightCounter()) {
-      return {
-        position: 'absolute',
-        'top': 0,
-        'z-index': 99999
-      }
-    } else {
-      return {
-        position: 'absolute',
-        'bottom': 0,
-        'z-index': 99999
-      }
-    }
-  } */
-
-
+  openEditMessageDiv() {
+    this.editMessage = !this.editMessage
+  }
 }
 
 
