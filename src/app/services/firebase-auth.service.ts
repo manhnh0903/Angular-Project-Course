@@ -120,13 +120,11 @@ export class FirebaseAuthService {
     return new Promise<boolean>((resolve, reject) => {
       onAuthStateChanged(this.auth, (user: User | null) => {
         if (user) {
-          /*           console.log('user is logged in check auth user data:', user.uid); */
+          //console.log('user is logged in check auth user data:', user.uid);
           this.currentUser = user;
           this.userService.getUserData(user.uid);
           resolve(true);
         } else {
-          /*        console.log('user is not logged in'); */
-
           resolve(false);
         }
       });

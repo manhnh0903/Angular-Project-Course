@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
@@ -12,7 +13,8 @@ export class ForgotPasswordComponent {
 
   constructor(
     private authService: FirebaseAuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.sendMailForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -25,8 +27,9 @@ export class ForgotPasswordComponent {
 
   async sendMail() {
     const email = this.email.value;
-    console.log(email);
-
+    this.sendMailForm.disable();
     await this.authService.sendForgotPasswordMail(email);
+    // trigger animation
+    this.router.navigate(['/login']);
   }
 }
