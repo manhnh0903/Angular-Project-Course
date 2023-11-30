@@ -1,4 +1,5 @@
 interface MessageData {
+  creationTime: string;
   sender: string;
   profileImg: string;
   content: string;
@@ -6,6 +7,7 @@ interface MessageData {
   reactions: [];
   creationDate: number;
   id: number;
+
 }
 
 export class Message {
@@ -17,7 +19,7 @@ export class Message {
   timeWhenCreated: string;
   creationDate: number;
   id: number;
-
+  creationTime: string;
   constructor(data?: MessageData) {
     this.sender = data?.sender || '';
     this.content = data?.content || '';
@@ -25,6 +27,7 @@ export class Message {
     this.thread = data?.thread || '';
     this.reactions = data?.reactions || [];
     this.creationDate = data?.creationDate || 0;
+    this.creationTime = data?.creationTime || '';
     this.id = data?.id || 0;
   }
 
@@ -36,6 +39,7 @@ export class Message {
       thread: this.thread,
       reactions: this.reactions,
       creationDate: this.creationDate,
+      creationTime: this.creationTime,
       id: this.id,
     };
   }
