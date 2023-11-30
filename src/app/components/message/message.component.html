@@ -27,7 +27,7 @@
     </div>
     <div class="messagesSection">
       <app-reactions [index]="index" [currentMessage]="currentMessage"></app-reactions>
-      <div class="messagesInfo" [ngClass]="{'odd-message': getSide(index)}">
+      <div class="messagesInfo" [ngClass]="{'odd-message': !getSide(index)}">
         <img class="messageUsersImg" src="assets/img/{{profileImg}}">
         <div class="nameContentDiv">
           <div>
