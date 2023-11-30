@@ -18,7 +18,7 @@ export class ReactionsComponent {
   @Input() index
   emoji
   openEdit = false
-
+  editMessage = false
   openEmoji() {
 
     if (this.emojiOpened === false) {
@@ -111,7 +111,9 @@ export class ReactionsComponent {
     this.openEdit = !this.openEdit
   }
 
-
+  openEditMessageDiv() {
+    this.editMessage = !this.editMessage
+  }
 }
 
 

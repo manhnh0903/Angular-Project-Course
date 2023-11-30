@@ -25,6 +25,8 @@
         {{ fireService.dateNameChecker(creationDate)}}
       </div>
     </div>
+
+
     <div class="messagesSection">
       <app-reactions [index]="index" [currentMessage]="currentMessage"></app-reactions>
       <div class="messagesInfo" [ngClass]="{'odd-message': !getSide(index)}">
@@ -44,6 +46,12 @@
           </div>
         </div>
       </div>
+      <div class="editMessageDiv" *ngIf="ReactionsComponent && ReactionsComponent.editMessage">
+        <input ngModel={{content}}>
+        <button class="cancelButton">Abbrechen</button>
+        <button class="createButton">Speichern</button>
+      </div>
     </div>
+
   </div>
   <!-- </div> -->
