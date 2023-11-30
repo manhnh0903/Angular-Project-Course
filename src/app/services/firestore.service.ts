@@ -68,7 +68,6 @@ export class FirestoreService {
     });
   }
 
-  //fix unsubscribe bei wechsel PM
   async subscribeToPMConversation(conversationID: string): Promise<void> {
     this.destroyConversationDataSubject();
 
