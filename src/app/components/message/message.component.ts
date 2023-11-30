@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Reaction } from 'src/app/classes/reaction.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
@@ -14,12 +15,13 @@ export class MessageComponent {
   @Input() profileImg: string;
   @Input() content: string;
   @Input() thread: string;
-  @Input() reactions: [];
+  @Input() reactions: Reaction[];
   @Input() creationDate: string;
   @Input() creationTime: number;
   @Input() id: number;
   @Input() type: 'private' | 'channel' = 'private';
   @Input() index: number
+  @Input() currentMessage: {};
   onRightSide
 
 
