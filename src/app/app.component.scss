@@ -1,14 +1,6 @@
-header {
-  margin-bottom: 20px;
-}
-
 main {
   background-color: var(--main-bg-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(100vh - 140px);
+  height: 100vh;
+  height: 100svh;
   width: 100%;
 }
-
-

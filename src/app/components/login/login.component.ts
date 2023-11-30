@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DabubbleUser } from 'src/app/classes/user.class';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 
 @Component({
@@ -10,6 +11,8 @@ import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+
+  user = new DabubbleUser();
 
   constructor(
     private authService: FirebaseAuthService,
@@ -32,7 +35,7 @@ export class LoginComponent {
   async submitFomrEmailAndPassword() {
     const email = this.email.value;
     const password = this.password.value;
-/*     console.log(this.loginForm); */
+    /*     console.log(this.loginForm); */
 
     if (this.loginForm.valid) {
       try {

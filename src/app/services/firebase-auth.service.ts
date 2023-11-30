@@ -10,6 +10,7 @@ import {
   User,
   sendPasswordResetEmail,
   updateEmail,
+  confirmPasswordReset,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { DabubbleUser } from '../classes/user.class';
@@ -24,6 +25,7 @@ export class FirebaseAuthService {
 
   provider = new GoogleAuthProvider();
   currentUser: User;
+  oobCode: string;
 
   async registerWithEmailAndPassword(user: DabubbleUser) {
     try {
@@ -59,7 +61,7 @@ export class FirebaseAuthService {
     try {
       await updateEmail(this.currentUser, email);
 
-  /*     console.log('E-Mail-Adresse erfolgreich aktualisiert'); */
+      /*     console.log('E-Mail-Adresse erfolgreich aktualisiert'); */
     } catch (err) {
       console.error(err);
     }
@@ -74,15 +76,27 @@ export class FirebaseAuthService {
     }
   }
 
+  async resetPassword(newPassword: string) {
+    try {
+      if (!this.oobCode) {
+        console.error('Ungültiger oder fehlender oobCode.');
+      }
+      await confirmPasswordReset(this.auth, this.oobCode, newPassword);
+      console.log('neues Passwort gesetzt');
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   async loginWithGoogle() {
-/*     console.log(this.provider); */
+    /*     console.log(this.provider); */
 
     try {
       const result = await signInWithPopup(this.auth, this.provider);
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       const user = result.user;
-/* 
+      /* 
       console.log('Result:', result);
       console.log('credential:', credential);
       console.log('token:', token);
@@ -106,13 +120,11 @@ export class FirebaseAuthService {
     return new Promise<boolean>((resolve, reject) => {
       onAuthStateChanged(this.auth, (user: User | null) => {
         if (user) {
-/*           console.log('user is logged in check auth user data:', user.uid); */
+          //console.log('user is logged in check auth user data:', user.uid);
           this.currentUser = user;
           this.userService.getUserData(user.uid);
           resolve(true);
         } else {
-   /*        console.log('user is not logged in'); */
-
           resolve(false);
         }
       });
