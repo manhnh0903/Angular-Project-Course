@@ -27,7 +27,7 @@ export class Message {
     this.thread = data?.thread || '';
     this.reactions = data?.reactions || [];
     this.creationDate = data?.creationDate || 0;
-    this.creationTime = data?.creationTime;
+    this.creationTime = data?.creationTime || '';
     this.id = data?.id || 0;
   }
 
