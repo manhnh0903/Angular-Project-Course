@@ -27,11 +27,20 @@
     </div>
 
 
-    <div class="messagesSection" >
+    <div class="messagesSection">
       <app-reactions [index]="index" [currentMessage]="currentMessage"></app-reactions>
       <div class="messagesInfo" [ngClass]="{'odd-message': !getSide(index)}">
         <img class="messageUsersImg" src="assets/img/{{profileImg}}">
         <div class="nameContentDiv">
+          <div class="editMessageWrapper" *ngIf="reactionsComponent && reactionsComponent.editMessage">
+            <div class="editMessageDiv">
+              <input ngModel={{content}}>
+              <div class="editButtons">
+                <button (click)=" closeEdit()" class="cancelButton">Abbrechen</button>
+                <button class="createButton">Speichern</button>
+              </div>
+            </div>
+          </div>
           <div>
             <span class="nameOfSender">{{sender}}</span>
             <span class="time">{{ creationTime}} Uhr</span>
@@ -45,11 +54,6 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="editMessageDiv" *ngIf="ReactionsComponent && ReactionsComponent.editMessage">
-        <input ngModel={{content}}>
-        <button class="cancelButton">Abbrechen</button>
-        <button class="createButton">Speichern</button>
       </div>
     </div>
 

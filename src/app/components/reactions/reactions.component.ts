@@ -113,6 +113,7 @@ export class ReactionsComponent {
 
   openEditMessageDiv() {
     this.editMessage = !this.editMessage
+    this.openEdit = !this.openEdit
   }
 }
 

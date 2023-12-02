@@ -24,7 +24,7 @@ export class MessageComponent {
   @Input() index: number
   @Input() currentMessage: {};
   onRightSide
-  @ViewChild(ReactionsComponent) ReactionsComponent: ReactionsComponent;
+  @ViewChild(ReactionsComponent) reactionsComponent: ReactionsComponent;
 
   getSide(index: number): boolean {
     let isEven = index % 2 === 0;
@@ -33,4 +33,9 @@ export class MessageComponent {
     return !isEven;
   }
 
+
+  closeEdit() {
+    this.reactionsComponent.editMessage = false
+    this.reactionsComponent.openEdit = false
+  }
 }
