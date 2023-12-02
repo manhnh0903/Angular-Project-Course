@@ -12,9 +12,9 @@ import {
   updateEmail,
   confirmPasswordReset,
 } from '@angular/fire/auth';
-import { Router } from '@angular/router';
+
 import { DabubbleUser } from '../classes/user.class';
-import { FirestoreService } from './firestore.service';
+
 import { UserService } from './user.service';
 
 @Injectable({

@@ -22,7 +22,7 @@
       <div class="dateDiv" *ngIf="fireService.dateNameChecker(creationDate)==='heute'">
       </div>
       <div class="dateContent">
-        {{ fireService.dateNameChecker(creationDate)}}
+        {{ fireService.dateNameChecker(creationDate) }}
       </div>
     </div>
 
@@ -42,20 +42,18 @@
             </div>
           </div>
           <div>
-            <span class="nameOfSender">{{sender}}</span>
-            <span class="time">{{ creationTime}} Uhr</span>
+            <span class="nameOfSender">{{ sender }}</span>
+            <span class="time">{{ creationTime }} Uhr</span>
           </div>
-          <span class="messageContent">{{content}}</span>
+          <span class="messageContent">{{ content }}</span>
           <div class="reactions" *ngIf="reactions?.length > 0">
             <div class="reaction" *ngFor="let emoji of reactions">
-              <div>{{ emoji.native}}</div>
-              <div *ngIf="emoji.counter">{{
-                emoji.counter}}</div>
+              <div>{{ emoji.native }}</div>
+              <div *ngIf="emoji.counter">{{ emoji.counter }}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
   <!-- </div> -->

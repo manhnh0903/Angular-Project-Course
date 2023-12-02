@@ -2,13 +2,38 @@
   <div class="thread-header">
     <div>
       <h3>Thread</h3>
-      <span># Entwicklerteam</span>
+      <span># {{ parentMessage.sender }}</span>
     </div>
     <img
-      (click)="closeThread()"
+      (click)="this.homeNav.toggleThread()"
       src="./assets/img/close.png"
       alt="close-icon"
     />
   </div>
-  <div class="chat-area"></div>
+  <div class="chat-area">
+    <app-message
+      *ngFor="let message of parentMessage.thread.reverse()"
+      [sender]="message.sender"
+      [profileImg]="message.profileImg"
+      [content]="message.content"
+      [creationDate]="message.creationDate"
+      [creationTime]="message.creationTime"
+    ></app-message>
+    <div class="seperator-wrapper">
+      <span>{{ 4 }} Antworten</span>
+      <div></div>
+    </div>
+    <app-message
+      [sender]="parentMessage.sender"
+      [profileImg]="parentMessage.profileImg"
+      [content]="parentMessage.content"
+      [currentMessage]="parentMessage"
+    ></app-message>
+  </div>
+  <div class="input-area">
+    <form [formGroup]="sendMessageForm" (ngSubmit)="sendForm()">
+      <textarea formControlName="message" cols="30" rows="10"></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </div>
 </section>

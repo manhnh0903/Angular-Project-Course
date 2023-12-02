@@ -1,4 +1,10 @@
 import { Component } from '@angular/core';
+import { HomeNavigationService } from 'src/app/services/home-navigation.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Message } from 'src/app/classes/message.class';
+import { Subject, startWith, takeUntil } from 'rxjs';
+import { UserService } from 'src/app/services/user.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
   selector: 'app-tread',
@@ -6,9 +12,67 @@ import { Component } from '@angular/core';
   styleUrls: ['./tread.component.scss'],
 })
 export class TreadComponent {
-  constructor() {}
+  public sendMessageForm: FormGroup;
+  public messages: Message[];
+  private destroy$ = new Subject<void>();
 
-  closeThread() {
-    console.log('close');
+  public parentMessage: Message = new Message();
+
+  constructor(
+    public homeNav: HomeNavigationService,
+    private fb: FormBuilder,
+    private userService: UserService,
+    private firestoreService: FirestoreService
+  ) {
+    this.sendMessageForm = this.fb.group({
+      message: ['', [Validators.required]],
+    });
+
+    this.subMessageData();
+  }
+
+  noOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  get message() {
+    return this.sendMessageForm.get('message');
+  }
+
+  subMessageData() {
+    this.homeNav.selectedMessage$
+      .pipe(startWith(this.homeNav.currentTread), takeUntil(this.destroy$))
+      .subscribe((data: Message) => {
+        this.parentMessage = data;
+
+        console.log(typeof this.parentMessage.creationDate);
+      });
+  }
+
+  sendForm() {
+    const msg = new Message();
+
+    msg.content = this.sendMessageForm.value.message;
+    msg.profileImg = this.userService.user.profileImg;
+    msg.sender = this.userService.user.name;
+    msg.creationDate = this.firestoreService.getCurrentDate();
+    msg.creationTime = this.firestoreService.getCurrentTime();
+    msg.id = this.addMessageId();
+
+    this.parentMessage.thread.push(msg);
+
+    console.log(this.parentMessage.thread);
+  }
+
+  addMessageId() {
+    let id: number;
+    if (this.parentMessage.thread.length > 0) {
+      id =
+        this.parentMessage.thread[this.parentMessage.thread.length - 1].id + 1;
+    } else {
+      id = 0;
+    }
+    return id;
   }
 }

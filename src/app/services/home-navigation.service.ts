@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,12 @@ export class HomeNavigationService {
   pmRecipient: string;
   threadOpen: boolean = false;
 
-  constructor() { }
+  currentTread: JSON;
+
+  public selectedMessageSubject = new Subject<any>();
+  selectedMessage$ = this.selectedMessageSubject.asObservable();
+
+  constructor() {}
 
   setChatPath(path: string) {
     this.mainChatPath = path;
@@ -18,8 +24,9 @@ export class HomeNavigationService {
     this.threadOpen = !this.threadOpen;
   }
 
+  selectMessage(messageData: {}) {
+    this.threadOpen = true;
 
-  
-
-
+    this.selectedMessageSubject.next(messageData);
+  }
 }

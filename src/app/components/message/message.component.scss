@@ -1,45 +1,45 @@
-.msg-wrapper {
-  display: flex;
-  gap: 30px;
+// .msg-wrapper {
+//   display: flex;
+//   gap: 30px;
 
-  img {
-    height: 70px;
-    width: 70px;
-    border-radius: 50%;
-  }
+//   img {
+//     height: 70px;
+//     width: 70px;
+//     border-radius: 50%;
+//   }
 
-  >div {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+//   >div {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 8px;
 
-    .msg-header {
-      display: flex;
-      gap: 20px;
-      align-items: center;
+//     .msg-header {
+//       display: flex;
+//       gap: 20px;
+//       align-items: center;
 
-      span {
-        font-size: 18px;
-        font-weight: 700;
-      }
+//       span {
+//         font-size: 18px;
+//         font-weight: 700;
+//       }
 
-      p {
-        font-size: 14px;
-        color: rgba(104, 104, 104, 1);
-      }
-    }
+//       p {
+//         font-size: 14px;
+//         color: rgba(104, 104, 104, 1);
+//       }
+//     }
 
-    .msg-content {
-      padding: 15px;
-      background-color: var(--main-bg-color);
-      border-radius: 0px 30px 30px 30px;
+//     .msg-content {
+//       padding: 15px;
+//       background-color: var(--main-bg-color);
+//       border-radius: 0px 30px 30px 30px;
 
-      p {
-        font-size: 18px;
-      }
-    }
-  }
-}
+//       p {
+//         font-size: 18px;
+//       }
+//     }
+//   }
+// }
 
 .messageUsersImg {
   height: 50px;
@@ -51,9 +51,8 @@
   display: flex;
   justify-content: space-between;
   width: 95%;
-  margin-bottom: 60px;
+  // margin-bottom: 60px;
   position: relative;
-
 }
 
 .nameContentDiv {
@@ -69,7 +68,7 @@
 
   .messageContent {
     margin-left: 10px;
-    background-color: #ECEEFE;
+    background-color: #eceefe;
     padding: 5px 10px;
     margin-top: 10px;
     border-radius: 0px 40px 40px 40px;
@@ -87,12 +86,10 @@
 
 .odd-message .messagesSection {
   flex-direction: row-reverse;
-
 }
 
 .odd-message {
   flex-direction: row-reverse;
-
 }
 
 .reaction {
@@ -157,7 +154,7 @@
 .createButton {
   color: rgb(255, 255, 255);
   border-radius: 20px;
-  background-color: #444DF2;
+  background-color: #444df2;
   padding: 5px 12px;
   border: none;
   text-align: center;
@@ -167,7 +164,7 @@
 }
 
 .cancelButton {
-  color: #444DF2;
+  color: #444df2;
   border-radius: 20px;
   background-color: rgb(255, 255, 255);
   padding: 5px 12px;

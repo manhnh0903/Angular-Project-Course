@@ -72,13 +72,27 @@ export class PmChatComponent {
     msg.content = this.sendMessageForm.value.message;
     msg.profileImg = this.userService.user.profileImg;
     msg.sender = this.userService.user.name;
-    msg.creationTime = this.firestoreService.getCurrentTime()
+    msg.creationDate = this.firestoreService.getCurrentDate();
+    msg.creationTime = this.firestoreService.getCurrentTime();
+    msg.id = this.addMessageId();
     this.conversation.messages.push(msg);
 
     this.firestoreService.updateConversation(
       this.conversationId,
       this.conversation.toJson()
     );
+  }
+
+  addMessageId() {
+    let id: number;
+    if (this.conversation.messages.length > 0) {
+      id =
+        this.conversation.messages[this.conversation.messages.length - 1].id +
+        1;
+    } else {
+      id = 0;
+    }
+    return id;
   }
 
   async setNewConversation() {
@@ -170,5 +184,4 @@ export class PmChatComponent {
         this.chatArea.nativeElement.scrollHeight;
     }
   }
-
 }
