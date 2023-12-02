@@ -13,7 +13,7 @@ export class MessageComponent {
   @Input() sender: string;
   @Input() profileImg: string;
   @Input() content: string;
-  @Input() thread: string;
+  @Input() thread: [];
   @Input() reactions: Reaction[];
   @Input() creationDate: string;
   @Input() creationTime: number;

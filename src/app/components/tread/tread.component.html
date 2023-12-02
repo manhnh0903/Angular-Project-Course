@@ -2,7 +2,7 @@
   <div class="thread-header">
     <div>
       <h3>Thread</h3>
-      <span># {{ message.sender }}</span>
+      <span># {{ parentMessage.sender }}</span>
     </div>
     <img
       (click)="this.homeNav.toggleThread()"
@@ -12,13 +12,23 @@
   </div>
   <div class="chat-area">
     <app-message
+      *ngFor="let message of parentMessage.thread.reverse()"
       [sender]="message.sender"
       [profileImg]="message.profileImg"
       [content]="message.content"
-      [currentMessage]="message"
+      [creationDate]="message.creationDate"
+      [creationTime]="message.creationTime"
     ></app-message>
-
-    <app-message *ngFor="let message of messages"></app-message>
+    <div class="seperator-wrapper">
+      <span>{{ 4 }} Antworten</span>
+      <div></div>
+    </div>
+    <app-message
+      [sender]="parentMessage.sender"
+      [profileImg]="parentMessage.profileImg"
+      [content]="parentMessage.content"
+      [currentMessage]="parentMessage"
+    ></app-message>
   </div>
   <div class="input-area">
     <form [formGroup]="sendMessageForm" (ngSubmit)="sendForm()">
