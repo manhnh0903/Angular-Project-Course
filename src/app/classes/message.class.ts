@@ -7,7 +7,6 @@ interface MessageData {
   reactions: [];
   creationDate: number;
   id: number;
-
 }
 
 export class Message {
@@ -20,6 +19,7 @@ export class Message {
   creationDate: number;
   id: number;
   creationTime: string;
+
   constructor(data?: MessageData) {
     this.sender = data?.sender || '';
     this.content = data?.content || '';

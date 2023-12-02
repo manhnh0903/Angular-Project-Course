@@ -2,13 +2,28 @@
   <div class="thread-header">
     <div>
       <h3>Thread</h3>
-      <span># Entwicklerteam</span>
+      <span># {{ message.sender }}</span>
     </div>
     <img
-      (click)="closeThread()"
+      (click)="this.homeNav.toggleThread()"
       src="./assets/img/close.png"
       alt="close-icon"
     />
   </div>
-  <div class="chat-area"></div>
+  <div class="chat-area">
+    <app-message
+      [sender]="message.sender"
+      [profileImg]="message.profileImg"
+      [content]="message.content"
+      [currentMessage]="message"
+    ></app-message>
+
+    <app-message *ngFor="let message of messages"></app-message>
+  </div>
+  <div class="input-area">
+    <form [formGroup]="sendMessageForm" (ngSubmit)="sendForm()">
+      <textarea formControlName="message" cols="30" rows="10"></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </div>
 </section>

@@ -9,9 +9,7 @@ import { ReactionsComponent } from '../reactions/reactions.component';
   styleUrls: ['./message.component.scss'],
 })
 export class MessageComponent {
-  constructor(public fireService: FirestoreService) {
-
-  }
+  constructor(public fireService: FirestoreService) {}
   @Input() sender: string;
   @Input() profileImg: string;
   @Input() content: string;
@@ -21,9 +19,9 @@ export class MessageComponent {
   @Input() creationTime: number;
   @Input() id: number;
   @Input() type: 'private' | 'channel' = 'private';
-  @Input() index: number
+  @Input() index: number;
   @Input() currentMessage: {};
-  onRightSide
+  onRightSide = false;
   @ViewChild(ReactionsComponent) ReactionsComponent: ReactionsComponent;
 
   getSide(index: number): boolean {
@@ -32,5 +30,4 @@ export class MessageComponent {
 
     return !isEven;
   }
-
 }

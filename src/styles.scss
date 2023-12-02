@@ -58,16 +58,6 @@ body {
   --main-dark-blue: rgb(68, 77, 242);
 }
 
-html,
-body {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
 .createChannelDialog .mat-mdc-dialog-container .mdc-dialog__surface {
   border-radius: 50px;
 }
@@ -76,4 +66,4 @@ app-home {
   height: 100%;
 }
 
-@import '@ctrl/ngx-emoji-mart/picker'
+@import "@ctrl/ngx-emoji-mart/picker";
