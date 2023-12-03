@@ -24,7 +24,7 @@ export class MessageComponent {
 
   @Input() index: number;
   @Input() currentMessage: {};
-  onRightSide
+  onRightSide: boolean
   @ViewChild(ReactionsComponent) reactionsComponent: ReactionsComponent;
 
   getSide(index: number): boolean {
@@ -32,6 +32,18 @@ export class MessageComponent {
     this.onRightSide = !isEven;
 
     return !isEven;
+  }
+
+  getLastReplyTime(): string {
+    if (this.thread.length > 0) {
+      const lastReply = this.thread[this.thread.length - 1];
+
+      const lastReplyTime = lastReply['creationTime'];
+
+      return lastReplyTime;
+    } else {
+      return '';
+    }
   }
 
 

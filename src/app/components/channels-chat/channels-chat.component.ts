@@ -83,6 +83,7 @@ export class ChannelsChatComponent {
       creationTime: this.fireService.getCurrentTime(),
       creationDay: this.fireService.getDaysName(),
       id: this.addMessageId(),
+      collectionId: this.fireService.currentChannel.id, //testen
     });
   }
 
