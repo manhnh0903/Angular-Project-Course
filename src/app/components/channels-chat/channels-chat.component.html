@@ -42,44 +42,16 @@
     <div class="messagesOnChannel">
         <app-message *ngFor="let message of fireService.sorted; let i = index" [sender]="message.sender"
             [profileImg]="message.profileImg" [content]="message.content" [creationDate]="message.creationDate"
-            [creationTime]="message.creationTime" [currentMessage]="message" [reactions]="message.reactions"
-            type="channel" [index]="i"></app-message>
+            [creationTime]="message.creationTime" [creationDay]="message.creationDay" [currentMessage]="message"
+            [reactions]="message.reactions" type="channel" [index]="i"></app-message>
     </div>
-    <!--   <div style="padding-bottom: 76px;" *ngIf="fireService.currentChannel">
-        <div *ngFor="let message of fireService.sorted let i=index" [ngClass]="{'odd-message': getSide(i)}">
-            <div *ngIf="fireService.isDifferentDate(message, i) || i===0">
-                <div class="dateDiv" *ngIf="fireService.dateNameChecker(message)==='heute'">
-                </div>
-                <div class="dateContent">
-                    {{ fireService.dateNameChecker(message)}}
-                </div>
-            </div>
-            <div class="messagesSection">
-                <app-reactions [index]="i" [currentMessage]="message"></app-reactions>
-                <div class="messagesInfo" [ngClass]="{'odd-message': !getSide(i)}">
-                    <img class="messageUsersImg" src="assets/img/{{message.profileImg}}">
-                    <div class="nameContentDiv">
-                        <div>
-                            <span class="nameOfSender">{{message.sender}}</span>
-                            <span class="time">{{ message.creationTime}} Uhr</span>
-                        </div>
-                        <span class="messageContent">{{message.content}}</span>
-                        <div class="reactions" *ngIf="message.reactions.length>0 ">
-                            <div class="reaction" *ngFor="let emoji of message.reactions">
-                                <div>{{ emoji.native}}</div>
-                                <div *ngIf="emoji.counter">{{
-                                    emoji.counter}}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
- -->
 
     <footer>
-        <input placeholder="Type your message" [(ngModel)]="content" />
-        <img (click)="addMessageToChannel()" class="sendIcon" src="assets/img/send_icon.png" />
+        <form [formGroup]="sendMessageForm" (ngSubmit)="addMessageToChannel()">
+            <input formControlName="sendMessage" placeholder="Type your message" />
+            <button class="sendIcon" type="submit">
+                <img #sendIcon src="assets/img/send_icon.png" />
+            </button>
+        </form>
     </footer>
 </div>

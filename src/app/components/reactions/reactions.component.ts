@@ -132,12 +132,14 @@ export class ReactionsComponent {
   }
 
   openEditMessageDiv() {
-    this.editMessage = !this.editMessage;
+    this.editMessage = !this.editMessage
+    this.openEdit = !this.openEdit
   }
 
   startThread() {
     this.homeNav.selectMessage(this.currentMessage);
 
     this.homeNav.currentTread = this.currentMessage;
+
   }
 }

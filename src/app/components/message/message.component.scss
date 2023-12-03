@@ -135,14 +135,14 @@
 
 .editMessageWrapper {
   position: absolute;
-  top: 0;
+  top: -15px;
   bottom: 0;
-  left: -5px;
-  right: -5px;
   border: 1px solid blue;
   border-radius: 15px;
   padding: 20px 20px 5px 20px;
   background-color: white;
+  min-height: 150%;
+  min-width: 150%;
 
   input {
     width: 100%;

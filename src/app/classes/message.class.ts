@@ -7,6 +7,7 @@ interface MessageData {
   reactions: [];
   creationDate: number;
   id: number;
+  creationDay: string
 }
 
 export class Message {
@@ -19,7 +20,7 @@ export class Message {
   creationDate: number;
   id: number;
   creationTime: string;
-
+  creationDay: string
   constructor(data?: MessageData) {
     this.sender = data?.sender || '';
     this.content = data?.content || '';
@@ -28,6 +29,7 @@ export class Message {
     this.reactions = data?.reactions || [];
     this.creationDate = data?.creationDate || 0;
     this.creationTime = data?.creationTime || '';
+    this.creationDay = data?.creationDay || '';
     this.id = data?.id || 0;
   }
 
@@ -40,6 +42,7 @@ export class Message {
       reactions: this.reactions,
       creationDate: this.creationDate,
       creationTime: this.creationTime,
+      creationDay: this.creationDay,
       id: this.id,
     };
   }

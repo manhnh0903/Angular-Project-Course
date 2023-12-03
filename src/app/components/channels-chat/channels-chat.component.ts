@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, inject } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, inject } from '@angular/core';
 import {
   Firestore,
   addDoc,
@@ -14,6 +14,7 @@ import { Message } from 'src/app/classes/message.class';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-channels-chat',
@@ -24,7 +25,6 @@ export class ChannelsChatComponent {
   firestore = inject(Firestore);
 
   private newMessage;
-  private channelId;
   public content;
   public filteredUsers = [];
   private selectedUsers = [];
@@ -32,38 +32,58 @@ export class ChannelsChatComponent {
   public addPeople = false;
   public isButtonDisabled = true;
   public buttonColor = 'gray';
+  public sendMessageForm: FormGroup;
   onRightSide;
+  @ViewChild('sendIcon', { static: false }) sendIcon: ElementRef;
 
   constructor(
     public fireService: FirestoreService,
     public navService: HomeNavigationService,
     public route: ActivatedRoute,
     public userService: UserService,
-    private el: ElementRef
+    private el: ElementRef,
+    private fb: FormBuilder
   ) {
     this.fireService.readMessagesOfChannels();
+    this.sendMessageForm = this.fb.group({
+      sendMessage: ['', [Validators.required]],
+    });
   }
 
+
   async addMessageToChannel() {
-    const docReference = this.fireService.getDocRef(
-      'channels',
-      this.fireService.currentChannel.id
-    );
+    if (this.sendMessageForm.valid) {
+      const docReference = this.fireService.getDocRef(
+        'channels',
+        this.fireService.currentChannel.id
+      );
+      this.createMessage()
+      this.fireService.currentChannel.messages.push(this.newMessage.toJSON());
+      await updateDoc(docReference, {
+        messages: this.fireService.currentChannel.messages,
+      });
+      this.fireService.readMessagesOfChannels();
+    }
+  }
+
+  /*   ifContentEmpty() {
+      if (!this.content || this.content.trim().length === 0) {
+        this.sendIcon.nativeElement.style.display = "none";
+      }
+    } */
+
+  createMessage() {
     this.newMessage = new Message({
       sender: this.userService.user.name,
       profileImg: this.userService.user.profileImg,
-      content: this.content,
+      content: this.sendMessageForm.get('sendMessage').value,
       thread: [],
       reactions: [],
       creationDate: this.fireService.getCurrentDate(),
       creationTime: this.fireService.getCurrentTime(),
+      creationDay: this.fireService.getDaysName(),
       id: this.addMessageId(),
     });
-    this.fireService.currentChannel.messages.push(this.newMessage.toJSON());
-    await updateDoc(docReference, {
-      messages: this.fireService.currentChannel.messages,
-    });
-    this.fireService.readMessagesOfChannels();
   }
 
   async addUsersToCurrentChannel() {
@@ -136,10 +156,5 @@ export class ChannelsChatComponent {
     return id;
   }
 
-  /*   getSide(index: number): boolean {
-    let isEven = index % 2 === 0;
-    this.onRightSide = !isEven;
 
-    return !isEven;
-  } */
 }

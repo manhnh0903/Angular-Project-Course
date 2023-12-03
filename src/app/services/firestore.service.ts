@@ -182,9 +182,9 @@ export class FirestoreService {
     });
   }
 
-  dateNameChecker(creationDate) {
-    if (creationDate !== this.getCurrentDate()) {
-      return `${this.getDaysName()}, ` + `${creationDate}`;
+  dateNameChecker(creationDay, creationDate) {
+    if (creationDay !== this.getDaysName()) {
+      return `${creationDay}, ` + `${creationDate}`;
     } else {
       return 'heute';
     }
@@ -213,14 +213,17 @@ export class FirestoreService {
 
   getCurrentDate() {
     let datetime = new Date();
+    const dayName = this.getDaysName();
     this.currentDate =
       datetime.getDate() +
       '.' +
       (datetime.getMonth() + 1) +
       '.' +
       datetime.getFullYear();
+
     return this.currentDate;
   }
+
 
   getCurrentTime() {
     let datetime = new Date();

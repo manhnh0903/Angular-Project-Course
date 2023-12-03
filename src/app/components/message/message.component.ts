@@ -1,7 +1,8 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input,  ViewChild } from '@angular/core';
 import { Reaction } from 'src/app/classes/reaction.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { ReactionsComponent } from '../reactions/reactions.component';
+
 
 @Component({
   selector: 'app-message',
@@ -9,16 +10,18 @@ import { ReactionsComponent } from '../reactions/reactions.component';
   styleUrls: ['./message.component.scss'],
 })
 export class MessageComponent {
-  constructor(public fireService: FirestoreService) {}
+  constructor(public fireService: FirestoreService) { }
+  
   @Input() sender: string;
   @Input() profileImg: string;
   @Input() content: string;
   @Input() thread: [];
   @Input() reactions: Reaction[];
   @Input() creationDate: string;
+  @Input() creationDay: string;
   @Input() creationTime: number;
   @Input() id: number;
-  @Input() type: 'private' | 'channel' = 'private';
+
   @Input() index: number;
   @Input() currentMessage: {};
   onRightSide
@@ -36,4 +39,9 @@ export class MessageComponent {
     this.reactionsComponent.editMessage = false
     this.reactionsComponent.openEdit = false
   }
+
+  
 }
+
+
+
