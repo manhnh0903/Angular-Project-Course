@@ -21,8 +21,6 @@ export class TreadComponent {
 
   public parentMessage: Message = new Message();
 
-  public currentMessage: Message;
-
   constructor(
     public homeNav: HomeNavigationService,
     private fb: FormBuilder,
@@ -59,8 +57,21 @@ export class TreadComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         this.opendThreadConversation = new Conversation(data);
+        this.updateCurrentMessage();
         console.log(this.opendThreadConversation);
       });
+  }
+
+  updateCurrentMessage() {
+    this.opendThreadConversation.messages.forEach(
+      (message: Message, index: number) => {
+        this.opendThreadConversation.messages[index] = new Message(message);
+
+        if (message.id === this.parentMessage.id) {
+          this.parentMessage = message;
+        }
+      }
+    );
   }
 
   sendForm() {
@@ -75,10 +86,12 @@ export class TreadComponent {
 
     this.parentMessage.thread.push(msg);
 
-    // this.firestoreService.updateConversation(
-    //   this.conversationId,
-    //   this.conversation.toJson()
-    // );
+    console.log('convo', this.opendThreadConversation);
+
+    this.firestoreService.updateConversation(
+      this.parentMessage.collectionId,
+      this.opendThreadConversation.toJson()
+    );
   }
 
   addMessageId() {
