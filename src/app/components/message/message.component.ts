@@ -30,4 +30,16 @@ export class MessageComponent {
 
     return !isEven;
   }
+
+  getLastReplyTime(): string {
+    if (this.thread.length > 0) {
+      const lastReply = this.thread[this.thread.length - 1];
+
+      const lastReplyTime = lastReply['creationTime'];
+
+      return lastReplyTime;
+    } else {
+      return '';
+    }
+  }
 }

@@ -17,14 +17,25 @@
         [index]="index"
         [currentMessage]="currentMessage"
       ></app-reactions>
-      <div class="messagesInfo" [ngClass]="{ 'odd-message': !getSide(index) }">
-        <img class="messageUsersImg" src="assets/img/{{ profileImg }}" />
-        <div class="nameContentDiv">
-          <div>
-            <span class="nameOfSender">{{ sender }}</span>
-            <span class="time">{{ creationTime }} Uhr</span>
+
+      <div class="msg-wrapper" [ngClass]="{ 'odd-message': !getSide(index) }">
+        <img src="assets/img/{{ profileImg }}" />
+
+        <div>
+          <div class="msg-header">
+            <span>{{ sender }}</span>
+            <p>{{ creationTime }} Uhr</p>
           </div>
-          <span class="messageContent">{{ content }}</span>
+
+          <div class="msg-content">
+            <span>{{ content }}</span>
+          </div>
+
+          <div *ngIf="thread && thread.length > 0" class="thread-wrapper">
+            <span>{{ thread.length }} Antworten</span>
+            <p>Letzte Antwort {{ getLastReplyTime() }}</p>
+          </div>
+
           <div class="reactions" *ngIf="reactions?.length > 0">
             <div class="reaction" *ngFor="let emoji of reactions">
               <div>{{ emoji.native }}</div>
@@ -33,6 +44,7 @@
           </div>
         </div>
       </div>
+
       <div
         class="editMessageDiv"
         *ngIf="ReactionsComponent && ReactionsComponent.editMessage"
