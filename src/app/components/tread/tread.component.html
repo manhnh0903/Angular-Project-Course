@@ -20,7 +20,7 @@
       [creationTime]="message.creationTime"
     ></app-message>
     <div class="seperator-wrapper">
-      <span>{{ 4 }} Antworten</span>
+      <span>{{ parentMessage.thread.length ?? 0 }} Antworten</span>
       <div></div>
     </div>
     <app-message

@@ -7,6 +7,7 @@ interface MessageData {
   reactions: [];
   creationDate: number;
   id: number;
+  collectionId: string;
 }
 
 export class Message {
@@ -19,6 +20,7 @@ export class Message {
   creationDate: number;
   id: number;
   creationTime: string;
+  collectionId: string;
 
   constructor(data?: MessageData) {
     this.sender = data?.sender || '';
@@ -29,6 +31,7 @@ export class Message {
     this.creationDate = data?.creationDate || 0;
     this.creationTime = data?.creationTime || '';
     this.id = data?.id || 0;
+    this.collectionId = data?.collectionId || '';
   }
 
   toJSON() {
@@ -41,6 +44,7 @@ export class Message {
       creationDate: this.creationDate,
       creationTime: this.creationTime,
       id: this.id,
+      collectionId: this.collectionId,
     };
   }
 }

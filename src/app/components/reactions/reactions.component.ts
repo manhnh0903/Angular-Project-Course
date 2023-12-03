@@ -27,8 +27,8 @@ export class ReactionsComponent {
 
   emojiOpened = false;
   @Input() currentMessage;
-  @Input() index;
-  emoji;
+  @Input() index: number;
+  emoji: Reaction;
   openEdit = false;
   editMessage = false;
 

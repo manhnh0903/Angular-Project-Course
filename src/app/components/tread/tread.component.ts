@@ -5,6 +5,7 @@ import { Message } from 'src/app/classes/message.class';
 import { Subject, startWith, takeUntil } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { Conversation } from 'src/app/classes/conversation.class';
 
 @Component({
   selector: 'app-tread',
@@ -16,7 +17,11 @@ export class TreadComponent {
   public messages: Message[];
   private destroy$ = new Subject<void>();
 
+  private opendThreadConversation: Conversation;
+
   public parentMessage: Message = new Message();
+
+  public currentMessage: Message;
 
   constructor(
     public homeNav: HomeNavigationService,
@@ -45,8 +50,16 @@ export class TreadComponent {
       .pipe(startWith(this.homeNav.currentTread), takeUntil(this.destroy$))
       .subscribe((data: Message) => {
         this.parentMessage = data;
+        this.subThreadData();
+      });
+  }
 
-        console.log(typeof this.parentMessage.creationDate);
+  subThreadData() {
+    this.firestoreService.threadData$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.opendThreadConversation = new Conversation(data);
+        console.log(this.opendThreadConversation);
       });
   }
 
@@ -62,7 +75,10 @@ export class TreadComponent {
 
     this.parentMessage.thread.push(msg);
 
-    console.log(this.parentMessage.thread);
+    // this.firestoreService.updateConversation(
+    //   this.conversationId,
+    //   this.conversation.toJson()
+    // );
   }
 
   addMessageId() {

@@ -58,6 +58,7 @@ export class ChannelsChatComponent {
       creationDate: this.fireService.getCurrentDate(),
       creationTime: this.fireService.getCurrentTime(),
       id: this.addMessageId(),
+      collectionId: this.fireService.currentChannel.id, //testen
     });
     this.fireService.currentChannel.messages.push(this.newMessage.toJSON());
     await updateDoc(docReference, {

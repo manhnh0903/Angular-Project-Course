@@ -1,3 +1,4 @@
+import { DeclarationListEmitMode } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import {
   Firestore,
@@ -13,6 +14,7 @@ import {
   QuerySnapshot,
   where,
   docData,
+  DocumentReference,
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 
@@ -27,7 +29,9 @@ export class FirestoreService {
   private conversationDataDataSubject = new BehaviorSubject<any>(null);
   public conversationData$: Observable<any> =
     this.conversationDataDataSubject.asObservable();
-  unsubUsers;
+  private threadDataSubject = new BehaviorSubject<any>(null);
+  threadData$: Observable<any> = this.threadDataSubject.asObservable();
+
   unsubUserData: Function;
   public currentChannel;
   public channels = [];
@@ -36,10 +40,12 @@ export class FirestoreService {
   private currentDate;
   public sorted = [];
 
-  constructor(private firestore: Firestore) { }
+  constructor(private firestore: Firestore) {}
 
   ngOnDestroy() {
     this.unsubUserData();
+    this.destroyConversationDataSubject();
+    this.destroyThreadDataSubject();
   }
 
   async getLogedInUserData(userId: string) {
@@ -69,7 +75,7 @@ export class FirestoreService {
   }
 
   async subscribeToPMConversation(conversationID: string): Promise<void> {
-    this.destroyConversationDataSubject();
+    // this.destroyConversationDataSubject();
 
     const docRef = this.getDocRef('pms', conversationID);
     this.conversationDataDataSubject = new BehaviorSubject<any>(null);
@@ -88,6 +94,28 @@ export class FirestoreService {
 
   private destroyConversationDataSubject(): void {
     this.conversationDataDataSubject.complete();
+  }
+
+  async subscribeToThreadDocument(col: string, docId: string) {
+    // this.destroyThreadDataSubject();
+
+    const docRef = this.getDocRef(col, docId);
+    this.threadDataSubject = new BehaviorSubject<any>(null);
+
+    onSnapshot(docRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const threadData = snapshot.data();
+        this.threadDataSubject.next(threadData);
+      } else {
+        this.threadDataSubject.next(null);
+      }
+    });
+
+    this.threadData$ = this.threadDataSubject.asObservable();
+  }
+
+  private destroyThreadDataSubject(): void {
+    this.threadDataSubject.complete();
   }
 
   async addNewConversation(data: {}) {
@@ -219,6 +247,7 @@ export class FirestoreService {
       (datetime.getMonth() + 1) +
       '.' +
       datetime.getFullYear();
+
     return this.currentDate;
   }
 
@@ -226,7 +255,7 @@ export class FirestoreService {
     let datetime = new Date();
     let hours = datetime.getHours();
     let minutes = datetime.getMinutes();
-    let formattedMinutes = (minutes < 10) ? '0' + minutes : minutes;
+    let formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
     let currentTime = `${hours}:${formattedMinutes}`;
     return currentTime;
   }

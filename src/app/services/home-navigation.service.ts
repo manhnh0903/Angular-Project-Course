@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { FirestoreService } from './firestore.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class HomeNavigationService {
   public selectedMessageSubject = new Subject<any>();
   selectedMessage$ = this.selectedMessageSubject.asObservable();
 
-  constructor() {}
+  constructor(private firestoreService: FirestoreService) {}
 
   setChatPath(path: string) {
     this.mainChatPath = path;
@@ -28,5 +29,10 @@ export class HomeNavigationService {
     this.threadOpen = true;
 
     this.selectedMessageSubject.next(messageData);
+
+    this.firestoreService.subscribeToThreadDocument(
+      'pms',
+      messageData['collectionId']
+    );
   }
 }

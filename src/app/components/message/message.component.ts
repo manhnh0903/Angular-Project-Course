@@ -21,7 +21,7 @@ export class MessageComponent {
   @Input() type: 'private' | 'channel' = 'private';
   @Input() index: number;
   @Input() currentMessage: {};
-  onRightSide = false;
+  onRightSide: boolean = false;
   @ViewChild(ReactionsComponent) ReactionsComponent: ReactionsComponent;
 
   getSide(index: number): boolean {

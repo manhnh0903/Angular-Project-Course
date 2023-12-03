@@ -75,6 +75,7 @@ export class PmChatComponent {
     msg.creationDate = this.firestoreService.getCurrentDate();
     msg.creationTime = this.firestoreService.getCurrentTime();
     msg.id = this.addMessageId();
+    msg.collectionId = this.conversationId;
     this.conversation.messages.push(msg);
 
     this.firestoreService.updateConversation(
