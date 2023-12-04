@@ -1,7 +1,7 @@
-.msg-wrapper {
+/* .msg-wrapper {
   display: flex;
   gap: 30px;
-
+} */
 //   img {
 //     height: 70px;
 //     width: 70px;
@@ -51,33 +51,32 @@
   display: flex;
   justify-content: space-between;
   width: 95%;
-  // margin-bottom: 60px;
   position: relative;
 }
 
-// .nameContentDiv {
-//   display: flex;
-//   flex-direction: column;
-//   margin-left: 20px;
-//   margin-right: 20px;
+.nameContentDiv {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  margin-right: 20px;
   position: relative;
 
-//   .nameOfSender {
-//     font-weight: bold;
-//   }
+  .nameOfSender {
+    font-weight: bold;
+  }
 
-//   .messageContent {
-//     margin-left: 10px;
-//     background-color: #eceefe;
-//     padding: 5px 10px;
-//     margin-top: 10px;
-//     border-radius: 0px 40px 40px 40px;
-//   }
-// }
+  .messageContent {
+    margin-left: 10px;
+    background-color: #eceefe;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-radius: 0px 40px 40px 40px;
+  }
+}
 
-// .messagesInfo {
-//   display: flex;
-// }
+.messagesInfo {
+  display: flex;
+}
 
 .reactions {
   display: flex;
@@ -142,7 +141,7 @@
   padding: 20px 20px 5px 20px;
   background-color: white;
   min-height: 150%;
-  min-width: 150%;
+  min-width: 200%;
 
   input {
     width: 100%;
@@ -160,7 +159,6 @@
   text-align: center;
   width: fit-content;
   cursor: pointer;
-  align-self: flex-end;
 }
 
 .cancelButton {
@@ -172,20 +170,20 @@
   text-align: center;
   width: fit-content;
   cursor: pointer;
-  align-self: flex-end;
 }
 
 .editMessageDiv {
-  position: relative;
-  right: 0;
-  bottom: 0;
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  input {
+    flex-grow: 1;
+  }
 }
 
 .editButtons {
   display: flex;
-  position: absolute;
-  right: 0;
-  bottom: 0;
+  align-self: flex-end;
 }

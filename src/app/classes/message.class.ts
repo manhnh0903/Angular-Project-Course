@@ -8,6 +8,7 @@ interface MessageData {
   creationDate: number;
   id: number;
   collectionId: string;
+  creationDay: string;
 }
 
 interface ThreadMessageData {
@@ -56,6 +57,7 @@ export class Message {
       reactions: message.reactions,
       creationDate: message.creationDate,
       creationTime: message.creationTime,
+      creationDay: this.creationDay,
       id: message.id,
       collectionId: message.collectionId,
     };

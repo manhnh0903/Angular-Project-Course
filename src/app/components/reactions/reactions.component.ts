@@ -1,8 +1,10 @@
 import {
   Component,
   ElementRef,
+  EventEmitter,
   HostListener,
   Input,
+  Output,
   inject,
 } from '@angular/core';
 import { Firestore, loadBundle, updateDoc } from '@angular/fire/firestore';
@@ -23,14 +25,23 @@ export class ReactionsComponent {
     public userService: UserService,
     private el: ElementRef,
     private homeNav: HomeNavigationService
-  ) {}
+  ) { }
 
   emojiOpened = false;
   @Input() currentMessage;
-  @Input() index: number;
-  emoji: Reaction;
+  @Input() index;
+  emoji;
   openEdit = false;
-  editMessage = false;
+  editMessage = true;
+  @Output() openEditMessageDivEvent = new EventEmitter<{ editMessage: boolean, openEdit: boolean }>();
+
+  openEditMessageDiv() {
+    this.editMessage = !this.editMessage;
+    this.openEdit = !this.openEdit;
+    console.log(this.editMessage);
+    this.openEditMessageDivEvent.emit({ editMessage: this.editMessage, openEdit: this.openEdit });
+  }
+
 
   openEmoji() {
     if (this.emojiOpened === false) {
@@ -131,15 +142,11 @@ export class ReactionsComponent {
     this.openEdit = !this.openEdit;
   }
 
-  openEditMessageDiv() {
-    this.editMessage = !this.editMessage
-    this.openEdit = !this.openEdit
-  }
+
 
   startThread() {
     this.homeNav.selectMessage(this.currentMessage);
 
     this.homeNav.currentTread = this.currentMessage;
-
   }
 }
