@@ -9,7 +9,7 @@ export class Channel {
     this.description = obj?.description || '';
     this.users = obj?.users || [];
     this.messages = obj?.messages || [];
-    this.id = obj?.description || '';
+    this.id = obj?.id || '';
   }
 
   toJSON() {
