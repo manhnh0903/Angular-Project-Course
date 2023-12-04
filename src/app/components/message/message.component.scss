@@ -72,6 +72,25 @@
     margin-top: 10px;
     border-radius: 0px 40px 40px 40px;
   }
+
+  .tread-info {
+    display: flex;
+    grid-gap: 20px;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 8px;
+    cursor: pointer;
+
+    span {
+      color: rgba(83, 90, 241, 1);
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 14px;
+      color: rgba(104, 104, 104, 1);
+    }
+  }
 }
 
 .messagesInfo {
@@ -146,7 +165,7 @@
   input {
     width: 100%;
     outline: none;
-    border: none
+    border: none;
   }
 }
 
