@@ -21,7 +21,7 @@ export class PmChatComponent {
   private conversationId: string;
   private destroy$ = new Subject<void>();
   public loading: boolean = true;
-
+  public type = 'pm'
   @ViewChild('chatArea', { static: false }) chatArea: ElementRef;
 
   constructor(
@@ -34,6 +34,8 @@ export class PmChatComponent {
     });
     this.initializeAsync();
   }
+
+
 
   async initializeAsync() {
     await this.subRecipientData();

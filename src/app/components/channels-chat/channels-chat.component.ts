@@ -33,7 +33,8 @@ export class ChannelsChatComponent {
   public isButtonDisabled = true;
   public buttonColor = 'gray';
   public sendMessageForm: FormGroup;
-  onRightSide;
+  public onRightSide;
+  public type = 'channel'
   @ViewChild('sendIcon', { static: false }) sendIcon: ElementRef;
 
   constructor(

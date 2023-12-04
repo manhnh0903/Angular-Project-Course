@@ -43,7 +43,7 @@
         <app-message *ngFor="let message of fireService.sorted; let i = index" [sender]="message.sender"
             [profileImg]="message.profileImg" [content]="message.content" [creationDate]="message.creationDate"
             [creationTime]="message.creationTime" [creationDay]="message.creationDay" [currentMessage]="message"
-            [reactions]="message.reactions"  type="channel" [index]="i"></app-message>
+            [reactions]="message.reactions" [type]="'channel'" [index]="i"></app-message>
     </div>
 
     <footer>

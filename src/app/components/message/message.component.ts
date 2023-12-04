@@ -26,9 +26,12 @@ export class MessageComponent {
   @Input() id: number;
   @Input() index: number;
   @Input() currentMessage: {};
-  onRightSide: boolean
-  editMessage = false
-  openEdit = false
+  @Input() collectionId;
+  @Input() conversation;
+  @Input() type: 'channel' | 'pm'
+  public onRightSide: boolean
+  public editMessage = false
+  private openEdit = false
 
   openEditMessageDiv(event: { editMessage: boolean, openEdit: boolean }) {
     if (this.editMessage && this.openEdit) {
@@ -72,10 +75,34 @@ export class MessageComponent {
 
 
   async updateMessageContent() {
-
-    let messageToUpdate = this.fireService.sorted[this.index]
+    let messageToUpdate
+    let docRef
+    ({ messageToUpdate, docRef } = this.checkForChannels(messageToUpdate, docRef));
+    ({ messageToUpdate, docRef } = this.checkForPMs(messageToUpdate, docRef));
     messageToUpdate.content = this.content
-    const docRef = doc(this.firestore, 'channels', this.fireService.currentChannel.id);
+    this.saveUpdatedInFirestore(docRef, messageToUpdate)
+  }
+
+
+  checkForChannels(messageToUpdate, docRef) {
+    if (this.type === 'channel') {
+      messageToUpdate = this.fireService.sorted[this.index]
+      docRef = doc(this.firestore, 'channels', this.fireService.currentChannel.id);
+    }
+    return { messageToUpdate, docRef };
+  }
+
+
+  checkForPMs(messageToUpdate, docRef) {
+    if (this.type === 'pm') {
+      messageToUpdate = this.conversation.messages.reverse()[this.index]
+      docRef = doc(this.firestore, 'pms', this.collectionId)
+    }
+    return { messageToUpdate, docRef };
+  }
+
+
+  async saveUpdatedInFirestore(docRef, messageToUpdate) {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const messages = docSnap.data()['messages'] || [];
@@ -84,7 +111,6 @@ export class MessageComponent {
       await updateDoc(docRef, { messages });
     }
   }
-
 
 }
 
