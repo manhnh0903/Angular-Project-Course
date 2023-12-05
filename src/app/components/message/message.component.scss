@@ -50,8 +50,9 @@
 .messagesSection {
   display: flex;
   justify-content: space-between;
-  width: 95%;
   position: relative;
+  padding: 20px;
+  cursor: pointer;
 }
 
 .nameContentDiv {
@@ -60,6 +61,7 @@
   margin-left: 20px;
   margin-right: 20px;
   position: relative;
+  flex-grow: 1;
 
   .nameOfSender {
     font-weight: bold;
@@ -114,6 +116,11 @@
   display: flex;
   align-items: center;
   margin-left: 4px;
+  margin-top: 4px;
+  background: white;
+  border-radius: 40px;
+  padding: 2px 7px;
+  border: 1px solid #cdcddc;
 }
 
 .dateDiv {
@@ -157,7 +164,7 @@
   bottom: 0;
   border: 1px solid blue;
   border-radius: 15px;
-  padding: 20px 20px 5px 20px;
+  padding: 10px 5px;
   background-color: white;
   min-height: 150%;
   width: 100%;

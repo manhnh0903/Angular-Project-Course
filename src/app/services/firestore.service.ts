@@ -232,6 +232,16 @@ export class FirestoreService {
     }
   }
 
+
+  sortOnChannel(){
+
+  }
+
+
+  sortOnPMs(){
+    
+  }
+
   isDifferentDate(creationDate, i: number): boolean {
     if (creationDate && i > 0) {
       return creationDate !== this.sorted[i - 1].creationDate;

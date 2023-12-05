@@ -1,8 +1,8 @@
-import { Component, Input, ViewChild, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Reaction } from 'src/app/classes/reaction.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { ReactionsComponent } from '../reactions/reactions.component';
-import { Firestore, doc, getDoc, onSnapshot, updateDoc } from '@angular/fire/firestore';
+import { Firestore, doc, getDoc, updateDoc } from '@angular/fire/firestore';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -11,7 +11,7 @@ import { Firestore, doc, getDoc, onSnapshot, updateDoc } from '@angular/fire/fir
   styleUrls: ['./message.component.scss'],
 })
 export class MessageComponent {
-  constructor(public fireService: FirestoreService,) {
+  constructor(public fireService: FirestoreService, private userService: UserService) {
 
   }
   firestore = inject(Firestore)
@@ -32,6 +32,8 @@ export class MessageComponent {
   public onRightSide: boolean
   public editMessage = false
   private openEdit = false
+
+
 
   openEditMessageDiv(event: { editMessage: boolean, openEdit: boolean }) {
     if (this.editMessage && this.openEdit) {
@@ -109,8 +111,27 @@ export class MessageComponent {
       const indexOfMessageToUpdate = messages.findIndex(message => message.id === messageToUpdate.id);
       messages[indexOfMessageToUpdate].content = messageToUpdate.content;
       await updateDoc(docRef, { messages });
+      this.closeEdit()
     }
   }
 
-}
 
+  getReactionsPeople(emoji) {
+    let names = []
+    emoji.userIDs.forEach(id => {
+      let index = this.fireService.allUsers.findIndex(user => user.userId === id)
+      if (index !== -1) {
+        if (id === this.userService.user.userId) {
+          names.push('Du')
+        } else {
+          names.push(this.fireService.allUsers[index].name)
+        }
+      }
+    })
+
+    return names
+  }
+
+
+
+}

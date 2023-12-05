@@ -9,6 +9,6 @@
         <span>Nachricht bearbeiten</span>
     </div>
     <emoji-mart *ngIf="emojiOpened" (emojiClick)="addEmoji($event)" (tooltip)=false
-        [ngClass]="{ 'ifRightSide': index % 2 !== 0}">
+        [ngClass]="{ 'ifRightSide': index % 2 === 0}">
     </emoji-mart>
 </div>
