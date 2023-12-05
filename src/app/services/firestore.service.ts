@@ -97,8 +97,6 @@ export class FirestoreService {
   }
 
   async subscribeToThreadDocument(col: string, docId: string) {
-    // this.destroyThreadDataSubject();
-
     const docRef = this.getDocRef(col, docId);
     this.threadDataSubject = new BehaviorSubject<any>(null);
 
@@ -124,8 +122,8 @@ export class FirestoreService {
     await addDoc(colRef, data);
   }
 
-  async updateConversation(conversationID: string, data: {}) {
-    const docRef = this.getDocRef('pms', conversationID);
+  async updateConversation(col, conversationID: string, data: {}) {
+    const docRef = this.getDocRef(col, conversationID);
 
     await setDoc(docRef, data);
   }
@@ -251,7 +249,6 @@ export class FirestoreService {
 
     return this.currentDate;
   }
-
 
   getCurrentTime() {
     let datetime = new Date();

@@ -6,6 +6,7 @@ import { Subject, startWith, takeUntil } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Conversation } from 'src/app/classes/conversation.class';
+import { Channel } from 'src/app/classes/channel.class';
 
 @Component({
   selector: 'app-tread',
@@ -17,7 +18,8 @@ export class TreadComponent {
   public messages: Message[];
   private destroy$ = new Subject<void>();
 
-  private opendThreadConversation: Conversation;
+  private opendThreadConversation: Conversation | Channel;
+  private threadCollection: string;
 
   public parentMessage: Message = new Message();
 
@@ -56,10 +58,29 @@ export class TreadComponent {
     this.firestoreService.threadData$
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
-        this.opendThreadConversation = new Conversation(data);
-        this.updateCurrentMessage();
-        console.log(this.opendThreadConversation);
+        if (data) {
+          if (this.isConversation(data)) {
+            this.opendThreadConversation = new Conversation(data);
+            this.threadCollection = 'pms';
+            console.log('Conversation');
+          } else if (this.isChannel(data)) {
+            this.opendThreadConversation = new Channel(data);
+            this.threadCollection = 'channels';
+            console.log('Channel');
+          }
+
+          console.log(this.opendThreadConversation);
+          this.updateCurrentMessage();
+        }
       });
+  }
+
+  isConversation(data: {}) {
+    return 'userId1' in data && 'userId2' in data && 'messages' in data;
+  }
+
+  isChannel(data: {}) {
+    return 'name' in data && 'description' in data;
   }
 
   updateCurrentMessage() {
@@ -89,8 +110,9 @@ export class TreadComponent {
     console.log('convo', this.opendThreadConversation);
 
     this.firestoreService.updateConversation(
+      this.threadCollection,
       this.parentMessage.collectionId,
-      this.opendThreadConversation.toJson()
+      this.opendThreadConversation.toJSON()
     );
   }
 

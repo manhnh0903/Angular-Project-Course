@@ -1,4 +1,11 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import {
   Firestore,
   addDoc,
@@ -14,7 +21,12 @@ import { Message } from 'src/app/classes/message.class';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-channels-chat',
@@ -34,7 +46,7 @@ export class ChannelsChatComponent {
   public buttonColor = 'gray';
   public sendMessageForm: FormGroup;
   public onRightSide;
-  public type = 'channel'
+  public type = 'channel';
   @ViewChild('sendIcon', { static: false }) sendIcon: ElementRef;
 
   constructor(
@@ -51,14 +63,13 @@ export class ChannelsChatComponent {
     });
   }
 
-
   async addMessageToChannel() {
     if (this.sendMessageForm.valid) {
       const docReference = this.fireService.getDocRef(
         'channels',
         this.fireService.currentChannel.id
       );
-      this.createMessage()
+      this.createMessage();
       this.fireService.currentChannel.messages.push(this.newMessage.toJSON());
       await updateDoc(docReference, {
         messages: this.fireService.currentChannel.messages,
@@ -84,7 +95,8 @@ export class ChannelsChatComponent {
       creationTime: this.fireService.getCurrentTime(),
       creationDay: this.fireService.getDaysName(),
       id: this.addMessageId(),
-      collectionId: this.fireService.currentChannel.id, //testen
+      collectionId: this.fireService.currentChannel.id,
+      messageType: 'channels',
     });
   }
 
@@ -157,6 +169,4 @@ export class ChannelsChatComponent {
     }
     return id;
   }
-
-
 }

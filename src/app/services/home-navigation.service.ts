@@ -31,7 +31,7 @@ export class HomeNavigationService {
     this.selectedMessageSubject.next(messageData);
 
     this.firestoreService.subscribeToThreadDocument(
-      'pms',
+      messageData['messageType'],
       messageData['collectionId']
     );
   }

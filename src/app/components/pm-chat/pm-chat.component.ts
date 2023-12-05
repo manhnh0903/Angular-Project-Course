@@ -21,7 +21,7 @@ export class PmChatComponent {
   private conversationId: string;
   private destroy$ = new Subject<void>();
   public loading: boolean = true;
-  public type = 'pm'
+  public type = 'pm';
   @ViewChild('chatArea', { static: false }) chatArea: ElementRef;
 
   constructor(
@@ -34,8 +34,6 @@ export class PmChatComponent {
     });
     this.initializeAsync();
   }
-
-
 
   async initializeAsync() {
     await this.subRecipientData();
@@ -79,11 +77,16 @@ export class PmChatComponent {
     msg.id = this.addMessageId();
     msg.collectionId = this.conversationId;
     msg.creationDay = this.firestoreService.getDaysName();
+    msg.messageType = 'pms';
+
     this.conversation.messages.push(msg);
 
+    console.log(this.conversation.toJSON());
+
     this.firestoreService.updateConversation(
+      'pms',
       this.conversationId,
-      this.conversation.toJson()
+      this.conversation.toJSON()
     );
   }
 
@@ -107,7 +110,7 @@ export class PmChatComponent {
     conversation.userId1 = this.userService.user.userId;
     conversation.userId2 = this.recipient.userId;
 
-    await this.firestoreService.addNewConversation(conversation.toJson());
+    await this.firestoreService.addNewConversation(conversation.toJSON());
 
     console.log('new conversation', conversation);
   }

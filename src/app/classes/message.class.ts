@@ -9,6 +9,7 @@ interface MessageData {
   id: number;
   collectionId: string;
   creationDay: string;
+  messageType: string;
 }
 
 interface ThreadMessageData {
@@ -21,7 +22,8 @@ interface ThreadMessageData {
   id: number;
   creationTime: string;
   collectionId: string;
-  creationDay: string
+  creationDay: string;
+  messageType: string;
 }
 
 export class Message {
@@ -35,7 +37,9 @@ export class Message {
   id: number;
   creationTime: string;
   collectionId: string;
-  creationDay: string
+  creationDay: string;
+  messageType: string;
+
   constructor(data?: MessageData) {
     this.sender = data?.sender || '';
     this.content = data?.content || '';
@@ -47,6 +51,7 @@ export class Message {
     this.creationDay = data?.creationDay || '';
     this.id = data?.id || 0;
     this.collectionId = data?.collectionId || '';
+    this.messageType = data?.messageType || '';
   }
 
   private threadMessageToJSON(message: ThreadMessageData): any {
@@ -60,6 +65,7 @@ export class Message {
       creationDay: this.creationDay,
       id: message.id,
       collectionId: message.collectionId,
+      messageType: message.messageType,
     };
   }
 
@@ -79,6 +85,7 @@ export class Message {
       creationDay: this.creationDay,
       id: this.id,
       collectionId: this.collectionId,
+      messageType: this.messageType,
     };
   }
 }

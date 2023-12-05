@@ -15,7 +15,7 @@ export class Conversation {
     this.messages = data?.messages || [];
   }
 
-  toJson() {
+  toJSON() {
     const messagesAsJson = this.messages.map((message) => {
       return message.toJSON();
     });
