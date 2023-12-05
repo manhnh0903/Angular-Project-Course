@@ -25,7 +25,7 @@ export class ReactionsComponent {
     public userService: UserService,
     private el: ElementRef,
     private homeNav: HomeNavigationService
-  ) { }
+  ) {}
 
   emojiOpened = false;
   @Input() currentMessage;
@@ -33,15 +33,20 @@ export class ReactionsComponent {
   emoji;
   openEdit = false;
   editMessage = true;
-  @Output() openEditMessageDivEvent = new EventEmitter<{ editMessage: boolean, openEdit: boolean }>();
+  @Output() openEditMessageDivEvent = new EventEmitter<{
+    editMessage: boolean;
+    openEdit: boolean;
+  }>();
 
   openEditMessageDiv() {
     this.editMessage = !this.editMessage;
     this.openEdit = !this.openEdit;
     console.log(this.editMessage);
-    this.openEditMessageDivEvent.emit({ editMessage: this.editMessage, openEdit: this.openEdit });
+    this.openEditMessageDivEvent.emit({
+      editMessage: this.editMessage,
+      openEdit: this.openEdit,
+    });
   }
-
 
   openEmoji() {
     if (this.emojiOpened === false) {
@@ -142,11 +147,8 @@ export class ReactionsComponent {
     this.openEdit = !this.openEdit;
   }
 
-
-
   startThread() {
     this.homeNav.selectMessage(this.currentMessage);
-
     this.homeNav.currentTread = this.currentMessage;
   }
 }

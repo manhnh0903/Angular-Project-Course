@@ -3,7 +3,8 @@ export class Channel {
   description: string;
   users: any[] = [];
   id;
-  messages = []
+  messages = [];
+
   constructor(obj?: any) {
     this.name = obj?.name || '';
     this.description = obj?.description || '';
@@ -13,12 +14,16 @@ export class Channel {
   }
 
   toJSON() {
+    const messagesAsJson = this.messages.map((message) => {
+      return message.toJSON();
+    });
+
     return {
       name: this.name,
       description: this.description,
       users: this.users,
-      messages: this.messages,
-      id: this.id
+      messages: messagesAsJson,
+      id: this.id,
     };
   }
 }
