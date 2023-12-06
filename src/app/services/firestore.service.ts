@@ -40,7 +40,7 @@ export class FirestoreService {
   private currentDate;
   public sorted = [];
 
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore) { }
 
   ngOnDestroy() {
     this.unsubUserData();
@@ -231,21 +231,16 @@ export class FirestoreService {
   }
 
 
-  sortOnChannel(){
+  sortOnChannel() {
 
   }
 
 
-  sortOnPMs(){
-    
+  sortOnPMs() {
+
   }
 
-  isDifferentDate(creationDate, i: number): boolean {
-    if (creationDate && i > 0) {
-      return creationDate !== this.sorted[i - 1].creationDate;
-    }
-    return true;
-  }
+ 
 
   getCurrentDate() {
     let datetime = new Date();

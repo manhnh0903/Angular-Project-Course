@@ -1,6 +1,6 @@
 <div style="padding-bottom: 76px">
   <div>
-    <div *ngIf="fireService.isDifferentDate(creationDate, index) || index === 0">
+    <div *ngIf="isDifferentDate(creationDate, index,type) || index === 0">
       <div class="dateDiv" *ngIf="
           fireService.dateNameChecker(creationDay, creationDate) === 'heute'
         "></div>
@@ -11,7 +11,8 @@
 
     <div class="messagesSection" [ngClass]="{ 'odd-message': !getSide(index) }">
       <app-reactions (openEditMessageDivEvent)="openEditMessageDiv($event)" [index]="index"
-        [currentMessage]="currentMessage"></app-reactions>
+        [currentMessage]="currentMessage" [type]="type" [conversation]="conversation"
+        [collectionId]="collectionId"></app-reactions>
       <div class="messagesInfo" [ngClass]="{ 'odd-message': getSide(index) }">
         <img class="messageUsersImg" src="assets/img/{{ profileImg }}" />
         <div class="nameContentDiv">
@@ -45,7 +46,7 @@
               <div *ngIf="emoji.counter">{{ emoji.counter }}
                 <div *ngIf="emoji.userIDs">{{getReactionsPeople(emoji)}}</div>
               </div>
-           
+
             </div>
           </div>
         </div>

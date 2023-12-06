@@ -25,11 +25,14 @@ export class ReactionsComponent {
     public userService: UserService,
     private el: ElementRef,
     private homeNav: HomeNavigationService
-  ) {}
+  ) { }
 
   emojiOpened = false;
   @Input() currentMessage;
   @Input() index;
+  @Input() type;
+  @Input() conversation;
+  @Input() collectionId;
   emoji;
   openEdit = false;
   editMessage = true;
@@ -41,7 +44,6 @@ export class ReactionsComponent {
   openEditMessageDiv() {
     this.editMessage = !this.editMessage;
     this.openEdit = !this.openEdit;
-    console.log(this.editMessage);
     this.openEditMessageDivEvent.emit({
       editMessage: this.editMessage,
       openEdit: this.openEdit,
@@ -57,24 +59,62 @@ export class ReactionsComponent {
   }
 
   async addEmoji(event) {
-    let indexOfCurrentMessage =
-      this.fireService.currentChannel.messages.findIndex(
-        (message) => message.id === this.currentMessage.id
-      ); //to find the message to change
-    const docReference = this.fireService.getDocRef(
-      'channels',
-      this.fireService.currentChannel.id
-    );
+    let indexOfCurrentMessage
+    let docReference
+
+
+    if (this.type === 'channel') {
+      /*    indexOfCurrentMessage =
+           this.fireService.currentChannel.messages.findIndex(
+             (message) => message.id === this.currentMessage.id
+           ); //to find the message to change  */
+      docReference = this.fireService.getDocRef(
+        'channels',
+        this.fireService.currentChannel.id
+      );
+
+    }
+    if (this.type === 'pm') {
+      /* indexOfCurrentMessage =
+       this.conversation.messages.reverse()[this.index]
+     this.conversation.messages.findIndex(
+       (message) => message.id === this.currentMessage.id
+     ); //to find the message to change */
+
+      docReference = this.fireService.getDocRef(
+        'pms',
+        this.collectionId
+      );
+
+    }
+
     this.createEmoji(event);
     let indexOfEmoji = this.currentMessage.reactions.findIndex(
       (reaction) => reaction.id === this.emoji.id
     ); //I check if the selected emoji already exists on the message
     this.checkForEmoji(indexOfEmoji);
-    this.fireService.currentChannel.messages[indexOfCurrentMessage] =
-      this.currentMessage; //I change the selected message
-    await updateDoc(docReference, {
-      messages: this.fireService.currentChannel.messages,
-    });
+    //I change the selected message
+
+
+    if (this.type === 'channel') {
+      this.fireService.currentChannel.messages[this.index] =
+        this.currentMessage;
+      console.log(this.fireService.currentChannel.messages);
+
+      await updateDoc(docReference, {
+        messages: this.fireService.currentChannel.messages,
+
+      });
+    }
+    if (this.type === 'pm') {
+      console.log(this.conversation.messages);
+
+      this.conversation.messages[this.index] =
+        this.currentMessage;
+      await updateDoc(docReference, {
+        messages: this.conversation.toJSON().messages
+      });
+    }
   }
 
   createEmoji(event) {
