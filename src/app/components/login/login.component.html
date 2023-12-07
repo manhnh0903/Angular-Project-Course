@@ -24,9 +24,13 @@
       <span
         *ngIf="
           email.touched &&
-          (email.hasError('required') || email.hasError('email'))
+          !noDabubbleUser &&
+          (email.hasError('required') || email.hasError('invalidEmail'))
         "
-        >Diese E-Mail-Adresse ist leider ungültig.</span
+        >Diese E-Mail-Adresse ist ungültig. (max&commat;muster.de)</span
+      >
+      <span *ngIf="noDabubbleUser"
+        >Leider ist uns diese E-Mail-Adresse nicht bekannt.</span
       >
     </div>
     <div class="input-with-error-wrapper">
@@ -41,10 +45,12 @@
       <span
         *ngIf="
           password.touched &&
+          !wrongPassword &&
           (password.hasError('required') || password.hasError('password'))
         "
         >Bitte geben Sie ein Passwort ein.</span
       >
+      <span *ngIf="wrongPassword">Passwort Falsch!</span>
     </div>
     <a [routerLink]="'/forgot-password'">Passwort vergessen?</a>
     <div class="seperator-wrapper">
@@ -56,7 +62,13 @@
       <img src="./assets/img/google.svg" alt="google-logo" />Anmelden mit Google
     </button>
     <div class="login-button-wrapper">
-      <button type="submit" class="login-button">Anmelden</button>
+      <button
+        type="submit"
+        class="login-button"
+        [class.disabled-button]="loginForm.disabled"
+      >
+        Anmelden
+      </button>
       <button type="button" (click)="guestLogin()" class="guest-login-button">
         Gäste-Login
       </button>

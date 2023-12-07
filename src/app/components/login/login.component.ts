@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CustomValidators } from 'src/app/classes/custom-validators.class';
 import { DabubbleUser } from 'src/app/classes/user.class';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 
@@ -11,7 +12,9 @@ import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 })
 export class LoginComponent {
   loginForm: FormGroup;
-
+  noDabubbleUser: boolean;
+  wrongPassword: boolean;
+  loading: boolean = false;
   user = new DabubbleUser();
 
   constructor(
@@ -20,7 +23,7 @@ export class LoginComponent {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, CustomValidators.emailValidator]],
       password: ['', Validators.required],
     });
   }
@@ -33,19 +36,46 @@ export class LoginComponent {
   }
 
   async submitFomrEmailAndPassword() {
+    this.resetErrors();
     const email = this.email.value;
     const password = this.password.value;
-    /*     console.log(this.loginForm); */
-
     if (this.loginForm.valid) {
+      this.loginForm.disable();
       try {
-        await this.authService.loginWithEmailAndPassword(email, password);
-        // play animation
-        this.router.navigate(['/home']);
+        await this.login(email, password);
       } catch (err) {
-        console.log(err);
+        this.handleError(err);
       }
     } else this.loginForm.markAllAsTouched();
+    this.loginForm.enable();
+  }
+
+  async login(email: string, password: string) {
+    try {
+      await this.authService.loginWithEmailAndPassword(email, password);
+      // play animation
+      this.router.navigate(['/home']);
+    } catch (err) {
+      throw new Error('Anmeldung fehlgeschlagen: ' + err);
+    }
+  }
+
+  handleError(err: any) {
+    if (err.message) {
+      const errorMessage = err.message;
+
+      if (errorMessage.includes('auth/wrong-password')) {
+        this.wrongPassword = true;
+      } else if (errorMessage.includes('auth/user-not-found')) {
+        this.noDabubbleUser = true;
+      } else {
+      }
+    }
+  }
+
+  resetErrors() {
+    this.noDabubbleUser = false;
+    this.wrongPassword = false;
   }
 
   async loginWithGoogle() {

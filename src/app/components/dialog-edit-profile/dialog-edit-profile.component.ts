@@ -1,6 +1,7 @@
 import { Component, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CustomValidators } from 'src/app/classes/custom-validators.class';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { UserService } from 'src/app/services/user.service';
@@ -23,7 +24,7 @@ export class DialogEditProfileComponent {
   ) {
     this.editProfileForm = this.fb.group({
       name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, CustomValidators.emailValidator]],
     });
   }
 

@@ -71,6 +71,7 @@ section {
       width: 100%;
 
       span {
+        position: absolute;
         color: rgb(237, 29, 119);
         font-size: 14px;
       }
@@ -184,5 +185,11 @@ section {
         }
       }
     }
+  }
+
+  .disabled-button {
+    background-color: rgb(66, 64, 64) !important;
+    pointer-events: none !important;
+    transition: none !important;
   }
 }

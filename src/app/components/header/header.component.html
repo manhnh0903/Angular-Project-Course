@@ -10,11 +10,19 @@
   <div class="user">
     <span class="userName">{{ userService.user.name }}</span>
     <div class="usersPicDiv">
-      <img class="usersPic" src="assets/img/{{ userService.user.profileImg }}" />
+      <img
+        *ngIf="userService.user.profileImg"
+        class="usersPic"
+        src="assets/img/{{ userService.user.profileImg }}"
+      />
       <img class="status" src="assets/img/online.png" />
       <!-- onlinestatus noch über userService machen -->
     </div>
-    <img (click)="openMenu()" class="arrowDown" src="assets/img/arrow_down.png" />
+    <img
+      (click)="openMenu()"
+      class="arrowDown"
+      src="assets/img/arrow_down.png"
+    />
     <div *ngIf="menuOpen" class="menuProfileContainer">
       <div class="menuProfileContent">
         <span routerLink="/profile" class="menuSpan">Profil</span>

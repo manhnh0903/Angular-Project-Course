@@ -135,7 +135,7 @@ export class MessageComponent {
   isDifferentDate(creationDate, i: number, type): boolean {
     if (type === 'channel')
       if (creationDate && i >= 0) {
-        console.log(this.fireService.currentChannel.messages);
+        console.log('channel Log', this.fireService.currentChannel.messages);
         if (i === this.fireService.currentChannel.messages.length - 1) {
           return true;
         }
@@ -146,7 +146,7 @@ export class MessageComponent {
       }
     if (type === 'pm') {
       if (creationDate && i >= 0) {
-        console.log(this.conversation.messages);
+        console.log('pm Log', this.conversation.messages);
         if (i === this.conversation.messages.length - 1) {
           return true;
         }

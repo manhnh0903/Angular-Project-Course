@@ -38,7 +38,15 @@
           class="editInput"
         />
         <span *ngIf="email.touched && email.hasError('required')"
-          >Diese E-Mail-Adresse ist leider ungültig.</span
+          >Bitte geben Sie eine E-Mail-Adresse ein.</span
+        >
+        <span
+          *ngIf="
+            email.touched &&
+            !email.hasError('required') &&
+            email.hasError('invalidEmail')
+          "
+          >Diese E-Mail-Adresse ist ungültig. (max&commat;muster.de)</span
         >
       </div>
     </div>
