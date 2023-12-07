@@ -35,11 +35,7 @@
       </p>
     </div>
     <app-message
-<<<<<<< HEAD
-      *ngFor="let message of conversation.messages.reverse(); let i = index"
-=======
-      *ngFor="let message of conversation.messages let i=index"
->>>>>>> d69589e50331bb3859c2248c1f2516a44e712b22
+      *ngFor="let message of conversation.messages; let i = index"
       [sender]="message.sender"
       [profileImg]="message.profileImg"
       [content]="message.content"
@@ -52,7 +48,6 @@
       [index]="i"
       [type]="'pm'"
       [collectionId]="message.collectionId"
-
     ></app-message>
   </div>
 
