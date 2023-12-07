@@ -1,8 +1,7 @@
 <div style="padding-bottom: 76px">
   <div>
-    <div *ngIf="isDifferentDate(creationDate, index,type) || index === 0">
-      <div class="dateDiv" *ngIf="
-          fireService.dateNameChecker(creationDay, creationDate) === 'heute'
+    <div *ngIf="isDifferentDate(creationDate, index,type)">
+      <div class=" dateDiv" *ngIf="fireService.dateNameChecker(creationDay, creationDate) === 'heute'
         "></div>
       <div class="dateContent">
         {{ fireService.dateNameChecker(creationDay, creationDate) }}

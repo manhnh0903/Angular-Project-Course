@@ -17,6 +17,7 @@ import {
   DocumentReference,
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { PmChatComponent } from '../components/pm-chat/pm-chat.component';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +32,7 @@ export class FirestoreService {
     this.conversationDataDataSubject.asObservable();
   private threadDataSubject = new BehaviorSubject<any>(null);
   threadData$: Observable<any> = this.threadDataSubject.asObservable();
-
+  public conversation: any;
   unsubUserData: Function;
   public currentChannel;
   public channels = [];
@@ -39,6 +40,7 @@ export class FirestoreService {
   public emailsForReactions = [];
   private currentDate;
   public sorted = [];
+
 
   constructor(private firestore: Firestore) { }
 
@@ -194,7 +196,7 @@ export class FirestoreService {
         { includeMetadataChanges: true },
         (doc) => {
           this.currentChannel.messages = doc.data()['messages'];
-          this.sortDates();
+          this.sortDates(this.currentChannel);
         }
       );
     }
@@ -216,31 +218,24 @@ export class FirestoreService {
     }
   }
 
-  sortDates() {
-    if (this.currentChannel && this.currentChannel.messages) {
-      this.sorted = this.currentChannel.messages.sort((a, b) => {
+  sortDates(obj) {
+    if (obj && obj.messages) {
+      this.sorted = obj.messages.sort((a, b) => {
         let dateA = new Date(
           a.creationDate.split('.').reverse().join('.')
         ).getTime();
         let dateB = new Date(
           b.creationDate.split('.').reverse().join('.')
         ).getTime();
-        return dateA - dateB;
+        return dateB - dateA;
       });
     }
   }
 
 
-  sortOnChannel() {
-
-  }
 
 
-  sortOnPMs() {
 
-  }
-
- 
 
   getCurrentDate() {
     let datetime = new Date();

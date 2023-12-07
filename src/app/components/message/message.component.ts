@@ -67,7 +67,6 @@ export class MessageComponent {
 
   closeEdit() {
     this.editMessage = !this.editMessage
-    console.log('this.editMessage:', this.editMessage);
   }
 
 
@@ -133,13 +132,17 @@ export class MessageComponent {
   }
 
   isDifferentDate(creationDate, i: number, type): boolean {
-    if (type === 'channel' && i === 0) {
-      return true
-    } else if (creationDate && i > 0 && type === 'channel') {
-      return creationDate !== this.fireService.sorted[i - 1].creationDate;
-    } else if (creationDate && i > 0 && type === 'pm') {
-      const reversedMessages = this.conversation.messages[i - 1].reverse();
-      return creationDate !== reversedMessages[reversedMessages.length - 1].creationDate;
+    if (type === 'channel')
+      if (creationDate && i >= 0) {
+        console.log(this.fireService.sorted);
+        if (i === this.fireService.sorted.length - 1) { return true }
+        return creationDate !== this.fireService.sorted[i + 1].creationDate;
+      }
+    if (type === 'pm') {
+      if (creationDate && i > 0) {
+        if (i === 0) { return true }
+        return creationDate !== this.conversation.messages[i - 1].creationDate;
+      }
     }
     return true;
   }

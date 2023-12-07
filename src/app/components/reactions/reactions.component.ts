@@ -106,7 +106,7 @@ export class ReactionsComponent {
 
       });
     }
-    if (this.type === 'pm') {
+ /*  if (this.type === 'pm') {
       console.log(this.conversation.messages);
 
       this.conversation.messages[this.index] =
@@ -114,7 +114,7 @@ export class ReactionsComponent {
       await updateDoc(docReference, {
         messages: this.conversation.toJSON().messages
       });
-    }
+    }  */
   }
 
   createEmoji(event) {
