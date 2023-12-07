@@ -218,18 +218,23 @@ export class FirestoreService {
     }
   }
 
-  sortDates(obj) {
+
+  sortDates(obj): any {
     if (obj && obj.messages) {
       this.sorted = obj.messages.sort((a, b) => {
-        let dateA = new Date(
-          a.creationDate.split('.').reverse().join('.')
-        ).getTime();
-        let dateB = new Date(
-          b.creationDate.split('.').reverse().join('.')
-        ).getTime();
-        return dateB - dateA;
+        let dateTimeA = this.parseDateTime(a.creationDate, a.creationTime);
+        let dateTimeB = this.parseDateTime(b.creationDate, b.creationTime);
+        return dateTimeB - dateTimeA;
       });
     }
+    return this.sorted
+  }
+
+
+  parseDateTime(dateString, timeString) {
+    let [day, month, year] = dateString.split('.').map(Number);
+    let [hours, minutes] = timeString.split(':').map(Number);
+    return new Date(year, month - 1, day, hours, minutes).getTime();
   }
 
 

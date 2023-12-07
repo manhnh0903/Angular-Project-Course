@@ -139,9 +139,9 @@ export class MessageComponent {
         return creationDate !== this.fireService.sorted[i + 1].creationDate;
       }
     if (type === 'pm') {
-      if (creationDate && i > 0) {
-        if (i === 0) { return true }
-        return creationDate !== this.conversation.messages[i - 1].creationDate;
+      if (creationDate && i >= 0) {
+        if (i === this.conversation.messages.length - 1) { return true }
+        return creationDate !== this.conversation.messages[i + 1].creationDate;
       }
     }
     return true;

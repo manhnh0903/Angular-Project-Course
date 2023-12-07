@@ -14,7 +14,7 @@ import { Conversation } from 'src/app/classes/conversation.class';
   templateUrl: './pm-chat.component.html',
   styleUrls: ['./pm-chat.component.scss'],
 })
-export class PmChatComponent{
+export class PmChatComponent {
   public conversation: Conversation = new Conversation();
   public sendMessageForm: FormGroup;
   public recipient: DabubbleUser;
@@ -60,10 +60,11 @@ export class PmChatComponent{
           await this.getConversationData();
         }
       });
+
   }
 
   openUserDetails() {
-/*     console.log('Test Log', this.recipient); */
+    /*     console.log('Test Log', this.recipient); */
   }
 
   sendPm() {
@@ -81,7 +82,7 @@ export class PmChatComponent{
 
     this.conversation.messages.push(msg);
 
-/*     console.log(this.conversation.toJSON()); */
+    /*     console.log(this.conversation.toJSON()); */
 
     this.firestoreService.updateConversation(
       'pms',
@@ -112,7 +113,7 @@ export class PmChatComponent{
 
     await this.firestoreService.addNewConversation(conversation.toJSON());
 
-/*     console.log('new conversation', conversation); */
+    /*     console.log('new conversation', conversation); */
   }
 
   async getConversationData() {
@@ -126,15 +127,16 @@ export class PmChatComponent{
 
       if (this.userInConversation(userId1, userId2)) {
         this.conversationId = doc.id;
-  /*       console.log(this.conversationId); */
+        /*       console.log(this.conversationId); */
 
         this.setupConversation(userId1, userId2);
         conversationFound = true;
+
         return;
       }
 
       if (!conversationFound) {
-/*         console.log('Die Benutzer sind nicht in der Konversation'); */
+        /*         console.log('Die Benutzer sind nicht in der Konversation'); */
       }
     });
 
@@ -142,7 +144,7 @@ export class PmChatComponent{
       await this.setNewConversation();
       await this.getConversationData();
     }
-   
+
   }
 
   async setupConversation(userId1: string, userId2: string) {
@@ -151,8 +153,6 @@ export class PmChatComponent{
     this.conversation.userId1 = userId1;
     this.conversation.userId2 = userId2;
     await this.subConversationData(this.conversationId);
-
-/*     console.log(this.conversation); */
   }
 
   userInConversation(userId1: string, userId2: string) {
@@ -175,15 +175,16 @@ export class PmChatComponent{
         if (data && data.messages) {
           data.messages.forEach((msg: Message) => {
             const message = new Message(msg);
-            this.conversation.messages.push(message);
-
+            this.conversation.messages.push(message)
           });
+          this.conversation.messages = this.firestoreService.sortDates(this.conversation.toJSON());//I sort messages here.
           this.loading = false;
           setTimeout(() => {
             this.scrollToBottom();
           }, 1);
         }
       });
+
   }
 
   scrollToBottom() {
