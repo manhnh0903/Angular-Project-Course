@@ -62,8 +62,12 @@ export class MessageComponent {
   }
 
   closeEdit() {
+<<<<<<< HEAD
     this.editMessage = !this.editMessage;
     console.log('this.editMessage:', this.editMessage);
+=======
+    this.editMessage = !this.editMessage
+>>>>>>> d69589e50331bb3859c2248c1f2516a44e712b22
   }
 
   getNewContent(newContent: string) {
@@ -84,20 +88,30 @@ export class MessageComponent {
 
   checkForChannels(messageToUpdate, docRef) {
     if (this.type === 'channel') {
+<<<<<<< HEAD
       messageToUpdate = this.fireService.sorted[this.index];
       docRef = doc(
         this.firestore,
         'channels',
         this.fireService.currentChannel.id
       );
+=======
+      messageToUpdate = this.fireService.currentChannel.messages[this.index]
+      docRef = doc(this.firestore, 'channels', this.fireService.currentChannel.id);
+>>>>>>> d69589e50331bb3859c2248c1f2516a44e712b22
     }
     return { messageToUpdate, docRef };
   }
 
   checkForPMs(messageToUpdate, docRef) {
     if (this.type === 'pm') {
+<<<<<<< HEAD
       messageToUpdate = this.conversation.messages.reverse()[this.index];
       docRef = doc(this.firestore, 'pms', this.collectionId);
+=======
+      messageToUpdate = this.conversation.messages[this.index]
+      docRef = doc(this.firestore, 'pms', this.collectionId)
+>>>>>>> d69589e50331bb3859c2248c1f2516a44e712b22
     }
     return { messageToUpdate, docRef };
   }
@@ -134,6 +148,7 @@ export class MessageComponent {
   }
 
   isDifferentDate(creationDate, i: number, type): boolean {
+<<<<<<< HEAD
     if (type === 'channel' && i === 0) {
       return true;
     } else if (creationDate && i > 0 && type === 'channel') {
@@ -144,6 +159,21 @@ export class MessageComponent {
         creationDate !==
         reversedMessages[reversedMessages.length - 1].creationDate
       );
+=======
+    
+    if (type === 'channel')
+      if (creationDate && i >=0) {
+        console.log(this.fireService.currentChannel.messages);
+        if (i === this.fireService.currentChannel.messages.length - 1) { return true }
+        return creationDate !== this.fireService.currentChannel.messages[i + 1].creationDate;
+      }
+    if (type === 'pm') {
+      if (creationDate && i >= 0) {
+        console.log(this.conversation.messages);
+        if (i === this.conversation.messages.length - 1) { return true }
+        return creationDate !== this.conversation.messages[i + 1].creationDate;
+      }
+>>>>>>> d69589e50331bb3859c2248c1f2516a44e712b22
     }
     return true;
   }

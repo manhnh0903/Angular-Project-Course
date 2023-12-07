@@ -37,12 +37,16 @@
           formControlName="email"
         />
       </div>
+      <span *ngIf="email.touched && email.hasError('required')"
+        >Bitte geben Sie eine E-Mail-Adresse ein.</span
+      >
       <span
         *ngIf="
           email.touched &&
-          (email.hasError('required') || email.hasError('email'))
+          !email.hasError('required') &&
+          email.hasError('invalidEmail')
         "
-        >Diese E-Mail-Adresse ist leider ungültig.</span
+        >Diese E-Mail-Adresse ist ungültig. (max&commat;muster.de)</span
       >
     </div>
     <div class="input-with-error-wrapper">
@@ -54,12 +58,16 @@
           formControlName="password"
         />
       </div>
+      <span *ngIf="password.touched && password.hasError('required')"
+        >Bitte geben Sie ein Passwort ein.</span
+      >
       <span
         *ngIf="
           password.touched &&
-          (password.hasError('required') || password.hasError('password'))
+          !password.hasError('required') &&
+          password.hasError('minLength')
         "
-        >Bitte geben Sie ein Passwort ein.</span
+        >Das Passwort muss mindestens 6 Zeichen lang sein.</span
       >
     </div>
     <div class="privacy-wrapper">

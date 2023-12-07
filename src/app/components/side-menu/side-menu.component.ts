@@ -32,7 +32,6 @@ export class SideMenuComponent {
   async openChanelChat(id: string) {
     await this.fireService.getCurrentChannel('channels', id);
     this.fireService.getCurrentDate();
-    this.fireService.sortDates();
     this.navService.setChatPath('chanel');
   }
 

@@ -70,7 +70,7 @@ export class ChannelsChatComponent {
         this.fireService.currentChannel.id
       );
       this.createMessage();
-      this.fireService.currentChannel.messages.push(this.newMessage.toJSON());
+      this.fireService.currentChannel.messages.unshift(this.newMessage.toJSON());
       await updateDoc(docReference, {
         messages: this.fireService.currentChannel.messages,
       });

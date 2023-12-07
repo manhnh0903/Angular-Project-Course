@@ -17,6 +17,7 @@ import {
   DocumentReference,
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { PmChatComponent } from '../components/pm-chat/pm-chat.component';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +32,7 @@ export class FirestoreService {
     this.conversationDataDataSubject.asObservable();
   private threadDataSubject = new BehaviorSubject<any>(null);
   threadData$: Observable<any> = this.threadDataSubject.asObservable();
-
+  public conversation: any;
   unsubUserData: Function;
   public currentChannel;
   public channels = [];
@@ -39,6 +40,7 @@ export class FirestoreService {
   public emailsForReactions = [];
   private currentDate;
   public sorted = [];
+
 
   constructor(private firestore: Firestore) { }
 
@@ -194,7 +196,6 @@ export class FirestoreService {
         { includeMetadataChanges: true },
         (doc) => {
           this.currentChannel.messages = doc.data()['messages'];
-          this.sortDates();
         }
       );
     }
@@ -216,31 +217,29 @@ export class FirestoreService {
     }
   }
 
-  sortDates() {
-    if (this.currentChannel && this.currentChannel.messages) {
-      this.sorted = this.currentChannel.messages.sort((a, b) => {
-        let dateA = new Date(
-          a.creationDate.split('.').reverse().join('.')
-        ).getTime();
-        let dateB = new Date(
-          b.creationDate.split('.').reverse().join('.')
-        ).getTime();
-        return dateA - dateB;
+/* 
+  sortDates(obj): any {
+    if (obj && obj.messages) {
+      this.sorted = obj.messages.sort((a, b) => {
+        let dateTimeA = this.parseDateTime(a.creationDate, a.creationTime);
+        let dateTimeB = this.parseDateTime(b.creationDate, b.creationTime);
+        return dateTimeB - dateTimeA;
       });
     }
+    return this.sorted
   }
 
 
-  sortOnChannel() {
+  parseDateTime(dateString, timeString) {
+    let [day, month, year] = dateString.split('.').map(Number);
+    let [hours, minutes] = timeString.split(':').map(Number);
+    return new Date(year, month - 1, day, hours, minutes).getTime();
+  } */
 
-  }
 
 
-  sortOnPMs() {
 
-  }
 
- 
 
   getCurrentDate() {
     let datetime = new Date();
@@ -260,6 +259,8 @@ export class FirestoreService {
     let hours = datetime.getHours();
     let minutes = datetime.getMinutes();
     let formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+
+
     let currentTime = `${hours}:${formattedMinutes}`;
     return currentTime;
   }
