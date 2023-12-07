@@ -196,7 +196,6 @@ export class FirestoreService {
         { includeMetadataChanges: true },
         (doc) => {
           this.currentChannel.messages = doc.data()['messages'];
-          this.sortDates(this.currentChannel);
         }
       );
     }
@@ -218,7 +217,7 @@ export class FirestoreService {
     }
   }
 
-
+/* 
   sortDates(obj): any {
     if (obj && obj.messages) {
       this.sorted = obj.messages.sort((a, b) => {
@@ -235,7 +234,7 @@ export class FirestoreService {
     let [day, month, year] = dateString.split('.').map(Number);
     let [hours, minutes] = timeString.split(':').map(Number);
     return new Date(year, month - 1, day, hours, minutes).getTime();
-  }
+  } */
 
 
 
@@ -260,6 +259,8 @@ export class FirestoreService {
     let hours = datetime.getHours();
     let minutes = datetime.getMinutes();
     let formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+
+
     let currentTime = `${hours}:${formattedMinutes}`;
     return currentTime;
   }

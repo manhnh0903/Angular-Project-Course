@@ -80,7 +80,7 @@ export class PmChatComponent {
     msg.creationDay = this.firestoreService.getDaysName();
     msg.messageType = 'pms';
 
-    this.conversation.messages.push(msg);
+    this.conversation.messages.unshift(msg);
 
     /*     console.log(this.conversation.toJSON()); */
 
@@ -177,7 +177,7 @@ export class PmChatComponent {
             const message = new Message(msg);
             this.conversation.messages.push(message)
           });
-          this.conversation.messages = this.firestoreService.sortDates(this.conversation.toJSON());//I sort messages here.
+          
           this.loading = false;
           setTimeout(() => {
             this.scrollToBottom();

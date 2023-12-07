@@ -87,7 +87,7 @@ export class MessageComponent {
 
   checkForChannels(messageToUpdate, docRef) {
     if (this.type === 'channel') {
-      messageToUpdate = this.fireService.sorted[this.index]
+      messageToUpdate = this.fireService.currentChannel.messages[this.index]
       docRef = doc(this.firestore, 'channels', this.fireService.currentChannel.id);
     }
     return { messageToUpdate, docRef };
@@ -96,7 +96,7 @@ export class MessageComponent {
 
   checkForPMs(messageToUpdate, docRef) {
     if (this.type === 'pm') {
-      messageToUpdate = this.conversation.messages.reverse()[this.index]
+      messageToUpdate = this.conversation.messages[this.index]
       docRef = doc(this.firestore, 'pms', this.collectionId)
     }
     return { messageToUpdate, docRef };
@@ -132,14 +132,16 @@ export class MessageComponent {
   }
 
   isDifferentDate(creationDate, i: number, type): boolean {
+    
     if (type === 'channel')
-      if (creationDate && i >= 0) {
-        console.log(this.fireService.sorted);
-        if (i === this.fireService.sorted.length - 1) { return true }
-        return creationDate !== this.fireService.sorted[i + 1].creationDate;
+      if (creationDate && i >=0) {
+        console.log(this.fireService.currentChannel.messages);
+        if (i === this.fireService.currentChannel.messages.length - 1) { return true }
+        return creationDate !== this.fireService.currentChannel.messages[i + 1].creationDate;
       }
     if (type === 'pm') {
       if (creationDate && i >= 0) {
+        console.log(this.conversation.messages);
         if (i === this.conversation.messages.length - 1) { return true }
         return creationDate !== this.conversation.messages[i + 1].creationDate;
       }
