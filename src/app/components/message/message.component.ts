@@ -4,17 +4,17 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { Firestore, doc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { UserService } from 'src/app/services/user.service';
 
-
 @Component({
   selector: 'app-message',
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.scss'],
 })
 export class MessageComponent {
-  constructor(public fireService: FirestoreService, private userService: UserService) {
-
-  }
-  firestore = inject(Firestore)
+  constructor(
+    public fireService: FirestoreService,
+    private userService: UserService
+  ) {}
+  firestore = inject(Firestore);
   @Input() sender: string;
   @Input() profileImg: string;
   @Input() content: string;
@@ -28,14 +28,12 @@ export class MessageComponent {
   @Input() currentMessage: {};
   @Input() collectionId;
   @Input() conversation;
-  @Input() type: 'channel' | 'pm'
-  public onRightSide: boolean
-  public editMessage = false
-  private openEdit = false
+  @Input() type: 'channel' | 'pm';
+  public onRightSide: boolean;
+  public editMessage = false;
+  private openEdit = false;
 
-
-
-  openEditMessageDiv(event: { editMessage: boolean, openEdit: boolean }) {
+  openEditMessageDiv(event: { editMessage: boolean; openEdit: boolean }) {
     if (this.editMessage && this.openEdit) {
       this.editMessage = false;
       this.openEdit = false;
@@ -44,7 +42,6 @@ export class MessageComponent {
       this.openEdit = true;
     }
   }
-
 
   getSide(index: number): boolean {
     let isEven = index % 2 === 0;
@@ -64,84 +61,90 @@ export class MessageComponent {
     }
   }
 
-
   closeEdit() {
-    this.editMessage = !this.editMessage
+    this.editMessage = !this.editMessage;
     console.log('this.editMessage:', this.editMessage);
   }
-
 
   getNewContent(newContent: string) {
     this.content = newContent;
   }
 
-
   async updateMessageContent() {
-    let messageToUpdate
-    let docRef
-    ({ messageToUpdate, docRef } = this.checkForChannels(messageToUpdate, docRef));
+    let messageToUpdate;
+    let docRef;
+    ({ messageToUpdate, docRef } = this.checkForChannels(
+      messageToUpdate,
+      docRef
+    ));
     ({ messageToUpdate, docRef } = this.checkForPMs(messageToUpdate, docRef));
-    messageToUpdate.content = this.content
-    this.saveUpdatedInFirestore(docRef, messageToUpdate)
+    messageToUpdate.content = this.content;
+    this.saveUpdatedInFirestore(docRef, messageToUpdate);
   }
-
 
   checkForChannels(messageToUpdate, docRef) {
     if (this.type === 'channel') {
-      messageToUpdate = this.fireService.sorted[this.index]
-      docRef = doc(this.firestore, 'channels', this.fireService.currentChannel.id);
+      messageToUpdate = this.fireService.sorted[this.index];
+      docRef = doc(
+        this.firestore,
+        'channels',
+        this.fireService.currentChannel.id
+      );
     }
     return { messageToUpdate, docRef };
   }
-
 
   checkForPMs(messageToUpdate, docRef) {
     if (this.type === 'pm') {
-      messageToUpdate = this.conversation.messages.reverse()[this.index]
-      docRef = doc(this.firestore, 'pms', this.collectionId)
+      messageToUpdate = this.conversation.messages.reverse()[this.index];
+      docRef = doc(this.firestore, 'pms', this.collectionId);
     }
     return { messageToUpdate, docRef };
   }
-
 
   async saveUpdatedInFirestore(docRef, messageToUpdate) {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const messages = docSnap.data()['messages'] || [];
-      const indexOfMessageToUpdate = messages.findIndex(message => message.id === messageToUpdate.id);
+      const indexOfMessageToUpdate = messages.findIndex(
+        (message) => message.id === messageToUpdate.id
+      );
       messages[indexOfMessageToUpdate].content = messageToUpdate.content;
       await updateDoc(docRef, { messages });
-      this.closeEdit()
+      this.closeEdit();
     }
   }
 
-
   getReactionsPeople(emoji) {
-    let names = []
-    emoji.userIDs.forEach(id => {
-      let index = this.fireService.allUsers.findIndex(user => user.userId === id)
+    let names = [];
+    emoji.userIDs.forEach((id) => {
+      let index = this.fireService.allUsers.findIndex(
+        (user) => user.userId === id
+      );
       if (index !== -1) {
         if (id === this.userService.user.userId) {
-          names.push('Du')
+          names.push('Du');
         } else {
-          names.push(this.fireService.allUsers[index].name)
+          names.push(this.fireService.allUsers[index].name);
         }
       }
-    })
+    });
 
-    return names
+    return names;
   }
 
   isDifferentDate(creationDate, i: number, type): boolean {
     if (type === 'channel' && i === 0) {
-      return true
+      return true;
     } else if (creationDate && i > 0 && type === 'channel') {
       return creationDate !== this.fireService.sorted[i - 1].creationDate;
     } else if (creationDate && i > 0 && type === 'pm') {
       const reversedMessages = this.conversation.messages[i - 1].reverse();
-      return creationDate !== reversedMessages[reversedMessages.length - 1].creationDate;
+      return (
+        creationDate !==
+        reversedMessages[reversedMessages.length - 1].creationDate
+      );
     }
     return true;
   }
-
 }
