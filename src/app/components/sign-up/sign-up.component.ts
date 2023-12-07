@@ -3,6 +3,7 @@ import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { state } from '@angular/animations';
+import { CustomValidators } from 'src/app/classes/custom-validators.class';
 
 @Component({
   selector: 'app-sign-up',
@@ -20,8 +21,11 @@ export class SignUpComponent {
   ) {
     this.registrationForm = this.fb.group({
       name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      email: ['', [Validators.required, CustomValidators.emailValidator]],
+      password: [
+        '',
+        [Validators.required, CustomValidators.passwordLengthValidator(6)],
+      ],
       privacy: [false, Validators.requiredTrue],
     });
   }
