@@ -19,11 +19,15 @@ $dabubble-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$dabubble-theme: mat.define-light-theme((color: (primary: $dabubble-primary,
-        accent: $dabubble-accent,
-        warn: $dabubble-warn,
-      ),
-    ));
+$dabubble-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $dabubble-primary,
+      accent: $dabubble-accent,
+      warn: $dabubble-warn,
+    ),
+  )
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -42,6 +46,7 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow-x: hidden;
 }
 
 * {
@@ -77,5 +82,4 @@ app-home {
 
 .messagesSection:hover {
   background-color: #eceefe;
-
 }

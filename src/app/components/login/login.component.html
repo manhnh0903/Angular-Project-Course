@@ -78,4 +78,12 @@
     <a class="link">Impressum</a>
     <a class="link">Datenschutz</a>
   </div>
+
+  <div
+    *ngIf="loginSuccessful"
+    [@slideInOutAnimation]="'in'"
+    class="login-message"
+  >
+    Anmeldung erfolreich!
+  </div>
 </section>

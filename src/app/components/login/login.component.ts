@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Animations } from 'src/app/classes/animations.class';
 import { CustomValidators } from 'src/app/classes/custom-validators.class';
 import { DabubbleUser } from 'src/app/classes/user.class';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
@@ -9,6 +10,7 @@ import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  animations: [Animations.slideInOutAnimation],
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -16,6 +18,8 @@ export class LoginComponent {
   wrongPassword: boolean;
   loading: boolean = false;
   user = new DabubbleUser();
+
+  loginSuccessful: boolean = false;
 
   constructor(
     private authService: FirebaseAuthService,
@@ -39,6 +43,7 @@ export class LoginComponent {
     this.resetErrors();
     const email = this.email.value;
     const password = this.password.value;
+
     if (this.loginForm.valid) {
       this.loginForm.disable();
       try {
@@ -53,8 +58,7 @@ export class LoginComponent {
   async login(email: string, password: string) {
     try {
       await this.authService.loginWithEmailAndPassword(email, password);
-      // play animation
-      this.router.navigate(['/home']);
+      this.animateAndRoute();
     } catch (err) {
       throw new Error('Anmeldung fehlgeschlagen: ' + err);
     }
@@ -80,8 +84,7 @@ export class LoginComponent {
 
   async loginWithGoogle() {
     await this.authService.loginWithGoogle();
-    // play animation
-    this.router.navigate(['/home']);
+    this.animateAndRoute();
   }
 
   async guestLogin() {
@@ -89,7 +92,14 @@ export class LoginComponent {
       'testuser@test.com',
       'test123'
     );
-    // play animation
-    this.router.navigate(['/home']);
+    this.animateAndRoute();
+  }
+
+  animateAndRoute() {
+    this.loginSuccessful = true;
+    setTimeout(() => {
+      this.loginSuccessful = false;
+      this.router.navigate(['/home']);
+    }, 800);
   }
 }
