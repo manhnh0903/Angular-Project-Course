@@ -10,7 +10,7 @@ export class Animations {
   static slideInOutAnimation = trigger('slideInOutAnimation', [
     state('in', style({ transform: 'translateX(0)' })),
     transition(':enter', [
-      style({ transform: 'translateX(700px)' }),
+      style({ transform: 'translateX(calc(100% + 60px))' }),
       animate('0.5s ease-in-out'),
     ]),
   ]);

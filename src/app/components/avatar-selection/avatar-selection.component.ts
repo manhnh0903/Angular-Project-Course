@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { user } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { Animations } from 'src/app/classes/animations.class';
 import { DabubbleUser } from 'src/app/classes/user.class';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -9,9 +10,11 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   selector: 'app-avatar-selection',
   templateUrl: './avatar-selection.component.html',
   styleUrls: ['./avatar-selection.component.scss'],
+  animations: [Animations.slideInOutAnimation],
 })
 export class AvatarSelectionComponent {
   user = new DabubbleUser();
+  userCreated: boolean = false;
 
   profilePictures: string[] = [
     '0character.png',
@@ -46,9 +49,14 @@ export class AvatarSelectionComponent {
     this.user.userId = userId;
 
     await this.firestoreService.newUser(this.user.toJson(), userId);
+    this.animateAndRoute();
+  }
 
-    //animation triggern
-    console.log('Ende');
-    this.router.navigate(['/Home']);
+  animateAndRoute() {
+    this.userCreated = true;
+    setTimeout(() => {
+      this.userCreated = false;
+      this.router.navigate(['/home']);
+    }, 800);
   }
 }

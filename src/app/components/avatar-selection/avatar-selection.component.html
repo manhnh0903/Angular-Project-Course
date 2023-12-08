@@ -36,4 +36,12 @@
     <a class="link">Impressum</a>
     <a class="link">Datenschutz</a>
   </div>
+
+  <div
+    *ngIf="userCreated"
+    [@slideInOutAnimation]="'in'"
+    class="success-message"
+  >
+    Konto erfolgreich erstellt!
+  </div>
 </section>
