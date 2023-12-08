@@ -210,7 +210,7 @@ export class FirestoreService {
   }
 
   dateNameChecker(creationDay, creationDate) {
-    if (creationDay !== this.getDaysName()) {
+    if (creationDate !== this.getCurrentDate()) {
       return `${creationDay}, ` + `${creationDate}`;
     } else {
       return 'heute';

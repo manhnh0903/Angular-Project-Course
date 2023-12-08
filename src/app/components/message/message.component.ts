@@ -13,7 +13,7 @@ export class MessageComponent {
   constructor(
     public fireService: FirestoreService,
     private userService: UserService
-  ) {}
+  ) { }
   firestore = inject(Firestore);
   @Input() sender: string;
   @Input() profileImg: string;
@@ -28,7 +28,7 @@ export class MessageComponent {
   @Input() currentMessage: {};
   @Input() collectionId;
   @Input() conversation;
-  @Input() type: 'channel' | 'pm';
+  @Input() type: 'channel' | 'pm' | 'thread';
   public onRightSide: boolean;
   public editMessage = false;
   private openEdit = false;
@@ -135,7 +135,7 @@ export class MessageComponent {
   isDifferentDate(creationDate, i: number, type): boolean {
     if (type === 'channel')
       if (creationDate && i >= 0) {
-        console.log('channel Log', this.fireService.currentChannel.messages);
+        /*    console.log('channel Log', this.fireService.currentChannel.messages); */
         if (i === this.fireService.currentChannel.messages.length - 1) {
           return true;
         }
@@ -146,13 +146,14 @@ export class MessageComponent {
       }
     if (type === 'pm') {
       if (creationDate && i >= 0) {
-        console.log('pm Log', this.conversation.messages);
+        /*      console.log('pm Log', this.conversation.messages); */
         if (i === this.conversation.messages.length - 1) {
           return true;
         }
         return creationDate !== this.conversation.messages[i + 1].creationDate;
       }
     }
+    
     return true;
   }
 }

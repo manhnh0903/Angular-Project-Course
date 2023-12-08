@@ -95,8 +95,7 @@ export class PmChatComponent {
     let id: number;
     if (this.conversation.messages.length > 0) {
       id =
-        this.conversation.messages[this.conversation.messages.length - 1].id +
-        1;
+        this.conversation.messages[0].id + 1;      
     } else {
       id = 0;
     }
@@ -177,7 +176,7 @@ export class PmChatComponent {
             const message = new Message(msg);
             this.conversation.messages.push(message)
           });
-          
+
           this.loading = false;
           setTimeout(() => {
             this.scrollToBottom();
