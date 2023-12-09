@@ -18,6 +18,7 @@ import {
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { PmChatComponent } from '../components/pm-chat/pm-chat.component';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',

@@ -20,26 +20,26 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  currentDate
-  today
+  currentDate;
+  today;
   public showMenu = true;
   firestore = inject(Firestore);
+
   constructor(
     private authService: FirebaseAuthService,
     public fireService: FirestoreService,
     private userService: UserService,
-    public navService: HomeNavigationService
+    public navService: HomeNavigationService,
+    private firestoreService: FirestoreService
   ) {
     this.fireService.readAllUsers();
     this.authService.checkAuth();
-    this.fireService.getCurrentDate()
+    this.fireService.getCurrentDate();
   }
-
 
   ngOnInit(): void {
     this.getLoggedUser();
-   this.fireService.defaultChannel()  
-    
+    this.fireService.defaultChannel();
   }
 
   hideMenu() {
@@ -64,31 +64,41 @@ export class HomeComponent {
       where('email', '==', 'katrin@test.de')
     );
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-    });
+    querySnapshot.forEach((doc) => {});
   }
-
-
-
-
-
-
-
-
-
 
   getDaysName() {
-    const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const weekday = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ];
     const d = new Date();
     let day = weekday[d.getDay()];
-    return day
+    return day;
   }
 
-
   getsMonthName() {
-    const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const month = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
     const d = new Date();
     let name = month[d.getMonth()];
-    return name
+    return name;
   }
 }

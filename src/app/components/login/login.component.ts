@@ -5,6 +5,8 @@ import { Animations } from 'src/app/classes/animations.class';
 import { CustomValidators } from 'src/app/classes/custom-validators.class';
 import { DabubbleUser } from 'src/app/classes/user.class';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +26,9 @@ export class LoginComponent {
   constructor(
     private authService: FirebaseAuthService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private userService: UserService,
+    private firestoreService: FirestoreService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, CustomValidators.emailValidator]],
@@ -59,6 +63,9 @@ export class LoginComponent {
     try {
       await this.authService.loginWithEmailAndPassword(email, password);
       this.animateAndRoute();
+      setTimeout(() => {
+        this.updateOnlineStatus();
+      }, 2000);
     } catch (err) {
       throw new Error('Anmeldung fehlgeschlagen: ' + err);
     }
@@ -85,6 +92,9 @@ export class LoginComponent {
   async loginWithGoogle() {
     await this.authService.loginWithGoogle();
     this.animateAndRoute();
+    setTimeout(() => {
+      this.updateOnlineStatus();
+    }, 2000);
   }
 
   async guestLogin() {
@@ -93,6 +103,9 @@ export class LoginComponent {
       'test123'
     );
     this.animateAndRoute();
+    setTimeout(() => {
+      this.updateOnlineStatus();
+    }, 2000);
   }
 
   animateAndRoute() {
@@ -101,5 +114,14 @@ export class LoginComponent {
       this.loginSuccessful = false;
       this.router.navigate(['/home']);
     }, 800);
+  }
+
+  async updateOnlineStatus() {
+    this.userService.user.onlineStatus = true;
+
+    await this.firestoreService.newUser(
+      this.userService.user.toJson(),
+      this.userService.user.userId
+    );
   }
 }
