@@ -63,6 +63,7 @@ export class ChannelsChatComponent {
     });
   }
 
+
   async addMessageToChannel() {
     if (this.sendMessageForm.valid) {
       const docReference = this.fireService.getDocRef(
@@ -162,8 +163,6 @@ export class ChannelsChatComponent {
     if (this.fireService.currentChannel.messages.length > 0) {
       id =
         this.fireService.currentChannel.messages[0].id + 1;
-      console.log(id);
-
     } else {
       id = 0;
     }

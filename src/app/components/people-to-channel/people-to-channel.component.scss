@@ -64,14 +64,23 @@
 
 }
 
+.selectedUsersDiv {
+    position: absolute;
+    right: 0;
+    left: 50%;
+    top: 4px;
+}
+
 .selectedUsers {
     position: absolute;
-    top: 3px;
-    background-color: white;
+    top:0;
+    right: 1px;
+
     div {
         display: flex;
         align-items: center;
-     
+        background: white;
+        border-radius: 50%;
     }
 }
 

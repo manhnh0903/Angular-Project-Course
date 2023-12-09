@@ -16,6 +16,7 @@ export class SideMenuComponent {
     private navService: HomeNavigationService
   ) {
     this.fireService.ifChangesOnChannels();
+    
   }
 
   channelsClicked = true;
@@ -33,8 +34,6 @@ export class SideMenuComponent {
     await this.fireService.getCurrentChannel('channels', id);
     this.fireService.getCurrentDate();
     this.navService.setChatPath('chanel');
-    console.log(this.fireService.currentChannel);
-    
   }
 
   openPM() {

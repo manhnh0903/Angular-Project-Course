@@ -26,9 +26,9 @@
           <p>{{ filteredUser.name }}</p>
         </div>
       </div>
-      <div>
+      <div class="selectedUsersDiv">
         <div
-          [ngStyle]="{ 'right.px': 30 - i * 9 }"
+          [ngStyle]="{ 'left.px': i * 12 }"
           *ngFor="let selected of selectedUsers; let i = index"
           class="selectedUsers"
         >
