@@ -166,30 +166,28 @@ export class FirestoreService {
     );
   }
 
-  ifChangesOnChannels() {
-    let initialSnapshot = true;
-    const q = query(this.getColRef('channels'));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        let channelToModifyIndex = this.channels.findIndex(
-          (channel) => channel.name === change.doc.data()['name']
-        );
-        if (!initialSnapshot && change.type === 'added') {
-          if (channelToModifyIndex === -1)
-            this.channels.push(change.doc.data());
-        }
-        if (!initialSnapshot && change.type === 'modified') {
-          if (channelToModifyIndex !== -1)
-            this.channels[channelToModifyIndex] = change.doc.data();
-        }
-        if (change.type === 'removed') {
-          this.channels.splice(channelToModifyIndex, 1);
-        }
-      });
-      initialSnapshot = false;
-    });
-    console.log(initialSnapshot);
-  }
+  /*  ifChangesOnChannels() {
+     const q = query(this.getColRef('channels'));
+     const unsubscribe = onSnapshot(q, (snapshot) => {
+       snapshot.docChanges().forEach((change) => {
+         let channelToModifyIndex = this.channels.findIndex(
+           (channel) => channel.name === change.doc.data()['name']
+         );
+         if (change.type === 'added') {
+           if (channelToModifyIndex === -1)
+             this.channels.push(change.doc.data());
+         }
+         if (change.type === 'modified') {
+           if (channelToModifyIndex !== -1)
+             this.channels[channelToModifyIndex] = change.doc.data();
+         }
+         if (change.type === 'removed') {
+           this.channels.splice(channelToModifyIndex, 1);
+         }
+       });
+     });
+ 
+   } */
 
   async defaultChannel() {
     const q = query(collection(this.firestore, 'channels'));

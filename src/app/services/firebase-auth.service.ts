@@ -127,7 +127,7 @@ export class FirebaseAuthService {
     dabubbleUser.email = user.email;
     dabubbleUser.name = user.displayName;
     dabubbleUser.userId = user.uid;
-    dabubbleUser.profileImg = '0character.png';
+    dabubbleUser.profileImg = user.photoURL;
 
     this.firestore.newUser(dabubbleUser.toJson(), user.uid);
   }
