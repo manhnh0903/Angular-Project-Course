@@ -32,13 +32,14 @@ export class HomeComponent {
   ) {
     this.fireService.readAllUsers();
     this.authService.checkAuth();
-    /*   this.fireService.ifChangesOnChannels(); */
     this.fireService.getCurrentDate()
   }
 
 
   ngOnInit(): void {
     this.getLoggedUser();
+   this.fireService.defaultChannel()  
+    
   }
 
   hideMenu() {

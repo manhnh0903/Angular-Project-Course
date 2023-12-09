@@ -17,8 +17,8 @@
                     <p>{{filteredUser.name}}</p>
                 </div>
             </div>
-            <div>
-                <div [ngStyle]="{'right.px':30-i*9}" *ngFor="let selected of selectedUsers, let i=index"
+            <div class="selectedUsersDiv">
+                <div [ngStyle]="{'left.px':i*12}" *ngFor="let selected of selectedUsers, let i=index"
                     class="selectedUsers">
                     <div *ngIf="selectedUsers.length>0">
                         <img class="profileImg" src="assets/img/{{selected.profileImg}}">

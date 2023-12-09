@@ -3,14 +3,17 @@
     <span>Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein #marketing zum
         Beispiel.
     </span>
-    <form (submit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()" [formGroup]="channelsForm">
         <h3>Channel-Name</h3>
         <div class="nameInput">
-            <input name="channelName" placeholder="Name" [(ngModel)]="channel.name" (ngModelChange)="checkIfNameExists()">
+            <input formControlName="channelsName" placeholder="Name" (ngModelChange)="checkIfNameExists()">
             <span class="warning" *ngIf="nameExists">Channel with this name exists</span>
         </div>
         <h3>Beschreibung</h3>
-        <input name="channelDescription" placeholder="Beschreibung" [(ngModel)]="channel.description">
-        <button type="submit" class="createButton">Erstellen</button>
+        <input formControlName="channelsDescription" placeholder="Beschreibung">
+        <button type="submit" [disabled]="!channelsForm.valid"
+        [ngStyle]="{'background-color': channelsForm.valid ? '#444DF2' : 'gray'}"
+     
+            class="createButton">Erstellen</button>
     </form>
 </div>

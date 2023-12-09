@@ -160,6 +160,8 @@ export class FirestoreService {
     }
   }
 
+
+
   async updateDocumentInFirebase() {
     await updateDoc(
       this.getDocRef('channels', this.currentChannel.id),
@@ -168,17 +170,18 @@ export class FirestoreService {
   }
 
   ifChangesOnChannels() {
+    let initialSnapshot = true;
     const q = query(this.getColRef('channels'));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         let channelToModifyIndex = this.channels.findIndex(
           (channel) => channel.name === change.doc.data()['name']
         );
-        if (change.type === 'added') {
+        if (!initialSnapshot && change.type === 'added') {
           if (channelToModifyIndex === -1)
             this.channels.push(change.doc.data());
         }
-        if (change.type === 'modified') {
+        if (!initialSnapshot && change.type === 'modified') {
           if (channelToModifyIndex !== -1)
             this.channels[channelToModifyIndex] = change.doc.data();
         }
@@ -186,7 +189,22 @@ export class FirestoreService {
           this.channels.splice(channelToModifyIndex, 1);
         }
       });
+      initialSnapshot = false;
     });
+console.log(initialSnapshot);
+
+  }
+
+  async defaultChannel() {
+    const q = query(collection(this.firestore, "channels"));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      this.channels.push(doc.data())
+    });
+
+    let index = this.channels.findIndex(channel => channel.name === 'Entwickler')
+    this.currentChannel = this.channels[index]
+    console.log(this.currentChannel);
   }
 
   async readMessagesOfChannels() {
@@ -217,24 +235,24 @@ export class FirestoreService {
     }
   }
 
-/* 
-  sortDates(obj): any {
-    if (obj && obj.messages) {
-      this.sorted = obj.messages.sort((a, b) => {
-        let dateTimeA = this.parseDateTime(a.creationDate, a.creationTime);
-        let dateTimeB = this.parseDateTime(b.creationDate, b.creationTime);
-        return dateTimeB - dateTimeA;
-      });
+  /* 
+    sortDates(obj): any {
+      if (obj && obj.messages) {
+        this.sorted = obj.messages.sort((a, b) => {
+          let dateTimeA = this.parseDateTime(a.creationDate, a.creationTime);
+          let dateTimeB = this.parseDateTime(b.creationDate, b.creationTime);
+          return dateTimeB - dateTimeA;
+        });
+      }
+      return this.sorted
     }
-    return this.sorted
-  }
-
-
-  parseDateTime(dateString, timeString) {
-    let [day, month, year] = dateString.split('.').map(Number);
-    let [hours, minutes] = timeString.split(':').map(Number);
-    return new Date(year, month - 1, day, hours, minutes).getTime();
-  } */
+  
+  
+    parseDateTime(dateString, timeString) {
+      let [day, month, year] = dateString.split('.').map(Number);
+      let [hours, minutes] = timeString.split(':').map(Number);
+      return new Date(year, month - 1, day, hours, minutes).getTime();
+    } */
 
 
 
