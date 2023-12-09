@@ -3,7 +3,7 @@
     <div *ngIf="recipient" (click)="openUserDetails()" class="user-info">
       <img
         class="profilePic"
-        src="./assets/img/{{ recipient.profileImg }}"
+        src="{{ recipient.profileImg }}"
         alt="profileImg"
       />
       <span>{{ recipient.name }}</span>
@@ -15,7 +15,7 @@
       *ngIf="conversation.messages.length === 0 && !loading"
     >
       <div class="no-msg-header">
-        <img src="./assets/img/{{ recipient.profileImg }}" alt="profileImg" />
+        <img src="{{ recipient.profileImg }}" alt="profileImg" />
         <span
           >{{ recipient.name }}
           <span *ngIf="recipient.name === userService.user.name"

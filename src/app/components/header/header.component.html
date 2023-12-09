@@ -13,7 +13,7 @@
       <img
         *ngIf="userService.user.profileImg"
         class="usersPic"
-        src="assets/img/{{ userService.user.profileImg }}"
+        src="{{ userService.user.profileImg }}"
       />
       <img class="status" src="assets/img/online.png" />
       <!-- onlinestatus noch über userService machen -->

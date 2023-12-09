@@ -16,12 +16,17 @@ import {
 import { DabubbleUser } from '../classes/user.class';
 
 import { UserService } from './user.service';
+import { FirestoreService } from './firestore.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseAuthService {
-  constructor(private auth: Auth, private userService: UserService) {}
+  constructor(
+    private auth: Auth,
+    private userService: UserService,
+    private firestore: FirestoreService
+  ) {}
 
   provider = new GoogleAuthProvider();
   currentUser: User;
@@ -50,7 +55,7 @@ export class FirebaseAuthService {
         password
       );
 
-      console.log('login successfull:', userCredential.user.uid);
+      console.log('login successful:', userCredential.user.uid);
     } catch (err) {
       console.error(err);
       throw err;
@@ -89,22 +94,42 @@ export class FirebaseAuthService {
   }
 
   async loginWithGoogle() {
-    /*     console.log(this.provider); */
-
     try {
       const result = await signInWithPopup(this.auth, this.provider);
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
       const user = result.user;
-      /* 
-      console.log('Result:', result);
-      console.log('credential:', credential);
-      console.log('token:', token);
-      console.log('user:', user); */
+
+      if (this.userIsInDatabase(user)) {
+        console.log('login successful:', user);
+      } else {
+        this.createNewGoogleUser(user);
+      }
     } catch (err) {
       console.error(err.code);
       console.error(err.message);
     }
+  }
+
+  userIsInDatabase(user) {
+    let userFound: boolean = false;
+
+    this.firestore.allUsers.forEach((DabubbleUser: DabubbleUser) => {
+      if (DabubbleUser.name === user.displayName) {
+        userFound = true;
+      }
+    });
+
+    return userFound;
+  }
+
+  createNewGoogleUser(user) {
+    const dabubbleUser = new DabubbleUser();
+
+    dabubbleUser.email = user.email;
+    dabubbleUser.name = user.displayName;
+    dabubbleUser.userId = user.uid;
+    dabubbleUser.profileImg = '0character.png';
+
+    this.firestore.newUser(dabubbleUser.toJson(), user.uid);
   }
 
   async logout() {

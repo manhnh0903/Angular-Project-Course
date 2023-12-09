@@ -8,10 +8,7 @@
         src="assets/img/close.png"
       />
     </div>
-    <img
-      class="profilePic"
-      src="assets/img/{{ userService.user.profileImg }}"
-    />
+    <img class="profilePic" src="{{ userService.user.profileImg }}" />
     <div class="profileFlex">
       <span class="menuSpan">{{ userService.user.name }}</span>
       <span class="editButton" routerLink="/edit_user">Bearbeiten</span>

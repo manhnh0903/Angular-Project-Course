@@ -1,32 +1,50 @@
 <div class="dialogContent">
-    <h2>Leute hinzufügen</h2>
-    <section class="example-section">
-        <mat-radio-group class="inputs" color="primary" [(ngModel)]="labelPosition">
-            <mat-radio-button (click)="checkAllPeople();" value="after">Alle Mitglieder von OfficeTeam
-                hinzufügen</mat-radio-button>
-            <mat-radio-button (click)="checkCertainPeople()" value="before">Bestimmte
-                Leute hinzufügen</mat-radio-button>
-        </mat-radio-group>
-        <div class="inputContainer">
-            <input class="choosePeopleInput" *ngIf="certainPeopleisChecked" [(ngModel)]="usersName"
-                (ngModelChange)="showFilteredUsers()">
-            <div *ngIf="filteredUsers.length>0" class="peopleToAdd">
-                <div *ngFor="let filteredUser of filteredUsers" class="filteredUser"
-                    (click)="addToSelectedUsers(filteredUser)">
-                    <img class="profileImg" src="assets/img/{{filteredUser.profileImg}}">
-                    <p>{{filteredUser.name}}</p>
-                </div>
-            </div>
-            <div>
-                <div [ngStyle]="{'right.px':30-i*9}" *ngFor="let selected of selectedUsers, let i=index"
-                    class="selectedUsers">
-                    <div *ngIf="selectedUsers.length>0">
-                        <img class="profileImg" src="assets/img/{{selected.profileImg}}">
-                        <p>{{selected.name}}</p>
-                    </div>
-                </div>
-            </div>
+  <h2>Leute hinzufügen</h2>
+  <section class="example-section">
+    <mat-radio-group class="inputs" color="primary" [(ngModel)]="labelPosition">
+      <mat-radio-button (click)="checkAllPeople()" value="after"
+        >Alle Mitglieder von OfficeTeam hinzufügen</mat-radio-button
+      >
+      <mat-radio-button (click)="checkCertainPeople()" value="before"
+        >Bestimmte Leute hinzufügen</mat-radio-button
+      >
+    </mat-radio-group>
+    <div class="inputContainer">
+      <input
+        class="choosePeopleInput"
+        *ngIf="certainPeopleisChecked"
+        [(ngModel)]="usersName"
+        (ngModelChange)="showFilteredUsers()"
+      />
+      <div *ngIf="filteredUsers.length > 0" class="peopleToAdd">
+        <div
+          *ngFor="let filteredUser of filteredUsers"
+          class="filteredUser"
+          (click)="addToSelectedUsers(filteredUser)"
+        >
+          <img class="profileImg" src="{{ filteredUser.profileImg }}" />
+          <p>{{ filteredUser.name }}</p>
         </div>
-    </section>
-    <button [mat-dialog-close] (click)="addChannelToCollection()" class="createButton">Erstellen</button>
+      </div>
+      <div>
+        <div
+          [ngStyle]="{ 'right.px': 30 - i * 9 }"
+          *ngFor="let selected of selectedUsers; let i = index"
+          class="selectedUsers"
+        >
+          <div *ngIf="selectedUsers.length > 0">
+            <img class="profileImg" src="{{ selected.profileImg }}" />
+            <p>{{ selected.name }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <button
+    [mat-dialog-close]
+    (click)="addChannelToCollection()"
+    class="createButton"
+  >
+    Erstellen
+  </button>
 </div>
