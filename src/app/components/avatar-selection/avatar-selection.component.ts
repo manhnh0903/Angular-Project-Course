@@ -17,12 +17,12 @@ export class AvatarSelectionComponent {
   userCreated: boolean = false;
 
   profilePictures: string[] = [
-    '0character.png',
-    '1character.png',
-    '2character.png',
-    '3character.png',
-    '4character.png',
-    '5character.png',
+    './assets/img/0character.png',
+    './assets/img/1character.png',
+    './assets/img/2character.png',
+    './assets/img/3character.png',
+    './assets/img/4character.png',
+    './assets/img/5character.png',
   ];
 
   constructor(

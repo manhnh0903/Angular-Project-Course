@@ -41,8 +41,7 @@ export class FirestoreService {
   private currentDate;
   public sorted = [];
 
-
-  constructor(private firestore: Firestore) { }
+  constructor(private firestore: Firestore) {}
 
   ngOnDestroy() {
     this.unsubUserData();
@@ -160,8 +159,6 @@ export class FirestoreService {
     }
   }
 
-
-
   async updateDocumentInFirebase() {
     await updateDoc(
       this.getDocRef('channels', this.currentChannel.id),
@@ -191,19 +188,20 @@ export class FirestoreService {
       });
       initialSnapshot = false;
     });
-console.log(initialSnapshot);
-
+    console.log(initialSnapshot);
   }
 
   async defaultChannel() {
-    const q = query(collection(this.firestore, "channels"));
+    const q = query(collection(this.firestore, 'channels'));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      this.channels.push(doc.data())
+      this.channels.push(doc.data());
     });
 
-    let index = this.channels.findIndex(channel => channel.name === 'Entwickler')
-    this.currentChannel = this.channels[index]
+    let index = this.channels.findIndex(
+      (channel) => channel.name === 'Entwickler'
+    );
+    this.currentChannel = this.channels[index];
     console.log(this.currentChannel);
   }
 
@@ -254,11 +252,6 @@ console.log(initialSnapshot);
       return new Date(year, month - 1, day, hours, minutes).getTime();
     } */
 
-
-
-
-
-
   getCurrentDate() {
     let datetime = new Date();
     const dayName = this.getDaysName();
@@ -277,7 +270,6 @@ console.log(initialSnapshot);
     let hours = datetime.getHours();
     let minutes = datetime.getMinutes();
     let formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
-
 
     let currentTime = `${hours}:${formattedMinutes}`;
     return currentTime;

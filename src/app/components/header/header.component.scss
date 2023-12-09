@@ -1,121 +1,115 @@
 .container {
-    padding-top: 25px;
-    display: flex;
-    align-items: center;
-    padding-bottom: 20px;
-    height: 120px
+  padding-top: 25px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
+  height: 120px;
 }
 
 .logo {
-    margin-left: 50px;
-    margin-right: 70px;
-
+  margin-left: 50px;
+  margin-right: 70px;
 }
 
 .searchBarContainer {
-    display: flex;
-    align-items: center;
-    flex-grow: 1;
-    position: relative;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  position: relative;
 }
 
 .searchBar {
-    padding: 17.5px 45px;
-    border-radius: 42px;
-    margin-left: 50px;
-    border: none;
+  padding: 17.5px 45px;
+  border-radius: 42px;
+  margin-left: 50px;
+  border: none;
+  width: 100%;
+
+  &::placeholder {
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 32.74px;
     width: 100%;
-
-
-    &::placeholder {
-        font-family: 'nunito';
-        font-weight: 400;
-        font-size: 24px;
-        line-height: 32.74px;
-        width: 100%;
-    }
+  }
 }
 
 .search_icon {
-    position: absolute;
-    right: 20px;
-
+  position: absolute;
+  right: 20px;
 }
 
 .logoSearchBar {
-    width: 70%;
-    display: flex;
-    align-items: center;
-
+  width: 70%;
+  display: flex;
+  align-items: center;
 }
 
 .user {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    .userName {
-        font-family: 'Nunito';
-        font-weight: 700;
-        font-size: 32px;
-        line-height: 43.65px;
-        margin-left: 7px;
-    }
+  .userName {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 43.65px;
+    margin-left: 7px;
+  }
 }
 
 .usersPicDiv {
-    position: relative;
-    margin-left: 10px;
+  position: relative;
+  margin-left: 10px;
 }
 
 .usersPic {
-    height: 70px;
-    width: 70px;
-    border-radius: 50%;
-
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
 }
 
 .status {
-    position: absolute;
-    bottom: 7px;
-    right: 2px;
+  position: absolute;
+  bottom: 7px;
+  right: 2px;
 }
 
 .arrowDown {
-    margin-left: 12px;
-    cursor: pointer;
+  margin-left: 12px;
+  cursor: pointer;
 
-    &:hover {
-        filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
-    }
+  &:hover {
+    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%)
+      hue-rotate(164deg) brightness(104%) contrast(98%);
+  }
 }
 
 .menuProfileContainer {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 9;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9;
 }
 
 .menuProfileContent {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    position: absolute;
-    top: 120px;
-    right: 40px;
-    height: 181px;
-    width: 282px;
-    border-radius: 30px 0px 30px 30px;
-    background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  position: absolute;
+  top: 120px;
+  right: 40px;
+  height: 181px;
+  width: 282px;
+  border-radius: 30px 0px 30px 30px;
+  background-color: #ffffff;
 
-    .menuSpan {
-        font-size: 22px;
-        cursor: pointer;
-    }
+  .menuSpan {
+    font-size: 22px;
+    cursor: pointer;
+  }
 }

@@ -16,7 +16,6 @@ export class SideMenuComponent {
     private navService: HomeNavigationService
   ) {
     this.fireService.ifChangesOnChannels();
-    
   }
 
   channelsClicked = true;

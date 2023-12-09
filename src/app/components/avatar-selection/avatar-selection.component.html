@@ -22,7 +22,7 @@
       <div class="character-img-wrapper">
         <img
           *ngFor="let profilePic of profilePictures"
-          src="./assets/img/{{ profilePic }}"
+          src="{{ profilePic }}"
           alt="character-img"
           (click)="setProfileImg(profilePic)"
         />
