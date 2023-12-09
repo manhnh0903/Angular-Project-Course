@@ -15,7 +15,7 @@ export class SideMenuComponent {
     public fireService: FirestoreService,
     private navService: HomeNavigationService
   ) {
-    this.fireService.ifChangesOnChannels();
+/*     this.fireService.ifChangesOnChannels();  */
     
   }
 
