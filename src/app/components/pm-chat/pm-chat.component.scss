@@ -19,15 +19,22 @@ section {
       gap: 15px;
       cursor: pointer;
       width: fit-content;
+      position: relative;
 
       &:hover {
         background-color: var(--main-bg-color);
       }
 
-      img {
+      .profilePic {
         height: 50px;
         width: 50px;
         border-radius: 50%;
+      }
+
+      .online-status-img {
+        position: absolute;
+        bottom: 5px;
+        left: 45px;
       }
 
       span {

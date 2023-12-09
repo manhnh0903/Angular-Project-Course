@@ -6,6 +6,18 @@
         src="{{ recipient.profileImg }}"
         alt="profileImg"
       />
+      <img
+        *ngIf="recipient.onlineStatus === true"
+        class="online-status-img"
+        src="./assets/img/online.png"
+        alt="online.img"
+      />
+      <img
+        *ngIf="recipient.onlineStatus === false"
+        class="online-status-img"
+        src="./assets/img/offline.png"
+        alt="online.img"
+      />
       <span>{{ recipient.name }}</span>
     </div>
   </div>

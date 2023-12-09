@@ -49,6 +49,18 @@
                 (click)="openPmChat(user.userId)"
               >
                 <img class="profilePic" src="{{ user.profileImg }}" />
+                <img
+                  *ngIf="user.onlineStatus === true"
+                  class="online-status-img"
+                  src="./assets/img/online.png"
+                  alt="online.img"
+                />
+                <img
+                  *ngIf="user.onlineStatus === false"
+                  class="online-status-img"
+                  src="./assets/img/offline.png"
+                  alt="online.img"
+                />
                 <p>{{ user.name }}</p>
               </div>
             </div>
