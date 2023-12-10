@@ -10,7 +10,7 @@ export class HomeNavigationService {
   pmRecipient: string;
   threadOpen: boolean = false;
 
-  currentTread: JSON;
+  currentTread: {};
 
   public selectedMessageSubject = new Subject<any>();
   selectedMessage$ = this.selectedMessageSubject.asObservable();

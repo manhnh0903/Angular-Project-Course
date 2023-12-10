@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  animations: [Animations.slideInOutAnimation],
+  animations: [Animations.slideInOutAnimation, Animations.landingPageAnimation],
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -21,7 +21,9 @@ export class LoginComponent {
   loading: boolean = false;
   user = new DabubbleUser();
 
-  loginSuccessful: boolean = false;
+  animationFinished: boolean = false;
+
+  public loginSuccessful: boolean = false;
 
   constructor(
     private authService: FirebaseAuthService,
@@ -34,6 +36,10 @@ export class LoginComponent {
       email: ['', [Validators.required, CustomValidators.emailValidator]],
       password: ['', Validators.required],
     });
+    setTimeout(() => {
+      this.animationFinished = true;
+      console.log(this.animationFinished);
+    }, 3000);
   }
 
   get email() {
