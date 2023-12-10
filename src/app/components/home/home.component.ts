@@ -35,11 +35,12 @@ export class HomeComponent {
     this.fireService.readAllUsers();
     this.authService.checkAuth();
     this.fireService.getCurrentDate();
+
   }
 
   ngOnInit(): void {
     this.getLoggedUser();
-    this.fireService.defaultChannel();
+
   }
 
   hideMenu() {

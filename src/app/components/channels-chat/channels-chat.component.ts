@@ -16,6 +16,7 @@ import {
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
+import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Message } from 'src/app/classes/message.class';
 import { ActivatedRoute } from '@angular/router';
@@ -23,10 +24,11 @@ import { UserService } from 'src/app/services/user.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Dialog } from '@angular/cdk/dialog';
+import { EditChannelComponent } from 'src/app/edit-channel/edit-channel.component';
 
 @Component({
   selector: 'app-channels-chat',
@@ -47,6 +49,7 @@ export class ChannelsChatComponent {
   public sendMessageForm: FormGroup;
   public onRightSide;
   public type = 'channel';
+
   @ViewChild('sendIcon', { static: false }) sendIcon: ElementRef;
 
   constructor(
@@ -55,9 +58,9 @@ export class ChannelsChatComponent {
     public route: ActivatedRoute,
     public userService: UserService,
     private el: ElementRef,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public dialog: MatDialog,
   ) {
-    this.fireService.readMessagesOfChannels();
     this.sendMessageForm = this.fb.group({
       sendMessage: ['', [Validators.required]],
     });
@@ -75,15 +78,10 @@ export class ChannelsChatComponent {
       await updateDoc(docReference, {
         messages: this.fireService.currentChannel.messages,
       });
-      this.fireService.readMessagesOfChannels();
+
     }
   }
 
-  /*   ifContentEmpty() {
-      if (!this.content || this.content.trim().length === 0) {
-        this.sendIcon.nativeElement.style.display = "none";
-      }
-    } */
 
   createMessage() {
     this.newMessage = new Message({
@@ -167,5 +165,14 @@ export class ChannelsChatComponent {
       id = 0;
     }
     return id;
+  }
+
+
+  openEditChannelDialog(): void {
+    const dialogRef = this.dialog.open(EditChannelComponent, {
+      height: '380px',
+      width: '500px',
+      panelClass: 'editChannelDialog',
+    });
   }
 }

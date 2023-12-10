@@ -42,7 +42,7 @@ export class FirestoreService {
   private currentDate;
   public sorted = [];
 
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore) { }
 
   ngOnDestroy() {
     this.unsubUserData();
@@ -167,54 +167,33 @@ export class FirestoreService {
     );
   }
 
-  /*  ifChangesOnChannels() {
-     const q = query(this.getColRef('channels'));
-     const unsubscribe = onSnapshot(q, (snapshot) => {
-       snapshot.docChanges().forEach((change) => {
-         let channelToModifyIndex = this.channels.findIndex(
-           (channel) => channel.name === change.doc.data()['name']
-         );
-         if (change.type === 'added') {
-           if (channelToModifyIndex === -1)
-             this.channels.push(change.doc.data());
-         }
-         if (change.type === 'modified') {
-           if (channelToModifyIndex !== -1)
-             this.channels[channelToModifyIndex] = change.doc.data();
-         }
-         if (change.type === 'removed') {
-           this.channels.splice(channelToModifyIndex, 1);
-         }
-       });
-     });
- 
-   } */
+
+  
 
   async defaultChannel() {
-    const q = query(collection(this.firestore, 'channels'));
+  /*   const q = query(collection(this.firestore, 'channels'));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       this.channels.push(doc.data());
-    });
+    }); */
 
     let index = this.channels.findIndex(
       (channel) => channel.name === 'Entwickler'
     );
     this.currentChannel = this.channels[index];
-    console.log(this.currentChannel);
   }
 
-  async readMessagesOfChannels() {
-    if (this.currentChannel && this.currentChannel.id) {
-      const unsub = onSnapshot(
-        doc(this.firestore, 'channels', this.currentChannel.id),
-        { includeMetadataChanges: true },
-        (doc) => {
-          this.currentChannel.messages = doc.data()['messages'];
-        }
-      );
-    }
-  }
+  /*   async readMessagesOfChannels() {
+      if (this.currentChannel && this.currentChannel.id) {
+        const unsub = onSnapshot(
+          doc(this.firestore, 'channels', this.currentChannel.id),
+          { includeMetadataChanges: true },
+          (doc) => {
+            this.currentChannel.messages = doc.data()['messages'];
+          }
+        );
+      }
+    } */
 
   async readAllUsers() {
     this.allUsers = [];

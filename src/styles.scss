@@ -62,6 +62,9 @@ body {
 .createChannelDialog .mat-mdc-dialog-container .mdc-dialog__surface {
   border-radius: 50px;
 }
+.editChannelDialog .mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 0 50px 50px 50px;
+}
 
 app-home {
   height: 100%;

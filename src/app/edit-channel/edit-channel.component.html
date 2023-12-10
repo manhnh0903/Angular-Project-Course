@@ -1,0 +1,35 @@
+<div class="dialogContent">
+    <h3># {{fireService.currentChannel.name}}</h3>
+    <div class="channelNameDiv">
+        <div class="channelNameSubdiv" *ngIf="!editName">
+            <div>
+                <h3>Channel-Name</h3>
+                <span># {{fireService.currentChannel.name}}</span>
+            </div>
+            <p (click)="openEditName()">Bearbeiten</p>
+        </div>
+        <div *ngIf="editName" class="nameInput">
+            <input formControlName="channelsName" placeholder="Name" (ngModelChange)="checkIfNameExists()">
+            <span class="warning" *ngIf="nameExists">Channel with this name exists</span>
+        </div>
+    </div>
+
+    <div class="channelDescriptDiv">
+        <div class="channelNameSubdiv" *ngIf="!editDescript">
+            <div>
+                <h3>Beschreibung</h3>
+                <span># {{fireService.currentChannel.description}}</span>
+            </div>
+            <p (click)="openEditDescript()">Bearbeiten</p>
+        </div>
+
+        <div *ngIf="editDescript" class="nameInput">
+            <input formControlName="channelsDescript" placeholder="{{fireService.currentChannel.description}}"
+                (ngModelChange)="checkIfNameExists()">
+            <span class="warning" *ngIf="nameExists">Channel with this name exists</span>
+        </div>
+    </div>
+    <button type="submit" [disabled]="!channelsForm.valid"
+        [ngStyle]="{'background-color': channelsForm.valid ? '#444DF2' : 'gray'}"
+        class="createButton">Erstellen</button>
+</div>
