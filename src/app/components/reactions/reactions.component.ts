@@ -25,7 +25,7 @@ export class ReactionsComponent {
     public userService: UserService,
     private el: ElementRef,
     private homeNav: HomeNavigationService
-  ) { }
+  ) {}
 
   emojiOpened = false;
   @Input() currentMessage;
@@ -59,9 +59,8 @@ export class ReactionsComponent {
   }
 
   async addEmoji(event) {
-    let indexOfCurrentMessage
-    let docReference
-
+    let indexOfCurrentMessage;
+    let docReference;
 
     if (this.type === 'channel') {
       /*    indexOfCurrentMessage =
@@ -72,7 +71,6 @@ export class ReactionsComponent {
         'channels',
         this.fireService.currentChannel.id
       );
-
     }
     if (this.type === 'pm') {
       /* indexOfCurrentMessage =
@@ -81,11 +79,7 @@ export class ReactionsComponent {
        (message) => message.id === this.currentMessage.id
      ); //to find the message to change */
 
-      docReference = this.fireService.getDocRef(
-        'pms',
-        this.collectionId
-      );
-
+      docReference = this.fireService.getDocRef('pms', this.collectionId);
     }
 
     this.createEmoji(event);
@@ -95,7 +89,6 @@ export class ReactionsComponent {
     this.checkForEmoji(indexOfEmoji);
     //I change the selected message
 
-
     if (this.type === 'channel') {
       this.fireService.currentChannel.messages[this.index] =
         this.currentMessage;
@@ -103,18 +96,16 @@ export class ReactionsComponent {
 
       await updateDoc(docReference, {
         messages: this.fireService.currentChannel.messages,
-
       });
     }
-   if (this.type === 'pm') {
+    if (this.type === 'pm') {
       console.log(this.conversation.messages);
 
-      this.conversation.messages[this.index] =
-        this.currentMessage;
+      this.conversation.messages[this.index] = this.currentMessage;
       await updateDoc(docReference, {
-        messages: this.conversation.toJSON().messages
+        messages: this.conversation.toJSON().messages,
       });
-    }  
+    }
   }
 
   createEmoji(event) {

@@ -51,7 +51,7 @@
           </div>
           <div class="messageContent">{{ content }}</div>
           <div *ngIf="thread && thread.length > 0" class="tread-info">
-            <span>{{ thread.length }} Antworten</span>
+            <span (click)="openThread()">{{ thread.length }} Antworten</span>
             <p>{{ getLastReplyTime() }}</p>
           </div>
           <div class="reactions" *ngIf="reactions?.length > 0">

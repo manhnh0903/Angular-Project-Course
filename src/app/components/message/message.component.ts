@@ -3,6 +3,7 @@ import { Reaction } from 'src/app/classes/reaction.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Firestore, doc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { UserService } from 'src/app/services/user.service';
+import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 
 @Component({
   selector: 'app-message',
@@ -12,8 +13,9 @@ import { UserService } from 'src/app/services/user.service';
 export class MessageComponent {
   constructor(
     public fireService: FirestoreService,
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+    private homeNav: HomeNavigationService
+  ) {}
   firestore = inject(Firestore);
   @Input() sender: string;
   @Input() profileImg: string;
@@ -153,7 +155,12 @@ export class MessageComponent {
         return creationDate !== this.conversation.messages[i + 1].creationDate;
       }
     }
-    
+
     return true;
+  }
+
+  openThread() {
+    this.homeNav.selectMessage(this.currentMessage);
+    this.homeNav.currentTread = this.currentMessage;
   }
 }

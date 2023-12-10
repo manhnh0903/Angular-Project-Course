@@ -54,6 +54,10 @@ body {
   font-family: "Nunito", Roboto, "Helvetica Neue", sans-serif !important;
 }
 
+.d-none {
+  display: none !important;
+}
+
 :root {
   --main-bg-color: rgb(236, 238, 254);
   --main-dark-blue: rgb(68, 77, 242);

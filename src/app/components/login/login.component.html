@@ -1,6 +1,23 @@
 <section>
+  <div
+    [@landingPageAnimation]
+    [ngClass]="{ 'd-none': animationFinished }"
+    class="landing-overlay , d-none"
+  >
+    <div class="background"></div>
+    <div class="logo-mask"></div>
+    <div class="logo-wrapper">
+      <img src="./assets/img/logo-no-text-big.png" alt="DABubble-logo" />
+
+      <span>DABubble</span>
+    </div>
+  </div>
   <div class="login-header">
-    <img src="./assets/img/logo.png" alt="logo" />
+    <div class="logo-wrapper" [ngClass]="{ opacity1: animationFinished }">
+      <img src="./assets/img/logo-no-text.png" alt="logo" />
+      <span>DABubble</span>
+    </div>
+
     <div class="register-wrapper">
       <span>Neu bei DABubble?</span>
       <a class="link" [routerLink]="'/sign-up'">Konto erstellen</a>
