@@ -38,7 +38,7 @@ export class FirestoreService {
   public sorted = [];
   public unsubUsers;
   userOnChannelCheck = []
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore) { }
 
   ngOnDestroy() {
     this.unsubUserData();
@@ -195,28 +195,28 @@ export class FirestoreService {
         }
       });
     })
-   
+
   }
 
 
   checkIfUserOnChannel() {
     let userId;
     this.loggedInUserDataSubject
-      .pipe(distinctUntilChanged()) // Add this line to ensure distinct values
+      .pipe(distinctUntilChanged())
       .subscribe(data => {
         if (data && data.userId) {
           userId = data.userId;
-          this.userOnChannelCheck = []; // Clear the array before populating it again
+          this.userOnChannelCheck = [];
           this.channels.forEach(channel => {
             let index = channel.users.find(user => user.userId === userId);
-  
+
             if (index !== undefined) {
               this.userOnChannelCheck.push(true);
             } else {
               this.userOnChannelCheck.push(false);
             }
           });
-  
+
           console.log(this.userOnChannelCheck);
         }
       });
