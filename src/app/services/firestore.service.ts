@@ -41,11 +41,13 @@ export class FirestoreService {
   public emailsForReactions = [];
   private currentDate;
   public sorted = [];
+  public unsubUsers;
 
-  constructor(private firestore: Firestore) { }
+  constructor(private firestore: Firestore) {}
 
   ngOnDestroy() {
     this.unsubUserData();
+    this.unsubUsers();
     this.destroyConversationDataSubject();
     this.destroyThreadDataSubject();
   }
@@ -167,11 +169,8 @@ export class FirestoreService {
     );
   }
 
-
-  
-
   async defaultChannel() {
-  /*   const q = query(collection(this.firestore, 'channels'));
+    /*   const q = query(collection(this.firestore, 'channels'));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       this.channels.push(doc.data());
@@ -196,10 +195,14 @@ export class FirestoreService {
     } */
 
   async readAllUsers() {
-    this.allUsers = [];
-    const querySnapshot = await getDocs(collection(this.firestore, 'users'));
-    querySnapshot.forEach((user) => {
-      this.allUsers.push(user.data());
+    const colRef = this.getColRef('users');
+
+    this.unsubUsers = onSnapshot(colRef, (snapshot) => {
+      this.allUsers = [];
+
+      snapshot.forEach((user) => {
+        this.allUsers.push(user.data());
+      });
     });
   }
 
