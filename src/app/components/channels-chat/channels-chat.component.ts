@@ -170,8 +170,8 @@ export class ChannelsChatComponent {
 
   openEditChannelDialog(): void {
     const dialogRef = this.dialog.open(EditChannelComponent, {
-      height: '380px',
-      width: '500px',
+      height: '420px',
+      width: '540px',
       panelClass: 'editChannelDialog',
     });
   }

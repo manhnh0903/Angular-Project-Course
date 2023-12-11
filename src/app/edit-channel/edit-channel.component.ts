@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { FirestoreService } from '../services/firestore.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { Firestore, doc, updateDoc } from '@angular/fire/firestore';
 @Component({
   selector: 'app-edit-channel',
   templateUrl: './edit-channel.component.html',
@@ -12,15 +13,15 @@ export class EditChannelComponent {
   nameExists = false
   public editName = false
   public editDescript = false
-  constructor(private formBuilder: FormBuilder, public fireService: FirestoreService, public dialog: MatDialog,) { }
-  channelsForm = this.formBuilder.group({
-    channelsName: ['', Validators.required],
-    channelsDescription: [''],
-  });
+  channelsName = new FormControl('', Validators.required);
+  channelsDescription = new FormControl('');
+  firestore = inject(Firestore);
+  constructor(public fireService: FirestoreService, public dialog: MatDialog,) { }
+
 
 
   checkIfNameExists() {
-    let channelToModifyIndex = this.fireService.channels.findIndex(channel => channel.name.toLowerCase() === this.channelsForm.get('channelsName').value.toLowerCase());
+    let channelToModifyIndex = this.fireService.channels.findIndex(channel => channel.name.toLowerCase() === this.channelsName.value.toLowerCase());
     if (channelToModifyIndex !== -1) {
       this.nameExists = true
     } else {
@@ -28,10 +29,21 @@ export class EditChannelComponent {
     }
   }
 
+  async updateName() {
+    await this.updateChannel('name', this.channelsName.value)
+    await this.fireService.ifChangesOnChannels()
+    this.editName = false
+  }
 
-  onSubmit() {
+
+
+  async updateDescript() {
+    await this.updateChannel('description', this.channelsDescription.value)
+    await this.fireService.ifChangesOnChannels()
+    this.editDescript = false
 
   }
+
 
   openEditName() {
     this.editName = true
@@ -40,5 +52,13 @@ export class EditChannelComponent {
 
   openEditDescript() {
     this.editDescript = true
+  }
+
+
+  async updateChannel(key, value) {
+    const channelsRef = doc(this.firestore, 'channels', this.fireService.currentChannel.id);
+    await updateDoc(channelsRef, {
+      [key]: value
+    });
   }
 }

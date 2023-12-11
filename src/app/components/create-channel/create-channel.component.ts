@@ -6,6 +6,7 @@ import { Channel } from 'src/app/classes/channel.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-create-channel',
   templateUrl: './create-channel.component.html',
@@ -20,7 +21,8 @@ export class CreateChannelComponent {
   constructor(public dialog: MatDialog,
     public fireService: FirestoreService,
     public dialogRef: MatDialogRef<CreateChannelComponent>,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private userService: UserService) {
 
   }
   firestore = inject(Firestore)
@@ -42,6 +44,7 @@ export class CreateChannelComponent {
   openPeopleToChannelDialog(): void {
     this.channel.name = this.channelsForm.get('channelsName').value;
     this.channel.description = this.channelsForm.get('channelsDescription').value;
+    this.channel.createdBy = this.userService.user.name
     let channelToModifyIndex = this.fireService.channels.findIndex(channel => channel.name === this.channel.name)
     if (channelToModifyIndex === -1) {
       const dialog = this.dialog.open(PeopleToChannelComponent, {

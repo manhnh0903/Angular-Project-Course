@@ -38,9 +38,11 @@ export class HomeComponent {
 
   }
 
-  ngOnInit(): void {
+  async ngOnInit(){
     this.getLoggedUser();
-
+    this.fireService.defaultChannel();
+    await this.fireService.ifChangesOnChannels();
+    this.fireService.checkIfUserOnChannel();
   }
 
   hideMenu() {

@@ -4,6 +4,7 @@ import { CreateChannelComponent } from '../create-channel/create-channel.compone
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 import { onSnapshot, query } from '@angular/fire/firestore';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -16,11 +17,12 @@ export class SideMenuComponent implements OnInit {
     public dialog: MatDialog,
     public fireService: FirestoreService,
     private navService: HomeNavigationService,
+    private userService: UserService
   ) {
 
   }
   async ngOnInit() {
-    await this.ifChangesOnChannels();
+
   }
 
   channelsClicked = true;
@@ -65,36 +67,6 @@ export class SideMenuComponent implements OnInit {
   }
 
 
-  async ifChangesOnChannels() {
-    const q = query(this.fireService.getColRef('channels'));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        const channelData = change.doc.data();
-        let channelToModifyIndex = this.fireService.channels.findIndex(
-          (channel) => channel.name === channelData['name']
-        );
-
-        if (change.type === 'added') {
-          if (channelToModifyIndex === -1) {
-            this.fireService.channels.push(channelData);
-          }
-        }
-
-        if (change.type === 'modified') {
-          if (channelToModifyIndex !== -1) {
-            this.fireService.channels[channelToModifyIndex] = channelData;
-          }
-        }
-
-        if (change.type === 'removed') {
-          if (channelToModifyIndex !== -1) {
-            this.fireService.channels.splice(channelToModifyIndex, 1);
-          }
-        }
-      });
-      this.fireService.defaultChannel();
-
-    })
-  }
-
 }
+
+

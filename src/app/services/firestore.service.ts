@@ -11,14 +11,9 @@ import {
   getDoc,
   query,
   getDocs,
-  QuerySnapshot,
-  where,
-  docData,
-  DocumentReference,
 } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { PmChatComponent } from '../components/pm-chat/pm-chat.component';
-import { UserService } from './user.service';
+import { Observable, BehaviorSubject, distinctUntilChanged } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +36,7 @@ export class FirestoreService {
   public emailsForReactions = [];
   private currentDate;
   public sorted = [];
-
+  userOnChannelCheck = []
   constructor(private firestore: Firestore) { }
 
   ngOnDestroy() {
@@ -168,32 +163,71 @@ export class FirestoreService {
   }
 
 
+  async ifChangesOnChannels() {
+    const q = query(this.getColRef('channels'));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        const channelData = change.doc.data();
+        let channelToModifyIndex = this.channels.findIndex(
+          (channel) => channel.name === channelData['name']
+        );
+
+        if (change.type === 'added') {
+          if (channelToModifyIndex === -1) {
+            this.channels.push(channelData);
+          }
+        }
+
+        if (change.type === 'modified') {
+          if (channelToModifyIndex !== -1) {
+            this.channels[channelToModifyIndex] = channelData;
+            this.currentChannel = this.channels[channelToModifyIndex]
+
+          }
+        }
+
+        if (change.type === 'removed') {
+          if (channelToModifyIndex !== -1) {
+            this.channels.splice(channelToModifyIndex, 1);
+          }
+        }
+      });
+    })
+   
+  }
+
+
+  checkIfUserOnChannel() {
+    let userId;
+    this.loggedInUserDataSubject
+      .pipe(distinctUntilChanged()) // Add this line to ensure distinct values
+      .subscribe(data => {
+        if (data && data.userId) {
+          userId = data.userId;
+          this.userOnChannelCheck = []; // Clear the array before populating it again
+          this.channels.forEach(channel => {
+            let index = channel.users.find(user => user.userId === userId);
   
+            if (index !== undefined) {
+              this.userOnChannelCheck.push(true);
+            } else {
+              this.userOnChannelCheck.push(false);
+            }
+          });
+  
+          console.log(this.userOnChannelCheck);
+        }
+      });
+  }
+
 
   async defaultChannel() {
-  /*   const q = query(collection(this.firestore, 'channels'));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      this.channels.push(doc.data());
-    }); */
-
     let index = this.channels.findIndex(
       (channel) => channel.name === 'Entwickler'
     );
     this.currentChannel = this.channels[index];
   }
 
-  /*   async readMessagesOfChannels() {
-      if (this.currentChannel && this.currentChannel.id) {
-        const unsub = onSnapshot(
-          doc(this.firestore, 'channels', this.currentChannel.id),
-          { includeMetadataChanges: true },
-          (doc) => {
-            this.currentChannel.messages = doc.data()['messages'];
-          }
-        );
-      }
-    } */
 
   async readAllUsers() {
     this.allUsers = [];
@@ -210,25 +244,6 @@ export class FirestoreService {
       return 'heute';
     }
   }
-
-  /* 
-    sortDates(obj): any {
-      if (obj && obj.messages) {
-        this.sorted = obj.messages.sort((a, b) => {
-          let dateTimeA = this.parseDateTime(a.creationDate, a.creationTime);
-          let dateTimeB = this.parseDateTime(b.creationDate, b.creationTime);
-          return dateTimeB - dateTimeA;
-        });
-      }
-      return this.sorted
-    }
-  
-  
-    parseDateTime(dateString, timeString) {
-      let [day, month, year] = dateString.split('.').map(Number);
-      let [hours, minutes] = timeString.split(':').map(Number);
-      return new Date(year, month - 1, day, hours, minutes).getTime();
-    } */
 
   getCurrentDate() {
     let datetime = new Date();
@@ -248,7 +263,6 @@ export class FirestoreService {
     let hours = datetime.getHours();
     let minutes = datetime.getMinutes();
     let formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
-
     let currentTime = `${hours}:${formattedMinutes}`;
     return currentTime;
   }
@@ -268,23 +282,4 @@ export class FirestoreService {
     return day;
   }
 
-  getsMonthName() {
-    const month = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    const d = new Date();
-    let name = month[d.getMonth()];
-    return name;
-  }
 }

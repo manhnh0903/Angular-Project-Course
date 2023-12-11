@@ -18,14 +18,15 @@
             <img class="subIcon" src="assets/img/add_circle.png" />
             <p>Channel hinzufügen</p>
           </div>
-          <div
-            *ngFor="let channel of fireService.channels"
-            (click)="openChanelChat(channel.id)"
-            class="dropDownSubDiv"
-          >
-            <img class="subIcon" src="assets/img/tag.png" />
+
+
+          <div *ngFor="let channel of fireService.channels let i=index"
+            (click)="fireService.userOnChannelCheck[i] ? openChanelChat(channel.id) : null" class="dropDownSubDiv">
+            <img *ngIf="fireService.userOnChannelCheck[i]" class="subIcon" src="assets/img/tag.png" />
+            <img *ngIf="!fireService.userOnChannelCheck[i]" class="subIcon" src="assets/img/padlock-16.png" />
             <p>{{ channel.name }}</p>
           </div>
+
         </div>
       </div>
       <div (click)="openCreateChannelDialog()" class="addIconDiv">
@@ -43,24 +44,12 @@
               <span class="forHover">Direktnachrichten</span>
             </div>
             <div *ngIf="PMclicked" class="dropDownContent">
-              <div
-                *ngFor="let user of fireService.allUsers"
-                class="dropDownSubDiv"
-                (click)="openPmChat(user.userId)"
-              >
+              <div *ngFor="let user of fireService.allUsers" class="dropDownSubDiv" (click)="openPmChat(user.userId)">
                 <img class="profilePic" src="{{ user.profileImg }}" />
-                <img
-                  *ngIf="user.onlineStatus === true"
-                  class="online-status-img"
-                  src="./assets/img/online.png"
-                  alt="online.img"
-                />
-                <img
-                  *ngIf="user.onlineStatus === false"
-                  class="online-status-img"
-                  src="./assets/img/offline.png"
-                  alt="online.img"
-                />
+                <img *ngIf="user.onlineStatus === true" class="online-status-img" src="./assets/img/online.png"
+                  alt="online.img" />
+                <img *ngIf="user.onlineStatus === false" class="online-status-img" src="./assets/img/offline.png"
+                  alt="online.img" />
                 <p>{{ user.name }}</p>
               </div>
             </div>

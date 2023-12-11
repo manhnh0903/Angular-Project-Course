@@ -1,7 +1,7 @@
 .dialogContent {
     width: 100%;
     height: 100%;
-    padding: 30px 40px;
+    padding: 15px 40px 0;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -15,15 +15,22 @@ form {
     justify-content: space-evenly;
 }
 
+.channelsNameH4 {
+    margin-bottom: 10px;
+}
+
 .createButton {
     color: rgb(255, 255, 255);
     border-radius: 20px;
     padding: 12px 25px;
     border: none;
+    outline: none;
     text-align: center;
     width: fit-content;
     cursor: pointer;
     align-self: flex-end;
+    background-color: #444DF2;
+
 }
 
 input {
@@ -52,12 +59,16 @@ input {
 
 .warning {
     position: absolute;
-    top: -7px;
-    left: 5px;
+    top: 19px;
+    left: 15px;
     font-size: 12px;
     background: white;
     color: #de0505;
 
+}
+
+.channelNameDiv {
+    margin-bottom: 20px;
 }
 
 .channelDescriptDiv,
@@ -67,8 +78,6 @@ input {
     padding: 20px;
     display: flex;
     border-radius: 20px;
-
-
 
     .channelNameSubdiv {
         display: flex;
@@ -80,11 +89,36 @@ input {
 
     p {
         color: blue;
+        cursor: pointer;
     }
 
-    div {
+    /*   div {
         display: flex;
         flex-direction: column;
         gap: 10px
+    } */
+}
+
+.saveDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    padding: 0 20px;
+}
+
+.createdBy {
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    padding-top: 20px;
+
+    p {
+        color: blue;
     }
+}
+
+.descriptionSubDiv {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
