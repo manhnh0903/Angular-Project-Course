@@ -27,17 +27,17 @@ export class Animations {
         group([
           query('.logo-wrapper', [
             animate(
-              '1s ease-in-out',
+              '500ms ease-in-out',
               style({
-                left: 'calc(50% - 300px)',
+                left: 'calc(50% - (180px + 16px))',
               })
             ),
           ]),
           query('.logo-mask', [
             animate(
-              '1s ease-in-out',
+              '500ms ease-in-out',
               style({
-                left: 'calc(50% - 300px)',
+                left: 'calc(50% - (180px + 16px))',
               })
             ),
           ]),
@@ -46,8 +46,11 @@ export class Animations {
         // animate text
 
         query('.logo-wrapper span', [
-          animate('1s ease-in-out', style({ left: ' calc(70px + 16px)' })),
+          animate('1000ms ease-in-out', style({ left: ' calc(180px + 16px)' })),
         ]),
+
+        // pause for 0,5 seconds
+        animate('500ms', style({})),
 
         // logo + lext top left corner and opacity of background
         group([
@@ -60,16 +63,33 @@ export class Animations {
             ),
           ]),
           query('.logo-wrapper', [
-            animate('1s ease-in-out', style({ left: ' 45px', top: '25px' })),
-          ]),
-          query('.logo-mask', [
-            animate('1s ease-in-out', style({ left: '45px' })),
+            animate(
+              '1000ms ease-in-out',
+              style({
+                left: ' 45px',
+                top: '25px',
+                height: 'calc(128px - 50px)',
+              })
+            ),
           ]),
           query('.logo-wrapper span', [
-            animate('1s ease-in-out', style({ color: 'black' })),
+            animate(
+              '1000ms ease-in-out',
+              style({
+                color: 'black',
+                'font-size': '26px',
+                left: 'calc(70px + 16px)',
+              })
+            ),
+          ]),
+          query('.logo-wrapper img', [
+            animate(
+              '1000ms ease-in-out',
+              style({ height: '70px', width: '70px' })
+            ),
           ]),
           query('.background', [
-            animate('1s ease-in-out', style({ opacity: '0' })),
+            animate('1000ms ease-in-out', style({ opacity: '0' })),
           ]),
         ]),
       ])

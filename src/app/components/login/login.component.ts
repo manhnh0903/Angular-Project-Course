@@ -38,7 +38,6 @@ export class LoginComponent {
     });
     setTimeout(() => {
       this.animationFinished = true;
-      console.log(this.animationFinished);
     }, 3000);
   }
 
