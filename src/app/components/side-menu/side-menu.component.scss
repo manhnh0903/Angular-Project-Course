@@ -46,8 +46,7 @@
   cursor: pointer;
 
   &:hover {
-    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%)
-      hue-rotate(164deg) brightness(104%) contrast(98%);
+    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
   }
 }
 
@@ -77,8 +76,7 @@
   cursor: pointer;
 
   &:hover {
-    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%)
-      hue-rotate(164deg) brightness(104%) contrast(98%);
+    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
   }
 }
 
@@ -86,8 +84,7 @@
   cursor: pointer;
 
   &:hover {
-    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%)
-      hue-rotate(164deg) brightness(104%) contrast(98%);
+    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
   }
 }
 
@@ -141,7 +138,7 @@
 }
 
 .subIcon {
-  height: 21px;
+  height: 19px;
 }
 
 .dropDownSubDiv {
@@ -153,13 +150,25 @@
   border-radius: 30px;
   position: relative;
 
+  .tag {
+    font-size: 25px;
+  }
+
   .online-status-img {
     position: absolute;
     bottom: 5px;
     left: 45px;
   }
 
+
+
   &:hover {
+
+    img,
+    p {
+      filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
+    }
+
     background-color: var(--main-bg-color);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   Firestore,
   collection,
@@ -19,7 +19,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   currentDate;
   today;
   public showMenu = true;
@@ -38,12 +38,18 @@ export class HomeComponent {
 
   }
 
-  async ngOnInit(){
+  async ngOnInit() {
     this.getLoggedUser();
-    this.fireService.defaultChannel();
-    await this.fireService.ifChangesOnChannels();
+    if (this.fireService.channels.length === 0) {
+      await this.fireService.readChannels();
+    }
     this.fireService.checkIfUserOnChannel();
+    this.fireService.defaultChannel()
+
+
   }
+
+
 
   hideMenu() {
     if (this.showMenu == true) {
@@ -67,7 +73,7 @@ export class HomeComponent {
       where('email', '==', 'katrin@test.de')
     );
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {});
+    querySnapshot.forEach((doc) => { });
   }
 
   getDaysName() {

@@ -31,7 +31,7 @@ export class EditChannelComponent {
 
   async updateName() {
     await this.updateChannel('name', this.channelsName.value)
-    await this.fireService.ifChangesOnChannels()
+    this.fireService.readChannels()
     this.editName = false
   }
 
@@ -39,7 +39,7 @@ export class EditChannelComponent {
 
   async updateDescript() {
     await this.updateChannel('description', this.channelsDescription.value)
-    await this.fireService.ifChangesOnChannels()
+    this.fireService.readChannels()
     this.editDescript = false
 
   }
@@ -60,5 +60,6 @@ export class EditChannelComponent {
     await updateDoc(channelsRef, {
       [key]: value
     });
+  
   }
 }

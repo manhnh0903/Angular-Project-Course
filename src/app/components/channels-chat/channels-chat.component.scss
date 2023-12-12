@@ -208,3 +208,23 @@ footer {
     display: flex;
     flex-direction: column-reverse;
 }
+
+.messageIcons {
+    display: flex;
+    align-items: center;
+}
+
+.messageIcon {
+    height: 20px;
+    margin-right: 8px;
+}
+
+.border {
+    padding-right: 5px;
+    border-right: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.emojiDiv {
+    display: flex;
+    position: relative;
+}

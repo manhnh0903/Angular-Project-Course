@@ -37,7 +37,7 @@ import { EditChannelComponent } from 'src/app/edit-channel/edit-channel.componen
 })
 export class ChannelsChatComponent {
   firestore = inject(Firestore);
-
+  public emojiOpened = false
   private newMessage;
   public content;
   public filteredUsers = [];
@@ -61,6 +61,7 @@ export class ChannelsChatComponent {
     private fb: FormBuilder,
     public dialog: MatDialog,
   ) {
+
     this.sendMessageForm = this.fb.group({
       sendMessage: ['', [Validators.required]],
     });
@@ -174,5 +175,14 @@ export class ChannelsChatComponent {
       width: '540px',
       panelClass: 'editChannelDialog',
     });
+  }
+
+  openEmoji() {
+    this.emojiOpened = !this.emojiOpened
+  }
+
+  addEmoji(emoji) {
+console.log(emoji);
+
   }
 }

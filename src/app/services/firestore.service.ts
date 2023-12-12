@@ -166,40 +166,60 @@ export class FirestoreService {
 
 
   async ifChangesOnChannels() {
-    const q = query(this.getColRef('channels'));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        const channelData = change.doc.data();
-        let channelToModifyIndex = this.channels.findIndex(
-          (channel) => channel.name === channelData['name']
-        );
-
-        if (change.type === 'added') {
-          if (channelToModifyIndex === -1) {
-            this.channels.push(channelData);
-          }
-        }
-
-        if (change.type === 'modified') {
-          if (channelToModifyIndex !== -1) {
-            this.channels[channelToModifyIndex] = channelData;
-            this.currentChannel = this.channels[channelToModifyIndex]
-
-          }
-        }
-
-        if (change.type === 'removed') {
-          if (channelToModifyIndex !== -1) {
-            this.channels.splice(channelToModifyIndex, 1);
-          }
-        }
-      });
-    })
-
+    /*     const q = query(this.getColRef('channels'));
+        onSnapshot(q, (snapshot) => {
+          snapshot.docChanges().forEach((change) => {
+            const channelData = change.doc.data();
+            let channelToModifyIndex = this.channels.findIndex(
+              (channel) => channel.name === channelData['name']
+            );
+    
+            if (change.type === 'added') {
+              if (channelToModifyIndex === -1) {
+                this.channels.push(channelData);
+              }
+    
+            }
+    
+            if (change.type === 'modified') {
+              if (channelToModifyIndex !== -1) {
+                this.channels[channelToModifyIndex] = channelData;
+                this.currentChannel = this.channels[channelToModifyIndex]
+    
+              }
+              console.log('modified');
+            }
+    
+            if (change.type === 'removed') {
+              if (channelToModifyIndex !== -1) {
+                this.channels.splice(channelToModifyIndex, 1);
+              }
+            }
+          });
+        })
+       await this.checkIfUserOnChannel() */
   }
 
 
-  checkIfUserOnChannel() {
+  async readChannels() {
+
+    const querySnapshot = await getDocs(collection(this.firestore, "channels"));
+    querySnapshot.forEach((doc) => {
+      let channelToModifyIndex = this.channels.findIndex(
+        (channel) => channel.id === doc.data()['id']
+      );
+      if (channelToModifyIndex === -1) {
+        this.channels.push(doc.data());
+      }
+      if (channelToModifyIndex !== -1) {
+        this.channels[channelToModifyIndex] = doc.data();
+        this.currentChannel = this.channels[channelToModifyIndex]
+      }
+    });
+    await this.checkIfUserOnChannel()
+  }
+
+  async checkIfUserOnChannel() {
     let userId;
     this.loggedInUserDataSubject
       .pipe(distinctUntilChanged())
@@ -209,17 +229,16 @@ export class FirestoreService {
           this.userOnChannelCheck = [];
           this.channels.forEach(channel => {
             let index = channel.users.find(user => user.userId === userId);
-
             if (index !== undefined) {
               this.userOnChannelCheck.push(true);
             } else {
               this.userOnChannelCheck.push(false);
             }
           });
-
-          console.log(this.userOnChannelCheck);
         }
       });
+
+
   }
 
 
