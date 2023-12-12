@@ -110,6 +110,7 @@ export class ChannelsChatComponent {
     await updateDoc(docReference, {
       users: this.fireService.currentChannel.users,
     });
+    await this.fireService.readChannels()
   }
 
   async showFilteredUsers() {
@@ -182,7 +183,7 @@ export class ChannelsChatComponent {
   }
 
   addEmoji(emoji) {
-console.log(emoji);
+    console.log(emoji);
 
   }
 }

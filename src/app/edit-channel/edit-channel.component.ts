@@ -60,6 +60,6 @@ export class EditChannelComponent {
     await updateDoc(channelsRef, {
       [key]: value
     });
-  
+
   }
 }
