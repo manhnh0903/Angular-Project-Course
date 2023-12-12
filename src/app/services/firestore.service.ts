@@ -210,10 +210,11 @@ export class FirestoreService {
       );
       if (channelToModifyIndex === -1) {
         this.channels.push(doc.data());
-      }
-      if (channelToModifyIndex !== -1) {
+      } else {
         this.channels[channelToModifyIndex] = doc.data();
-        this.currentChannel = this.channels[channelToModifyIndex]
+        if (this.currentChannel.id === doc.data()['id']) {
+          this.currentChannel = doc.data();
+        }
       }
     });
     await this.checkIfUserOnChannel()
