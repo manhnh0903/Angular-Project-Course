@@ -25,12 +25,14 @@ export class HomeNavigationService {
     this.threadOpen = !this.threadOpen;
   }
 
-  selectMessage(messageData: {}) {
+  async selectMessage(messageData: {}) {
     this.threadOpen = true;
 
     this.selectedMessageSubject.next(messageData);
 
-    this.firestoreService.subscribeToThreadDocument(
+    console.log(messageData);
+
+    await this.firestoreService.subscribeToThreadDocument(
       messageData['messageType'],
       messageData['collectionId']
     );

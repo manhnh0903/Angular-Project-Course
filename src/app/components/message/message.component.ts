@@ -11,11 +11,6 @@ import { HomeNavigationService } from 'src/app/services/home-navigation.service'
   styleUrls: ['./message.component.scss'],
 })
 export class MessageComponent {
-  constructor(
-    public fireService: FirestoreService,
-    private userService: UserService,
-    private homeNav: HomeNavigationService
-  ) {}
   firestore = inject(Firestore);
   @Input() sender: string;
   @Input() profileImg: string;
@@ -34,6 +29,12 @@ export class MessageComponent {
   public onRightSide: boolean;
   public editMessage = false;
   private openEdit = false;
+
+  constructor(
+    public fireService: FirestoreService,
+    private userService: UserService,
+    private homeNav: HomeNavigationService
+  ) {}
 
   openEditMessageDiv(event: { editMessage: boolean; openEdit: boolean }) {
     if (this.editMessage && this.openEdit) {
@@ -162,5 +163,7 @@ export class MessageComponent {
   openThread() {
     this.homeNav.selectMessage(this.currentMessage);
     this.homeNav.currentTread = this.currentMessage;
+
+    console.log('öffne Thread', this.currentMessage);
   }
 }
