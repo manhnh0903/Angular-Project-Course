@@ -39,7 +39,7 @@ emoji-mart {
     position: absolute;
     top: -45px;
     right: 20px;
-    /*    left: 77px;  */
+    z-index: 999;
     width: fit-content;
     background-color: white;
 }

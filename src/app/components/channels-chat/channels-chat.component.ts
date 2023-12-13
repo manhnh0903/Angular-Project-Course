@@ -1,19 +1,13 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
-  Input,
   OnInit,
   ViewChild,
   inject,
 } from '@angular/core';
 import {
   Firestore,
-  addDoc,
-  arrayUnion,
-  doc,
-  onSnapshot,
-  query,
-  setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
@@ -23,19 +17,17 @@ import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 import {
-  FormBuilder,
-  FormGroup,
+  FormControl,
   Validators,
 } from '@angular/forms';
-import { Dialog } from '@angular/cdk/dialog';
-import { EditChannelComponent } from 'src/app/edit-channel/edit-channel.component';
+import { EditChannelComponent } from 'src/app/components/edit-channel/edit-channel.component';
 
 @Component({
   selector: 'app-channels-chat',
   templateUrl: './channels-chat.component.html',
   styleUrls: ['./channels-chat.component.scss'],
 })
-export class ChannelsChatComponent {
+export class ChannelsChatComponent implements AfterViewInit {
   firestore = inject(Firestore);
   public emojiOpened = false
   private newMessage;
@@ -46,10 +38,9 @@ export class ChannelsChatComponent {
   public addPeople = false;
   public isButtonDisabled = true;
   public buttonColor = 'gray';
-  public sendMessageForm: FormGroup;
   public onRightSide;
   public type = 'channel';
-
+  sendMessageForm = new FormControl('', [Validators.required])
   @ViewChild('sendIcon', { static: false }) sendIcon: ElementRef;
 
   constructor(
@@ -58,14 +49,9 @@ export class ChannelsChatComponent {
     public route: ActivatedRoute,
     public userService: UserService,
     private el: ElementRef,
-    private fb: FormBuilder,
     public dialog: MatDialog,
-  ) {
+  ) { }
 
-    this.sendMessageForm = this.fb.group({
-      sendMessage: ['', [Validators.required]],
-    });
-  }
 
 
   async addMessageToChannel() {
@@ -79,7 +65,7 @@ export class ChannelsChatComponent {
       await updateDoc(docReference, {
         messages: this.fireService.currentChannel.messages,
       });
-
+      this.sendMessageForm.patchValue('')
     }
   }
 
@@ -88,7 +74,7 @@ export class ChannelsChatComponent {
     this.newMessage = new Message({
       sender: this.userService.user.name,
       profileImg: this.userService.user.profileImg,
-      content: this.sendMessageForm.get('sendMessage').value,
+      content: this.sendMessageForm.value,
       thread: [],
       reactions: [],
       creationDate: this.fireService.getCurrentDate(),
@@ -150,6 +136,7 @@ export class ChannelsChatComponent {
   }
 
   ngAfterViewInit() {
+
     this.el.nativeElement.addEventListener('click', (event) => {
       if (event.target.classList.contains('addPeopleDialog')) {
         this.closeAddPeople();
@@ -178,12 +165,26 @@ export class ChannelsChatComponent {
     });
   }
 
-  openEmoji() {
+  toggleEmoji() {
     this.emojiOpened = !this.emojiOpened
   }
 
-  addEmoji(emoji) {
-    console.log(emoji);
-
+  addEmoji(event) {
+    const currentMessage = this.sendMessageForm.value || '';
+    const cursorPosition = this.getCursorPosition();
+    const messageArray = currentMessage.split('');
+    messageArray.splice(cursorPosition, 0, event.emoji.native);
+    const updatedMessage = messageArray.join('');
+    this.sendMessageForm.patchValue(updatedMessage);
+    this.toggleEmoji();
+    
   }
+
+  @ViewChild('input') input: ElementRef;
+  getCursorPosition() {
+    const inputElement = this.input?.nativeElement;
+    const cursorPosition = inputElement.selectionStart;
+    return cursorPosition
+  }
+
 }
