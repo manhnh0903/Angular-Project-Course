@@ -1,46 +1,41 @@
 <div style="margin-top: 20px;">
   <div>
     <div *ngIf="isDifferentDate(creationDate, index, type)">
-      <div
-        class="dateDiv"
-        *ngIf="
+      <div class="dateDiv" *ngIf="
           fireService.dateNameChecker(creationDay, creationDate) === 'heute'
-        "
-      ></div>
+        "></div>
       <div class="dateContent">
         {{ fireService.dateNameChecker(creationDay, creationDate) }}
       </div>
     </div>
 
     <div class="messagesSection" [ngClass]="{ 'odd-message': !getSide(index) }">
-      <app-reactions
-        (openEditMessageDivEvent)="openEditMessageDiv($event)"
-        [index]="index"
-        [currentMessage]="currentMessage"
-        [type]="type"
-        [conversation]="conversation"
-        [collectionId]="collectionId"
-      ></app-reactions>
+      <app-reactions (openEditMessageDivEvent)="openEditMessageDiv($event)" [index]="index"
+        [currentMessage]="currentMessage" [type]="type" [conversation]="conversation"
+        [collectionId]="collectionId"></app-reactions>
       <div class="messagesInfo" [ngClass]="{ 'odd-message': getSide(index) }">
         <img class="messageUsersImg" src="{{ profileImg }}" />
         <div class="nameContentDiv">
-          <div
-            *ngIf="editMessage"
-            class="editMessageWrapper"
-            [ngStyle]="!getSide(index) ? { left: '0' } : { right: '0' }"
-          >
+          <div *ngIf="editMessage" class="editMessageWrapper"
+            [ngStyle]="!getSide(index) ? { left: '0' } : { right: '0' }">
             <div class="editMessageDiv">
-              <input
-                [(ngModel)]="content"
-                (ngModelChange)="getNewContent($event)"
-              />
+              <input [(ngModel)]="content" (ngModelChange)="getNewContent($event)" />
+
               <div class="editButtons">
-                <button (click)="closeEdit()" class="cancelButton">
-                  Abbrechen
-                </button>
-                <button (click)="updateMessageContent()" class="createButton">
-                  Speichern
-                </button>
+                <div class="emojiDiv">
+                  <img (click)="openEmojiOnEdit()" class="messageIcon" src="assets/img/sentiment_satisfied.svg">
+                  <emoji-mart *ngIf="emojiOpenedOnEdit" (emojiClick)="addEmojiOnEdit($event)" (tooltip)=false
+                    [style]="getEmojiPickerStyle()">
+                  </emoji-mart>
+                </div>
+                <div>
+                  <button (click)="closeEdit()" class="cancelButton">
+                    Abbrechen
+                  </button>
+                  <button (click)="updateMessageContent()" class="createButton">
+                    Speichern
+                  </button>
+                </div>
               </div>
             </div>
           </div>

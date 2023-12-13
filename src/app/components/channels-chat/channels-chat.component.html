@@ -45,13 +45,13 @@
   </div>
 
   <footer>
-    <form [formGroup]="sendMessageForm" (ngSubmit)="addMessageToChannel()">
-      <input formControlName="sendMessage" placeholder="Type your message" />
+    <form (ngSubmit)="addMessageToChannel()">
+      <input #input  [formControl]="sendMessageForm" placeholder="Type your message" />
       <div class="messageIcons">
         <img class="messageIcon border" src="assets/img/add.svg">
         <img class="messageIcon" src="assets/img/alternate_email.svg">
         <div class="emojiDiv">
-          <img (click)="openEmoji()" class="messageIcon" src="assets/img/sentiment_satisfied.svg">
+          <img (click)="toggleEmoji()"class="messageIcon" src="assets/img/sentiment_satisfied.svg">
           <emoji-mart *ngIf="emojiOpened" (emojiClick)="addEmoji($event)" (tooltip)=false
             [style]="{ position: 'absolute', left:'0',bottom: '20px' }">
           </emoji-mart>
