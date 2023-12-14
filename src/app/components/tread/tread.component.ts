@@ -46,9 +46,15 @@ export class TreadComponent {
   }
 
   subMessageData() {
+    console.log('funktion aufgerufen');
+    // debugger;
+
     this.homeNav.selectedMessage$
-      .pipe(startWith(this.homeNav.currentTread), takeUntil(this.destroy$))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((data: Message) => {
+        //funktion wird beim ersten mal nicht aufgerufen
+        console.log('Thread', data);
+
         this.parentMessage = data;
         this.subThreadData();
       });
