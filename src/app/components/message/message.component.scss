@@ -51,7 +51,7 @@
   display: flex;
   justify-content: space-between;
   position: relative;
-  padding: 20px;
+  padding: 20px 60px;
   cursor: pointer;
 }
 
@@ -62,6 +62,7 @@
   margin-right: 20px;
   position: relative;
   flex-grow: 1;
+
 
   .nameOfSender {
     font-weight: bold;
@@ -114,6 +115,10 @@
   flex-direction: row-reverse;
 }
 
+.justifyEnd {
+  align-items: flex-end;
+}
+
 .reaction {
   display: flex;
   align-items: center;
@@ -123,6 +128,12 @@
   border-radius: 40px;
   padding: 2px 7px;
   border: 1px solid #cdcddc;
+  position: relative;
+  cursor: pointer;
+
+  &:hover .reactionsPeople {
+    display: block;
+  }
 }
 
 .dateDiv {
@@ -224,4 +235,38 @@
 emoji-mart {
   z-index: 9999;
 
+}
+
+.reactionsPeople {
+  display: none;
+  position: absolute;
+  bottom: 25px;
+  /*   left: 30px; */
+  padding: 20px;
+  background-color: var(--Purple-1, #444DF2);
+
+  color: white;
+}
+
+
+.forPeopleReactedLeft {
+  left: 20px;
+  border-radius:20px 20px 20px 0px;
+}
+
+.forPeopleReactedRight {
+  right: 20px;
+  border-radius: 20px 20px 0px 20px;
+}
+
+.reactedSpan {
+  font-size: 12px;
+}
+
+.reactionsPeopleSubDiv {
+  width: max-content;
+}
+
+.max-width {
+  max-width: 80px;
 }

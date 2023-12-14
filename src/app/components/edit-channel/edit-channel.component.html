@@ -1,57 +1,57 @@
 <div class="dialogContent">
-   
-        <h4 class="channelsNameH4"># {{fireService.currentChannel.name}}</h4>
-        <div class="channelNameDiv">
-            <div class="channelNameSubdiv" *ngIf="!editName">
-                <div>
-                    <h4>Channel-Name</h4>
-                    <span># {{fireService.currentChannel.name}}</span>
-                </div>
-                <p (click)="openEditName()">Bearbeiten</p>
-            </div>
 
-            <div *ngIf="editName" class="nameInput">
-                <div class="saveDiv">
-                    <h4>Channel-Name</h4>
-                    <p (click)="updateName()">Speichern</p>
-                </div>
-                <div>
-                    <input  [formControl]="channelsName" placeholder="Name" (ngModelChange)="checkIfNameExists()">
-                    <span class="warning" *ngIf="nameExists">Channel with this name exists</span>
-                </div>
+    <h4 class="channelsNameH4"># {{fireService.currentChannel.name}}</h4>
+    <div class="channelNameDiv">
+        <div class="channelNameSubdiv" *ngIf="!editName">
+            <div>
+                <h4>Channel-Name</h4>
+                <span># {{fireService.currentChannel.name}}</span>
             </div>
+            <p (click)="openEditName()">Bearbeiten</p>
         </div>
 
-        <div class="channelDescriptDiv">
-            <div class="channelNameSubdiv" *ngIf="!editDescript">
-                <div style="width: 100%;">
-                    <div class="descriptionSubDiv">
-                        <h4>Beschreibung</h4>
-                        <p (click)="openEditDescript()">Bearbeiten</p>
-                    </div>
-                    <span># {{fireService.currentChannel.description}}</span>
-                    <div class="createdBy">
-                        <h4>Erstellt von</h4>
-                        <p>{{fireService.currentChannel.createdBy}}</p>
-                    </div>
-                </div>
+        <div *ngIf="editName" class="nameInput">
+            <div class="saveDiv">
+                <h4>Channel-Name</h4>
+                <p (click)="updateName()">Speichern</p>
             </div>
+            <div>
+                <input [formControl]="channelsName" placeholder="Name" (ngModelChange)="checkIfNameExists()">
+                <span class="warning" *ngIf="nameExists">Channel with this name exists</span>
+            </div>
+        </div>
+    </div>
 
-            <div *ngIf="editDescript" class="nameInput">
-                <div class="saveDiv">
+    <div class="channelDescriptDiv">
+        <div class="channelNameSubdiv" *ngIf="!editDescript">
+            <div style="width: 100%;">
+                <div class="descriptionSubDiv">
                     <h4>Beschreibung</h4>
-                    <p (click)="updateDescript()">Speichern</p>
+                    <p (click)="openEditDescript()">Bearbeiten</p>
                 </div>
-                <div>
-                    <input  [formControl]="channelsDescription" placeholder="Dein text hier"
-                        (ngModelChange)="checkIfNameExists()">
+                <span># {{fireService.currentChannel.description}}</span>
+                <div class="createdBy">
+                    <h4>Erstellt von</h4>
+                    <p>{{fireService.currentChannel.createdBy}}</p>
                 </div>
             </div>
         </div>
-        <div *ngIf="editDescript" class="createdBy">
-            <h4>Erstellt von</h4>
-            <p>{{fireService.currentChannel.createdBy}}</p>
+
+        <div *ngIf="editDescript" class="nameInput">
+            <div class="saveDiv">
+                <h4>Beschreibung</h4>
+                <p (click)="updateDescript()">Speichern</p>
+            </div>
+            <div>
+                <input [formControl]="channelsDescription" placeholder="Dein text hier"
+                    (ngModelChange)="checkIfNameExists()">
+            </div>
         </div>
-        <button class="createButton">Channel verlassen</button>
+    </div>
+    <div *ngIf="editDescript" class="createdBy">
+        <h4>Erstellt von</h4>
+        <p>{{fireService.currentChannel.createdBy}}</p>
+    </div>
+    <button (click)="leaveChannel()" class="createButton">Channel verlassen</button>
 
 </div>

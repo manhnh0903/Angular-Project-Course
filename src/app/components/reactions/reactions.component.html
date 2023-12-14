@@ -2,13 +2,13 @@
     <div class="reactionDiv">
         <img (click)="openEmoji()" src="assets/img/add_reaction.png" />
         <img (click)="startThread()" src="assets/img/comment.png" />
-        <img src="assets/img/more_vert.png" (click)="openEditMessage()" />
+        <img *ngIf="isYou" src="assets/img/more_vert.png" (click)="openEditMessage()" />
     </div>
     <div *ngIf="openEdit" class="editMessage" [ngClass]="{ 'editDialog': index % 2 !== 0}"
         (click)=" openEditMessageDiv()">
         <span>Nachricht bearbeiten</span>
     </div>
     <emoji-mart *ngIf="emojiOpened" (emojiClick)="addEmoji($event)" (tooltip)=false
-        [ngClass]="{ 'ifRightSide': index % 2 === 0}">
+        [ngClass]="{ 'ifRightSide': !isYou}" [ngStyle]="index===0 ? { 'bottom': '20px' } : { 'top': '20px' }">
     </emoji-mart>
 </div>

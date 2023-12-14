@@ -47,10 +47,14 @@ export class MessageComponent {
     }
   }
 
-  getSide(index: number): boolean {
-    let isEven = index % 2 === 0;
-    this.onRightSide = !isEven;
-    return !isEven;
+  isYou = false
+  getSide(sender: string): boolean {
+    if (sender === this.userService.user.name) {
+      this.isYou = true
+      return true
+    } else {
+      return false
+    }
   }
 
   getLastReplyTime(): string {
@@ -134,6 +138,17 @@ export class MessageComponent {
     });
 
     return names;
+  }
+
+
+  ifYouReacted(emoji) {
+    return emoji.userIDs.some((id) => {
+      const index = this.fireService.allUsers.findIndex(
+        (user) => user.userId === id
+      );
+
+      return index !== -1 && id === this.userService.user.userId;
+    });
   }
 
   isDifferentDate(creationDate, i: number, type): boolean {

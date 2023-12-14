@@ -9,15 +9,12 @@
       </div>
     </div>
 
-    <div class="messagesSection" [ngClass]="{ 'odd-message': !getSide(index) }">
-      <app-reactions (openEditMessageDivEvent)="openEditMessageDiv($event)" [index]="index"
-        [currentMessage]="currentMessage" [type]="type" [conversation]="conversation"
-        [collectionId]="collectionId"></app-reactions>
-      <div class="messagesInfo" [ngClass]="{ 'odd-message': getSide(index) }">
+    <div class="messagesSection" [ngClass]="{ 'odd-message':getSide(sender) }">
+
+      <div class="messagesInfo" [ngClass]="{ 'odd-message':getSide(sender) }">
         <img class="messageUsersImg" src="{{ profileImg }}" />
-        <div class="nameContentDiv">
-          <div *ngIf="editMessage" class="editMessageWrapper"
-            [ngStyle]="!getSide(index) ? { left: '0' } : { right: '0' }">
+        <div class="nameContentDiv" [ngClass]="{ 'justifyEnd':getSide(sender) }">
+          <div *ngIf="editMessage" class="editMessageWrapper">
             <div class="editMessageDiv">
               <input [(ngModel)]="content" (ngModelChange)="getNewContent($event)" />
 
@@ -54,12 +51,42 @@
               <div>{{ emoji.native }}</div>
               <div *ngIf="emoji.counter">
                 {{ emoji.counter }}
-                <div *ngIf="emoji.userIDs">{{ getReactionsPeople(emoji) }}</div>
+                <div *ngIf="getReactionsPeople(emoji).length >= 3" class="reactionsPeople"
+                  [ngStyle]="getSide(sender) ? { 'left': '20px' } : { 'right': '20px' }">
+                  <div class="reactionsPeopleSubDiv max-width">
+                    <ng-container *ngIf="ifYouReacted(emoji); else otherUsers">
+                      Du
+                      <span class="reactedSpan"> und noch</span>
+                      {{ getReactionsPeople(emoji).length - 1 }} Leute <span class="reactedSpan"> haben
+                        reagiert</span>
+                    </ng-container>
+                    <ng-template #otherUsers>
+                      {{ getReactionsPeople(emoji)[0] }}
+                      und noch {{ getReactionsPeople(emoji).length - 1 }} Leute <span class="reactedSpan">haben
+                        reagiert</span>
+                    </ng-template>
+                    <!--   </div> -->
+                  </div>
+                </div>
+
+                <div *ngIf="getReactionsPeople(emoji).length < 3" class="reactionsPeople"
+                  [ngClass]="!getSide(sender) ? 'forPeopleReactedLeft' : 'forPeopleReactedRight'">
+                  <div class="reactionsPeopleSubDiv" *ngFor="let name of getReactionsPeople(emoji); let i = index">
+                    {{ name }}
+                    <span class="reactedSpan" *ngIf="getReactionsPeople(emoji).length > 1 && i === 0"> und</span>
+                    <span class="reactedSpan" *ngIf="name === 'Du'"> hast reagiert</span>
+                    <div *ngIf="getReactionsPeople(emoji).length < 3">
+                      <span class="reactedSpan" *ngIf="name !== 'Du' && !getReactionsPeople(emoji)[i + 1]"> hat
+                        reagiert</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <app-reactions (openEditMessageDivEvent)="openEditMessageDiv($event)" [index]="index"
+        [currentMessage]="currentMessage" [type]="type" [conversation]="conversation" [collectionId]="collectionId"
+        [isYou]="isYou"></app-reactions>
     </div>
-  </div>
-</div>
