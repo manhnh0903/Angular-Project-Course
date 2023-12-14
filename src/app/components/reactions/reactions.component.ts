@@ -19,6 +19,7 @@ import { HomeNavigationService } from 'src/app/services/home-navigation.service'
   styleUrls: ['./reactions.component.scss'],
 })
 export class ReactionsComponent {
+[x: string]: any;
   firestore = inject(Firestore);
   constructor(
     public fireService: FirestoreService,
@@ -33,6 +34,8 @@ export class ReactionsComponent {
   @Input() type;
   @Input() conversation;
   @Input() collectionId;
+  @Input() isYou;
+
   emoji;
   openEdit = false;
   editMessage = true;
@@ -80,6 +83,7 @@ export class ReactionsComponent {
      ); //to find the message to change */
 
       docReference = this.fireService.getDocRef('pms', this.collectionId);
+     
     }
 
     this.createEmoji(event);
@@ -106,6 +110,7 @@ export class ReactionsComponent {
         messages: this.conversation.toJSON().messages,
       });
     }
+    this.openEmoji()
   }
 
   createEmoji(event) {
