@@ -60,7 +60,6 @@ export class PmChatComponent {
           await this.getConversationData();
         }
       });
-
   }
 
   openUserDetails() {
@@ -94,8 +93,7 @@ export class PmChatComponent {
   addMessageId() {
     let id: number;
     if (this.conversation.messages.length > 0) {
-      id =
-        this.conversation.messages[0].id + 1;      
+      id = this.conversation.messages[0].id + 1;
     } else {
       id = 0;
     }
@@ -143,7 +141,6 @@ export class PmChatComponent {
       await this.setNewConversation();
       await this.getConversationData();
     }
-
   }
 
   async setupConversation(userId1: string, userId2: string) {
@@ -174,7 +171,7 @@ export class PmChatComponent {
         if (data && data.messages) {
           data.messages.forEach((msg: Message) => {
             const message = new Message(msg);
-            this.conversation.messages.push(message)
+            this.conversation.messages.push(message);
           });
 
           this.loading = false;
@@ -183,7 +180,6 @@ export class PmChatComponent {
           }, 1);
         }
       });
-
   }
 
   scrollToBottom() {

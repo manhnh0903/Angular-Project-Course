@@ -16,7 +16,7 @@ export class MessageComponent {
     public fireService: FirestoreService,
     private userService: UserService,
     private homeNav: HomeNavigationService
-  ) { }
+  ) {}
   firestore = inject(Firestore);
   @Input() sender: string;
   @Input() profileImg: string;
@@ -35,7 +35,7 @@ export class MessageComponent {
   public onRightSide: boolean;
   public editMessage = false;
   private openEdit = false;
-  public emojiOpenedOnEdit = false
+  public emojiOpenedOnEdit = false;
 
   openEditMessageDiv(event: { editMessage: boolean; openEdit: boolean }) {
     if (this.editMessage && this.openEdit) {
@@ -181,16 +181,15 @@ export class MessageComponent {
     this.homeNav.currentTread = this.currentMessage;
   }
 
-
   openEmojiOnEdit() {
-    this.emojiOpenedOnEdit = !this.emojiOpenedOnEdit
+    this.emojiOpenedOnEdit = !this.emojiOpenedOnEdit;
   }
 
   addEmojiOnEdit(event) {
     const currentMessage = this.content || '';
     const updatedMessage = currentMessage + event.emoji.native;
     this.content = updatedMessage;
-    this.openEmojiOnEdit()
+    this.openEmojiOnEdit();
   }
 
   getEmojiPickerStyle() {
@@ -198,7 +197,7 @@ export class MessageComponent {
       position: 'absolute',
       left: '26px',
       bottom: '35px',
-      'z-index': '9999'
-    }
+      'z-index': '9999',
+    };
   }
 }

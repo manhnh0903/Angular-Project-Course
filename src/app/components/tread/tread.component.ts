@@ -59,17 +59,19 @@ export class TreadComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         if (data) {
+          console.log('threadData', data);
+
           if (this.isConversation(data)) {
             this.opendThreadConversation = new Conversation(data);
             this.threadCollection = 'pms';
-            console.log('Conversation');
+            // console.log('Conversation');
           } else if (this.isChannel(data)) {
             this.opendThreadConversation = new Channel(data);
             this.threadCollection = 'channels';
-            console.log('Channel');
+            // console.log('Channel');
           }
 
-          console.log(this.opendThreadConversation);
+          // console.log(this.opendThreadConversation);
           this.updateCurrentMessage();
         }
       });
