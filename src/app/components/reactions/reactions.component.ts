@@ -43,7 +43,9 @@ export class ReactionsComponent {
     editMessage: boolean;
     openEdit: boolean;
   }>();
+/*   @Output() addEmojiEvent=new EventEmitter<{}>(
 
+  ) */
   openEditMessageDiv() {
     this.editMessage = !this.editMessage;
     this.openEdit = !this.openEdit;
@@ -64,7 +66,7 @@ export class ReactionsComponent {
   async addEmoji(event) {
     let indexOfCurrentMessage;
     let docReference;
-
+/*     this.addEmojiEvent.emit(event); */
     if (this.type === 'channel') {
       /*    indexOfCurrentMessage =
            this.fireService.currentChannel.messages.findIndex(
