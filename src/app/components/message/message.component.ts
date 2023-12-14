@@ -161,9 +161,8 @@ export class MessageComponent {
     return true;
   }
 
-  openThread() {
-    this.homeNav.selectMessage(this.currentMessage);
-    this.homeNav.currentTread = this.currentMessage;
+  async openThread() {
+    await this.homeNav.selectMessage(this.currentMessage);
   }
 
   openEmojiOnEdit() {

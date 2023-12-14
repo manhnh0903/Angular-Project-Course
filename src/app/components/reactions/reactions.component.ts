@@ -180,6 +180,6 @@ export class ReactionsComponent {
 
   startThread() {
     this.homeNav.selectMessage(this.currentMessage);
-    this.homeNav.currentTread = this.currentMessage;
+    // this.homeNav.currentTread = this.currentMessage;
   }
 }

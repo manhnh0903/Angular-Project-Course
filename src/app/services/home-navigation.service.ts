@@ -10,8 +10,6 @@ export class HomeNavigationService {
   pmRecipient: string;
   threadOpen: boolean = false;
 
-  currentTread: {};
-
   public selectedMessageSubject = new Subject<any>();
   selectedMessage$ = this.selectedMessageSubject.asObservable();
 
@@ -29,8 +27,6 @@ export class HomeNavigationService {
     this.threadOpen = true;
 
     this.selectedMessageSubject.next(messageData);
-
-    console.log(messageData);
 
     await this.firestoreService.subscribeToThreadDocument(
       messageData['messageType'],
