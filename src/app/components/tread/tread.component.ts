@@ -47,7 +47,7 @@ export class TreadComponent {
 
   subMessageData() {
     console.log('funktion aufgerufen');
-    debugger;
+    // debugger;
 
     this.homeNav.selectedMessage$
       .pipe(takeUntil(this.destroy$))
