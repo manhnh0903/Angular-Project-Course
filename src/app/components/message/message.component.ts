@@ -155,29 +155,19 @@ export class MessageComponent {
   }
 
   isDifferentDate(creationDate, i: number, type): boolean {
-    if (type === 'channel')
-      if (creationDate && i >= 0) {
-        /*    console.log('channel Log', this.fireService.currentChannel.messages); */
-        if (i === this.fireService.currentChannel.messages.length - 1) {
-          return true;
-        }
-        return (
-          creationDate !==
-          this.fireService.currentChannel.messages[i + 1].creationDate
-        );
+
+    if (i === 0) return true
+    if (creationDate && i > 0) {
+      if (type === 'channel') {
+        return creationDate !== this.fireService.currentChannel.messages[i - 1].creationDate
       }
-    if (type === 'pm') {
-      if (creationDate && i >= 0) {
-        /*      console.log('pm Log', this.conversation.messages); */
-        if (i === this.conversation.messages.length - 1) {
-          return true;
-        }
-        return creationDate !== this.conversation.messages[i + 1].creationDate;
+      if (type === 'pm') {
+        return creationDate !== this.conversation.messages[i - 1].creationDate
       }
     }
-
-    return true;
+    return false;
   }
+
 
   async openThread() {
     await this.homeNav.selectMessage(this.currentMessage);
@@ -204,7 +194,9 @@ export class MessageComponent {
   }
 
   @ViewChild(ReactionsComponent, { static: false }) reactionsComponent: ReactionsComponent;
-  async addEmoji(indexOfEmoji) {
+  async addEmoji(indexOfEmoji, event) {
+    event.preventDefault()
+
     let docReference;
     if (this.checkForUsersIdForEmoji(indexOfEmoji) === -1) {
       this.increaseCounterOfExistingEmoji(indexOfEmoji);
@@ -227,6 +219,7 @@ export class MessageComponent {
     await updateDoc(docReference, {
       messages: this.fireService.currentChannel.messages,
     });
+
   }
 
 

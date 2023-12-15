@@ -165,42 +165,6 @@ export class FirestoreService {
   }
 
 
-  async ifChangesOnChannels() {
-    /*     const q = query(this.getColRef('channels'));
-        onSnapshot(q, (snapshot) => {
-          snapshot.docChanges().forEach((change) => {
-            const channelData = change.doc.data();
-            let channelToModifyIndex = this.channels.findIndex(
-              (channel) => channel.name === channelData['name']
-            );
-    
-            if (change.type === 'added') {
-              if (channelToModifyIndex === -1) {
-                this.channels.push(channelData);
-              }
-    
-            }
-    
-            if (change.type === 'modified') {
-              if (channelToModifyIndex !== -1) {
-                this.channels[channelToModifyIndex] = channelData;
-                this.currentChannel = this.channels[channelToModifyIndex]
-    
-              }
-              console.log('modified');
-            }
-    
-            if (change.type === 'removed') {
-              if (channelToModifyIndex !== -1) {
-                this.channels.splice(channelToModifyIndex, 1);
-              }
-            }
-          });
-        })
-       await this.checkIfUserOnChannel() */
-  }
-
-
   async readChannels() {
     const q = query(collection(this.firestore, "channels"))
     let unsubscribe = onSnapshot(q, (snapshot) => {
@@ -214,12 +178,13 @@ export class FirestoreService {
           }
         }
         if (change.type === "modified") {
-          this.channels[channelToModifyIndex] = change.doc.data();
-          this.currentChannel = this.channels[channelToModifyIndex]
+          this.currentChannel = change.doc.data();
           this.checkIfUserOnChannel()
         }
       });
     });
+
+
   }
 
   async checkIfUserOnChannel() {

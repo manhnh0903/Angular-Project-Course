@@ -60,7 +60,7 @@
             <p>{{ getLastReplyTime() }}</p>
           </div>
           <div class="reactions" *ngIf="reactions?.length > 0">
-            <div (click)="addEmoji(i)" class="reaction" *ngFor="let emoji of reactions let i=index">
+            <div (click)="addEmoji(i,$event)" class="reaction" *ngFor="let emoji of reactions let i=index">
               <div>{{ emoji.native }}</div>
               <div *ngIf="emoji.counter">
                 {{ emoji.counter }}

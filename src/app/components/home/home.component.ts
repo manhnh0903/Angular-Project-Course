@@ -40,12 +40,10 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit() {
     this.getLoggedUser();
-    if (this.fireService.channels.length === 0) {
 
-    }
     this.fireService.checkIfUserOnChannel();
     this.fireService.defaultChannel()
-
+    await this.fireService.readChannels()
 
   }
 
