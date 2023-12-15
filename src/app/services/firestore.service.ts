@@ -18,15 +18,11 @@ import { Observable, BehaviorSubject, distinctUntilChanged } from 'rxjs';
   providedIn: 'root',
 })
 export class FirestoreService {
-  private loggedInUserDataSubject = new BehaviorSubject<any>(null);
-  private subscribedRecipientDataSubject = new BehaviorSubject<any>(null);
-  public subscribedRecipientData$: Observable<any> =
-    this.subscribedRecipientDataSubject.asObservable();
-  private conversationDataDataSubject = new BehaviorSubject<any>(null);
-  public conversationData$: Observable<any> =
-    this.conversationDataDataSubject.asObservable();
-  private threadDataSubject = new BehaviorSubject<any>(null);
-  threadData$: Observable<any> = this.threadDataSubject.asObservable();
+  public loggedInUserDataSubject = new BehaviorSubject<any>(null);
+  public subscribedRecipientDataSubject = new BehaviorSubject<any>(null);
+  public conversationDataSubject = new BehaviorSubject<any>(null);
+  public threadDataSubject = new BehaviorSubject<any>(null);
+
   public conversation: any;
   unsubUserData: Function;
   public currentChannel;
@@ -75,44 +71,32 @@ export class FirestoreService {
   }
 
   async subscribeToPMConversation(conversationID: string): Promise<void> {
-    // this.destroyConversationDataSubject();
-
     const docRef = this.getDocRef('pms', conversationID);
-    this.conversationDataDataSubject = new BehaviorSubject<any>(null);
+    this.conversationDataSubject = new BehaviorSubject<any>(null);
 
     onSnapshot(docRef, (snapshot) => {
       if (snapshot.exists()) {
         const convData = snapshot.data();
-        this.conversationDataDataSubject.next(convData);
+        this.conversationDataSubject.next(convData);
       } else {
-        this.conversationDataDataSubject.next(null);
+        this.conversationDataSubject.next(null);
       }
     });
-
-    this.conversationData$ = this.conversationDataDataSubject.asObservable();
   }
 
   private destroyConversationDataSubject(): void {
-    this.conversationDataDataSubject.complete();
+    this.conversationDataSubject.complete();
   }
 
-  async subscribeToThreadDocument(col: string, docId: string) {
+  async subscribeToThreadDocument(col: string, docId: string): Promise<void> {
     const docRef = this.getDocRef(col, docId);
-    this.threadDataSubject = new BehaviorSubject<any>(null);
-
-    // debugger;
 
     this.usnubThreadDocument = onSnapshot(docRef, (snapshot) => {
       if (snapshot.exists()) {
-        // debugger;
         const threadData = snapshot.data();
-
-        console.log('thread data:', threadData);
         this.threadDataSubject.next(threadData);
-        this.threadData$ = this.threadDataSubject.asObservable();
       } else {
         this.threadDataSubject.next(null);
-        this.threadData$ = this.threadDataSubject.asObservable();
       }
     });
   }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { FirestoreService } from './firestore.service';
 
 @Injectable({
@@ -10,8 +10,7 @@ export class HomeNavigationService {
   pmRecipient: string;
   threadOpen: boolean = false;
 
-  public selectedMessageSubject = new Subject<any>();
-  selectedMessage$ = this.selectedMessageSubject.asObservable();
+  public selectedMessageSubject = new BehaviorSubject<any>(null);
 
   constructor(private firestoreService: FirestoreService) {}
 
@@ -24,13 +23,13 @@ export class HomeNavigationService {
   }
 
   async selectMessage(messageData: {}) {
-    this.threadOpen = true;
-
     this.selectedMessageSubject.next(messageData);
 
     await this.firestoreService.subscribeToThreadDocument(
       messageData['messageType'],
       messageData['collectionId']
     );
+
+    this.threadOpen = true;
   }
 }

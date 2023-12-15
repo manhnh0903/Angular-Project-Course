@@ -49,7 +49,7 @@ export class PmChatComponent {
   }
 
   async subRecipientData() {
-    this.firestoreService.subscribedRecipientData$
+    this.firestoreService.subscribedRecipientDataSubject
       .pipe(takeUntil(this.destroy$))
       .subscribe(async (data) => {
         if (data !== null) {
@@ -109,8 +109,6 @@ export class PmChatComponent {
     conversation.userId2 = this.recipient.userId;
 
     await this.firestoreService.addNewConversation(conversation.toJSON());
-
-    /*     console.log('new conversation', conversation); */
   }
 
   async getConversationData() {
@@ -124,16 +122,11 @@ export class PmChatComponent {
 
       if (this.userInConversation(userId1, userId2)) {
         this.conversationId = doc.id;
-        /*       console.log(this.conversationId); */
 
         this.setupConversation(userId1, userId2);
         conversationFound = true;
 
         return;
-      }
-
-      if (!conversationFound) {
-        /*         console.log('Die Benutzer sind nicht in der Konversation'); */
       }
     });
 
@@ -164,7 +157,7 @@ export class PmChatComponent {
   async subConversationData(conversationId: string) {
     await this.firestoreService.subscribeToPMConversation(conversationId);
 
-    this.firestoreService.conversationData$
+    this.firestoreService.conversationDataSubject
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         this.conversation.messages = [];
