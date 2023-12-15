@@ -5,6 +5,7 @@ import { Firestore, doc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { UserService } from 'src/app/services/user.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 import { ReactionsComponent } from '../reactions/reactions.component';
+import { CursorPositionService } from 'src/app/services/cursor-position.service';
 
 @Component({
   selector: 'app-message',
@@ -16,7 +17,8 @@ export class MessageComponent {
   constructor(
     public fireService: FirestoreService,
     private userService: UserService,
-    private homeNav: HomeNavigationService
+    private homeNav: HomeNavigationService,
+    public cursorService: CursorPositionService
   ) { }
   firestore = inject(Firestore);
   @Input() sender: string;
@@ -33,7 +35,7 @@ export class MessageComponent {
   @Input() collectionId;
   @Input() conversation;
   @Input() type: 'channel' | 'pm' | 'thread';
-
+  @ViewChild('inputEditMessage') inputEditMessage: ElementRef<HTMLInputElement>;
 
   public onRightSide: boolean;
   public editMessage = false;
@@ -177,10 +179,14 @@ export class MessageComponent {
     this.emojiOpenedOnEdit = !this.emojiOpenedOnEdit;
   }
 
-  addEmojiOnEdit(event) {
+  addEmojiOnEdit(event, inputElement: HTMLInputElement) {
     const currentMessage = this.content || '';
-    const updatedMessage = currentMessage + event.emoji.native;
-    this.content = updatedMessage;
+    const cursorPosition = this.cursorService.getCursorPosition(inputElement);
+    const messageArray = currentMessage.split('');
+
+    messageArray.splice(cursorPosition, 0, event.emoji.native);
+    const updatedMessage = messageArray.join('');
+    this.content = updatedMessage
     this.openEmojiOnEdit();
   }
 
@@ -195,8 +201,6 @@ export class MessageComponent {
 
   @ViewChild(ReactionsComponent, { static: false }) reactionsComponent: ReactionsComponent;
   async addEmoji(indexOfEmoji, event) {
-    event.preventDefault()
-
     let docReference;
     if (this.checkForUsersIdForEmoji(indexOfEmoji) === -1) {
       this.increaseCounterOfExistingEmoji(indexOfEmoji);
@@ -219,7 +223,6 @@ export class MessageComponent {
     await updateDoc(docReference, {
       messages: this.fireService.currentChannel.messages,
     });
-
   }
 
 
@@ -241,5 +244,6 @@ export class MessageComponent {
       (id) => id === this.userService.user.userId
     );
   }
+
 
 }

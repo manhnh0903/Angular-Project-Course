@@ -24,6 +24,7 @@ import {
 import { EditChannelComponent } from 'src/app/components/edit-channel/edit-channel.component';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { BehaviorSubject } from 'rxjs';
+import { CursorPositionService } from 'src/app/services/cursor-position.service';
 
 @Component({
   selector: 'app-channels-chat',
@@ -53,7 +54,7 @@ export class ChannelsChatComponent implements AfterViewInit {
     public userService: UserService,
     private el: ElementRef,
     public dialog: MatDialog,
-
+    private cursorService: CursorPositionService
   ) {
   }
 
@@ -177,23 +178,25 @@ export class ChannelsChatComponent implements AfterViewInit {
     this.emojiOpened = !this.emojiOpened
   }
 
-  addEmoji(event) {
+  addEmoji(event, inputElement: HTMLInputElement) {
     const currentMessage = this.sendMessageForm.value || '';
-    const cursorPosition = this.getCursorPosition();
+    const cursorPosition = this.cursorService.getCursorPosition(inputElement);
     const messageArray = currentMessage.split('');
+    
     messageArray.splice(cursorPosition, 0, event.emoji.native);
     const updatedMessage = messageArray.join('');
     this.sendMessageForm.patchValue(updatedMessage);
     this.toggleEmoji();
 
   }
+  @ViewChild('inputFooter') inputFooter: ElementRef<HTMLInputElement>;
+ 
 
-  @ViewChild('input') input: ElementRef;
-  getCursorPosition() {
-    const inputElement = this.input?.nativeElement;
-    const cursorPosition = inputElement.selectionStart;
-    return cursorPosition
-  }
+/*   getCursorPosition(inputElement: HTMLInputElement) {
+    const cursorPosition = inputElement?.selectionStart ?? 0;
+    console.log(cursorPosition);
+    return cursorPosition;
+  } */
 
 
 }
