@@ -60,17 +60,12 @@
             <p>{{ getLastReplyTime() }}</p>
           </div>
           <div class="reactions" *ngIf="reactions?.length > 0">
-            <div class="reaction" *ngFor="let emoji of reactions">
+            <div (click)="addEmoji(i,$event)" class="reaction" *ngFor="let emoji of reactions let i=index">
               <div>{{ emoji.native }}</div>
               <div *ngIf="emoji.counter">
                 {{ emoji.counter }}
-                <div
-                  *ngIf="getReactionsPeople(emoji).length >= 3"
-                  class="reactionsPeople"
-                  [ngStyle]="
-                    getSide(sender) ? { left: '20px' } : { right: '20px' }
-                  "
-                >
+                <div *ngIf="getReactionsPeople(emoji).length >= 3" class="reactionsPeople"
+                  [ngClass]="!getSide(sender) ? 'forPeopleReactedLeft' : 'forPeopleReactedRight'">
                   <div class="reactionsPeopleSubDiv max-width">
                     <ng-container *ngIf="ifYouReacted(emoji); else otherUsers">
                       Du

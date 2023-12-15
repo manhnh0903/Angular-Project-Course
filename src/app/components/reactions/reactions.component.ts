@@ -19,14 +19,14 @@ import { HomeNavigationService } from 'src/app/services/home-navigation.service'
   styleUrls: ['./reactions.component.scss'],
 })
 export class ReactionsComponent {
-[x: string]: any;
+  [x: string]: any;
   firestore = inject(Firestore);
   constructor(
     public fireService: FirestoreService,
     public userService: UserService,
     private el: ElementRef,
     private homeNav: HomeNavigationService
-  ) {}
+  ) { }
 
   emojiOpened = false;
   @Input() currentMessage;
@@ -35,7 +35,7 @@ export class ReactionsComponent {
   @Input() conversation;
   @Input() collectionId;
   @Input() isYou;
-
+  @Input() emojiFunction: () => void;
   emoji;
   openEdit = false;
   editMessage = true;
@@ -43,7 +43,9 @@ export class ReactionsComponent {
     editMessage: boolean;
     openEdit: boolean;
   }>();
+  @Output() addEmojiEvent = new EventEmitter<{ emoji }>(
 
+  )
   openEditMessageDiv() {
     this.editMessage = !this.editMessage;
     this.openEdit = !this.openEdit;
@@ -64,7 +66,7 @@ export class ReactionsComponent {
   async addEmoji(event) {
     let indexOfCurrentMessage;
     let docReference;
-
+    /*     this.addEmojiEvent.emit(event); */
     if (this.type === 'channel') {
       /*    indexOfCurrentMessage =
            this.fireService.currentChannel.messages.findIndex(
@@ -83,7 +85,7 @@ export class ReactionsComponent {
      ); //to find the message to change */
 
       docReference = this.fireService.getDocRef('pms', this.collectionId);
-     
+
     }
 
     this.createEmoji(event);
@@ -92,19 +94,14 @@ export class ReactionsComponent {
     ); //I check if the selected emoji already exists on the message
     this.checkForEmoji(indexOfEmoji);
     //I change the selected message
-
     if (this.type === 'channel') {
       this.fireService.currentChannel.messages[this.index] =
         this.currentMessage;
-      console.log(this.fireService.currentChannel.messages);
-
       await updateDoc(docReference, {
         messages: this.fireService.currentChannel.messages,
       });
     }
     if (this.type === 'pm') {
-      console.log(this.conversation.messages);
-
       this.conversation.messages[this.index] = this.currentMessage;
       await updateDoc(docReference, {
         messages: this.conversation.toJSON().messages,
@@ -185,6 +182,6 @@ export class ReactionsComponent {
 
   startThread() {
     this.homeNav.selectMessage(this.currentMessage);
-    // this.homeNav.currentTread = this.currentMessage;
+    /*     this.homeNav.currentTread = this.currentMessage; */
   }
 }

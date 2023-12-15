@@ -79,7 +79,7 @@ export class PmChatComponent {
     msg.creationDay = this.firestoreService.getDaysName();
     msg.messageType = 'pms';
 
-    this.conversation.messages.unshift(msg);
+    this.conversation.messages.push(msg);
 
     /*     console.log(this.conversation.toJSON()); */
 
@@ -93,7 +93,7 @@ export class PmChatComponent {
   addMessageId() {
     let id: number;
     if (this.conversation.messages.length > 0) {
-      id = this.conversation.messages[0].id + 1;
+      id = this.conversation.messages[this.conversation.messages.length - 1].id + 1;
     } else {
       id = 0;
     }

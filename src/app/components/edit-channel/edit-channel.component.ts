@@ -1,15 +1,15 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy,  Component, inject } from '@angular/core';
+import {  FormControl, Validators } from '@angular/forms';
 import { FirestoreService } from '../../services/firestore.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Firestore, doc, updateDoc } from '@angular/fire/firestore';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-edit-channel',
   templateUrl: './edit-channel.component.html',
-  styleUrls: ['./edit-channel.component.scss']
+  styleUrls: ['./edit-channel.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class EditChannelComponent {
   nameExists = false
@@ -21,7 +21,9 @@ export class EditChannelComponent {
   constructor(public fireService: FirestoreService, public dialog: MatDialog, private userService: UserService) { }
 
 
-
+/*   async ngOnInit() {
+    await this.fireService.readChannels()
+  } */
   checkIfNameExists() {
     let channelToModifyIndex = this.fireService.channels.findIndex(channel => channel.name.toLowerCase() === this.channelsName.value.toLowerCase());
     if (channelToModifyIndex !== -1) {
@@ -33,15 +35,14 @@ export class EditChannelComponent {
 
   async updateName() {
     await this.updateChannel('name', this.channelsName.value)
-    this.fireService.readChannels()
     this.editName = false
+
   }
 
 
 
   async updateDescript() {
     await this.updateChannel('description', this.channelsDescription.value)
-    this.fireService.readChannels()
     this.editDescript = false
 
   }
@@ -70,6 +71,6 @@ export class EditChannelComponent {
     let usersIndex = this.fireService.currentChannel.users.findIndex(user => user.userId === this.userService.user.userId)
     this.fireService.currentChannel.users.splice(usersIndex, 1)
     await this.updateChannel('users', this.fireService.currentChannel.users)
-    this.fireService.readChannels()
+    /*  this.fireService.readChannels() */
   }
 }

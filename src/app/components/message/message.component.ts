@@ -1,9 +1,10 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild, inject } from '@angular/core';
 import { Reaction } from 'src/app/classes/reaction.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Firestore, doc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { UserService } from 'src/app/services/user.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
+import { ReactionsComponent } from '../reactions/reactions.component';
 
 @Component({
   selector: 'app-message',
@@ -16,7 +17,7 @@ export class MessageComponent {
     public fireService: FirestoreService,
     private userService: UserService,
     private homeNav: HomeNavigationService
-  ) {}
+  ) { }
   firestore = inject(Firestore);
   @Input() sender: string;
   @Input() profileImg: string;
@@ -32,6 +33,8 @@ export class MessageComponent {
   @Input() collectionId;
   @Input() conversation;
   @Input() type: 'channel' | 'pm' | 'thread';
+
+
   public onRightSide: boolean;
   public editMessage = false;
   private openEdit = false;
@@ -152,29 +155,19 @@ export class MessageComponent {
   }
 
   isDifferentDate(creationDate, i: number, type): boolean {
-    if (type === 'channel')
-      if (creationDate && i >= 0) {
-        /*    console.log('channel Log', this.fireService.currentChannel.messages); */
-        if (i === this.fireService.currentChannel.messages.length - 1) {
-          return true;
-        }
-        return (
-          creationDate !==
-          this.fireService.currentChannel.messages[i + 1].creationDate
-        );
+
+    if (i === 0) return true
+    if (creationDate && i > 0) {
+      if (type === 'channel') {
+        return creationDate !== this.fireService.currentChannel.messages[i - 1].creationDate
       }
-    if (type === 'pm') {
-      if (creationDate && i >= 0) {
-        /*      console.log('pm Log', this.conversation.messages); */
-        if (i === this.conversation.messages.length - 1) {
-          return true;
-        }
-        return creationDate !== this.conversation.messages[i + 1].creationDate;
+      if (type === 'pm') {
+        return creationDate !== this.conversation.messages[i - 1].creationDate
       }
     }
-
-    return true;
+    return false;
   }
+
 
   async openThread() {
     await this.homeNav.selectMessage(this.currentMessage);
@@ -199,4 +192,54 @@ export class MessageComponent {
       'z-index': '9999',
     };
   }
+
+  @ViewChild(ReactionsComponent, { static: false }) reactionsComponent: ReactionsComponent;
+  async addEmoji(indexOfEmoji, event) {
+    event.preventDefault()
+
+    let docReference;
+    if (this.checkForUsersIdForEmoji(indexOfEmoji) === -1) {
+      this.increaseCounterOfExistingEmoji(indexOfEmoji);
+      this.reactionsComponent.currentMessage.reactions[indexOfEmoji].userIDs.push(
+        this.userService.user.userId
+      );
+    } else {
+      this.reactionsComponent.currentMessage.reactions[indexOfEmoji].userIDs.splice(
+        this.checkForUsersIdForEmoji(indexOfEmoji),
+        1
+      );
+      this.decreaseCounterOfExistingEmoji(indexOfEmoji);
+      if (this.reactionsComponent.currentMessage.reactions[indexOfEmoji].counter === 0)
+        this.removeEmojiIfCounter0(indexOfEmoji);
+    }
+    docReference = this.fireService.getDocRef(
+      'channels',
+      this.fireService.currentChannel.id
+    );
+    await updateDoc(docReference, {
+      messages: this.fireService.currentChannel.messages,
+    });
+
+  }
+
+
+  increaseCounterOfExistingEmoji(indexOfEmoji) {
+    return this.reactionsComponent.currentMessage.reactions[indexOfEmoji].counter++;
+  }
+
+
+  decreaseCounterOfExistingEmoji(indexOfEmoji) {
+    return this.reactionsComponent.currentMessage.reactions[indexOfEmoji].counter--;
+  }
+
+  removeEmojiIfCounter0(indexOfEmoji) {
+    this.reactionsComponent.currentMessage.reactions.splice(indexOfEmoji, 1);
+  }
+
+  checkForUsersIdForEmoji(indexOfEmoji) {
+    return this.reactionsComponent.currentMessage.reactions[indexOfEmoji].userIDs.findIndex(
+      (id) => id === this.userService.user.userId
+    );
+  }
+
 }

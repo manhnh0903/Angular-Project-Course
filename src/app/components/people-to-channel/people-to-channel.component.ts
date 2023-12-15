@@ -58,7 +58,6 @@ export class PeopleToChannelComponent {
     await updateDoc(createdChannelRef, {
       id: createdChannel.id
     });
-    this.fireService.readChannels()
   }
 
 

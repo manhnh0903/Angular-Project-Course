@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   OnInit,
+  Renderer2,
   ViewChild,
   inject,
 } from '@angular/core';
@@ -21,6 +22,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { EditChannelComponent } from 'src/app/components/edit-channel/edit-channel.component';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-channels-chat',
@@ -42,7 +45,7 @@ export class ChannelsChatComponent implements AfterViewInit {
   public type = 'channel';
   sendMessageForm = new FormControl('', [Validators.required])
   @ViewChild('sendIcon', { static: false }) sendIcon: ElementRef;
-
+  @ViewChild('messagesOnChannel', { static: false }) messagesOnChannel: ElementRef;
   constructor(
     public fireService: FirestoreService,
     public navService: HomeNavigationService,
@@ -50,7 +53,9 @@ export class ChannelsChatComponent implements AfterViewInit {
     public userService: UserService,
     private el: ElementRef,
     public dialog: MatDialog,
-  ) { }
+
+  ) {
+  }
 
 
 
@@ -61,7 +66,7 @@ export class ChannelsChatComponent implements AfterViewInit {
         this.fireService.currentChannel.id
       );
       this.createMessage();
-      this.fireService.currentChannel.messages.unshift(this.newMessage.toJSON());
+      this.fireService.currentChannel.messages.push(this.newMessage.toJSON());
       await updateDoc(docReference, {
         messages: this.fireService.currentChannel.messages,
       });
@@ -96,7 +101,7 @@ export class ChannelsChatComponent implements AfterViewInit {
     await updateDoc(docReference, {
       users: this.fireService.currentChannel.users,
     });
-    await this.fireService.readChannels()
+
   }
 
   async showFilteredUsers() {
@@ -135,7 +140,10 @@ export class ChannelsChatComponent implements AfterViewInit {
     this.addPeople = false;
   }
 
-  ngAfterViewInit() {
+
+
+
+  async ngAfterViewInit() {
 
     this.el.nativeElement.addEventListener('click', (event) => {
       if (event.target.classList.contains('addPeopleDialog')) {
@@ -149,7 +157,7 @@ export class ChannelsChatComponent implements AfterViewInit {
     let id;
     if (this.fireService.currentChannel.messages.length > 0) {
       id =
-        this.fireService.currentChannel.messages[0].id + 1;
+        this.fireService.currentChannel.messages[this.fireService.currentChannel.messages.length - 1].id + 1;
     } else {
       id = 0;
     }
@@ -177,7 +185,7 @@ export class ChannelsChatComponent implements AfterViewInit {
     const updatedMessage = messageArray.join('');
     this.sendMessageForm.patchValue(updatedMessage);
     this.toggleEmoji();
-    
+
   }
 
   @ViewChild('input') input: ElementRef;
@@ -186,5 +194,6 @@ export class ChannelsChatComponent implements AfterViewInit {
     const cursorPosition = inputElement.selectionStart;
     return cursorPosition
   }
+
 
 }

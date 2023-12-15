@@ -32,14 +32,12 @@ export class FirestoreService {
   private currentDate;
   public sorted = [];
   public unsubUsers;
-  private usnubThreadDocument: Function;
   userOnChannelCheck = [];
   constructor(private firestore: Firestore) {}
 
   ngOnDestroy() {
     this.unsubUserData();
     this.unsubUsers();
-    this.usnubThreadDocument();
     this.destroyConversationDataSubject();
     this.destroyThreadDataSubject();
   }
@@ -154,57 +152,25 @@ export class FirestoreService {
     );
   }
 
-  async ifChangesOnChannels() {
-    /*     const q = query(this.getColRef('channels'));
-        onSnapshot(q, (snapshot) => {
-          snapshot.docChanges().forEach((change) => {
-            const channelData = change.doc.data();
-            let channelToModifyIndex = this.channels.findIndex(
-              (channel) => channel.name === channelData['name']
-            );
-    
-            if (change.type === 'added') {
-              if (channelToModifyIndex === -1) {
-                this.channels.push(channelData);
-              }
-    
-            }
-    
-            if (change.type === 'modified') {
-              if (channelToModifyIndex !== -1) {
-                this.channels[channelToModifyIndex] = channelData;
-                this.currentChannel = this.channels[channelToModifyIndex]
-    
-              }
-              console.log('modified');
-            }
-    
-            if (change.type === 'removed') {
-              if (channelToModifyIndex !== -1) {
-                this.channels.splice(channelToModifyIndex, 1);
-              }
-            }
-          });
-        })
-       await this.checkIfUserOnChannel() */
-  }
-
   async readChannels() {
-    const querySnapshot = await getDocs(collection(this.firestore, 'channels'));
-    querySnapshot.forEach((doc) => {
-      let channelToModifyIndex = this.channels.findIndex(
-        (channel) => channel.id === doc.data()['id']
-      );
-      if (channelToModifyIndex === -1) {
-        this.channels.push(doc.data());
-      } else {
-        this.channels[channelToModifyIndex] = doc.data();
-        if (this.currentChannel.id === doc.data()['id']) {
-          this.currentChannel = doc.data();
+    const q = query(collection(this.firestore, 'channels'));
+    let unsubscribe = onSnapshot(q, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        let channelToModifyIndex = this.channels.findIndex(
+          (channel) => channel.id === change.doc.data()['id']
+        );
+        if (change.type === 'added') {
+          if (channelToModifyIndex === -1) {
+            this.channels.push(change.doc.data());
+            this.checkIfUserOnChannel();
+          }
         }
-      }
+        if (change.type === 'modified') {
+          this.currentChannel = change.doc.data();
+          this.checkIfUserOnChannel();
+        }
+      });
     });
-    await this.checkIfUserOnChannel();
   }
 
   async checkIfUserOnChannel() {
