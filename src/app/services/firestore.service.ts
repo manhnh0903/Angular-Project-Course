@@ -12,7 +12,7 @@ import {
   query,
   getDocs,
 } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject, distinctUntilChanged } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,8 @@ export class FirestoreService {
   public threadDataSubject = new BehaviorSubject<any>(null);
 
   public conversation: any;
-  unsubUserData: Function;
+  private unsubUserData: Function;
+  private usnubThreadDocument;
   public currentChannel;
   public channels = [];
   public allUsers = [];
@@ -38,6 +39,7 @@ export class FirestoreService {
   ngOnDestroy() {
     this.unsubUserData();
     this.unsubUsers();
+    this.usnubThreadDocument();
     this.destroyConversationDataSubject();
     this.destroyThreadDataSubject();
   }
