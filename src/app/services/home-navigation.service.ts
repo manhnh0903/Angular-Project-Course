@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { FirestoreService } from './firestore.service';
+import { DabubbleUser } from '../classes/user.class';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HomeNavigationService {
-  mainChatPath: string = 'chanel';
-  pmRecipient: string;
-  threadOpen: boolean = false;
-
   public selectedMessageSubject = new BehaviorSubject<any>(null);
+  public mainChatPath: string = 'chanel';
+  public pmRecipient: string;
+  public pmRecipientData: DabubbleUser;
+  public pmRecipientOverlayOpen: boolean = false;
+  public threadOpen: boolean = false;
 
   constructor(private firestoreService: FirestoreService) {}
 

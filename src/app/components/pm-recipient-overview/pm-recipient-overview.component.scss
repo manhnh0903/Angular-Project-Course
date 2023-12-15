@@ -1,0 +1,31 @@
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+  padding: 45px;
+  border-radius: 30px;
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+
+  background-color: white;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      font-weight: 700;
+      font-size: 24px;
+    }
+
+    img {
+      padding: 8px;
+      cursor: pointer;
+    }
+  }
+
+  > img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+}
