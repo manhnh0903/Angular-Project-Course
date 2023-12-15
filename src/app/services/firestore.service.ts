@@ -14,6 +14,7 @@ import {
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject, distinctUntilChanged } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -36,14 +37,12 @@ export class FirestoreService {
   private currentDate;
   public sorted = [];
   public unsubUsers;
-  private usnubThreadDocument: Function;
-  userOnChannelCheck = [];
-  constructor(private firestore: Firestore) {}
+  userOnChannelCheck = []
+  constructor(private firestore: Firestore) { }
 
   ngOnDestroy() {
     this.unsubUserData();
     this.unsubUsers();
-    this.usnubThreadDocument();
     this.destroyConversationDataSubject();
     this.destroyThreadDataSubject();
   }
@@ -100,21 +99,16 @@ export class FirestoreService {
     const docRef = this.getDocRef(col, docId);
     this.threadDataSubject = new BehaviorSubject<any>(null);
 
-    // debugger;
-
-    this.usnubThreadDocument = onSnapshot(docRef, (snapshot) => {
+    onSnapshot(docRef, (snapshot) => {
       if (snapshot.exists()) {
-        // debugger;
         const threadData = snapshot.data();
-
-        console.log('thread data:', threadData);
         this.threadDataSubject.next(threadData);
-        this.threadData$ = this.threadDataSubject.asObservable();
       } else {
         this.threadDataSubject.next(null);
-        this.threadData$ = this.threadDataSubject.asObservable();
       }
     });
+
+    this.threadData$ = this.threadDataSubject.asObservable();
   }
 
   private destroyThreadDataSubject(): void {
@@ -170,6 +164,7 @@ export class FirestoreService {
     );
   }
 
+
   async ifChangesOnChannels() {
     /*     const q = query(this.getColRef('channels'));
         onSnapshot(q, (snapshot) => {
@@ -205,34 +200,38 @@ export class FirestoreService {
        await this.checkIfUserOnChannel() */
   }
 
+
   async readChannels() {
-    const querySnapshot = await getDocs(collection(this.firestore, 'channels'));
-    querySnapshot.forEach((doc) => {
-      let channelToModifyIndex = this.channels.findIndex(
-        (channel) => channel.id === doc.data()['id']
-      );
-      if (channelToModifyIndex === -1) {
-        this.channels.push(doc.data());
-      } else {
-        this.channels[channelToModifyIndex] = doc.data();
-        if (this.currentChannel.id === doc.data()['id']) {
-          this.currentChannel = doc.data();
+    const q = query(collection(this.firestore, "channels"))
+    let unsubscribe = onSnapshot(q, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        let channelToModifyIndex = this.channels.findIndex(
+          (channel) => channel.id === change.doc.data()['id']);
+        if (change.type === "added") {
+          if (channelToModifyIndex === -1) {
+            this.channels.push(change.doc.data());
+            this.checkIfUserOnChannel()
+          }
         }
-      }
+        if (change.type === "modified") {
+          this.channels[channelToModifyIndex] = change.doc.data();
+          this.currentChannel = this.channels[channelToModifyIndex]
+          this.checkIfUserOnChannel()
+        }
+      });
     });
-    await this.checkIfUserOnChannel();
   }
 
   async checkIfUserOnChannel() {
     let userId;
     this.loggedInUserDataSubject
       .pipe(distinctUntilChanged())
-      .subscribe((data) => {
+      .subscribe(data => {
         if (data && data.userId) {
           userId = data.userId;
           this.userOnChannelCheck = [];
-          this.channels.forEach((channel) => {
-            let index = channel.users.find((user) => user.userId === userId);
+          this.channels.forEach(channel => {
+            let index = channel.users.find(user => user.userId === userId);
             if (index !== undefined) {
               this.userOnChannelCheck.push(true);
             } else {
@@ -241,7 +240,10 @@ export class FirestoreService {
           });
         }
       });
+
+
   }
+
 
   async defaultChannel() {
     let index = this.channels.findIndex(
@@ -249,6 +251,7 @@ export class FirestoreService {
     );
     this.currentChannel = this.channels[index];
   }
+
 
   async readAllUsers() {
     const colRef = this.getColRef('users');
@@ -306,4 +309,5 @@ export class FirestoreService {
     let day = weekday[d.getDay()];
     return day;
   }
+
 }

@@ -53,7 +53,6 @@ export class ChannelsChatComponent implements AfterViewInit {
   ) { }
 
 
-
   async addMessageToChannel() {
     if (this.sendMessageForm.valid) {
       const docReference = this.fireService.getDocRef(
@@ -96,7 +95,7 @@ export class ChannelsChatComponent implements AfterViewInit {
     await updateDoc(docReference, {
       users: this.fireService.currentChannel.users,
     });
-    await this.fireService.readChannels()
+  
   }
 
   async showFilteredUsers() {
@@ -135,8 +134,8 @@ export class ChannelsChatComponent implements AfterViewInit {
     this.addPeople = false;
   }
 
-  ngAfterViewInit() {
-
+  async ngAfterViewInit() {
+    await this.fireService.readChannels();
     this.el.nativeElement.addEventListener('click', (event) => {
       if (event.target.classList.contains('addPeopleDialog')) {
         this.closeAddPeople();
