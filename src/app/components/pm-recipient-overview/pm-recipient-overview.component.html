@@ -1,0 +1,41 @@
+<section>
+  <div class="header">
+    <span>Profil</span>
+    <img
+      (click)="homeNavService.pmRecipientOverlayOpen = false"
+      src="../../../assets/img/close-24px.png"
+      alt="close.img"
+    />
+  </div>
+  <img
+    src="{{ homeNavService.pmRecipientData.profileImg }}"
+    alt="profile.img"
+  />
+  <div>
+    <span>{{ homeNavService.pmRecipientData.name }}</span>
+    <img
+      *ngIf="homeNavService.pmRecipientData.onlineStatus === false"
+      src="../../../assets/img/offline.png"
+      alt="onlineStatus.img"
+    />
+    <img
+      *ngIf="homeNavService.pmRecipientData.onlineStatus === true"
+      src="../../../assets/img/online.png"
+      alt="onlineStatus.img"
+    />
+  </div>
+  <div>
+    <div>
+      <img src="../../../assets/img/mail_icon.png" alt="mail.img" />
+
+      <span>E-Mail -adresse</span>
+    </div>
+    <a href="mailto:{{ homeNavService.pmRecipientData.email }}">{{
+      homeNavService.pmRecipientData.email
+    }}</a>
+  </div>
+  <button>
+    <img src="../../../assets/img/comment-white.png" alt="chat.img" />
+    <span>Nachricht</span>
+  </button>
+</section>

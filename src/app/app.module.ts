@@ -32,6 +32,7 @@ import { TreadComponent } from './components/tread/tread.component';
 import { PmChatComponent } from './components/pm-chat/pm-chat.component';
 import { MessageComponent } from './components/message/message.component';
 import { EditChannelComponent } from './components/edit-channel/edit-channel.component';
+import { PmRecipientOverviewComponent } from './components/pm-recipient-overview/pm-recipient-overview.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { EditChannelComponent } from './components/edit-channel/edit-channel.com
     PmChatComponent,
     MessageComponent,
     EditChannelComponent,
+    PmRecipientOverviewComponent,
   ],
   imports: [
     

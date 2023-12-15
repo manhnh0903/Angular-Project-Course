@@ -12,24 +12,20 @@ import {
   query,
   getDocs,
 } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject, distinctUntilChanged } from 'rxjs';
-
+import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirestoreService {
-  private loggedInUserDataSubject = new BehaviorSubject<any>(null);
-  private subscribedRecipientDataSubject = new BehaviorSubject<any>(null);
-  public subscribedRecipientData$: Observable<any> =
-    this.subscribedRecipientDataSubject.asObservable();
-  private conversationDataDataSubject = new BehaviorSubject<any>(null);
-  public conversationData$: Observable<any> =
-    this.conversationDataDataSubject.asObservable();
-  private threadDataSubject = new BehaviorSubject<any>(null);
-  threadData$: Observable<any> = this.threadDataSubject.asObservable();
+  public loggedInUserDataSubject = new BehaviorSubject<any>(null);
+  public subscribedRecipientDataSubject = new BehaviorSubject<any>(null);
+  public conversationDataSubject = new BehaviorSubject<any>(null);
+  public threadDataSubject = new BehaviorSubject<any>(null);
+
   public conversation: any;
-  unsubUserData: Function;
+  private unsubUserData: Function;
+  private usnubThreadDocument;
   public currentChannel;
   public channels = [];
   public allUsers = [];
@@ -37,12 +33,13 @@ export class FirestoreService {
   private currentDate;
   public sorted = [];
   public unsubUsers;
-  userOnChannelCheck = []
-  constructor(private firestore: Firestore) { }
+  userOnChannelCheck = [];
+  constructor(private firestore: Firestore) {}
 
   ngOnDestroy() {
     this.unsubUserData();
     this.unsubUsers();
+    this.usnubThreadDocument();
     this.destroyConversationDataSubject();
     this.destroyThreadDataSubject();
   }
@@ -74,32 +71,27 @@ export class FirestoreService {
   }
 
   async subscribeToPMConversation(conversationID: string): Promise<void> {
-    // this.destroyConversationDataSubject();
-
     const docRef = this.getDocRef('pms', conversationID);
-    this.conversationDataDataSubject = new BehaviorSubject<any>(null);
+    this.conversationDataSubject = new BehaviorSubject<any>(null);
 
     onSnapshot(docRef, (snapshot) => {
       if (snapshot.exists()) {
         const convData = snapshot.data();
-        this.conversationDataDataSubject.next(convData);
+        this.conversationDataSubject.next(convData);
       } else {
-        this.conversationDataDataSubject.next(null);
+        this.conversationDataSubject.next(null);
       }
     });
-
-    this.conversationData$ = this.conversationDataDataSubject.asObservable();
   }
 
   private destroyConversationDataSubject(): void {
-    this.conversationDataDataSubject.complete();
+    this.conversationDataSubject.complete();
   }
 
-  async subscribeToThreadDocument(col: string, docId: string) {
+  async subscribeToThreadDocument(col: string, docId: string): Promise<void> {
     const docRef = this.getDocRef(col, docId);
-    this.threadDataSubject = new BehaviorSubject<any>(null);
 
-    onSnapshot(docRef, (snapshot) => {
+    this.usnubThreadDocument = onSnapshot(docRef, (snapshot) => {
       if (snapshot.exists()) {
         const threadData = snapshot.data();
         this.threadDataSubject.next(threadData);
@@ -107,8 +99,6 @@ export class FirestoreService {
         this.threadDataSubject.next(null);
       }
     });
-
-    this.threadData$ = this.threadDataSubject.asObservable();
   }
 
   private destroyThreadDataSubject(): void {
@@ -164,17 +154,17 @@ export class FirestoreService {
     );
   }
 
-
   async readChannels() {
-    const q = query(collection(this.firestore, "channels"))
+    const q = query(collection(this.firestore, 'channels'));
     let unsubscribe = onSnapshot(q, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         let channelToModifyIndex = this.channels.findIndex(
-          (channel) => channel.id === change.doc.data()['id']);
-        if (change.type === "added") {
+          (channel) => channel.id === change.doc.data()['id']
+        );
+        if (change.type === 'added') {
           if (channelToModifyIndex === -1) {
             this.channels.push(change.doc.data());
-            this.checkIfUserOnChannel()
+            this.checkIfUserOnChannel();
           }
         }
         if (change.type === "modified") {
@@ -186,20 +176,18 @@ export class FirestoreService {
         }
       });
     });
-
-
   }
 
   async checkIfUserOnChannel() {
     let userId;
     this.loggedInUserDataSubject
       .pipe(distinctUntilChanged())
-      .subscribe(data => {
+      .subscribe((data) => {
         if (data && data.userId) {
           userId = data.userId;
           this.userOnChannelCheck = [];
-          this.channels.forEach(channel => {
-            let index = channel.users.find(user => user.userId === userId);
+          this.channels.forEach((channel) => {
+            let index = channel.users.find((user) => user.userId === userId);
             if (index !== undefined) {
               this.userOnChannelCheck.push(true);
             } else {
@@ -208,10 +196,7 @@ export class FirestoreService {
           });
         }
       });
-
-
   }
-
 
   async defaultChannel() {
     let index = this.channels.findIndex(
@@ -219,7 +204,6 @@ export class FirestoreService {
     );
     this.currentChannel = this.channels[index];
   }
-
 
   async readAllUsers() {
     const colRef = this.getColRef('users');
@@ -277,5 +261,4 @@ export class FirestoreService {
     let day = weekday[d.getDay()];
     return day;
   }
-
 }

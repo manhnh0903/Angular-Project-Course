@@ -22,7 +22,8 @@
 
   &:hover .showMenuIcon,
   &:hover span {
-    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
+    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%)
+      hue-rotate(164deg) brightness(104%) contrast(98%);
   }
 }
 
@@ -60,6 +61,21 @@
 app-pm-chat {
   display: flex;
   flex: 1;
+}
+
+.pm-recipient-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(0, 0, 0, 0.2);
+
+  z-index: 1000;
 }
 
 /* .fullWidth {

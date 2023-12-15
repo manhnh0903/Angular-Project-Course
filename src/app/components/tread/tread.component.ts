@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Message } from 'src/app/classes/message.class';
-import { Subject, startWith, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Conversation } from 'src/app/classes/conversation.class';
@@ -46,38 +46,26 @@ export class TreadComponent {
   }
 
   subMessageData() {
-    console.log('funktion aufgerufen');
-    // debugger;
-
-    this.homeNav.selectedMessage$
+    this.homeNav.selectedMessageSubject
       .pipe(takeUntil(this.destroy$))
-      .subscribe((data: Message) => {
-        //funktion wird beim ersten mal nicht aufgerufen
-        console.log('Thread', data);
-
+      .subscribe((data) => {
         this.parentMessage = data;
         this.subThreadData();
       });
   }
 
   subThreadData() {
-    this.firestoreService.threadData$
+    this.firestoreService.threadDataSubject
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         if (data) {
-          console.log('threadData', data);
-
           if (this.isConversation(data)) {
             this.opendThreadConversation = new Conversation(data);
             this.threadCollection = 'pms';
-            // console.log('Conversation');
           } else if (this.isChannel(data)) {
             this.opendThreadConversation = new Channel(data);
             this.threadCollection = 'channels';
-            // console.log('Channel');
           }
-
-          // console.log(this.opendThreadConversation);
           this.updateCurrentMessage();
         }
       });

@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Message } from 'src/app/classes/message.class';
 import { Conversation } from 'src/app/classes/conversation.class';
+import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 
 @Component({
   selector: 'app-pm-chat',
@@ -27,7 +28,8 @@ export class PmChatComponent {
   constructor(
     private fb: FormBuilder,
     public firestoreService: FirestoreService,
-    public userService: UserService
+    public userService: UserService,
+    private homeNavService: HomeNavigationService
   ) {
     this.sendMessageForm = this.fb.group({
       message: ['', [Validators.required]],
@@ -49,7 +51,7 @@ export class PmChatComponent {
   }
 
   async subRecipientData() {
-    this.firestoreService.subscribedRecipientData$
+    this.firestoreService.subscribedRecipientDataSubject
       .pipe(takeUntil(this.destroy$))
       .subscribe(async (data) => {
         if (data !== null) {
@@ -63,7 +65,8 @@ export class PmChatComponent {
   }
 
   openUserDetails() {
-    /*     console.log('Test Log', this.recipient); */
+    this.homeNavService.pmRecipientData = this.recipient;
+    this.homeNavService.pmRecipientOverlayOpen = true;
   }
 
   sendPm() {
@@ -93,7 +96,9 @@ export class PmChatComponent {
   addMessageId() {
     let id: number;
     if (this.conversation.messages.length > 0) {
-      id = this.conversation.messages[this.conversation.messages.length - 1].id + 1;
+      id =
+        this.conversation.messages[this.conversation.messages.length - 1].id +
+        1;
     } else {
       id = 0;
     }
@@ -109,8 +114,6 @@ export class PmChatComponent {
     conversation.userId2 = this.recipient.userId;
 
     await this.firestoreService.addNewConversation(conversation.toJSON());
-
-    /*     console.log('new conversation', conversation); */
   }
 
   async getConversationData() {
@@ -124,16 +127,11 @@ export class PmChatComponent {
 
       if (this.userInConversation(userId1, userId2)) {
         this.conversationId = doc.id;
-        /*       console.log(this.conversationId); */
 
         this.setupConversation(userId1, userId2);
         conversationFound = true;
 
         return;
-      }
-
-      if (!conversationFound) {
-        /*         console.log('Die Benutzer sind nicht in der Konversation'); */
       }
     });
 
@@ -164,7 +162,7 @@ export class PmChatComponent {
   async subConversationData(conversationId: string) {
     await this.firestoreService.subscribeToPMConversation(conversationId);
 
-    this.firestoreService.conversationData$
+    this.firestoreService.conversationDataSubject
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         this.conversation.messages = [];
