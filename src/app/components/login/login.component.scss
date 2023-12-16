@@ -93,6 +93,20 @@ section {
     }
   }
 
+  .mobile-overlay {
+    display: none;
+
+    @media screen and (max-width: 600px) {
+      display: block;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .desktop-overlay {
+      display: none;
+    }
+  }
+
   .login-header {
     display: flex;
     align-items: center;
