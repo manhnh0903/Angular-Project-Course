@@ -22,7 +22,7 @@ export class SideMenuComponent implements OnInit {
 
   }
   async ngOnInit() {
-
+    this.fireService.readChannels()
   }
 
   channelsClicked = true;

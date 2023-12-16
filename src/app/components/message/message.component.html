@@ -18,7 +18,7 @@
         <div class="nameContentDiv" [ngClass]="{ justifyEnd: getSide(sender) }">
           <div *ngIf="editMessage" class="editMessageWrapper">
             <div class="editMessageDiv">
-              <input
+              <input #inputEditMessage
                 [(ngModel)]="content"
                 (ngModelChange)="getNewContent($event)"
               />
@@ -32,7 +32,7 @@
                   />
                   <emoji-mart
                     *ngIf="emojiOpenedOnEdit"
-                    (emojiClick)="addEmojiOnEdit($event)"
+                    (emojiClick)="addEmojiOnEdit($event, inputEditMessage)"
                     (tooltip)="(false)"
                     [style]="getEmojiPickerStyle()"
                   >

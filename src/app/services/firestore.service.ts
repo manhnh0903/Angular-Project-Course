@@ -167,9 +167,12 @@ export class FirestoreService {
             this.checkIfUserOnChannel();
           }
         }
-        if (change.type === 'modified') {
-          this.currentChannel = change.doc.data();
-          this.checkIfUserOnChannel();
+        if (change.type === "modified") {
+          this.channels[channelToModifyIndex] = change.doc.data();
+          if (this.currentChannel && this.currentChannel.id === this.channels[channelToModifyIndex].id) {
+            this.currentChannel = this.channels[channelToModifyIndex]
+          }
+          this.checkIfUserOnChannel()
         }
       });
     });
