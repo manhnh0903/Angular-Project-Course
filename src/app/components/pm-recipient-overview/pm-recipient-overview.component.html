@@ -3,30 +3,31 @@
     <span>Profil</span>
     <img
       (click)="homeNavService.pmRecipientOverlayOpen = false"
-      src="../../../assets/img/close-24px.png"
+      src="./assets/img/close-24px.png"
       alt="close.img"
     />
   </div>
-  <img
-    src="{{ homeNavService.pmRecipientData.profileImg }}"
-    alt="profile.img"
-  />
-  <div>
-    <span>{{ homeNavService.pmRecipientData.name }}</span>
+  <div class="profile-img-wrapper">
     <img
-      *ngIf="homeNavService.pmRecipientData.onlineStatus === false"
-      src="../../../assets/img/offline.png"
-      alt="onlineStatus.img"
-    />
-    <img
-      *ngIf="homeNavService.pmRecipientData.onlineStatus === true"
-      src="../../../assets/img/online.png"
-      alt="onlineStatus.img"
+      src="{{ homeNavService.pmRecipientData.profileImg }}"
+      alt="profile.img"
     />
   </div>
-  <div>
+
+  <div class="name-container">
+    <span>{{ homeNavService.pmRecipientData.name }}</span>
+    <div *ngIf="homeNavService.pmRecipientData.onlineStatus === false">
+      <img src="./assets/img/offline.png" alt="onlineStatus.img" />
+      <span class="offline">Offline</span>
+    </div>
+    <div *ngIf="homeNavService.pmRecipientData.onlineStatus === true">
+      <img src="./assets/img/online.png" alt="onlineStatus.img" />
+      <span class="online">Online</span>
+    </div>
+  </div>
+  <div class="email-container">
     <div>
-      <img src="../../../assets/img/mail_icon.png" alt="mail.img" />
+      <img src="./assets/img/mail_icon.png" alt="mail.img" />
 
       <span>E-Mail -adresse</span>
     </div>
@@ -34,8 +35,11 @@
       homeNavService.pmRecipientData.email
     }}</a>
   </div>
-  <button>
-    <img src="../../../assets/img/comment-white.png" alt="chat.img" />
-    <span>Nachricht</span>
-  </button>
+
+  <div class="button-wrapper">
+    <button (click)="openPmChat(homeNavService.pmRecipientData.userId)">
+      <img src="./assets/img/comment-white.png" alt="chat.img" />
+      <span>Nachricht</span>
+    </button>
+  </div>
 </section>
