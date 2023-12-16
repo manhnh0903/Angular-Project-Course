@@ -99,11 +99,11 @@ export class TreadComponent {
     msg.sender = this.userService.user.name;
     msg.creationDate = this.firestoreService.getCurrentDate();
     msg.creationTime = this.firestoreService.getCurrentTime();
+    msg.creationDay = this.firestoreService.getDaysName();
+    msg.messageType = 'thread';
     msg.id = this.addMessageId();
 
     this.parentMessage.thread.push(msg);
-
-    console.log('convo', this.opendThreadConversation);
 
     this.firestoreService.updateConversation(
       this.threadCollection,

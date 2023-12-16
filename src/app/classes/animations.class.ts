@@ -19,7 +19,7 @@ export class Animations {
     ]),
   ]);
 
-  static landingPageAnimation = trigger('landingPageAnimation', [
+  static landingPageAnimationDesktop = trigger('landingPageAnimationDesktop', [
     transition(
       ':enter',
       sequence([
@@ -88,6 +88,74 @@ export class Animations {
               style({ height: '70px', width: '70px' })
             ),
           ]),
+          query('.background', [
+            animate('1000ms ease-in-out', style({ opacity: '0' })),
+          ]),
+        ]),
+      ])
+    ),
+  ]);
+
+  static landingPageAnimationMobile = trigger('landingPageAnimationMobile', [
+    transition(
+      ':enter',
+      sequence([
+        // logo to left side
+        group([
+          query('.logo-wrapper', [
+            animate(
+              '500ms ease-in-out',
+              style({
+                left: 'calc(50% - (212px / 2 ))',
+              })
+            ),
+          ]),
+          query('.logo-mask', [
+            animate(
+              '500ms ease-in-out',
+              style({
+                left: 'calc(50% - (212px / 2))',
+              })
+            ),
+          ]),
+        ]),
+
+        // animate text
+
+        query('.logo-wrapper span', [
+          animate('1000ms ease-in-out', style({ left: ' calc(70px + 16px)' })),
+        ]),
+
+        // pause for 0,5 seconds
+        animate('500ms', style({})),
+
+        // logo + lext top left corner and opacity of background
+        group([
+          query('.logo-mask', [
+            animate(
+              '1ms ease-in-out',
+              style({
+                opacity: '0',
+              })
+            ),
+          ]),
+          query('.logo-wrapper', [
+            animate(
+              '1000ms ease-in-out',
+              style({
+                top: '19px',
+              })
+            ),
+          ]),
+          query('.logo-wrapper span', [
+            animate(
+              '1000ms ease-in-out',
+              style({
+                color: 'black',
+              })
+            ),
+          ]),
+
           query('.background', [
             animate('1000ms ease-in-out', style({ opacity: '0' })),
           ]),

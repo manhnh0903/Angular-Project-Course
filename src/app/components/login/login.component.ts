@@ -12,7 +12,11 @@ import { UserService } from 'src/app/services/user.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  animations: [Animations.slideInOutAnimation, Animations.landingPageAnimation],
+  animations: [
+    Animations.slideInOutAnimation,
+    Animations.landingPageAnimationDesktop,
+    Animations.landingPageAnimationMobile,
+  ],
 })
 export class LoginComponent {
   loginForm: FormGroup;

@@ -18,6 +18,11 @@
       [content]="message.content"
       [creationDate]="message.creationDate"
       [creationTime]="message.creationTime"
+      [creationDay]="message.creationDay"
+      [id]="message.id"
+      [index]="message.index"
+      [type]="message.type"
+      [currentMessage]="message.currentMessage"
     ></app-message>
     <div class="seperator-wrapper">
       <span>{{ parentMessage.thread.length ?? 0 }} Antworten</span>

@@ -1,6 +1,6 @@
 <section>
   <div
-    [@landingPageAnimation]
+    [@landingPageAnimationMobile]
     [ngClass]="{ 'd-none': animationFinished }"
     class="landing-overlay , d-none"
   >
@@ -24,11 +24,13 @@
     </div>
   </div>
   <form [formGroup]="loginForm" (ngSubmit)="submitFomrEmailAndPassword()">
-    <h2>Anmeldung</h2>
-    <p>
-      Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit
-      verwendest.
-    </p>
+    <div class="form-info">
+      <h2>Anmeldung</h2>
+      <p>
+        Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit
+        verwendest.
+      </p>
+    </div>
     <div class="input-with-error-wrapper">
       <div class="input-wrapper">
         <img src="./assets/img/mail.svg" alt="mail-icon" />
@@ -94,6 +96,10 @@
   <div class="legal-wrapper">
     <a class="link">Impressum</a>
     <a class="link">Datenschutz</a>
+  </div>
+  <div class="mobile-register-wrapper">
+    <span>Neu bei DABubble?</span>
+    <a [routerLink]="'/sign-up'">Konto erstellen</a>
   </div>
 
   <div
