@@ -17,10 +17,9 @@ export class TreadComponent {
   public sendMessageForm: FormGroup;
   public messages: Message[];
   private destroy$ = new Subject<void>();
-
+  type = 'thread'
   private opendThreadConversation: Conversation | Channel;
   private threadCollection: string;
-
   public parentMessage: Message = new Message();
 
   constructor(
@@ -69,6 +68,7 @@ export class TreadComponent {
           this.updateCurrentMessage();
         }
       });
+
   }
 
   isConversation(data: {}) {
@@ -100,7 +100,7 @@ export class TreadComponent {
     msg.creationDate = this.firestoreService.getCurrentDate();
     msg.creationTime = this.firestoreService.getCurrentTime();
     msg.creationDay = this.firestoreService.getDaysName();
-    msg.messageType = 'thread';
+    /*   msg.messageType = 'thread'; */
     msg.id = this.addMessageId();
 
     this.parentMessage.thread.push(msg);

@@ -11,8 +11,20 @@
     />
   </div>
   <div class="chat-area">
+  
+   <app-message
+      [sender]="parentMessage.sender"
+      [profileImg]="parentMessage.profileImg"
+      [content]="parentMessage.content"
+      [currentMessage]="parentMessage"
+    
+    ></app-message>
+    <div class="seperator-wrapper">
+      <span>{{ parentMessage.thread.length ?? 0 }} Antworten</span>
+      <div></div>
+    </div>
     <app-message
-      *ngFor="let message of parentMessage.thread.reverse()"
+      *ngFor="let message of parentMessage.thread let i=index"
       [sender]="message.sender"
       [profileImg]="message.profileImg"
       [content]="message.content"
@@ -20,20 +32,13 @@
       [creationTime]="message.creationTime"
       [creationDay]="message.creationDay"
       [id]="message.id"
-      [index]="message.index"
-      [type]="message.type"
+      [index]="i"
       [currentMessage]="message.currentMessage"
+      [thread]="parentMessage.thread"
+      [type]="'thread'"
+  
     ></app-message>
-    <div class="seperator-wrapper">
-      <span>{{ parentMessage.thread.length ?? 0 }} Antworten</span>
-      <div></div>
-    </div>
-    <app-message
-      [sender]="parentMessage.sender"
-      [profileImg]="parentMessage.profileImg"
-      [content]="parentMessage.content"
-      [currentMessage]="parentMessage"
-    ></app-message>
+  
   </div>
   <div class="input-area">
     <form [formGroup]="sendMessageForm" (ngSubmit)="sendForm()">

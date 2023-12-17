@@ -24,7 +24,7 @@ export class MessageComponent {
   @Input() sender: string;
   @Input() profileImg: string;
   @Input() content: string;
-  @Input() thread: [];
+  @Input() thread
   @Input() reactions: Reaction[];
   @Input() creationDate: string;
   @Input() creationDay: string;
@@ -157,16 +157,23 @@ export class MessageComponent {
   }
 
   isDifferentDate(creationDate, i: number, type): boolean {
-
-    if (i === 0) return true
-    if (creationDate && i > 0) {
+   console.log(i) 
+    if (i === 0) { return true }
+    if ((creationDate && i > 0) || type === 'thread') {
       if (type === 'channel') {
         return creationDate !== this.fireService.currentChannel.messages[i - 1].creationDate
       }
       if (type === 'pm') {
         return creationDate !== this.conversation.messages[i - 1].creationDate
       }
+      if (type === 'thread') {
+   if (i === 0) { return true }
+
+
+        return creationDate !== this.thread[i - 1].creationDate
+      }
     }
+
     return false;
   }
 
