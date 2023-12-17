@@ -7,7 +7,6 @@ import {
   sequence,
   query,
   group,
-  keyframes,
 } from '@angular/animations';
 
 export class Animations {
@@ -52,7 +51,7 @@ export class Animations {
         // pause for 0,5 seconds
         animate('500ms', style({})),
 
-        // logo + lext top left corner and opacity of background
+        // logo + text top left corner and opacity of background
         group([
           query('.logo-mask', [
             animate(
@@ -129,7 +128,7 @@ export class Animations {
         // pause for 0,5 seconds
         animate('500ms', style({})),
 
-        // logo + lext top left corner and opacity of background
+        // logo + text to top and opacity of background
         group([
           query('.logo-mask', [
             animate(

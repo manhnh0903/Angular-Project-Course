@@ -47,8 +47,15 @@
               <div>{{ emoji.native }}</div>
               <div *ngIf="emoji.counter">
                 {{ emoji.counter }}
-                <div *ngIf="getReactionsPeople(emoji).length >= 3" class="reactionsPeople"
-                  [ngClass]="!getSide(sender) ? 'forPeopleReactedLeft' : 'forPeopleReactedRight'">
+                <div
+                  *ngIf="getReactionsPeople(emoji).length >= 3"
+                  class="reactionsPeople"
+                  [ngClass]="
+                    !getSide(sender)
+                      ? 'forPeopleReactedLeft'
+                      : 'forPeopleReactedRight'
+                  "
+                >
                   <div class="reactionsPeopleSubDiv max-width">
                     <ng-container *ngIf="ifYouReacted(emoji); else otherUsers">
                       Du
