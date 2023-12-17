@@ -12,6 +12,7 @@ import { FirestoreService } from '../../services/firestore.service';
 import { Reaction } from '../../classes/reaction.class';
 import { UserService } from '../../services/user.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
+import { find } from 'rxjs';
 
 @Component({
   selector: 'app-reactions',
@@ -35,6 +36,7 @@ export class ReactionsComponent {
   @Input() conversation;
   @Input() collectionId;
   @Input() isYou;
+  @Input() parentMessage;
   @Input() emojiFunction: () => void;
   emoji;
   openEdit = false;
@@ -64,28 +66,19 @@ export class ReactionsComponent {
   }
 
   async addEmoji(event) {
-    let indexOfCurrentMessage;
     let docReference;
-    /*     this.addEmojiEvent.emit(event); */
-    if (this.type === 'channel') {
-      /*    indexOfCurrentMessage =
-           this.fireService.currentChannel.messages.findIndex(
-             (message) => message.id === this.currentMessage.id
-           ); //to find the message to change  */
+    if (this.type === 'channel' || this.type === 'thread') {
       docReference = this.fireService.getDocRef(
         'channels',
         this.fireService.currentChannel.id
       );
     }
     if (this.type === 'pm') {
-      /* indexOfCurrentMessage =
-       this.conversation.messages.reverse()[this.index]
-     this.conversation.messages.findIndex(
-       (message) => message.id === this.currentMessage.id
-     ); //to find the message to change */
-
       docReference = this.fireService.getDocRef('pms', this.collectionId);
-
+/*       this.conversation.messages[this.index] = this.currentMessage; */
+      await updateDoc(docReference, {
+        messages: this.conversation.toJSON().messages,
+      });
     }
 
     this.createEmoji(event);
@@ -97,15 +90,15 @@ export class ReactionsComponent {
     if (this.type === 'channel') {
       this.fireService.currentChannel.messages[this.index] =
         this.currentMessage;
-      await updateDoc(docReference, {
-        messages: this.fireService.currentChannel.messages,
-      });
+     this.updateDoc(docReference, this.fireService.currentChannel.messages)
+    }
+    if (this.type === 'thread') {
+      this.fireService.currentChannel.messages[this.indexParentMessage()].thread[this.indexMessageOnThread()] = this.currentMessage
+      this.updateDoc(docReference, this.fireService.currentChannel.messages)
     }
     if (this.type === 'pm') {
       this.conversation.messages[this.index] = this.currentMessage;
-      await updateDoc(docReference, {
-        messages: this.conversation.toJSON().messages,
-      });
+      this.updateDoc(docReference, this.conversation.toJSON().messages)
     }
     this.openEmoji()
   }
@@ -174,6 +167,24 @@ export class ReactionsComponent {
     return this.currentMessage.reactions[indexOfEmoji].userIDs.findIndex(
       (id) => id === this.userService.user.userId
     );
+  }
+
+
+
+  indexParentMessage() {
+    return this.fireService.currentChannel.messages.findIndex(message => message.id === this.parentMessage.id)
+  }
+
+
+  indexMessageOnThread() {
+    return this.fireService.currentChannel.messages[this.indexParentMessage()].thread.findIndex(message => message.id === this.currentMessage.id)
+  }
+
+
+  async updateDoc(docReference, obj) {
+    await updateDoc(docReference, {
+      messages: obj,
+    });
   }
 
   openEditMessage() {

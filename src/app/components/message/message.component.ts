@@ -34,6 +34,7 @@ export class MessageComponent {
   @Input() currentMessage: {};
   @Input() collectionId;
   @Input() conversation;
+  @Input() parentMessage;
   @Input() type: 'channel' | 'pm' | 'thread';
   @ViewChild('inputEditMessage') inputEditMessage: ElementRef<HTMLInputElement>;
 
@@ -97,12 +98,17 @@ export class MessageComponent {
   checkForChannels(messageToUpdate, docRef) {
     if (this.type === 'channel') {
       messageToUpdate = this.fireService.currentChannel.messages[this.index];
-      docRef = doc(
-        this.firestore,
-        'channels',
-        this.fireService.currentChannel.id
-      );
     }
+    if (this.type === 'thread') {
+
+      messageToUpdate = this.fireService.currentChannel.messages[this.reactionsComponent.indexParentMessage()].thread[this.reactionsComponent.indexMessageOnThread()];
+
+    }
+    docRef = doc(
+      this.firestore,
+      'channels',
+      this.fireService.currentChannel.id
+    );
     return { messageToUpdate, docRef };
   }
 
@@ -121,7 +127,11 @@ export class MessageComponent {
       const indexOfMessageToUpdate = messages.findIndex(
         (message) => message.id === messageToUpdate.id
       );
-      messages[indexOfMessageToUpdate].content = messageToUpdate.content;
+      if (this.type !== 'thread') {
+        messages[indexOfMessageToUpdate].content = messageToUpdate.content;
+      } else {
+        messages[this.reactionsComponent.indexParentMessage()].thread[this.reactionsComponent.indexMessageOnThread()].content = messageToUpdate.content;
+      }
       await updateDoc(docRef, { messages });
       this.closeEdit();
     }
@@ -157,7 +167,6 @@ export class MessageComponent {
   }
 
   isDifferentDate(creationDate, i: number, type): boolean {
-   console.log(i) 
     if (i === 0) { return true }
     if ((creationDate && i > 0) || type === 'thread') {
       if (type === 'channel') {
@@ -167,7 +176,7 @@ export class MessageComponent {
         return creationDate !== this.conversation.messages[i - 1].creationDate
       }
       if (type === 'thread') {
-   if (i === 0) { return true }
+        if (i === 0) { return true }
 
 
         return creationDate !== this.thread[i - 1].creationDate
@@ -207,50 +216,43 @@ export class MessageComponent {
   }
 
   @ViewChild(ReactionsComponent, { static: false }) reactionsComponent: ReactionsComponent;
-  async addEmoji(indexOfEmoji, event) {
+
+
+  async handleExistingEmoji(indexOfEmoji) {
     let docReference;
-    if (this.checkForUsersIdForEmoji(indexOfEmoji) === -1) {
-      this.increaseCounterOfExistingEmoji(indexOfEmoji);
+    if (this.reactionsComponent.checkForUsersIdForEmoji(indexOfEmoji) === -1) {
+      this.reactionsComponent.increaseCounterOfExistingEmoji(indexOfEmoji);
       this.reactionsComponent.currentMessage.reactions[indexOfEmoji].userIDs.push(
         this.userService.user.userId
       );
     } else {
       this.reactionsComponent.currentMessage.reactions[indexOfEmoji].userIDs.splice(
-        this.checkForUsersIdForEmoji(indexOfEmoji),
+        this.reactionsComponent.checkForUsersIdForEmoji(indexOfEmoji),
         1
       );
-      this.decreaseCounterOfExistingEmoji(indexOfEmoji);
+      this.reactionsComponent.decreaseCounterOfExistingEmoji(indexOfEmoji);
       if (this.reactionsComponent.currentMessage.reactions[indexOfEmoji].counter === 0)
-        this.removeEmojiIfCounter0(indexOfEmoji);
+        this.reactionsComponent.removeEmojiIfCounter0(indexOfEmoji);
     }
-    docReference = this.fireService.getDocRef(
-      'channels',
-      this.fireService.currentChannel.id
-    );
-    await updateDoc(docReference, {
-      messages: this.fireService.currentChannel.messages,
-    });
+
+    if (this.type === 'channel' || this.type === 'thread') {
+      docReference = this.fireService.getDocRef(
+        'channels',
+        this.fireService.currentChannel.id
+      );
+      this.fireService.currentChannel.messages[this.reactionsComponent.indexParentMessage()].thread[this.reactionsComponent.indexMessageOnThread()] = this.currentMessage
+      this.reactionsComponent.updateDoc(docReference, this.fireService.currentChannel.messages)
+    }
+    if (this.type === 'pm') {
+      docReference = this.fireService.getDocRef('pms', this.collectionId);
+      this.conversation.messages[this.index] = this.currentMessage;
+      await updateDoc(docReference, {
+        messages: this.conversation.toJSON().messages,
+      });
+    }
   }
-
-
-  increaseCounterOfExistingEmoji(indexOfEmoji) {
-    return this.reactionsComponent.currentMessage.reactions[indexOfEmoji].counter++;
-  }
-
-
-  decreaseCounterOfExistingEmoji(indexOfEmoji) {
-    return this.reactionsComponent.currentMessage.reactions[indexOfEmoji].counter--;
-  }
-
-  removeEmojiIfCounter0(indexOfEmoji) {
-    this.reactionsComponent.currentMessage.reactions.splice(indexOfEmoji, 1);
-  }
-
-  checkForUsersIdForEmoji(indexOfEmoji) {
-    return this.reactionsComponent.currentMessage.reactions[indexOfEmoji].userIDs.findIndex(
-      (id) => id === this.userService.user.userId
-    );
-  }
-
 
 }
+
+
+

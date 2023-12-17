@@ -33,10 +33,11 @@
       [creationDay]="message.creationDay"
       [id]="message.id"
       [index]="i"
-      [currentMessage]="message.currentMessage"
+      [currentMessage]="message"
       [thread]="parentMessage.thread"
+      [parentMessage]="parentMessage"
       [type]="'thread'"
-  
+  [reactions]="message.reactions"
     ></app-message>
   
   </div>
