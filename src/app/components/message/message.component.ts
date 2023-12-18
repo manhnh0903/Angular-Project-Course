@@ -127,10 +127,12 @@ export class MessageComponent {
       const indexOfMessageToUpdate = messages.findIndex(
         (message) => message.id === messageToUpdate.id
       );
-      if (this.type !== 'thread') {
+      if (this.type === 'pm') {
         messages[indexOfMessageToUpdate].content = messageToUpdate.content;
-      } else {
+      } else if (this.type === 'thread') {
         messages[this.reactionsComponent.indexParentMessage()].thread[this.reactionsComponent.indexMessageOnThread()].content = messageToUpdate.content;
+      } else {
+        messages[indexOfMessageToUpdate].content = messageToUpdate.content;
       }
       await updateDoc(docRef, { messages });
       this.closeEdit();
@@ -235,12 +237,21 @@ export class MessageComponent {
         this.reactionsComponent.removeEmojiIfCounter0(indexOfEmoji);
     }
 
-    if (this.type === 'channel' || this.type === 'thread') {
+    if (this.type === 'thread') {
       docReference = this.fireService.getDocRef(
         'channels',
         this.fireService.currentChannel.id
       );
       this.fireService.currentChannel.messages[this.reactionsComponent.indexParentMessage()].thread[this.reactionsComponent.indexMessageOnThread()] = this.currentMessage
+      this.reactionsComponent.updateDoc(docReference, this.fireService.currentChannel.messages)
+    }
+
+    if(this.type === 'channel'){
+      docReference = this.fireService.getDocRef(
+        'channels',
+        this.fireService.currentChannel.id
+      );
+      this.fireService.currentChannel.messages[this.index] = this.currentMessage
       this.reactionsComponent.updateDoc(docReference, this.fireService.currentChannel.messages)
     }
     if (this.type === 'pm') {
