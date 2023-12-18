@@ -50,6 +50,11 @@ export class PeopleToChannelComponent {
 
 
   async addChannelToCollection() {
+    if (this.fireService.channels.length === 0) {
+      this.currentChannel.index = 0;
+    } else {
+      this.currentChannel.index = this.fireService.channels[this.fireService.channels.length - 1].index + 1;
+    }
     await this.addUsers()
     let createdChannel = await addDoc(this.getChannelsRef(),
       this.currentChannel.toJSON()
@@ -58,6 +63,7 @@ export class PeopleToChannelComponent {
     await updateDoc(createdChannelRef, {
       id: createdChannel.id
     });
+     this.fireService.readChannels() 
   }
 
 

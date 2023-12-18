@@ -159,7 +159,7 @@ export class FirestoreService {
     let unsubscribe = onSnapshot(q, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         let channelToModifyIndex = this.channels.findIndex(
-          (channel) => channel.id === change.doc.data()['id']
+          (channel) => channel.index === change.doc.data()['index']
         );
         if (change.type === 'added') {
           if (channelToModifyIndex === -1) {
@@ -169,7 +169,7 @@ export class FirestoreService {
         }
         if (change.type === "modified") {
           this.channels[channelToModifyIndex] = change.doc.data();
-          if (this.currentChannel && this.currentChannel.id === this.channels[channelToModifyIndex].id) {
+          if (this.currentChannel && this.currentChannel.index === this.channels[channelToModifyIndex].index) {
             this.currentChannel = this.channels[channelToModifyIndex]
           }
           this.checkIfUserOnChannel()

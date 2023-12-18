@@ -45,6 +45,9 @@ export class CreateChannelComponent {
     this.channel.name = this.channelsForm.get('channelsName').value;
     this.channel.description = this.channelsForm.get('channelsDescription').value;
     this.channel.createdBy = this.userService.user.name
+  
+
+
     let channelToModifyIndex = this.fireService.channels.findIndex(channel => channel.name === this.channel.name)
     if (channelToModifyIndex === -1) {
       const dialog = this.dialog.open(PeopleToChannelComponent, {
