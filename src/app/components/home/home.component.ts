@@ -25,29 +25,50 @@ export class HomeComponent implements OnInit {
   public showMenu = true;
   firestore = inject(Firestore);
 
+  usersData: [{}];
+  pmsData: [{}];
+  channelsData: [{}];
+
   constructor(
     private authService: FirebaseAuthService,
     public fireService: FirestoreService,
     private userService: UserService,
-    public navService: HomeNavigationService,
-    private firestoreService: FirestoreService
+    public navService: HomeNavigationService
   ) {
     this.fireService.readAllUsers();
     this.authService.checkAuth();
     this.fireService.getCurrentDate();
-
   }
 
   async ngOnInit() {
     this.getLoggedUser();
-
     this.fireService.checkIfUserOnChannel();
-    this.fireService.defaultChannel()
-    await this.fireService.readChannels()
+    this.fireService.defaultChannel();
+    await this.fireService.readChannels();
 
+    this.subAllCollections();
   }
 
-
+  subAllCollections() {
+    this.fireService.pmsCollectionDataSubject.subscribe((data) => {
+      if (data) {
+        this.pmsData = data;
+        // console.log('PM DATA', this.pmsData);
+      }
+    });
+    this.fireService.usersCollectionDataSubject.subscribe((data) => {
+      if (data) {
+        this.usersData = data;
+        // console.log('USERS DATA', this.usersData);
+      }
+    });
+    this.fireService.channelsCollectionDataSubject.subscribe((data) => {
+      if (data) {
+        this.channelsData = data;
+        // console.log('CHANNELS DATA', this.channelsData);
+      }
+    });
+  }
 
   hideMenu() {
     if (this.showMenu == true) {
@@ -71,7 +92,7 @@ export class HomeComponent implements OnInit {
       where('email', '==', 'katrin@test.de')
     );
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => { });
+    querySnapshot.forEach((doc) => {});
   }
 
   getDaysName() {

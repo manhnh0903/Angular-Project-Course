@@ -11,6 +11,7 @@ import {
   getDoc,
   query,
   getDocs,
+  QuerySnapshot,
 } from '@angular/fire/firestore';
 import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 
@@ -23,6 +24,10 @@ export class FirestoreService {
   public conversationDataSubject = new BehaviorSubject<any>(null);
   public threadDataSubject = new BehaviorSubject<any>(null);
 
+  public pmsCollectionDataSubject = new BehaviorSubject<any>(null);
+  public usersCollectionDataSubject = new BehaviorSubject<any>(null);
+  public channelsCollectionDataSubject = new BehaviorSubject<any>(null);
+
   public conversation: any;
   private unsubUserData: Function;
   private usnubThreadDocument;
@@ -34,7 +39,11 @@ export class FirestoreService {
   public sorted = [];
   public unsubUsers;
   userOnChannelCheck = [];
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore) {
+    this.subscribeToCollection('pms', this.pmsCollectionDataSubject);
+    this.subscribeToCollection('users', this.usersCollectionDataSubject);
+    this.subscribeToCollection('channels', this.channelsCollectionDataSubject);
+  }
 
   ngOnDestroy() {
     this.unsubUserData();
@@ -55,6 +64,16 @@ export class FirestoreService {
     });
 
     return this.loggedInUserDataSubject.asObservable();
+  }
+
+  subscribeToCollection(col, subject) {
+    const docRef = this.getColRef(col);
+
+    onSnapshot(docRef, (snapshot: QuerySnapshot) => {
+      const collectionData = snapshot.docs.map((doc) => doc.data());
+
+      subject.next(collectionData);
+    });
   }
 
   subscribeToPmRecipient(userId: string) {
@@ -167,12 +186,15 @@ export class FirestoreService {
             this.checkIfUserOnChannel();
           }
         }
-        if (change.type === "modified") {
+        if (change.type === 'modified') {
           this.channels[channelToModifyIndex] = change.doc.data();
-          if (this.currentChannel && this.currentChannel.id === this.channels[channelToModifyIndex].id) {
-            this.currentChannel = this.channels[channelToModifyIndex]
+          if (
+            this.currentChannel &&
+            this.currentChannel.id === this.channels[channelToModifyIndex].id
+          ) {
+            this.currentChannel = this.channels[channelToModifyIndex];
           }
-          this.checkIfUserOnChannel()
+          this.checkIfUserOnChannel();
         }
       });
     });
