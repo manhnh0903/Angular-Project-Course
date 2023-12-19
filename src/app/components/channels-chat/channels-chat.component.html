@@ -1,4 +1,3 @@
-
 <div *ngIf="addPeople" class="addPeopleDialog">
   <div class="addPeopleDialogContent">
     <div class="inputContainer">
@@ -44,9 +43,19 @@
       [creationTime]="message.creationTime" [creationDay]="message.creationDay" [currentMessage]="message"
       [reactions]="message.reactions" [type]="'channel'" [index]="i" [thread]="message.thread"></app-message>
   </div>
-
+  <div class="ifNoMessagesDiv" *ngIf=" fireService.currentChannel &&fireService.currentChannel.messages.length===0">
+    <span class="channelsName"># {{fireService.currentChannel.name}}</span>
+    <div style="display: flex;">Das ist der Anfang des Channels<p> # {{fireService.currentChannel.name}}</p></div>
+  </div>
   <footer>
-    <!-- <form (ngSubmit)="addMessageToChannel()">
+    <app-footer-input [type]="'channel'"></app-footer-input>
+  </footer>
+
+</div>
+
+
+
+<!-- <form (ngSubmit)="addMessageToChannel()">
       <input #inputFooter  [formControl]="sendMessageForm" placeholder="Type your message" />
       <div class="messageIcons">
         <img class="messageIcon border" src="assets/img/add.svg">
@@ -62,7 +71,3 @@
         <img #sendIcon src="assets/img/send_icon.png" />
       </button>
     </form>-->
-    <app-footer-input></app-footer-input>
-  </footer> 
-
-</div>

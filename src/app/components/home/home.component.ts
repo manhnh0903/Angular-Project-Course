@@ -43,11 +43,14 @@ export class HomeComponent implements OnInit {
   async ngOnInit() {
     this.getLoggedUser();
     this.fireService.checkIfUserOnChannel();
-    this.fireService.defaultChannel();
+
     await this.fireService.readChannels();
 
     this.subAllCollections();
+
   }
+
+
 
   subAllCollections() {
     this.fireService.pmsCollectionDataSubject.subscribe((data) => {
@@ -92,7 +95,7 @@ export class HomeComponent implements OnInit {
       where('email', '==', 'katrin@test.de')
     );
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {});
+    querySnapshot.forEach((doc) => { });
   }
 
   getDaysName() {
