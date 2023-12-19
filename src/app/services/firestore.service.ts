@@ -201,7 +201,7 @@ export class FirestoreService {
       });
       if (!defaultChannelCalled && this.channels.length > 0) {
         this.defaultChannel();
-        defaultChannelCalled = true; // Set the flag to true to indicate that defaultChannel has been called
+        defaultChannelCalled = true; 
       }
     });
   }
