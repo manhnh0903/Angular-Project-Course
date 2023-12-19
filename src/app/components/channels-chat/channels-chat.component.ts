@@ -152,6 +152,7 @@ export class ChannelsChatComponent implements AfterViewInit {
         this.isButtonDisabled = true;
       }
     });
+    
   }
 
 /*   addMessageId() {

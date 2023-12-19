@@ -39,8 +39,37 @@ export class HomeComponent implements OnInit {
   async ngOnInit() {
     // this.getLoggedUser();
     this.fireService.checkIfUserOnChannel();
-    this.fireService.defaultChannel();
+
     await this.fireService.readChannels();
+<<<<<<< HEAD
+=======
+
+    this.subAllCollections();
+
+  }
+
+
+
+  subAllCollections() {
+    this.fireService.pmsCollectionDataSubject.subscribe((data) => {
+      if (data) {
+        this.pmsData = data;
+        // console.log('PM DATA', this.pmsData);
+      }
+    });
+    this.fireService.usersCollectionDataSubject.subscribe((data) => {
+      if (data) {
+        this.usersData = data;
+        // console.log('USERS DATA', this.usersData);
+      }
+    });
+    this.fireService.channelsCollectionDataSubject.subscribe((data) => {
+      if (data) {
+        this.channelsData = data;
+        // console.log('CHANNELS DATA', this.channelsData);
+      }
+    });
+>>>>>>> d7cdad5cd557e40abd0366c0aa564bc39605d3dc
   }
 
   hideMenu() {
@@ -59,6 +88,7 @@ export class HomeComponent implements OnInit {
   //   return collection(this.firestore, 'users');
   // }
 
+<<<<<<< HEAD
   // async getLoggedUser() {
   //   const q = query(
   //     collection(this.firestore, 'users'),
@@ -67,6 +97,16 @@ export class HomeComponent implements OnInit {
   //   const querySnapshot = await getDocs(q);
   //   querySnapshot.forEach((doc) => {});
   // }
+=======
+  async getLoggedUser() {
+    const q = query(
+      collection(this.firestore, 'users'),
+      where('email', '==', 'katrin@test.de')
+    );
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => { });
+  }
+>>>>>>> d7cdad5cd557e40abd0366c0aa564bc39605d3dc
 
   getDaysName() {
     const weekday = [

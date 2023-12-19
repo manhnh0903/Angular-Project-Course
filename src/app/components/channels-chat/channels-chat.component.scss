@@ -58,7 +58,19 @@ header {
     height: 22px;
     cursor: pointer;
 }
-
+.ifNoMessagesDiv{
+    margin-left: 60px;
+    margin-bottom: 35px;
+    display: flex;
+    flex-direction: column;
+    .channelsName{
+        font-weight: bold;
+    }
+    p{
+        color: blue;
+        margin-left: 10px;
+    }
+}
 
 footer {
     margin-top: auto;

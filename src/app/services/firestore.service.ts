@@ -174,6 +174,7 @@ export class FirestoreService {
   }
 
   async readChannels() {
+    let defaultChannelCalled = false;
     const q = query(collection(this.firestore, 'channels'));
     let unsubscribe = onSnapshot(q, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
@@ -191,13 +192,17 @@ export class FirestoreService {
           if (
             this.currentChannel &&
             this.currentChannel.index ===
-              this.channels[channelToModifyIndex].index
+            this.channels[channelToModifyIndex].index
           ) {
             this.currentChannel = this.channels[channelToModifyIndex];
           }
           this.checkIfUserOnChannel();
         }
       });
+      if (!defaultChannelCalled && this.channels.length > 0) {
+        this.defaultChannel();
+        defaultChannelCalled = true; 
+      }
     });
   }
 
@@ -218,14 +223,18 @@ export class FirestoreService {
             }
           });
         }
+     
       });
+   
   }
 
   async defaultChannel() {
-    let index = this.channels.findIndex(
-      (channel) => channel.name === 'Entwickler'
-    );
-    this.currentChannel = this.channels[index];
+    if (this.channels.length > 0) {
+      let index = this.channels.findIndex(
+        (channel) => channel.name === 'Entwickler'
+      );
+      this.currentChannel = this.channels[index];
+    }
   }
 
   async readAllUsers() {
