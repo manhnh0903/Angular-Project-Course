@@ -70,8 +70,9 @@ footer {
     margin-right: 60px;
     margin-left: 60px;
     position: relative;
+}
 
-    input {
+/*  input {
         width: 100%;
         outline: none;
         border: none;
@@ -119,7 +120,7 @@ footer {
     .channelsName {
         color: blue;
     }
-}
+} */
 
 .peopleToAdd {
     position: absolute;
@@ -210,12 +211,11 @@ footer {
     flex-flow: column nowrap;
 }
 
-.messagesOnChannel > :first-child {
+.messagesOnChannel> :first-child {
     margin-top: auto !important;
-    /* use !important to prevent breakage from child margin settings */
 }
 
-.messageIcons {
+/* .messageIcons {
     display: flex;
     align-items: center;
 }
@@ -233,4 +233,4 @@ footer {
 .emojiDiv {
     display: flex;
     position: relative;
-}
+} */

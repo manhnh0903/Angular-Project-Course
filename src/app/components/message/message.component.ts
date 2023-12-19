@@ -86,11 +86,14 @@ export class MessageComponent {
   async updateMessageContent() {
     let messageToUpdate;
     let docRef;
-    ({ messageToUpdate, docRef } = this.checkForChannels(
-      messageToUpdate,
-      docRef
-    ));
-    ({ messageToUpdate, docRef } = this.checkForPMs(messageToUpdate, docRef));
+    if (this.type === 'channel' || this.type === 'thread') {
+      ({ messageToUpdate, docRef } = this.checkForChannels(
+        messageToUpdate,
+        docRef
+      ));
+    } else {
+      ({ messageToUpdate, docRef } = this.checkForPMs(messageToUpdate, docRef));
+    }
     messageToUpdate.content = this.content;
     this.saveUpdatedInFirestore(docRef, messageToUpdate);
   }
@@ -246,7 +249,7 @@ export class MessageComponent {
       this.reactionsComponent.updateDoc(docReference, this.fireService.currentChannel.messages)
     }
 
-    if(this.type === 'channel'){
+    if (this.type === 'channel') {
       docReference = this.fireService.getDocRef(
         'channels',
         this.fireService.currentChannel.id

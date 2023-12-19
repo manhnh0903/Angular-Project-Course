@@ -44,7 +44,7 @@ export class ChannelsChatComponent implements AfterViewInit {
   public buttonColor = 'gray';
   public onRightSide;
   public type = 'channel';
-  sendMessageForm = new FormControl('', [Validators.required])
+ /*  sendMessageForm = new FormControl('', [Validators.required]) */
   @ViewChild('sendIcon', { static: false }) sendIcon: ElementRef;
   @ViewChild('messagesOnChannel', { static: false }) messagesOnChannel: ElementRef;
   constructor(
@@ -60,7 +60,7 @@ export class ChannelsChatComponent implements AfterViewInit {
 
 
 
-  async addMessageToChannel() {
+/*   async addMessageToChannel() {
     if (this.sendMessageForm.valid) {
       const docReference = this.fireService.getDocRef(
         'channels',
@@ -90,7 +90,7 @@ export class ChannelsChatComponent implements AfterViewInit {
       collectionId: this.fireService.currentChannel.id,
       messageType: 'channels',
     });
-  }
+  } */
 
   async addUsersToCurrentChannel() {
     const docReference = this.fireService.getDocRef(
@@ -154,7 +154,7 @@ export class ChannelsChatComponent implements AfterViewInit {
     });
   }
 
-  addMessageId() {
+/*   addMessageId() {
     let id;
     if (this.fireService.currentChannel.messages.length > 0) {
       id =
@@ -163,7 +163,7 @@ export class ChannelsChatComponent implements AfterViewInit {
       id = 0;
     }
     return id;
-  }
+  } */
 
 
   openEditChannelDialog(): void {
@@ -174,7 +174,7 @@ export class ChannelsChatComponent implements AfterViewInit {
     });
   }
 
-  toggleEmoji() {
+/*   toggleEmoji() {
     this.emojiOpened = !this.emojiOpened
   }
 
@@ -188,7 +188,7 @@ export class ChannelsChatComponent implements AfterViewInit {
     this.sendMessageForm.patchValue(updatedMessage);
     this.toggleEmoji();
 
-  }
+  } */
   @ViewChild('inputFooter') inputFooter: ElementRef<HTMLInputElement>;
  
 
@@ -197,6 +197,5 @@ export class ChannelsChatComponent implements AfterViewInit {
     console.log(cursorPosition);
     return cursorPosition;
   } */
-
 
 }

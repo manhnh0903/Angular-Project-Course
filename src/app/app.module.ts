@@ -33,6 +33,8 @@ import { PmChatComponent } from './components/pm-chat/pm-chat.component';
 import { MessageComponent } from './components/message/message.component';
 import { EditChannelComponent } from './components/edit-channel/edit-channel.component';
 import { PmRecipientOverviewComponent } from './components/pm-recipient-overview/pm-recipient-overview.component';
+import { FooterInputComponent } from './components/footer-input/footer-input.component';
+
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { PmRecipientOverviewComponent } from './components/pm-recipient-overview
     MessageComponent,
     EditChannelComponent,
     PmRecipientOverviewComponent,
+    FooterInputComponent,
+
   ],
   imports: [
     

@@ -1,3 +1,4 @@
+
 <div *ngIf="addPeople" class="addPeopleDialog">
   <div class="addPeopleDialogContent">
     <div class="inputContainer">
@@ -45,7 +46,7 @@
   </div>
 
   <footer>
-    <form (ngSubmit)="addMessageToChannel()">
+    <!-- <form (ngSubmit)="addMessageToChannel()">
       <input #inputFooter  [formControl]="sendMessageForm" placeholder="Type your message" />
       <div class="messageIcons">
         <img class="messageIcon border" src="assets/img/add.svg">
@@ -60,6 +61,8 @@
       <button class="sendIcon" type="submit">
         <img #sendIcon src="assets/img/send_icon.png" />
       </button>
-    </form>
-  </footer>
+    </form>-->
+    <app-footer-input></app-footer-input>
+  </footer> 
+
 </div>

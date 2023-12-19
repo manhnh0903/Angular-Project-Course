@@ -1,0 +1,79 @@
+/* footer {
+    margin-top: auto;
+    height: 20%;
+    border: 1px solid blue;
+    border-radius: 15px;
+    padding: 20px;
+    background-color: white;
+    margin-right: 60px;
+    margin-left: 60px;
+    position: relative; */
+
+input {
+    width: 100%;
+    outline: none;
+    border: none;
+    height: 50px;
+    font-size: 20px;
+}
+
+
+
+.sendIcon {
+    position: absolute;
+    bottom: 5%;
+    right: 20px;
+    background: white;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+}
+
+
+.choosePeopleInput {
+    border-radius: 40px;
+    border: 1px solid var(--ligth-purple-lines, #ADB0D9);
+    display: flex;
+    padding: 10px 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    align-self: stretch;
+    outline: none;
+    margin-top: 20px;
+    width: 100%;
+
+}
+
+.inputContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+    width: 90%;
+
+    .channelsName {
+        color: blue;
+    }
+}
+.messageIcons {
+    display: flex;
+    align-items: center;
+}
+
+.messageIcon {
+    height: 20px;
+    margin-right: 8px;
+}
+
+.border {
+    padding-right: 5px;
+    border-right: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.emojiDiv {
+    display: flex;
+    position: relative;
+}

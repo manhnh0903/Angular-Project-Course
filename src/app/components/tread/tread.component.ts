@@ -18,8 +18,8 @@ export class TreadComponent {
   public messages: Message[];
   private destroy$ = new Subject<void>();
   type = 'thread';
-  private opendThreadConversation: Conversation | Channel;
-  private threadCollection: string;
+  public opendThreadConversation: Conversation | Channel;
+  public threadCollection: string;
   public parentMessage: Message = new Message();
 
   constructor(
@@ -90,7 +90,7 @@ export class TreadComponent {
     );
   }
 
-  sendForm() {
+  /* sendForm() {
     const msg = new Message();
 
     msg.content = this.sendMessageForm.value.message;
@@ -99,8 +99,7 @@ export class TreadComponent {
     msg.creationDate = this.firestoreService.getCurrentDate();
     msg.creationTime = this.firestoreService.getCurrentTime();
     msg.creationDay = this.firestoreService.getDaysName();
-    // debugger;
-    /*   msg.messageType = 'thread'; */
+
     msg.id = this.addMessageId();
 
     this.parentMessage.thread.push(msg);
@@ -121,5 +120,5 @@ export class TreadComponent {
       id = 0;
     }
     return id;
-  }
+  } */
 }

@@ -64,10 +64,13 @@
     ></app-message>
   </div>
 
-  <div class="input-area">
+<!--   <div class="input-area">
     <form [formGroup]="sendMessageForm" (ngSubmit)="sendPm()">
       <textarea formControlName="message" cols="30" rows="5"></textarea>
       <button type="submit">Send</button>
     </form>
-  </div>
+  </div> -->
+  <footer>
+    <app-footer-input [type]="'pm'" [conversationId]="conversationId" [conversation]="conversation"></app-footer-input>
+  </footer>
 </section>

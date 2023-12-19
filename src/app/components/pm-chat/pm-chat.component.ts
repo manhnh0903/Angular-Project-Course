@@ -19,7 +19,7 @@ export class PmChatComponent {
   public conversation: Conversation = new Conversation();
   public sendMessageForm: FormGroup;
   public recipient: DabubbleUser;
-  private conversationId: string;
+  public conversationId: string;
   private destroy$ = new Subject<void>();
   public loading: boolean = true;
   public type = 'pm';
@@ -69,31 +69,31 @@ export class PmChatComponent {
     this.homeNavService.pmRecipientOverlayOpen = true;
   }
 
-  sendPm() {
-    const msg = new Message();
+  /*   sendPm() {
+      const msg = new Message();
+  
+      msg.content = this.sendMessageForm.value.message;
+      msg.profileImg = this.userService.user.profileImg;
+      msg.sender = this.userService.user.name;
+      msg.creationDate = this.firestoreService.getCurrentDate();
+      msg.creationTime = this.firestoreService.getCurrentTime();
+      msg.id = this.addMessageId();
+      msg.collectionId = this.conversationId;
+      msg.creationDay = this.firestoreService.getDaysName();
+      msg.messageType = 'pms';
+  
+      this.conversation.messages.push(msg);
+  
+      /*     console.log(this.conversation.toJSON()); 
+  
+      this.firestoreService.updateConversation(
+        'pms',
+        this.conversationId,
+        this.conversation.toJSON()
+      );
+    } */
 
-    msg.content = this.sendMessageForm.value.message;
-    msg.profileImg = this.userService.user.profileImg;
-    msg.sender = this.userService.user.name;
-    msg.creationDate = this.firestoreService.getCurrentDate();
-    msg.creationTime = this.firestoreService.getCurrentTime();
-    msg.id = this.addMessageId();
-    msg.collectionId = this.conversationId;
-    msg.creationDay = this.firestoreService.getDaysName();
-    msg.messageType = 'pms';
-
-    this.conversation.messages.push(msg);
-
-    /*     console.log(this.conversation.toJSON()); */
-
-    this.firestoreService.updateConversation(
-      'pms',
-      this.conversationId,
-      this.conversation.toJSON()
-    );
-  }
-
-  addMessageId() {
+/*   addMessageId() {
     let id: number;
     if (this.conversation.messages.length > 0) {
       id =
@@ -103,7 +103,7 @@ export class PmChatComponent {
       id = 0;
     }
     return id;
-  }
+  } */
 
   async setNewConversation() {
     const conversation = new Conversation();

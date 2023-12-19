@@ -41,10 +41,14 @@
     ></app-message>
   
   </div>
-  <div class="input-area">
+ <!--  <div class="input-area">
     <form [formGroup]="sendMessageForm" (ngSubmit)="sendForm()">
       <textarea formControlName="message" cols="30" rows="10"></textarea>
       <button type="submit">Send</button>
     </form>
-  </div>
+  </div> -->
+  <footer>
+    <app-footer-input [type]="'thread'" [openThreadConversation]="opendThreadConversation"
+    [parentMessage]="parentMessage" [threadCollection]="threadCollection"  ></app-footer-input>
+  </footer>
 </section>
