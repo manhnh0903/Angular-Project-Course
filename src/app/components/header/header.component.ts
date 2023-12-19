@@ -1,5 +1,9 @@
 import { Component, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { Channel } from 'src/app/classes/channel.class';
+import { Conversation } from 'src/app/classes/conversation.class';
+import { Message } from 'src/app/classes/message.class';
+import { DabubbleUser } from 'src/app/classes/user.class';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { UserService } from 'src/app/services/user.service';
@@ -11,6 +15,16 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class HeaderComponent {
   menuOpen = false;
+
+  searchInput: string;
+  usersData: {}[];
+  pmsData: {}[];
+  channelsData: {}[];
+
+  filterdUserData: {}[];
+  filterdPmsData: {}[];
+  filterdChannelsData: {}[];
+
   constructor(
     private el: ElementRef,
     public userService: UserService,
@@ -19,10 +33,7 @@ export class HeaderComponent {
     private firestoreService: FirestoreService
   ) {
     this.authService.checkAuth();
-  }
-
-  openMenu() {
-    this.menuOpen = true;
+    this.subAllCollections();
   }
 
   ngAfterViewInit() {
@@ -33,8 +44,100 @@ export class HeaderComponent {
     });
   }
 
+  openMenu() {
+    this.menuOpen = true;
+  }
+
   closeMenu() {
     this.menuOpen = false;
+  }
+
+  subAllCollections() {
+    this.firestoreService.pmsCollectionDataSubject.subscribe((data) => {
+      if (data) this.pmsData = data;
+    });
+    this.firestoreService.usersCollectionDataSubject.subscribe((data) => {
+      if (data) this.usersData = data;
+    });
+    this.firestoreService.channelsCollectionDataSubject.subscribe((data) => {
+      if (data) this.channelsData = data;
+    });
+  }
+
+  searchApp() {
+    this.resetResults();
+
+    if (this.searchInput.length >= 3) {
+      console.log(this.searchInput);
+
+      this.searchInUsers();
+      this.searchInPms();
+      this.searchInChannels();
+    }
+  }
+
+  resetResults() {
+    this.filterdUserData = [];
+    this.filterdPmsData = [];
+    this.filterdChannelsData = [];
+  }
+
+  searchInUsers() {
+    const searchResult = this.usersData.filter((user: DabubbleUser) => {
+      return (
+        user.name
+          .toLocaleLowerCase()
+          .includes(this.searchInput.toLocaleLowerCase()) ||
+        user.email
+          .toLocaleLowerCase()
+          .includes(this.searchInput.toLocaleLowerCase())
+      );
+    });
+
+    this.filterdUserData = searchResult;
+    console.log('users', this.filterdUserData);
+  }
+
+  searchInPms() {
+    const searchResult = this.pmsData.filter((conversation: Conversation) => {
+      return conversation.messages.some((message: Message) => {
+        return (
+          message.content
+            .toLocaleLowerCase()
+            .includes(this.searchInput.toLocaleLowerCase()) ||
+          //check Tread of message
+          message.thread.some((message: Message) => {
+            return message.content
+              .toLocaleLowerCase()
+              .includes(this.searchInput.toLocaleLowerCase());
+          })
+        );
+      });
+    });
+
+    this.filterdPmsData = searchResult;
+    console.log('pms', searchResult);
+  }
+
+  searchInChannels() {
+    const searchResult = this.channelsData.filter((channel: Channel) => {
+      return channel.messages.some((message: Message) => {
+        return (
+          message.content
+            .toLocaleLowerCase()
+            .includes(this.searchInput.toLocaleLowerCase()) ||
+          //check Tread of message
+          message.thread.some((message: Message) => {
+            return message.content
+              .toLocaleLowerCase()
+              .includes(this.searchInput.toLocaleLowerCase());
+          })
+        );
+      });
+    });
+
+    this.filterdChannelsData = searchResult;
+    console.log('channels', searchResult);
   }
 
   async logout() {

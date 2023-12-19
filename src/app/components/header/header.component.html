@@ -2,8 +2,21 @@
   <div class="logoSearchBar">
     <img class="logo" src="assets/img/logo.png" />
     <div class="searchBarContainer">
-      <input class="searchBar" placeholder="code learning durchsuchen" />
+      <input
+        [(ngModel)]="searchInput"
+        (keyup)="searchApp()"
+        class="searchBar"
+        placeholder="code learning durchsuchen"
+      />
       <img class="search_icon" src="assets/img/search_icon.png" />
+
+      <div class="search-result-container">
+        <div class="user-results-container">
+          <div *ngFor="let user of filterdUserData">
+            <span>{{ user["name"] }}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

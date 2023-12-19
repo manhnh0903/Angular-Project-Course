@@ -1,14 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
-import {
-  Firestore,
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-} from '@angular/fire/firestore';
+// import {
+//   Firestore,
+//   collection,
+//   doc,
+//   getDoc,
+//   getDocs,
+//   onSnapshot,
+//   query,
+//   where,
+// } from '@angular/fire/firestore';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
@@ -23,11 +23,7 @@ export class HomeComponent implements OnInit {
   currentDate;
   today;
   public showMenu = true;
-  firestore = inject(Firestore);
-
-  usersData: [{}];
-  pmsData: [{}];
-  channelsData: [{}];
+  // firestore = inject(Firestore);
 
   constructor(
     private authService: FirebaseAuthService,
@@ -41,33 +37,10 @@ export class HomeComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.getLoggedUser();
+    // this.getLoggedUser();
     this.fireService.checkIfUserOnChannel();
     this.fireService.defaultChannel();
     await this.fireService.readChannels();
-
-    this.subAllCollections();
-  }
-
-  subAllCollections() {
-    this.fireService.pmsCollectionDataSubject.subscribe((data) => {
-      if (data) {
-        this.pmsData = data;
-        // console.log('PM DATA', this.pmsData);
-      }
-    });
-    this.fireService.usersCollectionDataSubject.subscribe((data) => {
-      if (data) {
-        this.usersData = data;
-        // console.log('USERS DATA', this.usersData);
-      }
-    });
-    this.fireService.channelsCollectionDataSubject.subscribe((data) => {
-      if (data) {
-        this.channelsData = data;
-        // console.log('CHANNELS DATA', this.channelsData);
-      }
-    });
   }
 
   hideMenu() {
@@ -78,22 +51,22 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  getChannelsRef() {
-    return collection(this.firestore, 'channels');
-  }
+  // getChannelsRef() {
+  //   return collection(this.firestore, 'channels');
+  // }
 
-  getUsersRef() {
-    return collection(this.firestore, 'users');
-  }
+  // getUsersRef() {
+  //   return collection(this.firestore, 'users');
+  // }
 
-  async getLoggedUser() {
-    const q = query(
-      collection(this.firestore, 'users'),
-      where('email', '==', 'katrin@test.de')
-    );
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {});
-  }
+  // async getLoggedUser() {
+  //   const q = query(
+  //     collection(this.firestore, 'users'),
+  //     where('email', '==', 'katrin@test.de')
+  //   );
+  //   const querySnapshot = await getDocs(q);
+  //   querySnapshot.forEach((doc) => {});
+  // }
 
   getDaysName() {
     const weekday = [
