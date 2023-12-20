@@ -99,45 +99,52 @@ export class HeaderComponent {
   }
 
   searchInPms() {
-    const searchResult = this.pmsData.filter((conversation: Conversation) => {
-      return conversation.messages.some((message: Message) => {
-        return (
-          message.content
+    const searchResult = [];
+
+    this.pmsData.forEach((conversation: Conversation) => {
+      const matchingMessages = conversation.messages.filter(
+        (message: Message) => {
+          return message.content
             .toLocaleLowerCase()
-            .includes(this.searchInput.toLocaleLowerCase()) ||
-          //check Tread of message
-          message.thread.some((message: Message) => {
-            return message.content
-              .toLocaleLowerCase()
-              .includes(this.searchInput.toLocaleLowerCase());
-          })
-        );
-      });
+            .includes(this.searchInput.toLocaleLowerCase());
+          // ||
+          // message.thread.some((threadMessage: Message) => {
+          //   return threadMessage.content
+          //     .toLocaleLowerCase()
+          //     .includes(this.searchInput.toLocaleLowerCase());
+          // })
+        }
+      );
+      if (matchingMessages.length > 0) searchResult.push(...matchingMessages);
     });
 
     this.filterdPmsData = searchResult;
-    console.log('pms', searchResult);
+    console.log('pms', this.filterdPmsData);
   }
 
   searchInChannels() {
-    const searchResult = this.channelsData.filter((channel: Channel) => {
-      return channel.messages.some((message: Message) => {
-        return (
-          message.content
-            .toLocaleLowerCase()
-            .includes(this.searchInput.toLocaleLowerCase()) ||
-          //check Tread of message
-          message.thread.some((message: Message) => {
-            return message.content
-              .toLocaleLowerCase()
-              .includes(this.searchInput.toLocaleLowerCase());
-          })
-        );
+    const searchResult = [];
+
+    this.channelsData.forEach((channel: Channel) => {
+      const matchingMessages = channel.messages.filter((message: Message) => {
+        return message.content
+          .toLocaleLowerCase()
+          .includes(this.searchInput.toLocaleLowerCase());
+
+        // ||
+        // // Check Thread of message
+        // message.thread.some((threadMessage: Message) => {
+        //   return threadMessage.content
+        //     .toLocaleLowerCase()
+        //     .includes(this.searchInput.toLocaleLowerCase());
+        // })
       });
+
+      if (matchingMessages.length > 0) searchResult.push(...matchingMessages);
     });
 
     this.filterdChannelsData = searchResult;
-    console.log('channels', searchResult);
+    console.log('channels', this.filterdChannelsData);
   }
 
   async logout() {
