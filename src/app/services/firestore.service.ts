@@ -247,6 +247,7 @@ export class FirestoreService {
         this.allUsers.push(user.data());
       });
     });
+    
   }
 
   dateNameChecker(creationDay, creationDate) {

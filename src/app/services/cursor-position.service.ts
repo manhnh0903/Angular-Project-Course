@@ -12,11 +12,15 @@ export class CursorPositionService {
     return cursorPosition;
   }
 
+  setCursorPosition(inputElement: HTMLInputElement, position: number) {
+    inputElement.setSelectionRange(position, position);
+}
 
-  insertEmojiOnCursor(currentMessage,inputElement,event) {
+
+  insertEmojiOnCursor(currentMessage, inputElement, event) {
     const cursorPosition = this.getCursorPosition(inputElement);
     const messageArray = currentMessage.split('');
     messageArray.splice(cursorPosition, 0, event.emoji.native);
-    const updatedMessage = messageArray.join('');
+    return messageArray
   }
 }

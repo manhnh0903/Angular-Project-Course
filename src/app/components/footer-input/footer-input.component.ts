@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, inject } from '@angular/core';
 import { Firestore, updateDoc } from '@angular/fire/firestore';
 import { FormControl, Validators } from '@angular/forms';
 import { CursorPositionService } from 'src/app/services/cursor-position.service';
@@ -10,10 +10,11 @@ import { Message } from 'src/app/classes/message.class';
   templateUrl: './footer-input.component.html',
   styleUrls: ['./footer-input.component.scss']
 })
-export class FooterInputComponent implements OnInit {
+export class FooterInputComponent {
   firestore = inject(Firestore);
   public emojiOpened = false
   private newMessage;
+  public mentionsOpen = false
   sendMessageForm = new FormControl('', [Validators.required])
   @Input() type = 'channel'
   @Input() conversationId
@@ -21,21 +22,43 @@ export class FooterInputComponent implements OnInit {
   @Input() threadCollection
   @Input() parentMessage
   @Input() openThreadConversation
+  indexOfMention = []
+  event: any;
   constructor(
     public fireService: FirestoreService,
     public userService: UserService,
-    private cursorService: CursorPositionService
-  ) {
+    private cursorService: CursorPositionService,
+
+  ) { }
+
+  simulateMentionEvent(inputElement: HTMLInputElement) {
+    const event = new KeyboardEvent("keydown", { key: "@", code: "Digit2" });
+    inputElement.dispatchEvent(event);
   }
+  /*   ngOnInit() {
+      this.changesOfValueMessage()
+    } */
+
+  /*   filteredUsers = [] */
+  /*  changesOfValueMessage() {
+     this.sendMessageForm.valueChanges.subscribe((value: any) => {
+       value = value.split('');
+       let index = value.lastIndexOf('@')
+       if (index !== -1) {
+ 
+         this.mentionsOpen = true
+  
+       } else {
+         this.mentionsOpen = false
+       }
+     });
+ 
+   }
+  */
 
 
   toggleEmoji() {
     this.emojiOpened = !this.emojiOpened
-  }
-
-
-  ngOnInit() {
-    console.log(this.type);
   }
 
 
@@ -99,12 +122,9 @@ export class FooterInputComponent implements OnInit {
     this.newMessage.creationDay = this.fireService.getDaysName();
     this.newMessage.id = this.addMessageId();
     if (this.type === 'channel') {
-      {
-        this.newMessage.collectionId = this.fireService.currentChannel.id,
-          this.newMessage.messageType = 'channels'
-        this.addMessageToChannel()
-
-      }
+      this.newMessage.collectionId = this.fireService.currentChannel.id,
+        this.newMessage.messageType = 'channels'
+      this.addMessageToChannel()
     } else if (this.type === 'pm') {
       this.newMessage.collectionId = this.conversationId,
         this.newMessage.messageType = 'pms'
@@ -112,49 +132,7 @@ export class FooterInputComponent implements OnInit {
     } else if (this.type === 'thread') {
       this.addMessageToThread()
     }
-    ;
   }
-
-
-  sendForm() {
-    /*     const msg = new Message();
-    
-        msg.content = this.sendMessageForm.value.message;
-        msg.profileImg = this.userService.user.profileImg;
-        msg.sender = this.userService.user.name;
-        msg.creationDate = this.firestoreService.getCurrentDate();
-        msg.creationTime = this.firestoreService.getCurrentTime();
-        msg.creationDay = this.firestoreService.getDaysName();
-
-    msg.id = this.addMessageId(); */
-
-
-  }
-
-  /*sendPm() {
-   const msg = new Message();
-   
-    msg.content = this.sendMessageForm.value.message;
-    msg.profileImg = this.userService.user.profileImg;
-    msg.sender = this.userService.user.name; 
-    msg.creationDate = this.firestoreService.getCurrentDate();
-    msg.creationTime = this.firestoreService.getCurrentTime();
-    msg.id = this.addMessageId();
-      msg.creationDay = this.firestoreService.getDaysName();*/
-  /*     msg.collectionId = this.conversationId;
-   
-      msg.messageType = 'pms'; */
-
-  /*  this.conversation.messages.push(msg);
-   
-    console.log(this.conversation.toJSON());
-  
-  this.firestoreService.updateConversation(
-    'pms',
-    this.conversationId,
-    this.conversation.toJSON()
-  );
-  } */
 
 
   addMessageToThread() {
@@ -177,5 +155,24 @@ export class FooterInputComponent implements OnInit {
       this.conversation.toJSON()
     );
     this.sendMessageForm.patchValue('')
+  }
+
+
+  addTaggedUser(inputElement: HTMLInputElement) {
+    this.simulateMentionEvent(inputElement)
+    let currentMessage = this.sendMessageForm.value || '';
+    let cursorPosition = this.cursorService.getCursorPosition(inputElement);
+    let messageArray = currentMessage.split('');
+    messageArray.splice(cursorPosition, 0, '@');
+    let updatedMessage = messageArray.join('');
+    this.sendMessageForm.patchValue(updatedMessage);
+    let newCursorPosition = cursorPosition + 1;
+    this.cursorService.setCursorPosition(inputElement, newCursorPosition);
+    inputElement.focus();
+  }
+
+  toggleMention() {
+    this.mentionsOpen = !this.mentionsOpen
+
   }
 }
