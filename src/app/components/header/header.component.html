@@ -16,6 +16,18 @@
             <span>{{ user["name"] }}</span>
           </div>
         </div>
+
+        <div class="channel-result-container">
+          <div *ngFor="let message of filterdChannelsData">
+            <span>{{ message["content"] }}</span>
+          </div>
+        </div>
+
+        <div class="pms-result-container">
+          <div *ngFor="let message of filterdPmsData">
+            <span>{{ message["content"] }}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
