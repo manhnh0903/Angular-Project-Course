@@ -166,4 +166,15 @@ export class HeaderComponent {
       this.userService.user.userId
     );
   }
+
+
+  searchChannels() {
+    this.firestoreService.channels.forEach(channel => {
+      if (channel.name.toLowerCase().includes(this.searchInput)) {
+      console.log(   channel);
+      
+   
+      }
+    })
+  }
 }

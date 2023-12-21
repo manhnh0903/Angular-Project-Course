@@ -53,6 +53,8 @@ export class MessageComponent {
     }
   }
 
+
+
   isYou = false
   getSide(sender: string): boolean {
     if (sender === this.userService.user.name) {
@@ -62,6 +64,7 @@ export class MessageComponent {
       return false
     }
   }
+
 
   getLastReplyTime(): string {
     if (this.thread.length > 0) {
@@ -75,13 +78,17 @@ export class MessageComponent {
     }
   }
 
+
+
   closeEdit() {
     this.editMessage = !this.editMessage;
   }
 
+
   getNewContent(newContent: string) {
     this.content = newContent;
   }
+
 
   async updateMessageContent() {
     let messageToUpdate;
@@ -97,6 +104,7 @@ export class MessageComponent {
     messageToUpdate.content = this.content;
     this.saveUpdatedInFirestore(docRef, messageToUpdate);
   }
+
 
   checkForChannels(messageToUpdate, docRef) {
     if (this.type === 'channel') {
@@ -123,6 +131,8 @@ export class MessageComponent {
     return { messageToUpdate, docRef };
   }
 
+
+
   async saveUpdatedInFirestore(docRef, messageToUpdate) {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
@@ -142,6 +152,8 @@ export class MessageComponent {
     }
   }
 
+
+
   getReactionsPeople(emoji) {
     let names = [];
     emoji.userIDs.forEach((id) => {
@@ -156,9 +168,10 @@ export class MessageComponent {
         }
       }
     });
-
     return names;
   }
+
+
 
 
   ifYouReacted(emoji) {
@@ -171,6 +184,8 @@ export class MessageComponent {
     });
   }
 
+
+
   isDifferentDate(creationDate, i: number, type): boolean {
     if (i === 0) { return true }
     if ((creationDate && i > 0) || type === 'thread') {
@@ -182,12 +197,9 @@ export class MessageComponent {
       }
       if (type === 'thread') {
         if (i === 0) { return true }
-
-
         return creationDate !== this.thread[i - 1].creationDate
       }
     }
-
     return false;
   }
 
@@ -196,20 +208,23 @@ export class MessageComponent {
     await this.homeNav.selectMessage(this.currentMessage);
   }
 
+
   openEmojiOnEdit() {
     this.emojiOpenedOnEdit = !this.emojiOpenedOnEdit;
   }
+
 
   addEmojiOnEdit(event, inputElement: HTMLInputElement) {
     const currentMessage = this.content || '';
     const cursorPosition = this.cursorService.getCursorPosition(inputElement);
     const messageArray = currentMessage.split('');
-
     messageArray.splice(cursorPosition, 0, event.emoji.native);
     const updatedMessage = messageArray.join('');
     this.content = updatedMessage
     this.openEmojiOnEdit();
   }
+
+
 
   getEmojiPickerStyle() {
     return {

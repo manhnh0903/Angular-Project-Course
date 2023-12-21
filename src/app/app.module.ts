@@ -34,7 +34,7 @@ import { MessageComponent } from './components/message/message.component';
 import { EditChannelComponent } from './components/edit-channel/edit-channel.component';
 import { PmRecipientOverviewComponent } from './components/pm-recipient-overview/pm-recipient-overview.component';
 import { FooterInputComponent } from './components/footer-input/footer-input.component';
-
+import { MentionModule } from 'angular-mentions';
 
 @NgModule({
   declarations: [
@@ -62,7 +62,7 @@ import { FooterInputComponent } from './components/footer-input/footer-input.com
 
   ],
   imports: [
-    
+    MentionModule,
     PickerComponent,
     MatRadioModule,
     FormsModule,
