@@ -21,9 +21,9 @@ export class HeaderComponent {
   pmsData: {}[];
   channelsData: {}[];
 
-  filterdUserData: {}[];
-  filterdPmsData: {}[];
-  filterdChannelsData: {}[];
+  filterdUserData: DabubbleUser[] = [];
+  filterdPmsData: Message[] = [];
+  filterdChannelsData: Message[] = [];
 
   constructor(
     private el: ElementRef,
@@ -92,7 +92,7 @@ export class HeaderComponent {
           .toLocaleLowerCase()
           .includes(this.searchInput.toLocaleLowerCase())
       );
-    });
+    }) as DabubbleUser[];
 
     this.filterdUserData = searchResult;
     console.log('users', this.filterdUserData);
