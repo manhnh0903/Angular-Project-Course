@@ -76,8 +76,6 @@ export class HeaderComponent {
     this.resetResults();
 
     if (this.searchInput.length >= 3) {
-      console.log(this.searchInput);
-
       this.searchInUsers();
       this.searchInPms();
       this.searchInChannels();
@@ -103,7 +101,6 @@ export class HeaderComponent {
     }) as DabubbleUser[];
 
     this.filterdUserData = searchResult;
-    console.log('users', this.filterdUserData);
   }
 
   searchInPms() {
@@ -124,14 +121,12 @@ export class HeaderComponent {
     });
 
     this.filterdPmsData = searchResult;
-    console.log('pms', this.filterdPmsData);
   }
 
   isUserInConversation(conversation: Conversation) {
-    console.log(conversation);
     const userId = this.userService.user.userId;
 
-    return conversation.userId1 || conversation.userId2 === userId;
+    return conversation.userId1 === userId || conversation.userId2 === userId;
   }
 
   searchInChannels() {
@@ -148,7 +143,6 @@ export class HeaderComponent {
     });
 
     this.filterdChannelsData = searchResult;
-    console.log('channels', this.filterdChannelsData);
   }
 
   async logout() {
@@ -169,13 +163,5 @@ export class HeaderComponent {
       this.userService.user.toJson(),
       this.userService.user.userId
     );
-  }
-
-  searchChannels() {
-    this.firestoreService.channels.forEach((channel) => {
-      if (channel.name.toLowerCase().includes(this.searchInput)) {
-        console.log(channel);
-      }
-    });
   }
 }
