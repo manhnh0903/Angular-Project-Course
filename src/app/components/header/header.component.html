@@ -10,22 +10,69 @@
       />
       <img class="search_icon" src="assets/img/search_icon.png" />
 
-      <div class="search-result-container">
-        <div class="user-results-container">
-          <div *ngFor="let user of filterdUserData">
-            <span>{{ user["name"] }}</span>
+      <div
+        *ngIf="
+          filterdChannelsData.length > 0 ||
+          filterdUserData.length > 0 ||
+          filterdPmsData.length > 0
+        "
+        class="search-result-container"
+      >
+        <div *ngIf="filterdUserData.length > 0" class="user-results-container">
+          <div
+            class="user-result"
+            *ngFor="let user of filterdUserData"
+            (click)="openUserDetails(user)"
+          >
+            <img
+              class="profile-img"
+              src="{{ user.profileImg }}"
+              alt="profile.img"
+            />
+            <img
+              *ngIf="user.onlineStatus === true"
+              src="./assets/img/online.png"
+              alt="online.img"
+            />
+            <img
+              *ngIf="user.onlineStatus === false"
+              src="./assets/img/offline.png"
+              alt="online.img"
+            />
+            <span>{{ user.name }}</span>
           </div>
         </div>
 
-        <div class="channel-result-container">
-          <div *ngFor="let message of filterdChannelsData">
-            <span>{{ message["content"] }}</span>
+        <div
+          *ngIf="filterdChannelsData.length > 0"
+          class="channel-result-container"
+        >
+          <div class="message" *ngFor="let message of filterdChannelsData">
+            <img src="{{ message.profileImg }}" alt="profile-img" />
+            <div>
+              <span>{{ message.content }}</span>
+              <div class="sender-wrapper">
+                <p>{{ message.sender }}</p>
+                <span
+                  >{{ message.creationDate }} {{ message.creationTime }}</span
+                >
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="pms-result-container">
-          <div *ngFor="let message of filterdPmsData">
-            <span>{{ message["content"] }}</span>
+        <div *ngIf="filterdPmsData.length > 0" class="pms-result-container">
+          <div class="message" *ngFor="let message of filterdPmsData">
+            <img src="{{ message.profileImg }}" alt="profile-img" />
+            <div>
+              <span>{{ message.content }}</span>
+              <div class="sender-wrapper">
+                <p>{{ message.sender }}</p>
+                <span
+                  >{{ message.creationDate }} {{ message.creationTime }}</span
+                >
+              </div>
+            </div>
           </div>
         </div>
       </div>

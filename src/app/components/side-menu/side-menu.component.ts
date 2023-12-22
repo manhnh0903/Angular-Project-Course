@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, Input, NgZone, OnInit, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  NgZone,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateChannelComponent } from '../create-channel/create-channel.component';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -12,23 +19,18 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./side-menu.component.scss'],
 })
 export class SideMenuComponent implements OnInit {
-
   constructor(
     public dialog: MatDialog,
     public fireService: FirestoreService,
     private navService: HomeNavigationService,
     private userService: UserService
-  ) {
-
-  }
+  ) {}
   async ngOnInit() {
-    this.fireService.readChannels()
+    this.fireService.readChannels();
   }
 
   channelsClicked = true;
   PMclicked = true;
-
-
 
   openChannels() {
     if (this.channelsClicked == false) {
@@ -65,8 +67,4 @@ export class SideMenuComponent implements OnInit {
     this.navService.setChatPath('pm');
     this.fireService.subscribeToPmRecipient(userId);
   }
-
-
 }
-
-

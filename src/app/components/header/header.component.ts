@@ -1,4 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
+import { user } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Channel } from 'src/app/classes/channel.class';
 import { Conversation } from 'src/app/classes/conversation.class';
@@ -6,6 +7,7 @@ import { Message } from 'src/app/classes/message.class';
 import { DabubbleUser } from 'src/app/classes/user.class';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -21,16 +23,17 @@ export class HeaderComponent {
   pmsData: {}[];
   channelsData: {}[];
 
-  filterdUserData: {}[];
-  filterdPmsData: {}[];
-  filterdChannelsData: {}[];
+  filterdUserData: DabubbleUser[] = [];
+  filterdPmsData: Message[] = [];
+  filterdChannelsData: Message[] = [];
 
   constructor(
     private el: ElementRef,
     public userService: UserService,
     private authService: FirebaseAuthService,
     private router: Router,
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    private homeNavService: HomeNavigationService
   ) {
     this.authService.checkAuth();
     this.subAllCollections();
@@ -52,6 +55,11 @@ export class HeaderComponent {
     this.menuOpen = false;
   }
 
+  openUserDetails(user: DabubbleUser) {
+    this.homeNavService.pmRecipientData = user;
+    this.homeNavService.pmRecipientOverlayOpen = true;
+  }
+
   subAllCollections() {
     this.firestoreService.pmsCollectionDataSubject.subscribe((data) => {
       if (data) this.pmsData = data;
@@ -68,8 +76,6 @@ export class HeaderComponent {
     this.resetResults();
 
     if (this.searchInput.length >= 3) {
-      console.log(this.searchInput);
-
       this.searchInUsers();
       this.searchInPms();
       this.searchInChannels();
@@ -92,10 +98,9 @@ export class HeaderComponent {
           .toLocaleLowerCase()
           .includes(this.searchInput.toLocaleLowerCase())
       );
-    });
+    }) as DabubbleUser[];
 
     this.filterdUserData = searchResult;
-    console.log('users', this.filterdUserData);
   }
 
   searchInPms() {
@@ -104,22 +109,24 @@ export class HeaderComponent {
     this.pmsData.forEach((conversation: Conversation) => {
       const matchingMessages = conversation.messages.filter(
         (message: Message) => {
-          return message.content
+          const contentMatches = message.content
             .toLocaleLowerCase()
-            .includes(this.searchInput.toLocaleLowerCase());
-          // ||
-          // message.thread.some((threadMessage: Message) => {
-          //   return threadMessage.content
-          //     .toLocaleLowerCase()
-          //     .includes(this.searchInput.toLocaleLowerCase());
-          // })
+            .includes(this.searchInput.toLowerCase());
+
+          const userIsInConversation = this.isUserInConversation(conversation);
+          return contentMatches && userIsInConversation;
         }
       );
       if (matchingMessages.length > 0) searchResult.push(...matchingMessages);
     });
 
     this.filterdPmsData = searchResult;
-    console.log('pms', this.filterdPmsData);
+  }
+
+  isUserInConversation(conversation: Conversation) {
+    const userId = this.userService.user.userId;
+
+    return conversation.userId1 === userId || conversation.userId2 === userId;
   }
 
   searchInChannels() {
@@ -130,21 +137,12 @@ export class HeaderComponent {
         return message.content
           .toLocaleLowerCase()
           .includes(this.searchInput.toLocaleLowerCase());
-
-        // ||
-        // // Check Thread of message
-        // message.thread.some((threadMessage: Message) => {
-        //   return threadMessage.content
-        //     .toLocaleLowerCase()
-        //     .includes(this.searchInput.toLocaleLowerCase());
-        // })
       });
 
       if (matchingMessages.length > 0) searchResult.push(...matchingMessages);
     });
 
     this.filterdChannelsData = searchResult;
-    console.log('channels', this.filterdChannelsData);
   }
 
   async logout() {
@@ -165,16 +163,5 @@ export class HeaderComponent {
       this.userService.user.toJson(),
       this.userService.user.userId
     );
-  }
-
-
-  searchChannels() {
-    this.firestoreService.channels.forEach(channel => {
-      if (channel.name.toLowerCase().includes(this.searchInput)) {
-      console.log(   channel);
-      
-   
-      }
-    })
   }
 }
