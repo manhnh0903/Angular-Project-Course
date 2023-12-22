@@ -8,7 +8,7 @@
         (click)=" openEditMessageDiv()">
         <span>Nachricht bearbeiten</span>
     </div>
-    <emoji-mart *ngIf="emojiOpened" (emojiClick)="addEmoji($event)" (tooltip)=false
-        [ngClass]="{ 'ifRightSide': !isYou}" [ngStyle]="index===0 ? { 'bottom': '20px' } : { 'top': '20px' }">
+    <emoji-mart *ngIf="emojiOpened" (emojiClick)="addEmoji($event)" (tooltip)=false [ngClass]="{ 'ifRightSide': !isYou}"
+        [ngStyle]="{ 'top': '20px' }">
     </emoji-mart>
 </div>

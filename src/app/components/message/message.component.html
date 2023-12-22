@@ -15,8 +15,16 @@
         <div class="nameContentDiv" [ngClass]="{ justifyEnd: getSide(sender) }">
           <div *ngIf="editMessage" class="editMessageWrapper">
             <div class="editMessageDiv">
-              <input #inputEditMessage [(ngModel)]="content" (ngModelChange)="getNewContent($event)" />
-
+              <input [mention]="fireService.allUsers" [mentionListTemplate]="mentionListTemplate"
+                [mentionConfig]="{triggerChar:'@', dropUp:true,labelKey:'name'}" #inputEditMessage [(ngModel)]="content"
+                (ngModelChange)="getNewContent($event)" />
+              <ng-template #mentionListTemplate let-item="item">
+                <div class="templateLine">
+                  <img class="mr-3" src="{{item.profileImg}}" alt="" width="30" height="30">
+                  &nbsp;
+                  <span>{{item.name}}</span>
+                </div>
+              </ng-template>
               <div class="editButtons">
                 <div class="emojiDiv">
                   <img (click)="openEmojiOnEdit()" class="messageIcon" src="assets/img/sentiment_satisfied.svg" />
@@ -40,22 +48,19 @@
             <span class="nameOfSender">{{ sender }}</span>
             <span class="time">{{ creationTime }} Uhr</span>
           </div>
-          <div class="messageContent">{{ content }}</div>
+          <div [ngClass]="isYou ? 'borderForMessageIfYou':'borderForMessage'" #contentContainer class="messageContent">
+          </div>
 
           <div class="reactions" *ngIf="reactions?.length > 0">
             <div (click)=" handleExistingEmoji(i)" class="reaction" *ngFor="let emoji of reactions let i=index">
               <div>{{ emoji.native }}</div>
               <div *ngIf="emoji.counter">
                 {{ emoji.counter }}
-                <div
-                  *ngIf="getReactionsPeople(emoji).length >= 3"
-                  class="reactionsPeople"
-                  [ngClass]="
+                <div *ngIf="getReactionsPeople(emoji).length >= 3" class="reactionsPeople" [ngClass]="
                     !getSide(sender)
                       ? 'forPeopleReactedLeft'
                       : 'forPeopleReactedRight'
-                  "
-                >
+                  ">
                   <div class="reactionsPeopleSubDiv max-width">
                     <ng-container *ngIf="ifYouReacted(emoji); else otherUsers">
                       Du

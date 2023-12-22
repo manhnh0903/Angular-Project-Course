@@ -80,4 +80,4 @@ import { MentionModule } from 'angular-mentions';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

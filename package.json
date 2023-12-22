@@ -22,6 +22,8 @@
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
     "@ctrl/ngx-emoji-mart": "^9.2.0",
+    "@nth-cloud/ng-mentions": "^10.0.0",
+    "@syncfusion/ej2-angular-dropdowns": "^24.1.41",
     "angular-mentions": "^1.5.0",
     "angular-ui-mention": "^0.0.10",
     "rxjs": "~7.8.0",

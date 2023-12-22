@@ -16,7 +16,7 @@
         [(ngModel)]="usersName"
         (ngModelChange)="showFilteredUsers()"
       />
-      <div *ngIf="filteredUsers.length > 0" class="peopleToAdd">
+      <div *ngIf="usersToAddOpen" class="peopleToAdd">
         <div
           *ngFor="let filteredUser of filteredUsers"
           class="filteredUser"

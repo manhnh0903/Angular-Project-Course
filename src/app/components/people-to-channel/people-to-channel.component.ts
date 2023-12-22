@@ -24,8 +24,13 @@ export class PeopleToChannelComponent {
   filteredUsers = []
   usersName
   selectedUsers = []
-
+  usersToAddOpen = false
   constructor(private router: Router, private el: ElementRef, public fireService: FirestoreService) { }
+
+  toggleUsersToAdd() {
+    this.usersToAddOpen = !this.usersToAddOpen
+  }
+
 
   checkAllPeople() {
     this.allPeopleIsChecked = true;
@@ -55,9 +60,9 @@ export class PeopleToChannelComponent {
     } else {
       this.currentChannel.index = this.fireService.channels[this.fireService.channels.length - 1].index + 1;
     }
-    console.log(this.fireService.channels,this.fireService.channels[this.fireService.channels.length - 1]);
-    
-   await this.addUsers()
+    console.log(this.fireService.channels, this.fireService.channels[this.fireService.channels.length - 1]);
+
+    await this.addUsers()
     let createdChannel = await addDoc(this.getChannelsRef(),
       this.currentChannel.toJSON()
     )
@@ -65,7 +70,7 @@ export class PeopleToChannelComponent {
     await updateDoc(createdChannelRef, {
       id: createdChannel.id
     });
-     this.fireService.readChannels()  
+    this.fireService.readChannels()
   }
 
 
@@ -82,6 +87,7 @@ export class PeopleToChannelComponent {
 
 
   async showFilteredUsers() {
+    this.usersToAddOpen = true
     this.filteredUsers = this.fireService.allUsers.filter(user => {
       return user.name.toLowerCase().includes(this.usersName.toLowerCase())
     })
@@ -93,6 +99,7 @@ export class PeopleToChannelComponent {
     if (!this.selectedUsers.includes(filteredUser)) {
       this.selectedUsers.push(filteredUser);
     }
+    this.usersToAddOpen = false
   }
 
 }

@@ -1,46 +1,3 @@
-/* .msg-wrapper {
-  display: flex;
-  gap: 30px;
-} */
-//   img {
-//     height: 70px;
-//     width: 70px;
-//     border-radius: 50%;
-//   }
-
-//   >div {
-//     display: flex;
-//     flex-direction: column;
-//     gap: 8px;
-
-//     .msg-header {
-//       display: flex;
-//       gap: 20px;
-//       align-items: center;
-
-//       span {
-//         font-size: 18px;
-//         font-weight: 700;
-//       }
-
-//       p {
-//         font-size: 14px;
-//         color: rgba(104, 104, 104, 1);
-//       }
-//     }
-
-//     .msg-content {
-//       padding: 15px;
-//       background-color: var(--main-bg-color);
-//       border-radius: 0px 30px 30px 30px;
-
-//       p {
-//         font-size: 18px;
-//       }
-//     }
-//   }
-// }
-
 .messageUsersImg {
   height: 50px;
   width: 50px;
@@ -71,10 +28,17 @@
   .messageContent {
     margin-left: 10px;
     background-color: #eceefe;
-    padding: 5px 10px;
+    padding: 15px 10px 20px;
     margin-top: 10px;
-    border-radius: 0px 40px 40px 40px;
     width: fit-content;
+  }
+
+  .borderForMessageIfYou {
+    border-radius: 40px 0 40px 40px;
+  }
+
+  .borderForMessage {
+    border-radius: 0 40px 40px 40px;
   }
 
   .tread-info {
@@ -181,6 +145,7 @@
   background-color: white;
   width: 100%;
   z-index: 9;
+
   input {
     width: 100%;
     outline: none;
@@ -250,7 +215,7 @@ emoji-mart {
 
 .forPeopleReactedLeft {
   left: 20px;
-  border-radius:20px 20px 20px 0px;
+  border-radius: 20px 20px 20px 0px;
 }
 
 .forPeopleReactedRight {
@@ -268,4 +233,8 @@ emoji-mart {
 
 .max-width {
   max-width: 80px;
+}
+
+.mention {
+  background-color: blue;
 }

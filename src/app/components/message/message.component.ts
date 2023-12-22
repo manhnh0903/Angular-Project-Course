@@ -6,6 +6,7 @@ import { UserService } from 'src/app/services/user.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 import { ReactionsComponent } from '../reactions/reactions.component';
 import { CursorPositionService } from 'src/app/services/cursor-position.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-message',
@@ -18,7 +19,8 @@ export class MessageComponent {
     public fireService: FirestoreService,
     private userService: UserService,
     private homeNav: HomeNavigationService,
-    public cursorService: CursorPositionService
+    public cursorService: CursorPositionService,
+
   ) { }
   firestore = inject(Firestore);
   @Input() sender: string;
@@ -37,12 +39,13 @@ export class MessageComponent {
   @Input() parentMessage;
   @Input() type: 'channel' | 'pm' | 'thread';
   @ViewChild('inputEditMessage') inputEditMessage: ElementRef<HTMLInputElement>;
-
+  @ViewChild('contentContainer') contentContainer: ElementRef;
+  @ViewChild(ReactionsComponent, { static: false }) reactionsComponent: ReactionsComponent;
   public onRightSide: boolean;
   public editMessage = false;
   private openEdit = false;
   public emojiOpenedOnEdit = false;
-
+  public isYou = false
   openEditMessageDiv(event: { editMessage: boolean; openEdit: boolean }) {
     if (this.editMessage && this.openEdit) {
       this.editMessage = false;
@@ -54,8 +57,11 @@ export class MessageComponent {
   }
 
 
+  ngAfterViewInit() {
+    this.mentions()
+  }
 
-  isYou = false
+
   getSide(sender: string): boolean {
     if (sender === this.userService.user.name) {
       this.isYou = true
@@ -69,15 +75,12 @@ export class MessageComponent {
   getLastReplyTime(): string {
     if (this.thread.length > 0) {
       const lastReply = this.thread[this.thread.length - 1];
-
       const lastReplyTime = lastReply['creationTime'];
-
       return lastReplyTime;
     } else {
       return '';
     }
   }
-
 
 
   closeEdit() {
@@ -111,9 +114,7 @@ export class MessageComponent {
       messageToUpdate = this.fireService.currentChannel.messages[this.index];
     }
     if (this.type === 'thread') {
-
       messageToUpdate = this.fireService.currentChannel.messages[this.reactionsComponent.indexParentMessage()].thread[this.reactionsComponent.indexMessageOnThread()];
-
     }
     docRef = doc(
       this.firestore,
@@ -123,6 +124,7 @@ export class MessageComponent {
     return { messageToUpdate, docRef };
   }
 
+
   checkForPMs(messageToUpdate, docRef) {
     if (this.type === 'pm') {
       messageToUpdate = this.conversation.messages[this.index];
@@ -130,7 +132,6 @@ export class MessageComponent {
     }
     return { messageToUpdate, docRef };
   }
-
 
 
   async saveUpdatedInFirestore(docRef, messageToUpdate) {
@@ -153,7 +154,6 @@ export class MessageComponent {
   }
 
 
-
   getReactionsPeople(emoji) {
     let names = [];
     emoji.userIDs.forEach((id) => {
@@ -172,18 +172,14 @@ export class MessageComponent {
   }
 
 
-
-
   ifYouReacted(emoji) {
     return emoji.userIDs.some((id) => {
       const index = this.fireService.allUsers.findIndex(
         (user) => user.userId === id
       );
-
       return index !== -1 && id === this.userService.user.userId;
     });
   }
-
 
 
   isDifferentDate(creationDate, i: number, type): boolean {
@@ -225,7 +221,6 @@ export class MessageComponent {
   }
 
 
-
   getEmojiPickerStyle() {
     return {
       position: 'absolute',
@@ -235,50 +230,118 @@ export class MessageComponent {
     };
   }
 
-  @ViewChild(ReactionsComponent, { static: false }) reactionsComponent: ReactionsComponent;
-
 
   async handleExistingEmoji(indexOfEmoji) {
     let docReference;
     if (this.reactionsComponent.checkForUsersIdForEmoji(indexOfEmoji) === -1) {
-      this.reactionsComponent.increaseCounterOfExistingEmoji(indexOfEmoji);
-      this.reactionsComponent.currentMessage.reactions[indexOfEmoji].userIDs.push(
-        this.userService.user.userId
-      );
+      this.ifNoEmojiFromUser(indexOfEmoji)
     } else {
-      this.reactionsComponent.currentMessage.reactions[indexOfEmoji].userIDs.splice(
-        this.reactionsComponent.checkForUsersIdForEmoji(indexOfEmoji),
-        1
-      );
-      this.reactionsComponent.decreaseCounterOfExistingEmoji(indexOfEmoji);
-      if (this.reactionsComponent.currentMessage.reactions[indexOfEmoji].counter === 0)
-        this.reactionsComponent.removeEmojiIfCounter0(indexOfEmoji);
+      this.ifEmojiFromUserExists(indexOfEmoji)
     }
+    this.conditionsForHandlingExistingEmojis(docReference)
+  }
 
+
+  ifNoEmojiFromUser(indexOfEmoji) {
+    this.reactionsComponent.increaseCounterOfExistingEmoji(indexOfEmoji);
+    this.reactionsComponent.currentMessage.reactions[indexOfEmoji].userIDs.push(
+      this.userService.user.userId
+    );
+  }
+
+
+  ifEmojiFromUserExists(indexOfEmoji) {
+    this.reactionsComponent.currentMessage.reactions[indexOfEmoji].userIDs.splice(
+      this.reactionsComponent.checkForUsersIdForEmoji(indexOfEmoji),
+      1
+    );
+    this.reactionsComponent.decreaseCounterOfExistingEmoji(indexOfEmoji);
+    if (this.reactionsComponent.currentMessage.reactions[indexOfEmoji].counter === 0)
+      this.reactionsComponent.removeEmojiIfCounter0(indexOfEmoji);
+  }
+
+
+  conditionsForHandlingExistingEmojis(docReference) {
     if (this.type === 'thread') {
-      docReference = this.fireService.getDocRef(
-        'channels',
-        this.fireService.currentChannel.id
-      );
-      this.fireService.currentChannel.messages[this.reactionsComponent.indexParentMessage()].thread[this.reactionsComponent.indexMessageOnThread()] = this.currentMessage
-      this.reactionsComponent.updateDoc(docReference, this.fireService.currentChannel.messages)
+      this.existingEmojiOnThread(docReference)
     }
-
     if (this.type === 'channel') {
-      docReference = this.fireService.getDocRef(
-        'channels',
-        this.fireService.currentChannel.id
-      );
-      this.fireService.currentChannel.messages[this.index] = this.currentMessage
-      this.reactionsComponent.updateDoc(docReference, this.fireService.currentChannel.messages)
+      this.existingEmojiOnChannel(docReference)
     }
     if (this.type === 'pm') {
-      docReference = this.fireService.getDocRef('pms', this.collectionId);
-      this.conversation.messages[this.index] = this.currentMessage;
-      await updateDoc(docReference, {
-        messages: this.conversation.toJSON().messages,
-      });
+      this.existingEmojiOnPM(docReference)
     }
+  }
+
+
+  existingEmojiOnThread(docReference) {
+    docReference = this.fireService.getDocRef(
+      'channels',
+      this.fireService.currentChannel.id
+    );
+    this.fireService.currentChannel.messages[this.reactionsComponent.indexParentMessage()].thread[this.reactionsComponent.indexMessageOnThread()] = this.currentMessage
+    this.reactionsComponent.updateDoc(docReference, this.fireService.currentChannel.messages)
+  }
+
+
+  existingEmojiOnChannel(docReference) {
+    docReference = this.fireService.getDocRef(
+      'channels',
+      this.fireService.currentChannel.id
+    );
+    this.fireService.currentChannel.messages[this.index] = this.currentMessage
+    this.reactionsComponent.updateDoc(docReference, this.fireService.currentChannel.messages)
+  }
+
+
+  async existingEmojiOnPM(docReference) {
+    docReference = this.fireService.getDocRef('pms', this.collectionId);
+    this.conversation.messages[this.index] = this.currentMessage;
+    await updateDoc(docReference, {
+      messages: this.conversation.toJSON().messages,
+    });
+  }
+
+
+  mentions() {
+
+    let splitted = this.content.split(' ');
+    for (let i = 0; i < this.fireService.allUsers.length; i++) {
+      let user = this.fireService.allUsers[i];
+      for (let j = 0; j < splitted.length; j++) {
+        let word = splitted[j];
+        let wordWithoutMention = word.substring(1);
+        if (
+          this.checkIfMentionExists(wordWithoutMention, splitted, j, user)
+        ) {
+          this.ifMentionExists(word, j, splitted)
+        }
+      }
+    }
+    this.assignToHTML(splitted)
+  }
+
+
+  checkIfMentionExists(wordWithoutMention, splitted, j, user) {
+    return wordWithoutMention.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "") === user.name.toLowerCase().split(' ')[0] &&
+      splitted[j + 1].toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "") === user.name.toLowerCase().split(' ')[1]
+  }
+
+
+  ifMentionExists(word, j, splitted) {
+    let firstName;
+    let lastName;
+    let index;
+    firstName = word;
+    index = j;
+    lastName = splitted[j + 1];
+    splitted.splice(index, 2, `<span style="color: blue;">${firstName} ${lastName}</span>`);
+  }
+
+
+  assignToHTML(splitted) {
+    let result = splitted.join(' ');
+    this.contentContainer.nativeElement.innerHTML = result
   }
 
 }
