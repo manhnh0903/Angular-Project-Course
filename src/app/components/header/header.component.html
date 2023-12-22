@@ -19,7 +19,11 @@
         class="search-result-container"
       >
         <div *ngIf="filterdUserData.length > 0" class="user-results-container">
-          <div class="user-result" *ngFor="let user of filterdUserData">
+          <div
+            class="user-result"
+            *ngFor="let user of filterdUserData"
+            (click)="openUserDetails(user)"
+          >
             <img
               class="profile-img"
               src="{{ user.profileImg }}"
