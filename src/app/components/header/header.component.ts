@@ -146,15 +146,32 @@ export class HeaderComponent {
 
     this.channelsData.forEach((channel: Channel) => {
       const matchingMessages = channel.messages.filter((message: Message) => {
-        return message.content
+        const contentMatches = message.content
           .toLocaleLowerCase()
-          .includes(this.searchInput.toLocaleLowerCase());
+          .includes(this.searchInput.toLowerCase());
+
+        const userInChannel = this.isUserInChannel(channel);
+
+        console.log(
+          'user in channel:',
+          userInChannel,
+          'content matches:',
+          contentMatches
+        );
+
+        return contentMatches && userInChannel;
       });
 
       if (matchingMessages.length > 0) searchResult.push(...matchingMessages);
     });
 
     this.filterdChannelsData = searchResult;
+  }
+
+  isUserInChannel(channel: Channel) {
+    const userId = this.userService.user.userId;
+
+    return !!channel.users.find((user: DabubbleUser) => userId === user.userId);
   }
 
   async logout() {
