@@ -10,6 +10,8 @@ interface MessageData {
   collectionId: string;
   creationDay: string;
   messageType: string;
+  senderId: string;
+  recipientId: string;
 }
 
 interface ThreadMessageData {
@@ -24,6 +26,8 @@ interface ThreadMessageData {
   collectionId: string;
   creationDay: string;
   messageType: string;
+  senderId: string;
+  recipientId: string;
 }
 
 export class Message {
@@ -39,6 +43,8 @@ export class Message {
   collectionId: string;
   creationDay: string;
   messageType: string;
+  senderId: string;
+  recipientId: string;
 
   constructor(data?: MessageData) {
     this.sender = data?.sender || '';
@@ -52,6 +58,8 @@ export class Message {
     this.id = data?.id || 0;
     this.collectionId = data?.collectionId || '';
     this.messageType = data?.messageType || '';
+    this.senderId = data?.senderId || '';
+    this.recipientId = data?.recipientId || '';
   }
 
   private threadMessageToJSON(message: ThreadMessageData): any {
@@ -62,7 +70,7 @@ export class Message {
       reactions: message.reactions,
       creationDate: message.creationDate,
       creationTime: message.creationTime,
-      creationDay: this.creationDay,
+      creationDay: message.creationDay,
       id: message.id,
       collectionId: message.collectionId,
       messageType: message.messageType,
@@ -86,6 +94,8 @@ export class Message {
       id: this.id,
       collectionId: this.collectionId,
       messageType: this.messageType,
+      senderId: this.senderId,
+      recipientId: this.recipientId,
     };
   }
 }

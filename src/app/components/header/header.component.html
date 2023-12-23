@@ -47,7 +47,11 @@
           *ngIf="filterdChannelsData.length > 0"
           class="channel-result-container"
         >
-          <div class="message" *ngFor="let message of filterdChannelsData">
+          <div
+            (click)="openChanelChat(message.collectionId)"
+            class="message"
+            *ngFor="let message of filterdChannelsData"
+          >
             <img src="{{ message.profileImg }}" alt="profile-img" />
             <div>
               <span>{{ message.content }}</span>
@@ -62,7 +66,11 @@
         </div>
 
         <div *ngIf="filterdPmsData.length > 0" class="pms-result-container">
-          <div class="message" *ngFor="let message of filterdPmsData">
+          <div
+            (click)="openPmChat(message.recipientId)"
+            class="message"
+            *ngFor="let message of filterdPmsData"
+          >
             <img src="{{ message.profileImg }}" alt="profile-img" />
             <div>
               <span>{{ message.content }}</span>

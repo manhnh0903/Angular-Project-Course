@@ -60,6 +60,18 @@ export class HeaderComponent {
     this.homeNavService.pmRecipientOverlayOpen = true;
   }
 
+  async openChanelChat(id: string) {
+    await this.firestoreService.getCurrentChannel('channels', id);
+    this.firestoreService.getCurrentDate();
+    this.homeNavService.setChatPath('chanel');
+  }
+
+  openPmChat(userId: string) {
+    this.homeNavService.pmRecipient = userId;
+    this.homeNavService.setChatPath('pm');
+    this.firestoreService.subscribeToPmRecipient(userId);
+  }
+
   subAllCollections() {
     this.firestoreService.pmsCollectionDataSubject.subscribe((data) => {
       if (data) this.pmsData = data;

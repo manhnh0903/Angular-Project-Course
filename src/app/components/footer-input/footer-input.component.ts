@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, Input, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { Firestore, updateDoc } from '@angular/fire/firestore';
 import { FormControl, Validators } from '@angular/forms';
 import { CursorPositionService } from 'src/app/services/cursor-position.service';
@@ -8,31 +14,31 @@ import { Message } from 'src/app/classes/message.class';
 @Component({
   selector: 'app-footer-input',
   templateUrl: './footer-input.component.html',
-  styleUrls: ['./footer-input.component.scss']
+  styleUrls: ['./footer-input.component.scss'],
 })
 export class FooterInputComponent {
   firestore = inject(Firestore);
-  public emojiOpened = false
+  public emojiOpened = false;
   private newMessage;
-  public mentionsOpen = false
-  sendMessageForm = new FormControl('', [Validators.required])
-  @Input() type = 'channel'
-  @Input() conversationId
-  @Input() conversation
-  @Input() threadCollection
-  @Input() parentMessage
-  @Input() openThreadConversation
-  indexOfMention = []
+  public mentionsOpen = false;
+  sendMessageForm = new FormControl('', [Validators.required]);
+  @Input() type = 'channel';
+  @Input() conversationId;
+  @Input() conversation;
+  @Input() pmRecipient: string;
+  @Input() threadCollection;
+  @Input() parentMessage;
+  @Input() openThreadConversation;
+  indexOfMention = [];
   event: any;
   constructor(
     public fireService: FirestoreService,
     public userService: UserService,
-    private cursorService: CursorPositionService,
-
-  ) { }
+    private cursorService: CursorPositionService
+  ) {}
 
   simulateMentionEvent(inputElement: HTMLInputElement) {
-    const event = new KeyboardEvent("keydown", { key: "@", code: "Digit2" });
+    const event = new KeyboardEvent('keydown', { key: '@', code: 'Digit2' });
     inputElement.dispatchEvent(event);
   }
   /*   ngOnInit() {
@@ -56,11 +62,9 @@ export class FooterInputComponent {
    }
   */
 
-
   toggleEmoji() {
-    this.emojiOpened = !this.emojiOpened
+    this.emojiOpened = !this.emojiOpened;
   }
-
 
   addEmoji(event, inputElement: HTMLInputElement) {
     const currentMessage = this.sendMessageForm.value || '';
@@ -72,14 +76,16 @@ export class FooterInputComponent {
     this.toggleEmoji();
   }
 
-
-
   addMessageId() {
     let id: number;
-    if (this.type === 'channel' && this.fireService.currentChannel.messages.length > 0) {
+    if (
+      this.type === 'channel' &&
+      this.fireService.currentChannel.messages.length > 0
+    ) {
       id =
-        this.fireService.currentChannel.messages[this.fireService.currentChannel.messages.length - 1].id + 1;
-
+        this.fireService.currentChannel.messages[
+          this.fireService.currentChannel.messages.length - 1
+        ].id + 1;
     } else if (this.type === 'pm' && this.conversation.messages.length > 0) {
       id =
         this.conversation.messages[this.conversation.messages.length - 1].id +
@@ -93,8 +99,6 @@ export class FooterInputComponent {
     return id;
   }
 
-
-
   async addMessageToChannel() {
     if (this.sendMessageForm.valid) {
       const docReference = this.fireService.getDocRef(
@@ -105,13 +109,12 @@ export class FooterInputComponent {
       await updateDoc(docReference, {
         messages: this.fireService.currentChannel.messages,
       });
-      this.sendMessageForm.patchValue('')
+      this.sendMessageForm.patchValue('');
     }
   }
 
-
   createMessage() {
-    this.newMessage = new Message()
+    this.newMessage = new Message();
     this.newMessage.sender = this.userService.user.name;
     this.newMessage.profileImg = this.userService.user.profileImg;
     this.newMessage.content = this.sendMessageForm.value;
@@ -122,18 +125,19 @@ export class FooterInputComponent {
     this.newMessage.creationDay = this.fireService.getDaysName();
     this.newMessage.id = this.addMessageId();
     if (this.type === 'channel') {
-      this.newMessage.collectionId = this.fireService.currentChannel.id,
-        this.newMessage.messageType = 'channels'
-      this.addMessageToChannel()
+      this.newMessage.collectionId = this.fireService.currentChannel.id;
+      this.newMessage.messageType = 'channels';
+      this.addMessageToChannel();
     } else if (this.type === 'pm') {
-      this.newMessage.collectionId = this.conversationId,
-        this.newMessage.messageType = 'pms'
-      this.addMessageToPM()
+      this.newMessage.collectionId = this.conversationId;
+      this.newMessage.messageType = 'pms';
+      this.newMessage.senderId = this.userService.user.userId;
+      this.newMessage.recipientId = this.pmRecipient;
+      this.addMessageToPM();
     } else if (this.type === 'thread') {
-      this.addMessageToThread()
+      this.addMessageToThread();
     }
   }
-
 
   addMessageToThread() {
     this.parentMessage.thread.push(this.newMessage);
@@ -143,9 +147,8 @@ export class FooterInputComponent {
       this.parentMessage.collectionId,
       this.openThreadConversation.toJSON()
     );
-    this.sendMessageForm.patchValue('')
+    this.sendMessageForm.patchValue('');
   }
-
 
   addMessageToPM() {
     this.conversation.messages.push(this.newMessage);
@@ -154,12 +157,11 @@ export class FooterInputComponent {
       this.conversationId,
       this.conversation.toJSON()
     );
-    this.sendMessageForm.patchValue('')
+    this.sendMessageForm.patchValue('');
   }
 
-
   addTaggedUser(inputElement: HTMLInputElement) {
-    this.simulateMentionEvent(inputElement)
+    this.simulateMentionEvent(inputElement);
     let currentMessage = this.sendMessageForm.value || '';
     let cursorPosition = this.cursorService.getCursorPosition(inputElement);
     let messageArray = currentMessage.split('');
@@ -172,7 +174,6 @@ export class FooterInputComponent {
   }
 
   toggleMention() {
-    this.mentionsOpen = !this.mentionsOpen
-
+    this.mentionsOpen = !this.mentionsOpen;
   }
 }
