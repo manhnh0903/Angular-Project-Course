@@ -58,18 +58,24 @@ export class HeaderComponent {
   openUserDetails(user: DabubbleUser) {
     this.homeNavService.pmRecipientData = user;
     this.homeNavService.pmRecipientOverlayOpen = true;
+    this.searchInput = '';
+    this.resetResults();
   }
 
   async openChanelChat(id: string) {
     await this.firestoreService.getCurrentChannel('channels', id);
     this.firestoreService.getCurrentDate();
     this.homeNavService.setChatPath('chanel');
+    this.searchInput = '';
+    this.resetResults();
   }
 
   openPmChat(userId: string) {
     this.homeNavService.pmRecipient = userId;
     this.homeNavService.setChatPath('pm');
     this.firestoreService.subscribeToPmRecipient(userId);
+    this.searchInput = '';
+    this.resetResults();
   }
 
   subAllCollections() {
@@ -151,13 +157,6 @@ export class HeaderComponent {
           .includes(this.searchInput.toLowerCase());
 
         const userInChannel = this.isUserInChannel(channel);
-
-        console.log(
-          'user in channel:',
-          userInChannel,
-          'content matches:',
-          contentMatches
-        );
 
         return contentMatches && userInChannel;
       });

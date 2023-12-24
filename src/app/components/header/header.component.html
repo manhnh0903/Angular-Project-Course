@@ -1,85 +1,83 @@
 <div class="container">
-  <div class="logoSearchBar">
-    <img class="logo" src="assets/img/logo.png" />
-    <div class="searchBarContainer">
-      <input
-        [(ngModel)]="searchInput"
-        (keyup)="searchApp()"
-        class="searchBar"
-        placeholder="code learning durchsuchen"
-      />
-      <img class="search_icon" src="assets/img/search_icon.png" />
+  <img class="logo" src="assets/img/logo.png" />
+
+  <div class="searchBarContainer">
+    <input
+      [(ngModel)]="searchInput"
+      (keyup)="searchApp()"
+      class="searchBar"
+      placeholder="code learning durchsuchen"
+    />
+    <img class="search_icon" src="assets/img/search_icon.png" />
+
+    <div
+      *ngIf="
+        filterdChannelsData.length > 0 ||
+        filterdUserData.length > 0 ||
+        filterdPmsData.length > 0
+      "
+      class="search-result-container"
+    >
+      <div *ngIf="filterdUserData.length > 0" class="user-results-container">
+        <span>#Users</span>
+        <div
+          class="user-result"
+          *ngFor="let user of filterdUserData"
+          (click)="openUserDetails(user)"
+        >
+          <img
+            class="profile-img"
+            src="{{ user.profileImg }}"
+            alt="profile.img"
+          />
+          <img
+            *ngIf="user.onlineStatus === true"
+            src="./assets/img/online.png"
+            alt="online.img"
+          />
+          <img
+            *ngIf="user.onlineStatus === false"
+            src="./assets/img/offline.png"
+            alt="online.img"
+          />
+          <span>{{ user.name }}</span>
+        </div>
+      </div>
 
       <div
-        *ngIf="
-          filterdChannelsData.length > 0 ||
-          filterdUserData.length > 0 ||
-          filterdPmsData.length > 0
-        "
-        class="search-result-container"
+        *ngIf="filterdChannelsData.length > 0"
+        class="channel-result-container"
       >
-        <div *ngIf="filterdUserData.length > 0" class="user-results-container">
-          <div
-            class="user-result"
-            *ngFor="let user of filterdUserData"
-            (click)="openUserDetails(user)"
-          >
-            <img
-              class="profile-img"
-              src="{{ user.profileImg }}"
-              alt="profile.img"
-            />
-            <img
-              *ngIf="user.onlineStatus === true"
-              src="./assets/img/online.png"
-              alt="online.img"
-            />
-            <img
-              *ngIf="user.onlineStatus === false"
-              src="./assets/img/offline.png"
-              alt="online.img"
-            />
-            <span>{{ user.name }}</span>
-          </div>
-        </div>
-
+        <span>#Channels Nachrichten</span>
         <div
-          *ngIf="filterdChannelsData.length > 0"
-          class="channel-result-container"
+          (click)="openChanelChat(message.collectionId)"
+          class="message"
+          *ngFor="let message of filterdChannelsData"
         >
-          <div
-            (click)="openChanelChat(message.collectionId)"
-            class="message"
-            *ngFor="let message of filterdChannelsData"
-          >
-            <img src="{{ message.profileImg }}" alt="profile-img" />
-            <div>
-              <span>{{ message.content }}</span>
-              <div class="sender-wrapper">
-                <p>{{ message.sender }}</p>
-                <span
-                  >{{ message.creationDate }} {{ message.creationTime }}</span
-                >
-              </div>
+          <img src="{{ message.profileImg }}" alt="profile-img" />
+          <div>
+            <span>{{ message.content }}</span>
+            <div class="sender-wrapper">
+              <p>{{ message.sender }}</p>
+              <span>{{ message.creationDate }} {{ message.creationTime }}</span>
             </div>
           </div>
         </div>
+      </div>
 
-        <div *ngIf="filterdPmsData.length > 0" class="pms-result-container">
-          <div
-            (click)="openPmChat(message.recipientId)"
-            class="message"
-            *ngFor="let message of filterdPmsData"
-          >
-            <img src="{{ message.profileImg }}" alt="profile-img" />
-            <div>
-              <span>{{ message.content }}</span>
-              <div class="sender-wrapper">
-                <p>{{ message.sender }}</p>
-                <span
-                  >{{ message.creationDate }} {{ message.creationTime }}</span
-                >
-              </div>
+      <div *ngIf="filterdPmsData.length > 0" class="pms-result-container">
+        <span>#Direktnachrichten</span>
+        <div
+          (click)="openPmChat(message.recipientId)"
+          class="message"
+          *ngFor="let message of filterdPmsData"
+        >
+          <img src="{{ message.profileImg }}" alt="profile-img" />
+          <div>
+            <span>{{ message.content }}</span>
+            <div class="sender-wrapper">
+              <p>{{ message.sender }}</p>
+              <span>{{ message.creationDate }} {{ message.creationTime }}</span>
             </div>
           </div>
         </div>
@@ -96,7 +94,6 @@
         src="{{ userService.user.profileImg }}"
       />
       <img class="status" src="assets/img/online.png" />
-      <!-- onlinestatus noch über userService machen -->
     </div>
     <img
       (click)="openMenu()"
