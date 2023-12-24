@@ -12,8 +12,15 @@
     />
     <h2>Wähle deinen Avatar</h2>
     <img
+      *ngIf="user.profileImg === ''"
       class="focus-img"
       src="./assets/img/blank-avatar.svg"
+      alt="blank-avatar"
+    />
+    <img
+      *ngIf="user.profileImg !== ''"
+      class="focus-img"
+      src="{{ user.profileImg }}"
       alt="blank-avatar"
     />
     <div class="choose-wrapper">

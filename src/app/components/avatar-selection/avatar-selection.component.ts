@@ -13,8 +13,8 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   animations: [Animations.slideInOutAnimation],
 })
 export class AvatarSelectionComponent {
-  user = new DabubbleUser();
-  userCreated: boolean = false;
+  public user = new DabubbleUser();
+  public userCreated: boolean = false;
 
   profilePictures: string[] = [
     './assets/img/0character.png',
@@ -38,7 +38,6 @@ export class AvatarSelectionComponent {
 
   setProfileImg(img: string) {
     this.user.profileImg = img;
-    console.log(this.user);
   }
 
   async createUser() {
