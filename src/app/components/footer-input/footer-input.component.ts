@@ -1,8 +1,10 @@
 import {
   ChangeDetectorRef,
   Component,
+  ElementRef,
   Input,
   OnInit,
+  ViewChild,
   inject,
 } from '@angular/core';
 import { Firestore, updateDoc } from '@angular/fire/firestore';
@@ -11,6 +13,8 @@ import { CursorPositionService } from 'src/app/services/cursor-position.service'
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { UserService } from 'src/app/services/user.service';
 import { Message } from 'src/app/classes/message.class';
+import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+
 @Component({
   selector: 'app-footer-input',
   templateUrl: './footer-input.component.html',
@@ -29,38 +33,75 @@ export class FooterInputComponent {
   @Input() threadCollection;
   @Input() parentMessage;
   @Input() openThreadConversation;
+  files
   indexOfMention = [];
   event: any;
   constructor(
     public fireService: FirestoreService,
     public userService: UserService,
-    private cursorService: CursorPositionService
-  ) {}
+    private cursorService: CursorPositionService,
+
+  ) { }
+  fileName = '';
+  @ViewChild('contentContainer') contentContainer: ElementRef;
+  
+
+  async onFileSelected(event,input) {
+    const metadata = {
+      contentType: 'image/jpeg'
+    };
+    let inputElement = event.target.files as HTMLInputElement
+    const storage = getStorage();
+    const storageRef = ref(storage, 'images/' + inputElement[0].name);
+    const uploadTask = uploadBytesResumable(storageRef, inputElement[0], metadata);
+    uploadTask.on('state_changed',
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case 'paused':
+            console.log('Upload is paused');
+            break;
+          case 'running':
+            console.log('Upload is running');
+            break;
+        }
+      },
+      (error) => {
+        switch (error.code) {
+          case 'storage/unauthorized':
+            break;
+          case 'storage/canceled':
+            break;
+          case 'storage/unknown':
+            break;
+        }
+      })
+    this.readImage(uploadTask,input)
+  }
+
+
+  readImage(uploadTask, input) {
+    uploadTask.then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((downloadURL) => {
+        const currentMessage = this.sendMessageForm.value || '';
+        const cursorPosition = this.cursorService.getCursorPosition(input);
+        const messageArray = currentMessage.split('');
+        messageArray.splice(cursorPosition, 0, `<a href="${downloadURL}">Open file</a>`);
+        const updatedMessage = messageArray.join('');
+        this.sendMessageForm.patchValue(updatedMessage);
+        /*         this.sendMessageForm.patchValue(`<a href="${downloadURL}">Open file</a>`) */
+      })
+    });
+  }
+
+
 
   simulateMentionEvent(inputElement: HTMLInputElement) {
     const event = new KeyboardEvent('keydown', { key: '@', code: 'Digit2' });
     inputElement.dispatchEvent(event);
   }
-  /*   ngOnInit() {
-      this.changesOfValueMessage()
-    } */
 
-  /*   filteredUsers = [] */
-  /*  changesOfValueMessage() {
-     this.sendMessageForm.valueChanges.subscribe((value: any) => {
-       value = value.split('');
-       let index = value.lastIndexOf('@')
-       if (index !== -1) {
- 
-         this.mentionsOpen = true
-  
-       } else {
-         this.mentionsOpen = false
-       }
-     });
- 
-   }
-  */
 
   toggleEmoji() {
     this.emojiOpened = !this.emojiOpened;

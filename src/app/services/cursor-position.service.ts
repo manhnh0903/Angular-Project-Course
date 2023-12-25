@@ -8,7 +8,6 @@ export class CursorPositionService {
   constructor() { }
   getCursorPosition(inputElement: HTMLInputElement) {
     const cursorPosition = inputElement?.selectionStart ?? 0;
-    console.log(cursorPosition);
     return cursorPosition;
   }
 

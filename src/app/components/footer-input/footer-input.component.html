@@ -1,10 +1,15 @@
 <form (ngSubmit)="createMessage()">
-  <input autofocus #inputFooter [formControl]="sendMessageForm" placeholder="Type your message" [mention]="fireService.allUsers"
-    [mentionListTemplate]="mentionListTemplate" [mentionConfig]="{triggerChar:'@', dropUp:true,labelKey:'name'}" />
+  <input autofocus #inputFooter [formControl]="sendMessageForm" placeholder="Type your message"
+    [mention]="fireService.allUsers" [mentionListTemplate]="mentionListTemplate"
+    [mentionConfig]="{triggerChar:'@', dropUp:true,labelKey:'name'}" />
   <div class="messageIcons">
-    <img class="messageIcon border" src="assets/img/add.svg">
+    <div class="addFile" #contentContainer>
+      <img class="messageIcon border" src="assets/img/add.svg">
+      <input class="addFileInput" (change)="onFileSelected($event, inputFooter)" #fileUpload type="file" />
+      <app-file-upload [sendMessageForm]="sendMessageForm"></app-file-upload>
+    </div>
     <div class="positionRelative">
-      <img class="messageIcon" (click)=" addTaggedUser(inputFooter)" src="assets/img/alternate_email.svg">
+      <img class="messageIcon" (click)="addTaggedUser(inputFooter)" src="assets/img/alternate_email.svg">
       <ng-template #mentionListTemplate let-item="item">
         <div class="templateLine">
           <img class="mr-3" src="{{item.profileImg}}" alt="" width="30" height="30">
