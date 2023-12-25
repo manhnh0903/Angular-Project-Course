@@ -1,5 +1,4 @@
 import { Component, ElementRef } from '@angular/core';
-import { user } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Channel } from 'src/app/classes/channel.class';
 import { Conversation } from 'src/app/classes/conversation.class';
@@ -16,16 +15,16 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  menuOpen = false;
+  menuOpen: boolean = false;
 
   searchInput: string;
-  usersData: {}[];
-  pmsData: {}[];
-  channelsData: {}[];
+  private usersData: {}[];
+  private pmsData: {}[];
+  private channelsData: {}[];
 
-  filterdUserData: DabubbleUser[] = [];
-  filterdPmsData: Message[] = [];
-  filterdChannelsData: Message[] = [];
+  public filterdUserData: DabubbleUser[] = [];
+  public filterdPmsData: Message[] = [];
+  public filterdChannelsData: Message[] = [];
 
   constructor(
     private el: ElementRef,
@@ -33,7 +32,7 @@ export class HeaderComponent {
     private authService: FirebaseAuthService,
     private router: Router,
     private firestoreService: FirestoreService,
-    private homeNavService: HomeNavigationService
+    public homeNavService: HomeNavigationService
   ) {
     this.authService.checkAuth();
     this.subAllCollections();

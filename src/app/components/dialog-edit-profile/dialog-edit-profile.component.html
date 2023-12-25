@@ -2,7 +2,11 @@
   <form [formGroup]="editProfileForm" (ngSubmit)="editProfile()">
     <div class="profileFlex">
       <span class="menuSpan">Dein Profil bearbeiten</span>
-      <img routerLink="/home" class="closeIcon" src="assets/img/close.png" />
+      <img
+        (click)="closeDialog()"
+        class="closeIcon"
+        src="assets/img/close.png"
+      />
     </div>
     <img class="profilePic" src="{{ userService.user.profileImg }}" />
 

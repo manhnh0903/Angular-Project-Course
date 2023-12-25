@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CustomValidators } from 'src/app/classes/custom-validators.class';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -20,7 +21,8 @@ export class DialogEditProfileComponent {
     public userService: UserService,
     private firestoreService: FirestoreService,
     private authService: FirebaseAuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private homeNavService: HomeNavigationService
   ) {
     this.editProfileForm = this.fb.group({
       name: ['', Validators.required],
@@ -73,5 +75,6 @@ export class DialogEditProfileComponent {
 
   closeDialog() {
     this.router.navigateByUrl('/home');
+    this.homeNavService.editProfileOpen = false;
   }
 }

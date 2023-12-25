@@ -102,9 +102,22 @@
     />
     <div *ngIf="menuOpen" class="menuProfileContainer">
       <div class="menuProfileContent">
-        <span routerLink="/profile" class="menuSpan">Profil</span>
+        <span (click)="homeNavService.profileOverlay = true" class="menuSpan"
+          >Profil</span
+        >
         <span (click)="logout()" class="menuSpan">Log out</span>
       </div>
+    </div>
+    <div
+      *ngIf="homeNavService.profileOverlay"
+      class="profile-component-wrapper"
+    >
+      <app-profile-dialog
+        *ngIf="homeNavService.profileOverlay"
+      ></app-profile-dialog>
+      <app-dialog-edit-profile
+        *ngIf="homeNavService.editProfileOpen"
+      ></app-dialog-edit-profile>
     </div>
   </div>
 </div>

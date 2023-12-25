@@ -13,6 +13,8 @@ export class HomeNavigationService {
   public pmRecipientData: DabubbleUser;
   public pmRecipientOverlayOpen: boolean = false;
   public threadOpen: boolean = false;
+  public profileOverlay: boolean = false;
+  public editProfileOpen: boolean = false;
 
   constructor(private firestoreService: FirestoreService) {}
 
