@@ -1,14 +1,3 @@
-/* footer {
-    margin-top: auto;
-    height: 20%;
-    border: 1px solid blue;
-    border-radius: 15px;
-    padding: 20px;
-    background-color: white;
-    margin-right: 60px;
-    margin-left: 60px;
-    position: relative; */
-
 input {
     width: 100%;
     outline: none;
@@ -17,7 +6,18 @@ input {
     font-size: 20px;
 }
 
+.fileToAdd {
+    display: flex;
 
+    span {
+        cursor: pointer;
+    }
+
+    p {
+        margin-left: 5px;
+        cursor: pointer;
+    }
+}
 
 .sendIcon {
     position: absolute;
@@ -60,7 +60,7 @@ input {
 }
 
 .imgSize {
-    max-height:40px
+    max-height: 40px
 }
 
 .messageIcons {

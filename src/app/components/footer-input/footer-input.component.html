@@ -1,7 +1,13 @@
 <form (ngSubmit)="createMessage()">
-  <input autofocus #inputFooter [formControl]="sendMessageForm" placeholder="Type your message"
-    [mention]="fireService.allUsers" [mentionListTemplate]="mentionListTemplate"
-    [mentionConfig]="{triggerChar:'@', dropUp:true,labelKey:'name'}" />
+  <div>
+    <div class="fileToAdd" *ngIf="this.linkContent">
+      <span [innerHTML]="linkContent"></span>
+      <p (click)="deleteFile()">x</p>
+    </div>
+    <input autofocus #inputFooter [formControl]="sendMessageForm" placeholder="Type your message"
+      [mention]="fireService.allUsers" [mentionListTemplate]="mentionListTemplate"
+      [mentionConfig]="{triggerChar:'@', dropUp:true,labelKey:'name'}" />
+  </div>
   <div class="messageIcons">
     <div class="addFile" #contentContainer>
       <img class="messageIcon border" src="assets/img/add.svg">

@@ -13,7 +13,7 @@ import { CursorPositionService } from 'src/app/services/cursor-position.service'
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { UserService } from 'src/app/services/user.service';
 import { Message } from 'src/app/classes/message.class';
-import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable, deleteObject } from "firebase/storage";
 
 @Component({
   selector: 'app-footer-input',
@@ -44,57 +44,30 @@ export class FooterInputComponent {
   ) { }
   fileName = '';
   @ViewChild('contentContainer') contentContainer: ElementRef;
-  
+  @ViewChild('inputFooter', { static: true }) inputFooter: ElementRef;
+  private storageRef
+  public linkContent: string
 
-  async onFileSelected(event,input) {
+
+  async onFileSelected(event, input) {
     const metadata = {
       contentType: 'image/jpeg'
     };
     let inputElement = event.target.files as HTMLInputElement
     const storage = getStorage();
-    const storageRef = ref(storage, 'images/' + inputElement[0].name);
-    const uploadTask = uploadBytesResumable(storageRef, inputElement[0], metadata);
-    uploadTask.on('state_changed',
-      (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-        switch (snapshot.state) {
-          case 'paused':
-            console.log('Upload is paused');
-            break;
-          case 'running':
-            console.log('Upload is running');
-            break;
-        }
-      },
-      (error) => {
-        switch (error.code) {
-          case 'storage/unauthorized':
-            break;
-          case 'storage/canceled':
-            break;
-          case 'storage/unknown':
-            break;
-        }
-      })
-    this.readImage(uploadTask,input)
+    this.storageRef = ref(storage, 'images/' + inputElement[0].name);
+    const uploadTask = uploadBytesResumable(this.storageRef, inputElement[0], metadata);
+    this.readImage(uploadTask, input)
   }
 
 
   readImage(uploadTask, input) {
     uploadTask.then((snapshot) => {
       getDownloadURL(snapshot.ref).then((downloadURL) => {
-        const currentMessage = this.sendMessageForm.value || '';
-        const cursorPosition = this.cursorService.getCursorPosition(input);
-        const messageArray = currentMessage.split('');
-        messageArray.splice(cursorPosition, 0, `<a href="${downloadURL}">Open file</a>`);
-        const updatedMessage = messageArray.join('');
-        this.sendMessageForm.patchValue(updatedMessage);
-        /*         this.sendMessageForm.patchValue(`<a href="${downloadURL}">Open file</a>`) */
+        this.linkContent = `<a href="${downloadURL}">Open file</a>`
       })
     });
   }
-
 
 
   simulateMentionEvent(inputElement: HTMLInputElement) {
@@ -107,6 +80,7 @@ export class FooterInputComponent {
     this.emojiOpened = !this.emojiOpened;
   }
 
+
   addEmoji(event, inputElement: HTMLInputElement) {
     const currentMessage = this.sendMessageForm.value || '';
     const cursorPosition = this.cursorService.getCursorPosition(inputElement);
@@ -116,6 +90,7 @@ export class FooterInputComponent {
     this.sendMessageForm.patchValue(updatedMessage);
     this.toggleEmoji();
   }
+
 
   addMessageId() {
     let id: number;
@@ -154,17 +129,35 @@ export class FooterInputComponent {
     }
   }
 
+
+  deleteFile() {
+    deleteObject(this.storageRef)
+    this.linkContent = ''
+  }
+
+  addImageToMessage() {
+    const currentMessage = this.sendMessageForm.value || '';
+    const updatedMessage = this.linkContent + currentMessage;
+    this.sendMessageForm.patchValue(updatedMessage);
+  }
+
   createMessage() {
+
     this.newMessage = new Message();
     this.newMessage.sender = this.userService.user.name;
     this.newMessage.profileImg = this.userService.user.profileImg;
-    this.newMessage.content = this.sendMessageForm.value;
+    if (this.linkContent) {
+      this.newMessage.content = this.linkContent + this.sendMessageForm.value;
+    } else {
+      this.newMessage.content = this.sendMessageForm.value;
+    }
     this.newMessage.thread = [];
     this.newMessage.reactions = [];
     this.newMessage.creationDate = this.fireService.getCurrentDate();
     this.newMessage.creationTime = this.fireService.getCurrentTime();
     this.newMessage.creationDay = this.fireService.getDaysName();
     this.newMessage.id = this.addMessageId();
+
     if (this.type === 'channel') {
       this.newMessage.collectionId = this.fireService.currentChannel.id;
       this.newMessage.messageType = 'channels';
