@@ -1,17 +1,14 @@
 import {
-  AfterViewInit,
   Component,
-  Input,
-  NgZone,
+  EventEmitter,
   OnInit,
-  inject,
+  Output,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateChannelComponent } from '../create-channel/create-channel.component';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
-import { onSnapshot, query } from '@angular/fire/firestore';
-import { UserService } from 'src/app/services/user.service';
+
 
 @Component({
   selector: 'app-side-menu',
@@ -19,16 +16,18 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./side-menu.component.scss'],
 })
 export class SideMenuComponent implements OnInit {
+  @Output() booleanChanged = new EventEmitter<boolean>();
+  
   constructor(
     public dialog: MatDialog,
     public fireService: FirestoreService,
     private navService: HomeNavigationService,
-    private userService: UserService
-  ) {}
+  ) { }
   async ngOnInit() {
     this.fireService.readChannels();
-  }
 
+  }
+  clickedOnMobile = false
   channelsClicked = true;
   PMclicked = true;
 
@@ -41,6 +40,8 @@ export class SideMenuComponent implements OnInit {
   }
 
   async openChanelChat(id: string) {
+    this.clickedOnMobile = true;
+    this.booleanChanged.emit(this.clickedOnMobile);
     await this.fireService.getCurrentChannel('channels', id);
     this.fireService.getCurrentDate();
     this.navService.setChatPath('chanel');

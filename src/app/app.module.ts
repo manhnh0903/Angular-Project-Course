@@ -35,8 +35,9 @@ import { EditChannelComponent } from './components/edit-channel/edit-channel.com
 import { PmRecipientOverviewComponent } from './components/pm-recipient-overview/pm-recipient-overview.component';
 import { FooterInputComponent } from './components/footer-input/footer-input.component';
 import { MentionModule } from 'angular-mentions';
-import { FileUploadComponent } from './file-upload/file-upload.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LayoutModule } from '@angular/cdk/layout';
+
 
 @NgModule({
   declarations: [
@@ -61,10 +62,10 @@ import { HttpClientModule } from '@angular/common/http';
     EditChannelComponent,
     PmRecipientOverviewComponent,
     FooterInputComponent,
-    FileUploadComponent,
-
   ],
   imports: [
+
+    LayoutModule,
     HttpClientModule,
     MentionModule,
     PickerComponent,
@@ -84,4 +85,7 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {
+  isMobile
+
+}

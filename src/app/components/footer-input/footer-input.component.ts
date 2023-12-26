@@ -64,7 +64,7 @@ export class FooterInputComponent {
   readImage(uploadTask, input) {
     uploadTask.then((snapshot) => {
       getDownloadURL(snapshot.ref).then((downloadURL) => {
-        this.linkContent = `<a href="${downloadURL}">Open file</a>`
+        this.linkContent = `<a target="_blank" href="${downloadURL}">Open file</a>`
       })
     });
   }

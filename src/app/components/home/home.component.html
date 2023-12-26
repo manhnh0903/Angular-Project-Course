@@ -1,24 +1,27 @@
-<div
-  *ngIf="navService.pmRecipientOverlayOpen"
-  class="pm-recipient-overlay"
-  (click)="navService.pmRecipientOverlayOpen = false"
->
-  <app-pm-recipient-overview
-    (click)="$event.stopPropagation()"
-  ></app-pm-recipient-overview>
+<div *ngIf="navService.pmRecipientOverlayOpen" class="pm-recipient-overlay"
+  (click)="navService.pmRecipientOverlayOpen = false">
+  <app-pm-recipient-overview (click)="$event.stopPropagation()"></app-pm-recipient-overview>
 </div>
-<app-header></app-header>
+<app-header *ngIf="!isMobile || isMobile && !clickedOnMobile"></app-header>
 <div class="homeContainer">
-  <div (click)="hideMenu()" class="sideMenuButton">
+  <div (click)="hideMenu()" class="sideMenuButton" *ngIf="!isMobile">
     <span>Workspace menu schliesen</span>
     <img class="showMenuIcon" src="assets/img/Hide-navigation.svg" />
   </div>
   <div [ngClass]="{ hideMenu: !showMenu, showMenu: showMenu }">
-    <app-side-menu></app-side-menu>
+    <app-side-menu (booleanChanged)="handleBooleanChange($event)"></app-side-menu>
   </div>
-  <div *ngIf="navService.mainChatPath === 'chanel'" class="chatContainer">
+
+  <div [ngStyle]="{ 'display': isMobile && clickedOnMobile ? 'unset':'' }"
+    *ngIf="navService.mainChatPath === 'chanel'" class="chatContainer">
+    <div *ngIf="isMobile && clickedOnMobile" class="logoContainer">
+      <img class="logoMenu" src="assets/img/menu_logo.png" />
+      <h1>Code learning</h1>
+      <img class="edit_square" src="assets/img/edit_square.png" />
+    </div>
     <app-channels-chat></app-channels-chat>
   </div>
+
   <app-pm-chat *ngIf="navService.mainChatPath === 'pm'"></app-pm-chat>
   <app-tread *ngIf="navService.threadOpen"></app-tread>
 </div>

@@ -22,8 +22,7 @@
 
   &:hover .showMenuIcon,
   &:hover span {
-    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%)
-      hue-rotate(164deg) brightness(104%) contrast(98%);
+    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
   }
 }
 
@@ -94,28 +93,43 @@ app-pm-chat {
   }
 }
 
-/* @keyframes expandChannelContainer {
-    0% {
-        width: 0;
-    }
+@media(max-width:650px) {
+  .sideMenuButton {
+    position: relative;
+    display: none;
+  }
 
-    20% {
-        width: 60%;
-    }
+  .chatContainer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    display: none;
+  }
 
-    40% {
-        width: 70%;
-    }
+  .showMenu {
+    width: 100%
+  }
+}
 
-    60% {
-        width: 80%;
-    }
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  background-color: #ECEEFE;
+  padding: 23px;
 
-    80% {
-        width: 90%;
-    }
+  h1 {
+    color: var(--Black, #000);
+    font-family: Nunito;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+}
 
-    100% {
-        width: 100%
-    }
-} */
+.logoMenu {
+  height: 60px;
+}

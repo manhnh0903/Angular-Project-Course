@@ -1,3 +1,4 @@
+
 import { Component, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Channel } from 'src/app/classes/channel.class';
@@ -32,11 +33,17 @@ export class HeaderComponent {
     private authService: FirebaseAuthService,
     private router: Router,
     private firestoreService: FirestoreService,
-    public homeNavService: HomeNavigationService
+    public homeNavService: HomeNavigationService,
   ) {
     this.authService.checkAuth();
     this.subAllCollections();
+
   }
+
+ 
+ 
+
+
 
   ngAfterViewInit() {
     this.el.nativeElement.addEventListener('click', (event) => {

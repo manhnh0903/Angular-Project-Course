@@ -52,12 +52,12 @@
 
   z-index: 100;
 
-  > div {
+  >div {
     display: flex;
     flex-direction: column;
     gap: 8px;
 
-    > span {
+    >span {
       color: gray;
       padding: 0 8px 0 8px;
     }
@@ -97,7 +97,7 @@
       border: 1px solid var(--main-dark-blue);
     }
 
-    > div {
+    >div {
       display: flex;
       flex-direction: column;
 
@@ -162,8 +162,7 @@
     cursor: pointer;
 
     &:hover {
-      filter: brightness(0) saturate(100%) invert(29%) sepia(14%)
-        saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
+      filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
     }
   }
 }
@@ -202,5 +201,30 @@
   .menuSpan {
     font-size: 22px;
     cursor: pointer;
+  }
+}
+
+
+@media(max-width:650px) {
+  .container {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .userName {
+    display: none;
+  }
+
+  .logo {
+    max-height: 50px;
+  }
+
+  .searchBarContainer {
+    display: none;
+  }
+
+  .arrowDown {
+    display: none;
   }
 }

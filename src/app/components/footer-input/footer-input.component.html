@@ -12,7 +12,6 @@
     <div class="addFile" #contentContainer>
       <img class="messageIcon border" src="assets/img/add.svg">
       <input class="addFileInput" (change)="onFileSelected($event, inputFooter)" #fileUpload type="file" />
-      <app-file-upload [sendMessageForm]="sendMessageForm"></app-file-upload>
     </div>
     <div class="positionRelative">
       <img class="messageIcon" (click)="addTaggedUser(inputFooter)" src="assets/img/alternate_email.svg">
