@@ -8,7 +8,11 @@
         src="assets/img/close.png"
       />
     </div>
-    <img class="profilePic" src="{{ userService.user.profileImg }}" />
+    <img
+      (click)="openEditProfileImg()"
+      class="profilePic"
+      src="{{ userService.user.profileImg }}"
+    />
 
     <div class="emailContainer">
       <div class="emailDiv">
@@ -59,4 +63,20 @@
       <button type="submit" class="save">Speichern</button>
     </div>
   </form>
+
+  <div
+    (click)="closeEditProfileImg()"
+    *ngIf="chooseProfileImg"
+    class="select-profile-img-overlay"
+  >
+    <div>
+      <img
+        (click)="selectProfileImg($event, img)"
+        class="profilePic"
+        *ngFor="let img of profilePictures"
+        src="{{ img }}"
+        alt="profile.img"
+      />
+    </div>
+  </div>
 </div>

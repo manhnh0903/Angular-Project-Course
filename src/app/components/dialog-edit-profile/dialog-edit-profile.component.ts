@@ -14,6 +14,17 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class DialogEditProfileComponent {
   editProfileForm: FormGroup;
+  chooseProfileImg: boolean = false;
+  originalProfileImg: string;
+
+  profilePictures: string[] = [
+    './assets/img/0character.png',
+    './assets/img/1character.png',
+    './assets/img/2character.png',
+    './assets/img/3character.png',
+    './assets/img/4character.png',
+    './assets/img/5character.png',
+  ];
 
   constructor(
     private router: Router,
@@ -43,6 +54,22 @@ export class DialogEditProfileComponent {
   }
   get email() {
     return this.editProfileForm.get('email');
+  }
+
+  openEditProfileImg() {
+    this.chooseProfileImg = true;
+    this.originalProfileImg = this.userService.user.profileImg;
+  }
+
+  closeEditProfileImg() {
+    this.chooseProfileImg = false;
+  }
+
+  selectProfileImg(event: Event, img: string) {
+    event.stopPropagation();
+    this.userService.user.profileImg = img;
+
+    console.log(this.originalProfileImg);
   }
 
   async editProfile() {
