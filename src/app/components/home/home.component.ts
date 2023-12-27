@@ -50,6 +50,8 @@ export class HomeComponent implements OnInit {
 
 backToMenu(){
   this.clickedOnMobile=false
+  console.log(this.clickedOnMobile);
+  
 }
 
 

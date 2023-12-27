@@ -17,7 +17,7 @@ import { HomeNavigationService } from 'src/app/services/home-navigation.service'
 })
 export class SideMenuComponent implements OnInit {
   @Output() booleanChanged = new EventEmitter<boolean>();
-  
+
   constructor(
     public dialog: MatDialog,
     public fireService: FirestoreService,
@@ -64,6 +64,9 @@ export class SideMenuComponent implements OnInit {
   }
 
   openPmChat(userId: string) {
+    this.clickedOnMobile = true;
+    this.booleanChanged.emit(this.clickedOnMobile);
+    
     this.navService.pmRecipient = userId;
     this.navService.setChatPath('pm');
     this.fireService.subscribeToPmRecipient(userId);
