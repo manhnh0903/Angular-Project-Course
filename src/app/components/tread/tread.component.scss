@@ -34,7 +34,8 @@ section {
       }
     }
   }
-/*   .chat-area> :first-child {
+
+  /*   .chat-area> :first-child {
     margin-top: auto !important;
   } */
   .chat-area {
@@ -45,26 +46,36 @@ section {
     flex-flow: column nowrap;
     gap: 32px;
 
-  .seperator-wrapper {
-    display: flex;
-    gap: 20px;
-    align-items: center;
+    .seperator-wrapper {
+      display: flex;
+      gap: 20px;
+      align-items: center;
 
-    span {
-      font-size: 18px;
-      color: rgba(173, 176, 217, 1);
-    }
+      span {
+        font-size: 18px;
+        color: rgba(173, 176, 217, 1);
+      }
 
-    div {
-      border-bottom: 1px solid rgba(173, 176, 217, 1);
-      flex: 1;
+      div {
+        border-bottom: 1px solid rgba(173, 176, 217, 1);
+        flex: 1;
+      }
     }
+  }
+
+  .input-area {
+    height: 200px;
+    padding: 20px 45px;
   }
 }
 
-.input-area {
-  height: 200px;
-  padding: 20px 45px;
+@media(max-width:650px) {
+  section {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: unset;
+    border-radius: 0;
+  }
 }
-}
-
