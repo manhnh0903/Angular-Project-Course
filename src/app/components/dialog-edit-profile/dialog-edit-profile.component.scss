@@ -21,7 +21,7 @@ form {
   top: 100px;
   right: 40px;
   height: 80%;
-  width: 27%;
+  width: 350px;
   border-radius: 30px 0px 30px 30px;
   background-color: #ffffff;
 
@@ -65,14 +65,35 @@ form {
 
   > div {
     display: flex;
-    justify-content: center;
-    gap: 8px;
-    max-width: 300px;
-    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: column;
+    gap: 16px;
     background-color: white;
     padding: 30px;
     border-radius: 30px;
     box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+
+    > img {
+      width: 136px;
+      height: 136px;
+      object-fit: cover;
+      background-color: rgba(121, 126, 243, 1);
+      border-radius: 50%;
+    }
+
+    .img-container {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .button-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
   }
 }
 
@@ -107,23 +128,34 @@ form {
 }
 
 .cancel {
-  color: #797ef3;
-  border: solid 2px #797ef3;
+  color: var(--main-dark-blue);
+  border: solid 1px var(--main-dark-blue);
   border-radius: 20px;
   background-color: white;
   padding: 12px 25px;
   text-align: center;
   cursor: pointer;
+  transition: all 225ms ease-in-out;
+
+  &:hover {
+    background-color: var(--main-dark-blue);
+    color: white;
+  }
 }
 
 .save {
   color: rgb(255, 255, 255);
   border-radius: 20px;
-  background-color: #444df2;
+  background-color: var(--main-dark-blue);
   padding: 12px 25px;
   border: none;
   text-align: center;
   cursor: pointer;
+  transition: all 225ms ease-in-out;
+
+  &:hover {
+    filter: brightness(1.5);
+  }
 }
 
 .buttons {
@@ -144,7 +176,7 @@ form {
     color: rgb(237, 29, 119);
     font-size: 14px;
     position: absolute;
-    bottom: -20px;
+    top: 55px;
   }
 }
 
@@ -153,17 +185,11 @@ form {
   height: 44px;
   padding: 15px 20px;
   border-radius: 30px;
-  border: 1px solid #797ef3;
+  border: 1px solid var(--main-dark-blue);
   gap: 10px;
   outline: none;
   margin-top: 10px;
-  color: #686868;
   font-weight: 500;
   font-size: 18px;
   line-height: 21.6px;
-
-  &:focus {
-    border: 2px solid #797ef3;
-    height: 47px;
-  }
 }
