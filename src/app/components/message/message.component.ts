@@ -7,6 +7,7 @@ import { HomeNavigationService } from 'src/app/services/home-navigation.service'
 import { ReactionsComponent } from '../reactions/reactions.component';
 import { CursorPositionService } from 'src/app/services/cursor-position.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-message',
@@ -15,13 +16,25 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class MessageComponent {
   z: any;
+  isMobile
   constructor(
     public fireService: FirestoreService,
     private userService: UserService,
     private homeNav: HomeNavigationService,
     public cursorService: CursorPositionService,
+    private breakpointObserver: BreakpointObserver,
+  ) {
+    this.breakpointObserver.observe([
+      "(max-width: 650px)"
+    ]).subscribe((result: BreakpointState) => {
+      if (result.matches) {
+        this.isMobile = true
 
-  ) { }
+      } else {
+        this.isMobile = false
+      }
+    });
+  }
   firestore = inject(Firestore);
   @Input() sender: string;
   @Input() profileImg: string;
@@ -335,7 +348,14 @@ export class MessageComponent {
     firstName = word;
     index = j;
     lastName = splitted[j + 1];
-    splitted.splice(index, 2, `<span style="color: blue;">${firstName} ${lastName}</span>`);
+    if (!this.isMobile) {
+      splitted.splice(index, 2, `<span style="color: blue;">${firstName} ${lastName}</span>`);
+      console.log(this.isMobile);
+      
+    }else{
+      splitted.splice(index, 2, `<span style="font-weight:bold">${firstName} ${lastName}</span>`);
+      console.log(this.isMobile);
+    }
   }
 
 

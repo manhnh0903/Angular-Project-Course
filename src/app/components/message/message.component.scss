@@ -11,7 +11,9 @@
   padding: 20px 60px;
   cursor: pointer;
 }
-
+.mention {
+  color: #444DF2;
+}
 .nameContentDiv {
   display: flex;
   flex-direction: column;
@@ -40,6 +42,8 @@
   .borderForMessage {
     border-radius: 0 40px 40px 40px;
   }
+
+
 
   .tread-info {
     display: flex;
@@ -237,4 +241,13 @@ emoji-mart {
 
 .mention {
   background-color: blue;
+}
+
+@media(max-width:650px) {
+  .messageContent {
+    background-color: #444DF2 !important;
+    color: white;
+
+  }
+
 }

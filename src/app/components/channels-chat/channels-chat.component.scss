@@ -58,39 +58,33 @@ header {
     height: 22px;
     cursor: pointer;
 }
-.ifNoMessagesDiv{
+
+.ifNoMessagesDiv {
     margin-left: 60px;
     margin-bottom: 35px;
     display: flex;
     flex-direction: column;
-    .channelsName{
+
+    .channelsName {
         font-weight: bold;
     }
-    p{
+
+    p {
         color: blue;
         margin-left: 10px;
     }
 }
 
-footer {
-    margin-top: auto;
-    border: 1px solid blue;
-    border-radius: 15px;
-    padding: 20px;
-    background-color: white;
-    margin-right: 60px;
-    margin-left: 60px;
-    position: relative;
-}
 
-/*  input {
+
+ input {
         width: 100%;
         outline: none;
         border: none;
         height: 50px;
         font-size: 20px;
     }
-}
+
 
 
 .sendIcon {
@@ -131,7 +125,7 @@ footer {
     .channelsName {
         color: blue;
     }
-} */
+} 
 
 .peopleToAdd {
     position: absolute;
@@ -226,22 +220,8 @@ footer {
     margin-top: auto !important;
 }
 
-/* .messageIcons {
-    display: flex;
-    align-items: center;
+@media(max-width:650px) {
+    .channelsContainer {
+        height: 85%;
+    }
 }
-
-.messageIcon {
-    height: 20px;
-    margin-right: 8px;
-}
-
-.border {
-    padding-right: 5px;
-    border-right: 1px solid rgba(0, 0, 0, 0.5);
-}
-
-.emojiDiv {
-    display: flex;
-    position: relative;
-} */

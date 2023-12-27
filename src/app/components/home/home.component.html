@@ -15,6 +15,7 @@
   <div [ngStyle]="{ 'display': isMobile && clickedOnMobile ? 'unset':'' }"
     *ngIf="navService.mainChatPath === 'chanel'" class="chatContainer">
     <div *ngIf="isMobile && clickedOnMobile" class="logoContainer">
+      <img (click)="backToMenu()" src="assets/img/arrow_back.png">
       <img class="logoMenu" src="assets/img/menu_logo.png" />
       <h1>Code learning</h1>
       <img class="edit_square" src="assets/img/edit_square.png" />
