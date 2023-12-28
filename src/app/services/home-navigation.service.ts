@@ -18,14 +18,27 @@ export class HomeNavigationService {
 
   constructor(private firestoreService: FirestoreService) {}
 
+  /**
+   * Sets the main chat path.
+   * @param path - The new path for the main chat.
+   */
   setChatPath(path: string) {
     this.mainChatPath = path;
   }
 
+  /**
+   * Toggles the state of component thread.
+   * If the thread is open, it will be closed; if it's closed, it will be opened.
+   */
   toggleThread() {
     this.threadOpen = !this.threadOpen;
   }
 
+  /**
+   * Selects a message and opens the associated thread.
+   *
+   * @param messageData - The data related to the selected message.
+   */
   async selectMessage(messageData: {}) {
     this.selectedMessageSubject.next(messageData);
 
