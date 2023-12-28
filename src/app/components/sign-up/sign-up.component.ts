@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { state } from '@angular/animations';
 import { CustomValidators } from 'src/app/classes/custom-validators.class';
 
 @Component({
@@ -30,23 +29,55 @@ export class SignUpComponent {
     });
   }
 
+  /**
+   * Getter method for the 'name' form control.
+   *
+   * @returns The 'name' form control.
+   */
   get name() {
     return this.registrationForm.get('name');
   }
+
+  /**
+   * Getter method for the 'email' form control.
+   *
+   * @returns The 'email' form control.
+   */
   get email() {
     return this.registrationForm.get('email');
   }
+
+  /**
+   * Getter method for the 'password' form control.
+   *
+   * @returns The 'password' form control.
+   */
   get password() {
     return this.registrationForm.get('password');
   }
+
+  /**
+   * Getter method for the 'privacy' form control.
+   *
+   * @returns The 'privacy' form control.
+   */
   get privacy() {
     return this.registrationForm.get('privacy');
   }
 
+  /**
+   * Toggles the value of the privacy form control.
+   * If the current value is true, it sets it to false, and vice versa.
+   */
   togglePrivacy() {
     this.privacy.setValue(!this.privacy.value);
   }
 
+  /**
+   * Gets the image source based on the current state of privacy and hover.
+   *
+   * @returns {string} The image source URL.
+   */
   getImageSource(): string {
     if (this.privacyHover) {
       return this.privacy.value
@@ -59,6 +90,11 @@ export class SignUpComponent {
     }
   }
 
+  /**
+   * Submits the registration form. If the form is valid, navigates to the 'select-avatar' route
+   * with the user's email, password, and name as state parameters. If the form is invalid,
+   * marks all form controls as touched.
+   */
   async submitForm() {
     const email = this.email.value;
     const password = this.password.value;
