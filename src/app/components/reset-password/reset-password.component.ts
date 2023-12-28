@@ -42,14 +42,28 @@ export class ResetPasswordComponent {
     }
   }
 
+  /**
+   * Getter method for the 'password' form control.
+   *
+   * @returns The 'password' form control.
+   */
   get password() {
     return this.resetPasswordForm.get('password');
   }
 
+  /**
+   * Getter method for the 'passwordRepeat' form control.
+   *
+   * @returns The 'passwordRepeat' form control.
+   */
   get passwordRepeat() {
     return this.resetPasswordForm.get('passwordRepeat');
   }
 
+  /**
+   * Custom validator function to check if the entered password and repeated password match.
+   * Returns `null` if they match, and an object with the key `passwordMismatch` if they don't.
+   */
   passwordMatchValidator() {
     const password = this.password.value;
     const passwordRepeat = this.passwordRepeat.value;
@@ -57,6 +71,11 @@ export class ResetPasswordComponent {
     return password === passwordRepeat ? null : { passwordMismath: true };
   }
 
+  /**
+   * Handles the submission of the reset password form.
+   * Calls the AuthService's resetPassword method with the entered password.
+   * Navigates to the login page after the password is successfully reset.
+   */
   async sendResetPasswordForm() {
     await this.authService.resetPassword(this.password.value);
     this.router.navigate(['/login']);
