@@ -200,7 +200,6 @@ section {
     border-radius: 30px;
     box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
     gap: 20px;
-
     max-width: 600px;
 
     .form-info {
@@ -209,24 +208,44 @@ section {
       align-items: center;
       gap: 15px;
 
+      @media screen and (max-width: 600px) and (max-height: 850px) {
+        gap: 8px;
+      }
+
       h2 {
         color: var(--main-dark-blue);
         font-size: 46px;
         font-weight: 700;
+
+        @media screen and (max-width: 600px) and (max-height: 850px) {
+          font-size: 36px;
+        }
       }
 
       p {
         font-size: 20px;
+
+        @media screen and (max-width: 600px) and (max-height: 850px) {
+          font-size: 16px;
+        }
       }
     }
 
     .input-with-error-wrapper {
       width: 100%;
+      position: relative;
 
       span {
         position: absolute;
         color: rgb(237, 29, 119);
         font-size: 14px;
+
+        @media screen and (max-width: 600px) {
+          width: 280px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
       }
     }
 
@@ -244,7 +263,7 @@ section {
 
       input {
         width: 100%;
-        height: 60px;
+        height: 100%;
         font-size: 18px;
         border-radius: 30px;
         padding-left: 60px;
@@ -257,6 +276,7 @@ section {
       padding: 5px 15px;
       border-radius: 14px;
       text-decoration: none;
+
       &:hover {
         background-color: var(--main-bg-color);
       }
@@ -320,6 +340,10 @@ section {
         border-radius: 25px;
         cursor: pointer;
         transition: all 225ms ease-in-out;
+
+        @media screen and (max-width: 600px) and (max-height: 850px) {
+          font-size: 15px;
+        }
       }
 
       .login-button {
