@@ -25,10 +25,20 @@ export class ForgotPasswordComponent {
     });
   }
 
+  /**
+   * Getter method for the 'email' form control.
+   *
+   * @returns The 'email' form control.
+   */
   get email() {
     return this.sendMailForm.get('email');
   }
 
+  /**
+   * Sends a password reset email to the provided email address.
+   * Disables the sendMailForm during the operation and triggers
+   * animations before routing to the next view.
+   */
   async sendMail() {
     const email = this.email.value;
     this.sendMailForm.disable();
@@ -36,6 +46,9 @@ export class ForgotPasswordComponent {
     this.animateAndRoute();
   }
 
+  /**
+   * Animates the mailSend property to true, triggers a timeout to reset
+   */
   animateAndRoute() {
     this.mailSend = true;
     setTimeout(() => {
