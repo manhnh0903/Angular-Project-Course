@@ -36,10 +36,18 @@ export class AvatarSelectionComponent {
     this.user.name = this.router.getCurrentNavigation().extras.state['name'];
   }
 
+  /**
+   * Sets the profile image for the user.
+   * @param img - The URL or identifier of the selected profile image.
+   */
   setProfileImg(img: string) {
     this.user.profileImg = img;
   }
 
+  /**
+   * Creates a new user by registering with email and password using the AuthService.
+   * After registration, the user data is stored in Firestore.
+   */
   async createUser() {
     const userCredential = await this.authService.registerWithEmailAndPassword(
       this.user
@@ -51,6 +59,9 @@ export class AvatarSelectionComponent {
     this.animateAndRoute();
   }
 
+  /**
+   * Sets the userCreated property to true, triggers a timeout to reset
+   */
   animateAndRoute() {
     this.userCreated = true;
     setTimeout(() => {

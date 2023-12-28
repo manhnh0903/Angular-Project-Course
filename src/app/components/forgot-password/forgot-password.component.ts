@@ -47,7 +47,7 @@ export class ForgotPasswordComponent {
   }
 
   /**
-   * Animates the mailSend property to true, triggers a timeout to reset
+   * Sets the mailSend property to true, triggers a timeout to reset
    */
   animateAndRoute() {
     this.mailSend = true;
