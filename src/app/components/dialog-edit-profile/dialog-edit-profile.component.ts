@@ -15,7 +15,7 @@ import { UserService } from 'src/app/services/user.service';
 export class DialogEditProfileComponent {
   editProfileForm: FormGroup;
   chooseProfileImg: boolean = false;
-  originalProfileImg: string;
+  public selectedProfileImg: string;
 
   profilePictures: string[] = [
     './assets/img/0character.png',
@@ -36,9 +36,13 @@ export class DialogEditProfileComponent {
     private homeNavService: HomeNavigationService
   ) {
     this.editProfileForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, CustomValidators.emailValidator]],
+      name: [userService.user.name, Validators.required],
+      email: [
+        userService.user.email,
+        [Validators.required, CustomValidators.emailValidator],
+      ],
     });
+    this.addGoogleProfileImg();
   }
 
   ngAfterViewInit() {
@@ -56,20 +60,23 @@ export class DialogEditProfileComponent {
     return this.editProfileForm.get('email');
   }
 
+  addGoogleProfileImg() {
+    if (this.authService.currentUser.photoURL) {
+      this.profilePictures.push(this.authService.currentUser.photoURL);
+    }
+  }
+
   openEditProfileImg() {
     this.chooseProfileImg = true;
-    this.originalProfileImg = this.userService.user.profileImg;
   }
 
   closeEditProfileImg() {
     this.chooseProfileImg = false;
+    this.selectedProfileImg = null;
   }
 
-  selectProfileImg(event: Event, img: string) {
-    event.stopPropagation();
-    this.userService.user.profileImg = img;
-
-    console.log(this.originalProfileImg);
+  selectProfileImg() {
+    this.chooseProfileImg = false;
   }
 
   async editProfile() {
@@ -84,20 +91,29 @@ export class DialogEditProfileComponent {
   }
 
   async updateUserData(name: string, email: string) {
-    if (this.userService.user.email === 'testuser@test.com') {
-      this.userService.user.name = name;
-    } else {
-      this.userService.user.name = name;
+    this.userService.user.name = name;
+
+    if (this.selectedProfileImg)
+      this.userService.user.profileImg = this.selectedProfileImg;
+
+    if (this.userService.user.email !== 'testuser@test.com')
       this.userService.user.email = email;
-    }
 
     await this.firestoreService.newUser(
       this.userService.user.toJson(),
       this.userService.user.userId
     );
-    if (this.userService.user.email !== 'testuser@test.com') {
+    if (this.isNotGoogleOrTestUser()) {
       await this.authService.updateEmailInFirebaseAuth(email);
     }
+    this.homeNavService.editProfileOpen = false;
+  }
+
+  isNotGoogleOrTestUser() {
+    return (
+      this.authService.currentUser.photoURL === null &&
+      this.userService.user.email !== 'testuser@test.com'
+    );
   }
 
   closeDialog() {

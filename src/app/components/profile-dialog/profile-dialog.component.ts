@@ -30,7 +30,6 @@ export class ProfileDialogComponent {
   }
 
   openEditDialog() {
-    console.log('open edit');
     this.homeNavService.editProfileOpen = true;
   }
 }

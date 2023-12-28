@@ -11,7 +11,9 @@
     <img
       (click)="openEditProfileImg()"
       class="profilePic"
-      src="{{ userService.user.profileImg }}"
+      [src]="
+        selectedProfileImg ? selectedProfileImg : userService.user.profileImg
+      "
     />
 
     <div class="emailContainer">
@@ -20,11 +22,7 @@
         <span class="adresseSpan">Vollständiger Name</span>
       </div>
       <div class="input-with-error-wrapper">
-        <input
-          formControlName="name"
-          placeholder="{{ userService.user.name }}"
-          class="editInput"
-        />
+        <input formControlName="name" placeholder="Name" class="editInput" />
         <span *ngIf="name.touched && name.hasError('required')"
           >Bitte schreiben Sie einen Namen.</span
         >
@@ -37,11 +35,7 @@
         <span class="adresseSpan">E-Mail-Adresse</span>
       </div>
       <div class="input-with-error-wrapper">
-        <input
-          formControlName="email"
-          placeholder="{{ userService.user.email }}"
-          class="editInput"
-        />
+        <input formControlName="email" placeholder="E-Mail" class="editInput" />
         <span *ngIf="email.touched && email.hasError('required')"
           >Bitte geben Sie eine E-Mail-Adresse ein.</span
         >
@@ -69,14 +63,30 @@
     *ngIf="chooseProfileImg"
     class="select-profile-img-overlay"
   >
-    <div>
+    <div (click)="$event.stopPropagation()">
       <img
-        (click)="selectProfileImg($event, img)"
-        class="profilePic"
-        *ngFor="let img of profilePictures"
-        src="{{ img }}"
-        alt="profile.img"
+        [src]="
+          selectedProfileImg
+            ? selectedProfileImg
+            : './assets/img/blank-avatar.svg'
+        "
+        alt="blank-avatar.img"
       />
+      <div class="img-container">
+        <img
+          (click)="selectedProfileImg = img"
+          class="profilePic"
+          *ngFor="let img of profilePictures"
+          src="{{ img }}"
+          alt="profile.img"
+        />
+      </div>
+      <div class="button-wrapper">
+        <button class="cancel" (click)="closeEditProfileImg()">
+          Abbrechen
+        </button>
+        <button class="save" (click)="selectProfileImg()">Auswählen</button>
+      </div>
     </div>
   </div>
 </div>
