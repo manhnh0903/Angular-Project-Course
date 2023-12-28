@@ -13,7 +13,7 @@ import {
   getDocs,
   QuerySnapshot,
 } from '@angular/fire/firestore';
-import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
+import { BehaviorSubject, Subject, distinctUntilChanged } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -23,11 +23,9 @@ export class FirestoreService {
   public subscribedRecipientDataSubject = new BehaviorSubject<any>(null);
   public conversationDataSubject = new BehaviorSubject<any>(null);
   public threadDataSubject = new BehaviorSubject<any>(null);
-
   public pmsCollectionDataSubject = new BehaviorSubject<any>(null);
   public usersCollectionDataSubject = new BehaviorSubject<any>(null);
   public channelsCollectionDataSubject = new BehaviorSubject<any>(null);
-
   public conversation: any;
   private unsubUserData: Function;
   private usnubThreadDocument;
@@ -53,6 +51,12 @@ export class FirestoreService {
     this.destroyThreadDataSubject();
   }
 
+  /**
+   * Retrieves and observes user data for the specified userId from Firestore.
+   * Subscribes to the Firestore document changes using onSnapshot.
+   * @param userId - The unique identifier of the user.
+   * @returns An observable that emits the user data.
+   */
   async getLogedInUserData(userId: string) {
     const docRef = this.getDocRef('users', userId);
 
@@ -66,6 +70,11 @@ export class FirestoreService {
     return this.loggedInUserDataSubject.asObservable();
   }
 
+  /**
+   * Subscribes to changes in a Firestore collection and updates the specified subject.
+   * @param col - The name of the Firestore collection.
+   * @param subject - The subject to be updated with the collection data.
+   */
   subscribeToCollection(col, subject) {
     const docRef = this.getColRef(col);
 
@@ -76,6 +85,11 @@ export class FirestoreService {
     });
   }
 
+  /**
+   * Subscribes to changes in the user document with the specified userId in the 'users' collection.
+   * Updates the subscribedRecipientDataSubject with the document data or null if the document doesn't exist.
+   * @param userId - The unique identifier of the user.
+   */
   subscribeToPmRecipient(userId: string) {
     const docRef = this.getDocRef('users', userId);
 
@@ -89,6 +103,13 @@ export class FirestoreService {
     });
   }
 
+  /**
+   * Subscribes to changes in the private messaging (PM) conversation document with the specified conversationID in the 'pms' collection.
+   * Updates the conversationDataSubject with the document data or null if the document doesn't exist.
+   * @param conversationID - The unique identifier of the PM conversation.
+   * @throws - An error if there is an issue with the subscription.
+   * @returns - A Promise that resolves when the subscription is successfully set up.
+   */
   async subscribeToPMConversation(conversationID: string): Promise<void> {
     const docRef = this.getDocRef('pms', conversationID);
     this.conversationDataSubject = new BehaviorSubject<any>(null);
@@ -103,10 +124,19 @@ export class FirestoreService {
     });
   }
 
+  /**
+   * Destroys the conversationDataSubject by completing it.
+   */
   private destroyConversationDataSubject(): void {
     this.conversationDataSubject.complete();
   }
 
+  /**
+   * Subscribes to a document in a specific collection (thread) and updates the threadDataSubject with the latest data.
+   * @param col The name of the collection.
+   * @param docId The ID of the document to subscribe to.
+   * @returns A Promise that resolves when the subscription is established.
+   */
   async subscribeToThreadDocument(col: string, docId: string): Promise<void> {
     const docRef = this.getDocRef(col, docId);
 
@@ -120,41 +150,79 @@ export class FirestoreService {
     });
   }
 
+  /**
+   * Destroys the threadDataSubject by completing it.
+   */
   private destroyThreadDataSubject(): void {
     this.threadDataSubject.complete();
   }
 
+  /**
+   * Adds a new conversation to the 'pms' collection in Firestore.
+   * @param data The data to be added to the conversation document.
+   */
   async addNewConversation(data: {}) {
     const colRef = this.getColRef('pms');
 
     await addDoc(colRef, data);
   }
 
-  async updateConversation(col, conversationID: string, data: {}) {
+  /**
+   * Updates a conversation document in the specified collection in Firestore.
+   * @param col The name of the collection containing the conversation document.
+   * @param conversationID The ID of the conversation document to be updated.
+   * @param data The updated data to be set in the conversation document.
+   */
+  async updateConversation(col: string, conversationID: string, data: {}) {
     const docRef = this.getDocRef(col, conversationID);
 
     await setDoc(docRef, data);
   }
 
+  /**
+   * Retrieves a snapshot of the 'pms' collection from Firestore.
+   * @returns A Promise that resolves with the snapshot of the 'pms' collection.
+   */
   async getPmsSnapshot() {
     const colRef = this.getColRef('pms');
 
     return await getDocs(colRef);
   }
 
+  /**
+   * Adds or updates user data in the 'users' collection in Firestore.
+   * @param data - The user data to be added or updated.
+   * @param userId - The unique identifier for the user.
+   */
   async newUser(data: {}, userId: string) {
     const userRef = this.getDocRef('users', userId);
     await setDoc(userRef, data);
   }
 
+  /**
+   * Retrieves a reference to a Firestore collection with the specified name.
+   * @param colName - The name of the collection.
+   * @returns A reference to the Firestore collection.
+   */
   getColRef(colName: string) {
     return collection(this.firestore, colName);
   }
 
+  /**
+   * Retrieves a reference to a Firestore document with the specified ID within the given collection.
+   * @param colName - The name of the collection containing the document.
+   * @param docId - The ID of the document to retrieve.
+   * @returns A reference to the Firestore document.
+   */
   getDocRef(colName: string, docId: string) {
     return doc(this.getColRef(colName), docId);
   }
 
+  /**
+   * Retrieves the current channel data from Firestore.
+   * @param colName - The name of the collection containing the channel.
+   * @param docId - The ID of the channel document to retrieve.
+   */
   async getCurrentChannel(colName: string, docId: string) {
     const channelRef = await getDoc(this.getDocRef(colName, docId));
     if (channelRef.exists()) {
@@ -166,6 +234,10 @@ export class FirestoreService {
     }
   }
 
+  /**
+   * Updates the current channel document in Firestore with the latest data.
+   * @returns A Promise that resolves when the document update is successful.
+   */
   async updateDocumentInFirebase() {
     await updateDoc(
       this.getDocRef('channels', this.currentChannel.id),
@@ -192,7 +264,7 @@ export class FirestoreService {
           if (
             this.currentChannel &&
             this.currentChannel.index ===
-            this.channels[channelToModifyIndex].index
+              this.channels[channelToModifyIndex].index
           ) {
             this.currentChannel = this.channels[channelToModifyIndex];
           }
@@ -201,11 +273,14 @@ export class FirestoreService {
       });
       if (!defaultChannelCalled && this.channels.length > 0) {
         this.defaultChannel();
-        defaultChannelCalled = true; 
+        defaultChannelCalled = true;
       }
     });
   }
 
+  /**
+   * Checks if the logged-in user is on each channel in the channels array.
+   */
   async checkIfUserOnChannel() {
     let userId;
     this.loggedInUserDataSubject
@@ -223,11 +298,12 @@ export class FirestoreService {
             }
           });
         }
-     
       });
-   
   }
 
+  /**
+   * Sets the current channel to the default channel named 'Entwickler' if it exists in the channels array.
+   */
   async defaultChannel() {
     if (this.channels.length > 0) {
       let index = this.channels.findIndex(
@@ -237,6 +313,9 @@ export class FirestoreService {
     }
   }
 
+  /**
+   * Reads all users from the 'users' collection in Firestore and updates the 'allUsers' array.
+   */
   async readAllUsers() {
     const colRef = this.getColRef('users');
 
@@ -247,9 +326,15 @@ export class FirestoreService {
         this.allUsers.push(user.data());
       });
     });
-    
   }
 
+  /**
+   * Checks if the given creation date is the current date.
+   * If it is, returns 'heute'; otherwise, returns the formatted creation date.
+   * @param creationDay The day of the week.
+   * @param creationDate The date to check.
+   * @returns A formatted string indicating the creation date or 'heute' if it's the current date.
+   */
   dateNameChecker(creationDay, creationDate) {
     if (creationDate !== this.getCurrentDate()) {
       return `${creationDay}, ` + `${creationDate}`;
@@ -258,6 +343,10 @@ export class FirestoreService {
     }
   }
 
+  /**
+   * Gets the current date in the format 'dd.mm.yyyy'.
+   * @returns The current date as a formatted string.
+   */
   getCurrentDate() {
     let datetime = new Date();
     const dayName = this.getDaysName();
@@ -271,6 +360,10 @@ export class FirestoreService {
     return this.currentDate;
   }
 
+  /**
+   * Gets the current time in the format 'hh:mm'.
+   * @returns The current time as a formatted string.
+   */
   getCurrentTime() {
     let datetime = new Date();
     let hours = datetime.getHours();
@@ -280,6 +373,10 @@ export class FirestoreService {
     return currentTime;
   }
 
+  /**
+   * Gets the name of the current day.
+   * @returns The name of the current day as a string.
+   */
   getDaysName() {
     const weekday = [
       'Sonntag',
