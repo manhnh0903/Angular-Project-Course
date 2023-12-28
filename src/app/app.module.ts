@@ -37,6 +37,8 @@ import { FooterInputComponent } from './components/footer-input/footer-input.com
 import { MentionModule } from 'angular-mentions';
 import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
+import { ImprintComponent } from './components/imprint/imprint.component';
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 
 
 @NgModule({
@@ -62,6 +64,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     EditChannelComponent,
     PmRecipientOverviewComponent,
     FooterInputComponent,
+    ImprintComponent,
+    PrivacyPolicyComponent,
   ],
   imports: [
 
