@@ -1,6 +1,4 @@
 import { Component, ElementRef } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -11,7 +9,6 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ProfileDialogComponent {
   constructor(
-    private router: Router,
     private el: ElementRef,
     public userService: UserService,
     private homeNavService: HomeNavigationService
@@ -25,10 +22,16 @@ export class ProfileDialogComponent {
     });
   }
 
+  /**
+   * Closes the profile dialog by updating the 'profileOverlay' property in the HomeNavService.
+   */
   closeDialog() {
     this.homeNavService.profileOverlay = false;
   }
 
+  /**
+   * Opens the edit profile dialog by updating the 'editProfileOpen' property in the HomeNavService.
+   */
   openEditDialog() {
     this.homeNavService.editProfileOpen = true;
   }

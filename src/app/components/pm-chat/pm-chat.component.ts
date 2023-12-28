@@ -35,6 +35,7 @@ export class PmChatComponent {
       message: ['', [Validators.required]],
     });
     this.initializeAsync();
+    this.scrollToBottom();
   }
 
   async initializeAsync() {
@@ -46,10 +47,21 @@ export class PmChatComponent {
     this.destroy$.complete();
   }
 
+  /**
+   * Getter method for the 'message' form control.
+   *
+   * @returns The 'message' form control.
+   */
   get message() {
     return this.sendMessageForm.get('message');
   }
 
+  /**
+   * Subscribes to changes in the recipient data through the subscribedRecipientDataSubject.
+   * Upon receiving non-null data, initializes the recipient and conversation properties,
+   * sets the loading flag to true, and triggers the retrieval of conversation data.
+   * This subscription is managed until the component is destroyed.
+   */
   async subRecipientData() {
     this.firestoreService.subscribedRecipientDataSubject
       .pipe(takeUntil(this.destroy$))
@@ -64,58 +76,34 @@ export class PmChatComponent {
       });
   }
 
+  /**
+   * Opens user details by updating the pmRecipientData property with the current recipient
+   * and setting the pmRecipientOverlayOpen flag to true, triggering the display of user details.
+   */
   openUserDetails() {
     this.homeNavService.pmRecipientData = this.recipient;
     this.homeNavService.pmRecipientOverlayOpen = true;
   }
 
-  /*   sendPm() {
-      const msg = new Message();
-  
-      msg.content = this.sendMessageForm.value.message;
-      msg.profileImg = this.userService.user.profileImg;
-      msg.sender = this.userService.user.name;
-      msg.creationDate = this.firestoreService.getCurrentDate();
-      msg.creationTime = this.firestoreService.getCurrentTime();
-      msg.id = this.addMessageId();
-      msg.collectionId = this.conversationId;
-      msg.creationDay = this.firestoreService.getDaysName();
-      msg.messageType = 'pms';
-  
-      this.conversation.messages.push(msg);
-  
-      /*     console.log(this.conversation.toJSON()); 
-  
-      this.firestoreService.updateConversation(
-        'pms',
-        this.conversationId,
-        this.conversation.toJSON()
-      );
-    } */
-
-/*   addMessageId() {
-    let id: number;
-    if (this.conversation.messages.length > 0) {
-      id =
-        this.conversation.messages[this.conversation.messages.length - 1].id +
-        1;
-    } else {
-      id = 0;
-    }
-    return id;
-  } */
-
+  /**
+   * Sets up a new conversation between the logged-in user and the selected recipient.
+   * Creates a new Conversation object, assigns user IDs, and adds the conversation to the Firestore database.
+   */
   async setNewConversation() {
     const conversation = new Conversation();
 
     this.conversationId = undefined;
-
     conversation.userId1 = this.userService.user.userId;
     conversation.userId2 = this.recipient.userId;
 
     await this.firestoreService.addNewConversation(conversation.toJSON());
   }
 
+  /**
+   * Retrieves the snapshot of PM conversations from Firestore
+   * and processes them to find or create a conversation involving the logged-in user and a recipient.
+   * If a conversation is found, it sets up the conversation; otherwise, it creates a new one.
+   */
   async getConversationData() {
     const ConversationsSnapshot = await this.firestoreService.getPmsSnapshot();
     let conversationFound = false;
@@ -127,10 +115,8 @@ export class PmChatComponent {
 
       if (this.userInConversation(userId1, userId2)) {
         this.conversationId = doc.id;
-
         this.setupConversation(userId1, userId2);
         conversationFound = true;
-
         return;
       }
     });
@@ -141,14 +127,27 @@ export class PmChatComponent {
     }
   }
 
+  /**
+   * Sets up the conversation based on the provided user IDs.
+   * It initializes a new Conversation object, assigns the user IDs,
+   * and subscribes to real-time data updates for the conversation.
+   * @param userId1 - The ID of the first user in the conversation.
+   * @param userId2 - The ID of the second user in the conversation.
+   */
   async setupConversation(userId1: string, userId2: string) {
     this.conversation = new Conversation();
-
     this.conversation.userId1 = userId1;
     this.conversation.userId2 = userId2;
     await this.subConversationData(this.conversationId);
   }
 
+  /**
+   * Checks if the provided user IDs correspond to the logged-in user and the recipient.
+   * Returns true if the user IDs match the current logged-in user and recipient, regardless of the order.
+   * @param userId1 - The ID of the first user to check.
+   * @param userId2 - The ID of the second user to check.
+   * @returns True if the user IDs correspond to the logged-in user and recipient; otherwise, false.
+   */
   userInConversation(userId1: string, userId2: string) {
     const logedInUserId = this.userService.user.userId;
     const recipientUserId = this.recipient.userId;
@@ -159,9 +158,13 @@ export class PmChatComponent {
     );
   }
 
+  /**
+   * Subscribes to the conversation data for the given conversation ID, updating the current conversation.
+   * Fetches and processes messages from the conversation, updating the conversation messages.
+   * @param conversationId - The ID of the conversation to subscribe to.
+   */
   async subConversationData(conversationId: string) {
     await this.firestoreService.subscribeToPMConversation(conversationId);
-
     this.firestoreService.conversationDataSubject
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
@@ -180,6 +183,10 @@ export class PmChatComponent {
       });
   }
 
+  /**
+   * Scrolls the chat area to the bottom, ensuring the latest messages are visible.
+   * Uses the native element properties to set the scrollTop to the scrollHeight.
+   */
   scrollToBottom() {
     if (this.chatArea && this.chatArea.nativeElement) {
       this.chatArea.nativeElement.scrollTop =
