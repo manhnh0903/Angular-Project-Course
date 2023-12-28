@@ -53,32 +53,57 @@ export class DialogEditProfileComponent {
     });
   }
 
+  /**
+   * Getter method for the 'name' form control.
+   *
+   * @returns The 'name' form control.
+   */
   get name() {
     return this.editProfileForm.get('name');
   }
+  /**
+   * Getter method for the 'email' form control.
+   *
+   * @returns The 'email' form control.
+   */
   get email() {
     return this.editProfileForm.get('email');
   }
 
+  /**
+   * Adds the Google profile image to the profilePictures array if available.
+   */
   addGoogleProfileImg() {
     if (this.authService.currentUser.photoURL) {
       this.profilePictures.push(this.authService.currentUser.photoURL);
     }
   }
 
+  /**
+   * Opens the profile image selection overlay.
+   */
   openEditProfileImg() {
     this.chooseProfileImg = true;
   }
 
+  /**
+   * Closes the profile image selection overlay and clears the selected image.
+   */
   closeEditProfileImg() {
     this.chooseProfileImg = false;
     this.selectedProfileImg = null;
   }
 
+  /**
+   * Selects a profile image and closes the image selection overlay.
+   */
   selectProfileImg() {
     this.chooseProfileImg = false;
   }
 
+  /**
+   * Handles the user's profile editing process, updating the user data if the form is valid.
+   */
   async editProfile() {
     const email = this.email.value;
     const name = this.name.value;
@@ -90,6 +115,12 @@ export class DialogEditProfileComponent {
     }
   }
 
+  /**
+   * Updates user data, including name, profile image, and email, and synchronizes changes with Firebase.
+   * Closes the edit profile dialog afterward.
+   * @param name - The new user name.
+   * @param email - The new user email.
+   */
   async updateUserData(name: string, email: string) {
     this.userService.user.name = name;
 
@@ -109,6 +140,10 @@ export class DialogEditProfileComponent {
     this.homeNavService.editProfileOpen = false;
   }
 
+  /**
+   * Checks if the current user is not a Google user and not the test user.
+   * @returns True if the user is neither a Google user (with a photo URL) nor the test user.
+   */
   isNotGoogleOrTestUser() {
     return (
       this.authService.currentUser.photoURL === null &&
@@ -116,6 +151,9 @@ export class DialogEditProfileComponent {
     );
   }
 
+  /**
+   * Closes the edit profile dialog and navigates back to the home page.
+   */
   closeDialog() {
     this.router.navigateByUrl('/home');
     this.homeNavService.editProfileOpen = false;
