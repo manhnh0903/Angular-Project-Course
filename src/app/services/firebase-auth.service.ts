@@ -32,6 +32,12 @@ export class FirebaseAuthService {
   currentUser: User;
   oobCode: string;
 
+  /**
+   * Registers a user with email and password in Firebase.
+   *
+   * @param user - User information, including email and password.
+   * @returns A Promise containing the user authentication information.
+   */
   async registerWithEmailAndPassword(user: DabubbleUser) {
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -39,7 +45,6 @@ export class FirebaseAuthService {
         user.email,
         user.password
       );
-      console.log('user created user credentials:', userCredential);
       return userCredential;
     } catch (err) {
       console.error(err);
@@ -47,6 +52,13 @@ export class FirebaseAuthService {
     }
   }
 
+  /**
+   * Logs in a user with email and password using Firebase authentication.
+   *
+   * @param email - The user's email address.
+   * @param password - The user's password.
+   * @throws Throws an error if login fails.
+   */
   async loginWithEmailAndPassword(email: string, password: string) {
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -62,25 +74,37 @@ export class FirebaseAuthService {
     }
   }
 
+  /**
+   * Updates the email address for the currently authenticated user in Firebase authentication.
+   *
+   * @param email - The new email address.
+   */
   async updateEmailInFirebaseAuth(email: string) {
     try {
       await updateEmail(this.currentUser, email);
-
-      /*     console.log('E-Mail-Adresse erfolgreich aktualisiert'); */
     } catch (err) {
       console.error(err);
     }
   }
 
+  /**
+   * Sends a password reset email to the specified email address using Firebase authentication.
+   *
+   * @param email - The email address to which the password reset email will be sent.
+   */
   async sendForgotPasswordMail(email: string) {
     try {
-      //evtl validieren ob email von angemeldeten user
       await sendPasswordResetEmail(this.auth, email);
     } catch (err) {
       console.error(err);
     }
   }
 
+  /**
+   * Resets the password using Firebase authentication.
+   *
+   * @param newPassword - The new password to be set.
+   */
   async resetPassword(newPassword: string) {
     try {
       if (!this.oobCode) {
@@ -93,6 +117,9 @@ export class FirebaseAuthService {
     }
   }
 
+  /**
+   * Logs in the user with Google authentication.
+   */
   async loginWithGoogle() {
     try {
       const result = await signInWithPopup(this.auth, this.provider);
@@ -109,6 +136,11 @@ export class FirebaseAuthService {
     }
   }
 
+  /**
+   * Checks if a user is already present in the database based on their display name.
+   * @param user - The user object obtained from Google authentication.
+   * @returns `true` if the user is found in the database, otherwise `false`.
+   */
   userIsInDatabase(user) {
     let userFound: boolean = false;
 
@@ -121,6 +153,10 @@ export class FirebaseAuthService {
     return userFound;
   }
 
+  /**
+   * Creates a new user in using Google authentication information.
+   * @param user - The user object obtained from Google authentication.
+   */
   createNewGoogleUser(user) {
     const dabubbleUser = new DabubbleUser();
 
@@ -132,6 +168,10 @@ export class FirebaseAuthService {
     this.firestore.newUser(dabubbleUser.toJson(), user.uid);
   }
 
+  /**
+   * Logs the user out of the application.
+   * @throws Error if there is an issue during the logout process.
+   */
   async logout() {
     try {
       await signOut(this.auth);
@@ -141,11 +181,14 @@ export class FirebaseAuthService {
     }
   }
 
+  /**
+   * Checks the authentication state of the user.
+   * @returns A promise that resolves to a boolean value indicating whether the user is authenticated or not.
+   */
   async checkAuth() {
     return new Promise<boolean>((resolve, reject) => {
       onAuthStateChanged(this.auth, (user: User | null) => {
         if (user) {
-          //console.log('user is logged in check auth user data:', user.uid);
           this.currentUser = user;
           this.userService.getUserData(user.uid);
           resolve(true);
