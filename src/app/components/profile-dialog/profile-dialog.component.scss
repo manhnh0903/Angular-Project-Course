@@ -46,9 +46,9 @@
   height: 110px;
   width: 110px;
   border-radius: 50%;
+
   &:hover {
-    fill: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%)
-      hue-rotate(164deg) brightness(104%) contrast(98%);
+    fill: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
   }
 }
 
@@ -81,4 +81,16 @@
 .editButton {
   color: blue;
   cursor: pointer;
+}
+
+@media(max-width:900px) {
+  .profileContent {
+    top: 30px !important;
+    right: 30px !important;
+    left: 30px !important;
+    bottom: 30px !important;
+    width: unset;
+    width: unset;
+    height: unset;
+  }
 }

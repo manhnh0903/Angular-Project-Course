@@ -25,7 +25,7 @@ export class MessageComponent {
     private breakpointObserver: BreakpointObserver,
   ) {
     this.breakpointObserver.observe([
-      "(max-width: 650px)"
+      "(max-width:900px)"
     ]).subscribe((result: BreakpointState) => {
       if (result.matches) {
         this.isMobile = true
@@ -350,11 +350,8 @@ export class MessageComponent {
     lastName = splitted[j + 1];
     if (!this.isMobile) {
       splitted.splice(index, 2, `<span style="color: blue;">${firstName} ${lastName}</span>`);
-      console.log(this.isMobile);
-      
-    }else{
+      }else{
       splitted.splice(index, 2, `<span style="font-weight:bold">${firstName} ${lastName}</span>`);
-      console.log(this.isMobile);
     }
   }
 

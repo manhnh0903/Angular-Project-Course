@@ -2,58 +2,27 @@
   <img class="logo" src="assets/img/logo.png" />
 
   <div class="searchBarContainer">
-    <input
-      [(ngModel)]="searchInput"
-      (keyup)="searchApp()"
-      class="searchBar"
-      placeholder="code learning durchsuchen"
-    />
+    <input [(ngModel)]="searchInput" (keyup)="searchApp()" class="searchBar" placeholder="code learning durchsuchen" />
     <img class="search_icon" src="assets/img/search_icon.png" />
 
-    <div
-      *ngIf="
+    <div *ngIf="
         filterdChannelsData.length > 0 ||
         filterdUserData.length > 0 ||
         filterdPmsData.length > 0
-      "
-      class="search-result-container"
-    >
+      " class="search-result-container">
       <div *ngIf="filterdUserData.length > 0" class="user-results-container">
         <span>#Users</span>
-        <div
-          class="user-result"
-          *ngFor="let user of filterdUserData"
-          (click)="openUserDetails(user)"
-        >
-          <img
-            class="profile-img"
-            src="{{ user.profileImg }}"
-            alt="profile.img"
-          />
-          <img
-            *ngIf="user.onlineStatus === true"
-            src="./assets/img/online.png"
-            alt="online.img"
-          />
-          <img
-            *ngIf="user.onlineStatus === false"
-            src="./assets/img/offline.png"
-            alt="online.img"
-          />
+        <div class="user-result" *ngFor="let user of filterdUserData" (click)="openUserDetails(user)">
+          <img class="profile-img" src="{{ user.profileImg }}" alt="profile.img" />
+          <img *ngIf="user.onlineStatus === true" src="./assets/img/online.png" alt="online.img" />
+          <img *ngIf="user.onlineStatus === false" src="./assets/img/offline.png" alt="online.img" />
           <span>{{ user.name }}</span>
         </div>
       </div>
 
-      <div
-        *ngIf="filterdChannelsData.length > 0"
-        class="channel-result-container"
-      >
+      <div *ngIf="filterdChannelsData.length > 0" class="channel-result-container">
         <span>#Channels Nachrichten</span>
-        <div
-          (click)="openChanelChat(message.collectionId)"
-          class="message"
-          *ngFor="let message of filterdChannelsData"
-        >
+        <div (click)="openChanelChat(message.collectionId)" class="message" *ngFor="let message of filterdChannelsData">
           <img src="{{ message.profileImg }}" alt="profile-img" />
           <div>
             <span>{{ message.content }}</span>
@@ -67,11 +36,7 @@
 
       <div *ngIf="filterdPmsData.length > 0" class="pms-result-container">
         <span>#Direktnachrichten</span>
-        <div
-          (click)="openPmChat(message.recipientId)"
-          class="message"
-          *ngFor="let message of filterdPmsData"
-        >
+        <div (click)="openPmChat(message.recipientId)" class="message" *ngFor="let message of filterdPmsData">
           <img src="{{ message.profileImg }}" alt="profile-img" />
           <div>
             <span>{{ message.content }}</span>
@@ -88,36 +53,26 @@
   <div class="user">
     <span class="userName">{{ userService.user.name }}</span>
     <div class="usersPicDiv">
-      <img
-        *ngIf="userService.user.profileImg"
-        class="usersPic"
-        src="{{ userService.user.profileImg }}"
-      />
+      <img *ngIf="userService.user.profileImg" class="usersPic" src="{{ userService.user.profileImg }}" />
       <img class="status" src="assets/img/online.png" />
     </div>
-    <img
-      (click)="openMenu()"
-      class="arrowDown"
-      src="assets/img/arrow_down.png"
-    />
+    <img (click)="openMenu()" class="arrowDown" src="assets/img/arrow_down.png" />
     <div *ngIf="menuOpen" class="menuProfileContainer">
       <div class="menuProfileContent">
-        <span (click)="homeNavService.profileOverlay = true" class="menuSpan"
-          >Profil</span
-        >
-        <span (click)="logout()" class="menuSpan">Log out</span>
+        <img class="rectangle" src="assets/img/rectangle.png">
+        <div (click)="homeNavService.profileOverlay = true" class="subdiv">
+          <img src="assets/img/account_icon.png" class="subIcon">
+          <span  class="menuSpan">Profil</span>
+        </div>
+        <div (click)="logout()" class="subdiv">
+          <img  src="assets/img/logout.png" class="subIcon">
+          <span  class="menuSpan">Log out</span>
+        </div>
       </div>
     </div>
-    <div
-      *ngIf="homeNavService.profileOverlay"
-      class="profile-component-wrapper"
-    >
-      <app-profile-dialog
-        *ngIf="homeNavService.profileOverlay"
-      ></app-profile-dialog>
-      <app-dialog-edit-profile
-        *ngIf="homeNavService.editProfileOpen"
-      ></app-dialog-edit-profile>
+    <div *ngIf="homeNavService.profileOverlay" class="profile-component-wrapper">
+      <app-profile-dialog *ngIf="homeNavService.profileOverlay"></app-profile-dialog>
+      <app-dialog-edit-profile *ngIf="homeNavService.editProfileOpen"></app-dialog-edit-profile>
     </div>
   </div>
 </div>

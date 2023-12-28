@@ -25,17 +25,15 @@ import { EditChannelComponent } from 'src/app/components/edit-channel/edit-chann
 })
 export class ChannelsChatComponent implements AfterViewInit {
   firestore = inject(Firestore);
-  public emojiOpened = false
-  private newMessage;
-  public content;
-  public filteredUsers = [];
-  private selectedUsers = [];
-  public usersName;
-  public addPeople = false;
-  public isButtonDisabled = true;
-  public buttonColor = 'gray';
-  public onRightSide;
-  public type = 'channel';
+  public emojiOpened: boolean = false;
+  public content: string;
+  public filteredUsers: any[] = [];
+  private selectedUsers: string[] = [];
+  public usersName: string;
+  public addPeople: boolean = false;
+  public isButtonDisabled: boolean = true;
+  public buttonColor: string = 'gray';
+  public type: string = 'channel';
 
   @ViewChild('inputFooter') inputFooter: ElementRef<HTMLInputElement>;
   @ViewChild('sendIcon', { static: false }) sendIcon: ElementRef;
@@ -124,6 +122,7 @@ export class ChannelsChatComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(EditChannelComponent, {
       height: '420px',
       width: '540px',
+      maxWidth: '100vw',
       panelClass: 'editChannelDialog',
     });
   }

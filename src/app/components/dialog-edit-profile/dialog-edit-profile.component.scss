@@ -63,7 +63,7 @@ form {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.2);
 
-  > div {
+  >div {
     display: flex;
     justify-content: center;
     gap: 8px;
@@ -165,5 +165,18 @@ form {
   &:focus {
     border: 2px solid #797ef3;
     height: 47px;
+  }
+}
+
+
+@media(max-width:900px) {
+  form {
+    top: 30px !important;
+    right: 30px !important;
+    left: 30px !important;
+    bottom: 30px !important;
+    width: unset;
+    width: unset;
+    height: unset;
   }
 }

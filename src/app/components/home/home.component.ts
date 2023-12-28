@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
     this.authService.checkAuth();
     this.fireService.getCurrentDate();
     this.breakpointObserver.observe([
-      "(max-width: 650px)"
+      "(max-width: 900px)"
     ]).subscribe((result: BreakpointState) => {
       if (result.matches) {
         this.isMobile = true

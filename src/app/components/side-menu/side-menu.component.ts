@@ -59,16 +59,18 @@ export class SideMenuComponent implements OnInit {
     const dialogRef = this.dialog.open(CreateChannelComponent, {
       height: '400px',
       width: '600px',
+      maxWidth: '100vw',
       panelClass: 'createChannelDialog',
-    });
-  }
-
-  openPmChat(userId: string) {
-    this.clickedOnMobile = true;
-    this.booleanChanged.emit(this.clickedOnMobile);
     
-    this.navService.pmRecipient = userId;
-    this.navService.setChatPath('pm');
-    this.fireService.subscribeToPmRecipient(userId);
-  }
+    });
+}
+
+openPmChat(userId: string) {
+  this.clickedOnMobile = true;
+  this.booleanChanged.emit(this.clickedOnMobile);
+
+  this.navService.pmRecipient = userId;
+  this.navService.setChatPath('pm');
+  this.fireService.subscribeToPmRecipient(userId);
+}
 }

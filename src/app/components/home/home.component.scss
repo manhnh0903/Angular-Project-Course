@@ -57,10 +57,10 @@
   padding-bottom: 5px;
 }
 
-app-pm-chat {
+/* app-pm-chat {
   display: flex;
   flex: 1;
-}
+} */
 
 .pm-recipient-overlay {
   position: absolute;
@@ -93,7 +93,11 @@ app-pm-chat {
   }
 }
 
-@media(max-width:650px) {
+@media(max-width:900px) {
+  .homeContainer {
+    width: 100vw;
+  }
+
   .sideMenuButton {
     position: relative;
     display: none;

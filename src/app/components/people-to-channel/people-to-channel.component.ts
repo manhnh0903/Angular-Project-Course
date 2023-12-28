@@ -55,22 +55,22 @@ export class PeopleToChannelComponent {
 
 
   async addChannelToCollection() {
-    if (this.fireService.channels.length === 0) {
-      this.currentChannel.index = 0;
-    } else {
-      this.currentChannel.index = this.fireService.channels[this.fireService.channels.length - 1].index + 1;
-    }
-    console.log(this.fireService.channels, this.fireService.channels[this.fireService.channels.length - 1]);
+      if (this.fireService.channels.length === 0) {
+        this.currentChannel.index = 0;
+      } else {
+        this.currentChannel.index = this.fireService.channels[this.fireService.channels.length - 1].index + 1;
+      }
 
-    await this.addUsers()
-    let createdChannel = await addDoc(this.getChannelsRef(),
-      this.currentChannel.toJSON()
-    )
-    const createdChannelRef = doc(this.firestore, "channels", createdChannel.id);
-    await updateDoc(createdChannelRef, {
-      id: createdChannel.id
-    });
-    this.fireService.readChannels()
+      await this.addUsers()
+      let createdChannel = await addDoc(this.getChannelsRef(),
+        this.currentChannel.toJSON()
+      )
+      const createdChannelRef = doc(this.firestore, "channels", createdChannel.id);
+      await updateDoc(createdChannelRef, {
+        id: createdChannel.id
+      });
+      this.fireService.readChannels()
+    
   }
 
 

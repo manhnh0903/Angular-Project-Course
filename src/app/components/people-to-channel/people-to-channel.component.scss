@@ -73,14 +73,19 @@
 
 .selectedUsers {
     position: absolute;
-    top:0;
-    right: 1px;
+    top: 0;
+    right: 0;
+    overflow-x: hidden;
 
     div {
         display: flex;
         align-items: center;
         background: white;
         border-radius: 50%;
+
+        p {
+            white-space: nowrap;
+        }
     }
 }
 
@@ -89,4 +94,10 @@
     width: 30px;
     border-radius: 50%;
     margin-right: 10px;
+}
+
+@media(max-width:900px) {
+    .peopleToAdd {
+        right: unset;
+    }
 }

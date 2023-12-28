@@ -53,6 +53,7 @@ export class CreateChannelComponent {
       const dialog = this.dialog.open(PeopleToChannelComponent, {
         height: '400px',
         width: '600px',
+        maxWidth: '100vw',
       });
       dialog.componentInstance.currentChannel = new Channel(this.channel.toJSON())
       this.dialogRef.close()

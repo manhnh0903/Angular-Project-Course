@@ -11,9 +11,11 @@
   padding: 20px 60px;
   cursor: pointer;
 }
+
 .mention {
   color: #444DF2;
 }
+
 .nameContentDiv {
   display: flex;
   flex-direction: column;
@@ -243,11 +245,14 @@ emoji-mart {
   background-color: blue;
 }
 
-@media(max-width:650px) {
+@media(max-width:900px) {
   .messageContent {
     background-color: #444DF2 !important;
     color: white;
 
   }
 
+  .messagesSection {
+    padding: 10px;
+  }
 }

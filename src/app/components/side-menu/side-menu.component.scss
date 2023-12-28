@@ -105,12 +105,13 @@
     font-size: 22px;
     line-height: 1.1;
     cursor: pointer;
+    font-weight: bold;
   }
 }
 
 .dropDownContent {
   width: 75%;
-  margin-left: 69px;
+  margin-left: 63px;
   margin-right: auto;
   top: 100%;
   left: 0;
@@ -143,7 +144,7 @@
 
 .dropDownSubDiv {
   display: flex;
-  gap: 15px;
+  gap: 17px;
   align-items: center;
   cursor: pointer;
   padding: 4px 8px;
@@ -177,15 +178,36 @@
   border-radius: 50%;
 }
 
-@media(max-width:650px) {
+@media(max-width:900px) {
   .sideMenu {
     width: 100%;
     margin: 0;
     border-radius: 0;
   }
 
+  .dropDownContent {
+    width: 85%;
+    margin-left: 20px;
+  }
+
   .logoContainer {
     display: none;
   }
 
+  .channelHeaders {
+    margin-left: -12px;
+  }
+  .channelsSpans{
+    padding-left: 40px;
+  }
+
+  .forHover {
+    font-size: 18px !important;
+  }
+  .dropDownSubDiv{
+    line-height: 1.6;
+  }
+.icon{
+  margin-left: 0;
+}
 }
