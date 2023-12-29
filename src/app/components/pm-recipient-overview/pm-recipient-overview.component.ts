@@ -13,6 +13,10 @@ export class PmRecipientOverviewComponent {
     private fireService: FirestoreService
   ) {}
 
+  /**
+   * Opens a private message (PM) chat with the specified user.
+   * @param userId - The unique identifier of the user for the PM chat.
+   */
   openPmChat(userId: string) {
     this.homeNavService.pmRecipient = userId;
     this.homeNavService.setChatPath('pm');

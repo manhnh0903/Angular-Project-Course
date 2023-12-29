@@ -2,7 +2,6 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostListener,
   Input,
   Output,
   inject,
@@ -12,7 +11,6 @@ import { FirestoreService } from '../../services/firestore.service';
 import { Reaction } from '../../classes/reaction.class';
 import { UserService } from '../../services/user.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
-import { find } from 'rxjs';
 
 @Component({
   selector: 'app-reactions',
@@ -27,7 +25,7 @@ export class ReactionsComponent {
     public userService: UserService,
     private el: ElementRef,
     private homeNav: HomeNavigationService
-  ) { }
+  ) {}
 
   emojiOpened = false;
   @Input() currentMessage;
@@ -45,9 +43,7 @@ export class ReactionsComponent {
     editMessage: boolean;
     openEdit: boolean;
   }>();
-  @Output() addEmojiEvent = new EventEmitter<{ emoji }>(
-
-  )
+  @Output() addEmojiEvent = new EventEmitter<{ emoji }>();
   openEditMessageDiv() {
     this.editMessage = !this.editMessage;
     this.openEdit = !this.openEdit;
@@ -75,7 +71,7 @@ export class ReactionsComponent {
     }
     if (this.type === 'pm') {
       docReference = this.fireService.getDocRef('pms', this.collectionId);
-/*       this.conversation.messages[this.index] = this.currentMessage; */
+      /*       this.conversation.messages[this.index] = this.currentMessage; */
       await updateDoc(docReference, {
         messages: this.conversation.toJSON().messages,
       });
@@ -90,17 +86,19 @@ export class ReactionsComponent {
     if (this.type === 'channel') {
       this.fireService.currentChannel.messages[this.index] =
         this.currentMessage;
-     this.updateDoc(docReference, this.fireService.currentChannel.messages)
+      this.updateDoc(docReference, this.fireService.currentChannel.messages);
     }
     if (this.type === 'thread') {
-      this.fireService.currentChannel.messages[this.indexParentMessage()].thread[this.indexMessageOnThread()] = this.currentMessage
-      this.updateDoc(docReference, this.fireService.currentChannel.messages)
+      this.fireService.currentChannel.messages[
+        this.indexParentMessage()
+      ].thread[this.indexMessageOnThread()] = this.currentMessage;
+      this.updateDoc(docReference, this.fireService.currentChannel.messages);
     }
     if (this.type === 'pm') {
       this.conversation.messages[this.index] = this.currentMessage;
-      this.updateDoc(docReference, this.conversation.toJSON().messages)
+      this.updateDoc(docReference, this.conversation.toJSON().messages);
     }
-    this.openEmoji()
+    this.openEmoji();
   }
 
   createEmoji(event) {
@@ -169,17 +167,17 @@ export class ReactionsComponent {
     );
   }
 
-
-
   indexParentMessage() {
-    return this.fireService.currentChannel.messages.findIndex(message => message.id === this.parentMessage.id)
+    return this.fireService.currentChannel.messages.findIndex(
+      (message) => message.id === this.parentMessage.id
+    );
   }
-
 
   indexMessageOnThread() {
-    return this.fireService.currentChannel.messages[this.indexParentMessage()].thread.findIndex(message => message.id === this.currentMessage.id)
+    return this.fireService.currentChannel.messages[
+      this.indexParentMessage()
+    ].thread.findIndex((message) => message.id === this.currentMessage.id);
   }
-
 
   async updateDoc(docReference, obj) {
     await updateDoc(docReference, {

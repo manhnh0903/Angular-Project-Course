@@ -1,14 +1,8 @@
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateChannelComponent } from '../create-channel/create-channel.component';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
-
 
 @Component({
   selector: 'app-side-menu',
@@ -21,24 +15,35 @@ export class SideMenuComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public fireService: FirestoreService,
-    private navService: HomeNavigationService,
-  ) { }
+    private navService: HomeNavigationService
+  ) {}
   async ngOnInit() {
     this.fireService.readChannels();
-
   }
-  clickedOnMobile = false
+  clickedOnMobile = false;
   channelsClicked = true;
   PMclicked = true;
 
+  /**
+   * Toggles the value of the channelsClicked property.
+   */
   openChannels() {
-    if (this.channelsClicked == false) {
-      this.channelsClicked = true;
-    } else {
-      this.channelsClicked = false;
-    }
+    this.channelsClicked = !this.channelsClicked;
   }
 
+  /**
+   * Toggles the value of the PMclicked property.
+   */
+  openPM() {
+    this.PMclicked = !this.PMclicked;
+  }
+
+  /**
+   * opens a chat channel identified by the given id.
+   * Updates some properties and invokes methods from the 'fireService' and 'navService'.
+   * Emits a boolean value through the 'booleanChanged' event.
+   * @param id - The id of the chat channel.
+   */
   async openChanelChat(id: string) {
     this.clickedOnMobile = true;
     this.booleanChanged.emit(this.clickedOnMobile);
@@ -47,30 +52,30 @@ export class SideMenuComponent implements OnInit {
     this.navService.setChatPath('chanel');
   }
 
-  openPM() {
-    if (this.PMclicked == false) {
-      this.PMclicked = true;
-    } else {
-      this.PMclicked = false;
-    }
-  }
-
+  /**
+   * Opens a dialog for creating a channel.
+   * Uses Angular Material's dialog service to create and display the dialog.
+   */
   openCreateChannelDialog(): void {
     const dialogRef = this.dialog.open(CreateChannelComponent, {
       height: '400px',
       width: '600px',
       maxWidth: '100vw',
       panelClass: 'createChannelDialog',
-    
     });
-}
+  }
 
-openPmChat(userId: string) {
-  this.clickedOnMobile = true;
-  this.booleanChanged.emit(this.clickedOnMobile);
-
-  this.navService.pmRecipient = userId;
-  this.navService.setChatPath('pm');
-  this.fireService.subscribeToPmRecipient(userId);
-}
+  /**
+   * Opens a private chat (PM) with the specified user.
+   * Updates properties and subscribes to the private chat recipient using 'fireService' and 'navService'.
+   * Emits a boolean value through the 'booleanChanged' event.
+   * @param userId - The ID of the user to initiate a private chat with.
+   */
+  openPmChat(userId: string) {
+    this.clickedOnMobile = true;
+    this.booleanChanged.emit(this.clickedOnMobile);
+    this.navService.pmRecipient = userId;
+    this.navService.setChatPath('pm');
+    this.fireService.subscribeToPmRecipient(userId);
+  }
 }
