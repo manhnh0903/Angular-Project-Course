@@ -13,7 +13,7 @@
 }
 
 .mention {
-  color: #444DF2;
+  color: #444df2;
 }
 
 .nameContentDiv {
@@ -23,7 +23,6 @@
   margin-right: 20px;
   position: relative;
   flex-grow: 1;
-
 
   .nameOfSender {
     font-weight: bold;
@@ -45,13 +44,10 @@
     border-radius: 0 40px 40px 40px;
   }
 
-
-
   .tread-info {
     display: flex;
     grid-gap: 20px;
     align-items: center;
-    justify-content: flex-end;
     margin-top: 8px;
     cursor: pointer;
 
@@ -69,7 +65,7 @@
 
 .messagesInfo {
   display: flex;
-  width: 100%
+  width: 100%;
 }
 
 .reactions {
@@ -121,7 +117,6 @@
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
-
 }
 
 .messageDiv {
@@ -199,12 +194,10 @@
   align-items: center;
   margin-left: auto;
   margin-right: auto;
-
 }
 
 emoji-mart {
   z-index: 9999;
-
 }
 
 .reactionsPeople {
@@ -213,11 +206,10 @@ emoji-mart {
   bottom: 25px;
   /*   left: 30px; */
   padding: 20px;
-  background-color: var(--Purple-1, #444DF2);
+  background-color: var(--Purple-1, #444df2);
 
   color: white;
 }
-
 
 .forPeopleReactedLeft {
   left: 20px;
@@ -245,11 +237,10 @@ emoji-mart {
   background-color: blue;
 }
 
-@media(max-width:900px) {
+@media (max-width: 900px) {
   .messageContent {
-    background-color: #444DF2 !important;
+    background-color: #444df2 !important;
     color: white;
-
   }
 
   .messagesSection {
