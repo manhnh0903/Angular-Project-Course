@@ -1,7 +1,6 @@
 import { Component, ElementRef, inject } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PeopleToChannelComponent } from '../people-to-channel/people-to-channel.component';
-// import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 import { Channel } from 'src/app/classes/channel.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
@@ -27,7 +26,6 @@ export class CreateChannelComponent {
     private formBuilder: FormBuilder,
     private userService: UserService
   ) {}
-  // firestore = inject(Firestore)
   channel = new Channel();
   nameExists = false;
 
