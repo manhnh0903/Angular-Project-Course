@@ -354,19 +354,12 @@ export class MessageComponent {
     firstName = word;
     index = j;
     lastName = splitted[j + 1];
-    if (!this.isMobile) {
-      splitted.splice(
-        index,
-        2,
-        `<span style="color: blue;">${firstName} ${lastName}</span>`
-      );
-    } else {
-      splitted.splice(
-        index,
-        2,
-        `<span style="font-weight:bold">${firstName} ${lastName}</span>`
-      );
-    }
+
+    splitted.splice(
+      index,
+      2,
+      `<span style="color: blue;">${firstName} ${lastName}</span>`
+    );
   }
 
   assignToHTML(splitted) {

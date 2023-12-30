@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit {
 
   handleBooleanChange(value: boolean) {
     this.clickedOnMobile = value;
-    console.log(this.clickedOnMobile);
   }
 
   constructor(

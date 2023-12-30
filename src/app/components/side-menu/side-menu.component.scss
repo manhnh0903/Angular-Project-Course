@@ -1,5 +1,4 @@
 .sideMenu {
-  margin-left: 50px;
   width: 420px;
   height: 100%;
   border-radius: 30px;
@@ -46,7 +45,8 @@
   cursor: pointer;
 
   &:hover {
-    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
+    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%)
+      hue-rotate(164deg) brightness(104%) contrast(98%);
   }
 }
 
@@ -76,7 +76,8 @@
   cursor: pointer;
 
   &:hover {
-    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
+    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%)
+      hue-rotate(164deg) brightness(104%) contrast(98%);
   }
 }
 
@@ -84,7 +85,8 @@
   cursor: pointer;
 
   &:hover {
-    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
+    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%)
+      hue-rotate(164deg) brightness(104%) contrast(98%);
   }
 }
 
@@ -161,11 +163,10 @@
     left: 45px;
   }
 
-
-
   &:hover {
     p {
-      filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
+      filter: brightness(0) saturate(100%) invert(29%) sepia(14%)
+        saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
     }
 
     background-color: var(--main-bg-color);
@@ -178,7 +179,7 @@
   border-radius: 50%;
 }
 
-@media(max-width:900px) {
+@media (max-width: 900px) {
   .sideMenu {
     width: 100%;
     margin: 0;
@@ -197,17 +198,17 @@
   .channelHeaders {
     margin-left: -12px;
   }
-  .channelsSpans{
+  .channelsSpans {
     padding-left: 40px;
   }
 
   .forHover {
     font-size: 18px !important;
   }
-  .dropDownSubDiv{
+  .dropDownSubDiv {
     line-height: 1.6;
   }
-.icon{
-  margin-left: 0;
-}
+  .icon {
+    margin-left: 0;
+  }
 }
