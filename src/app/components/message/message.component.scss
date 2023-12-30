@@ -204,7 +204,6 @@ emoji-mart {
   display: none;
   position: absolute;
   bottom: 25px;
-  /*   left: 30px; */
   padding: 20px;
   background-color: var(--Purple-1, #444df2);
 
@@ -238,11 +237,6 @@ emoji-mart {
 }
 
 @media (max-width: 900px) {
-  .messageContent {
-    background-color: #444df2 !important;
-    color: white;
-  }
-
   .messagesSection {
     padding: 10px;
   }

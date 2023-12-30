@@ -1,9 +1,13 @@
 .homeContainer {
-  width: 98vw;
+  width: 100%;
   height: calc(100% - 120px);
   display: flex;
   gap: 16px;
-  padding-bottom: 25px;
+  padding: 0 25px 25px 25px;
+
+  @media screen and (max-width: 900px) {
+    padding: 0;
+  }
 }
 
 .sideMenuButton {
@@ -22,7 +26,8 @@
 
   &:hover .showMenuIcon,
   &:hover span {
-    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
+    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%)
+      hue-rotate(164deg) brightness(104%) contrast(98%);
   }
 }
 
@@ -93,7 +98,7 @@
   }
 }
 
-@media(max-width:900px) {
+@media (max-width: 900px) {
   .homeContainer {
     width: 100vw;
   }
@@ -113,10 +118,8 @@
   }
 
   .showMenu {
-    width: 100%
+    width: 100%;
   }
-
-
 
   .pmContainer {
     position: absolute;
@@ -133,7 +136,7 @@
   align-items: center;
   justify-content: space-evenly;
   width: 100%;
-  background-color: #ECEEFE;
+  background-color: #eceefe;
   padding: 23px;
 
   h1 {
