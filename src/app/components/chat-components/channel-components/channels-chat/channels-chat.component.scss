@@ -6,6 +6,11 @@
   background-color: white;
   border-radius: 30px;
   padding-bottom: 5px;
+
+  @media (max-width: 900px) {
+    height: calc(100% - 106px);
+    border-radius: unset;
+  }
 }
 
 header {
@@ -222,10 +227,4 @@ input {
 
 .messagesOnChannel > :first-child {
   margin-top: auto !important;
-}
-
-@media (max-width: 900px) {
-  .channelsContainer {
-    height: calc(100% - 106px);
-  }
 }
