@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { CustomValidators } from 'src/app/classes/custom-validators.class';
 
 @Component({
@@ -12,12 +12,9 @@ import { CustomValidators } from 'src/app/classes/custom-validators.class';
 export class SignUpComponent {
   registrationForm: FormGroup;
   privacyHover: boolean;
+  subscription: Subscription;
 
-  constructor(
-    private authService: FirebaseAuthService,
-    private fb: FormBuilder,
-    private router: Router
-  ) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.registrationForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, CustomValidators.emailValidator]],
@@ -27,6 +24,15 @@ export class SignUpComponent {
       ],
       privacy: [false, Validators.requiredTrue],
     });
+
+    if (router.getCurrentNavigation().extras.state) {
+      this.registrationForm.setValue({
+        name: this.router.getCurrentNavigation().extras.state['name'],
+        email: this.router.getCurrentNavigation().extras.state['email'],
+        password: this.router.getCurrentNavigation().extras.state['password'],
+        privacy: false,
+      });
+    }
   }
 
   /**

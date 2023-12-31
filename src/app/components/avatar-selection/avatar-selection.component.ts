@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { user } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Animations } from 'src/app/classes/animations.class';
 import { DabubbleUser } from 'src/app/classes/user.class';
@@ -68,5 +67,17 @@ export class AvatarSelectionComponent {
       this.userCreated = false;
       this.router.navigate(['/home']);
     }, 800);
+  }
+
+  routeBackToSignUp() {
+    console.log('routeBackToSignUp');
+
+    const name = this.user.name;
+    const email = this.user.email;
+    const password = this.user.password;
+
+    this.router.navigate(['/sign-up'], {
+      state: { email, password, name },
+    });
   }
 }
