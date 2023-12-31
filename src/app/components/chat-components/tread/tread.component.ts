@@ -3,7 +3,6 @@ import { HomeNavigationService } from 'src/app/services/home-navigation.service'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Message } from 'src/app/classes/message.class';
 import { Subject, takeUntil } from 'rxjs';
-import { UserService } from 'src/app/services/user.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Conversation } from 'src/app/classes/conversation.class';
 import { Channel } from 'src/app/classes/channel.class';
@@ -25,7 +24,7 @@ export class TreadComponent {
   constructor(
     public homeNav: HomeNavigationService,
     private fb: FormBuilder,
-    private userService: UserService,
+
     private firestoreService: FirestoreService
   ) {
     this.sendMessageForm = this.fb.group({
@@ -89,36 +88,4 @@ export class TreadComponent {
       }
     );
   }
-
-  /* sendForm() {
-    const msg = new Message();
-
-    msg.content = this.sendMessageForm.value.message;
-    msg.profileImg = this.userService.user.profileImg;
-    msg.sender = this.userService.user.name;
-    msg.creationDate = this.firestoreService.getCurrentDate();
-    msg.creationTime = this.firestoreService.getCurrentTime();
-    msg.creationDay = this.firestoreService.getDaysName();
-
-    msg.id = this.addMessageId();
-
-    this.parentMessage.thread.push(msg);
-
-    this.firestoreService.updateConversation(
-      this.threadCollection,
-      this.parentMessage.collectionId,
-      this.opendThreadConversation.toJSON()
-    );
-  }
-
-  addMessageId() {
-    let id: number;
-    if (this.parentMessage.thread.length > 0) {
-      id =
-        this.parentMessage.thread[this.parentMessage.thread.length - 1].id + 1;
-    } else {
-      id = 0;
-    }
-    return id;
-  } */
 }

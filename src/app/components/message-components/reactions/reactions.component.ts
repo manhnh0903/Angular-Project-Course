@@ -7,9 +7,9 @@ import {
   inject,
 } from '@angular/core';
 import { Firestore, loadBundle, updateDoc } from '@angular/fire/firestore';
-import { FirestoreService } from '../../services/firestore.service';
-import { Reaction } from '../../classes/reaction.class';
-import { UserService } from '../../services/user.service';
+import { FirestoreService } from '../../../services/firestore.service';
+import { Reaction } from '../../../classes/reaction.class';
+import { UserService } from '../../../services/user.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 
 @Component({

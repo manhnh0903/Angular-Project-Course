@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { FirestoreService } from '../../services/firestore.service';
+import { FirestoreService } from '../../../../services/firestore.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Firestore, doc, updateDoc } from '@angular/fire/firestore';
 import { UserService } from 'src/app/services/user.service';

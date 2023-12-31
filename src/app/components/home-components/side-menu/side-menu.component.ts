@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateChannelComponent } from '../create-channel/create-channel.component';
+import { CreateChannelComponent } from '../../chat-components/channel-components/create-channel/create-channel.component';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 

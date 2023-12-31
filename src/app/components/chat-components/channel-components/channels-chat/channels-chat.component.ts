@@ -11,7 +11,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
-import { EditChannelComponent } from 'src/app/components/edit-channel/edit-channel.component';
+import { EditChannelComponent } from 'src/app/components/chat-components/channel-components/edit-channel/edit-channel.component';
 
 @Component({
   selector: 'app-channels-chat',
