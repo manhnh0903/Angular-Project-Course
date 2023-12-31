@@ -8,14 +8,14 @@
     <div class="channels">
       <div class="channelsSpans">
         <div class="channelHeaders">
-          <div (click)="openChannels()">
+          <div class="channel-headline" (click)="openChannels()">
             <img class="dropDownIcon" src="assets/img/arrow_drop_down.png" />
             <img class="icon" src="assets/img/workspaces.png" />
             <span class="forHover">Channels</span>
           </div>
 
           <div (click)="openCreateChannelDialog()" class="addIconDiv">
-            <img class="addIcon" src="assets/img/add.png" />
+            <img class="addIcon" src="./assets/img/add.png" />
           </div>
         </div>
         <div *ngIf="channelsClicked" class="dropDownContent">
@@ -50,7 +50,7 @@
         <div style="display: flex; align-items: flex-start">
           <div class="channelsSpans">
             <div class="channelHeaders">
-              <div (click)="openPM()">
+              <div class="channel-headline" (click)="openPM()">
                 <img
                   class="dropDownIcon"
                   src="assets/img/arrow_drop_down.png"

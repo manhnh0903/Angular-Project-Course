@@ -73,7 +73,7 @@
   align-items: center;
   cursor: pointer;
 
-  > div {
+  .channel-headline {
     display: flex;
     align-items: center;
     gap: 16px;
@@ -101,10 +101,12 @@
 .addIconDiv {
   display: flex;
   align-items: center;
+  justify-content: center;
   border-radius: 50%;
+  border: 1px solid transparent;
 
   &:hover {
-    background-color: #eceefe;
+    background-color: var(--main-bg-color);
   }
 }
 
