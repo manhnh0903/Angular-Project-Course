@@ -56,10 +56,7 @@
 }
 
 .chatContainer {
-  background: var(--White, #fff);
   flex-grow: 1;
-  border-radius: 30px;
-  padding-bottom: 5px;
 }
 
 .pm-recipient-overlay {
@@ -76,11 +73,6 @@
 
   z-index: 1000;
 }
-
-/* .fullWidth {
-    animation: expandChannelContainer 4s ease-in-out !important;
-}
- */
 
 @keyframes hideMenu {
   from {
