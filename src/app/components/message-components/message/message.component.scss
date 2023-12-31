@@ -34,6 +34,7 @@
     padding: 15px 10px 20px;
     margin-top: 10px;
     width: fit-content;
+    overflow-wrap: anywhere;
   }
 
   .borderForMessageIfYou {
@@ -234,6 +235,18 @@ emoji-mart {
 
 .mention {
   background-color: blue;
+}
+
+app-reactions {
+  position: absolute;
+}
+
+.reaction-left {
+  left: 0;
+}
+
+.reaction-right {
+  right: 0;
 }
 
 @media (max-width: 900px) {

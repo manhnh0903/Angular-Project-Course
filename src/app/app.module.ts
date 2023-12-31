@@ -33,7 +33,7 @@ import { PmChatComponent } from './components/chat-components/pm-chat/pm-chat.co
 import { MessageComponent } from './components/message-components/message/message.component';
 import { EditChannelComponent } from './components/chat-components/channel-components/edit-channel/edit-channel.component';
 import { PmRecipientOverviewComponent } from './components/overlay-components/pm-recipient-overview/pm-recipient-overview.component';
-import { FooterInputComponent } from './components/message-components/footer-input/footer-input.component';
+import { FooterInputComponent } from './components/chat-components/channel-components/footer-input/footer-input.component';
 import { MentionModule } from 'angular-mentions';
 import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';

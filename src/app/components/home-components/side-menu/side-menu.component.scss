@@ -6,6 +6,10 @@
   padding-top: 20px;
   padding-bottom: 20px;
   overflow-y: auto;
+
+  @media screen and (max-width: 1300px) {
+    width: 280px;
+  }
 }
 
 .sideMenuContent {
@@ -53,15 +57,8 @@
 .channels {
   display: flex;
   align-items: flex-start;
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
   justify-content: space-between;
-}
-
-.dropDownIcon {
-  height: 20px;
-  margin-right: 20px;
 }
 
 .subChannels {
@@ -72,12 +69,23 @@
 
 .channelHeaders {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   cursor: pointer;
 
-  &:hover {
-    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%)
-      hue-rotate(164deg) brightness(104%) contrast(98%);
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    &:hover {
+      filter: brightness(0) saturate(100%) invert(29%) sepia(14%)
+        saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
+    }
+  }
+
+  .dropDownIcon {
+    height: 20px;
   }
 }
 
@@ -112,9 +120,7 @@
 }
 
 .dropDownContent {
-  width: 75%;
   margin-left: 63px;
-  margin-right: auto;
   top: 100%;
   left: 0;
   background-color: white;
@@ -123,6 +129,10 @@
   padding-top: 12px;
   gap: 12px;
   line-height: 2.8;
+
+  @media screen and (max-width: 1300px) {
+    margin-left: 12px;
+  }
 }
 
 .account_icon {
@@ -136,8 +146,6 @@
 
 .icon {
   height: 21px;
-  margin-right: 15px;
-  margin-left: 30px;
 }
 
 .subIcon {
@@ -152,15 +160,18 @@
   padding: 4px 8px;
   border-radius: 30px;
   position: relative;
-
-  .tag {
-    font-size: 25px;
-  }
+  width: fit-content;
+  min-width: 200px;
 
   .online-status-img {
     position: absolute;
     bottom: 5px;
     left: 45px;
+  }
+
+  p {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &:hover {
@@ -187,7 +198,6 @@
   }
 
   .dropDownContent {
-    width: 85%;
     margin-left: 20px;
   }
 

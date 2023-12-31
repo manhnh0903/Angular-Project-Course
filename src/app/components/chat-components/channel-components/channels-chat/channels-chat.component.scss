@@ -13,9 +13,12 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 20px 45px;
-
   box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
   height: 100px;
+
+  @media screen and (max-width: 1300px) {
+    padding: 20px 8px;
+  }
 }
 
 .headerLeft {
@@ -211,6 +214,10 @@ input {
   display: flex;
   gap: 32px;
   flex-flow: column nowrap;
+
+  @media screen and (max-width: 1300px) {
+    padding: 20px 8px;
+  }
 }
 
 .messagesOnChannel > :first-child {
@@ -219,6 +226,6 @@ input {
 
 @media (max-width: 900px) {
   .channelsContainer {
-    height: 85%;
+    height: calc(100% - 106px);
   }
 }

@@ -24,7 +24,7 @@ export class ReactionsComponent {
   emojiOpened = false;
   @Input() currentMessage;
   @Input() index;
-  @Input() public type;
+  @Input() public type: string;
   @Input() conversation;
   @Input() collectionId;
   @Input() isYou;
@@ -194,6 +194,5 @@ export class ReactionsComponent {
 
   startThread() {
     this.homeNav.selectMessage(this.currentMessage);
-    /*     this.homeNav.currentTread = this.currentMessage; */
   }
 }

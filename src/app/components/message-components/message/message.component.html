@@ -164,6 +164,7 @@
         </div>
       </div>
       <app-reactions
+        [ngClass]="{ 'reaction-left': isYou, 'reaction-right': !isYou }"
         (openEditMessageDivEvent)="openEditMessageDiv($event)"
         [index]="index"
         [currentMessage]="currentMessage"
