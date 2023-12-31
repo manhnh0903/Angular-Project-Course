@@ -20,17 +20,11 @@ import { HomeNavigationService } from 'src/app/services/home-navigation.service'
 export class ReactionsComponent {
   [x: string]: any;
   firestore = inject(Firestore);
-  constructor(
-    public fireService: FirestoreService,
-    public userService: UserService,
-    private el: ElementRef,
-    private homeNav: HomeNavigationService
-  ) {}
 
   emojiOpened = false;
   @Input() currentMessage;
   @Input() index;
-  @Input() type;
+  @Input() public type;
   @Input() conversation;
   @Input() collectionId;
   @Input() isYou;
@@ -39,11 +33,20 @@ export class ReactionsComponent {
   emoji;
   openEdit = false;
   editMessage = true;
+
+  constructor(
+    public fireService: FirestoreService,
+    public userService: UserService,
+    private el: ElementRef,
+    private homeNav: HomeNavigationService
+  ) {}
+
   @Output() openEditMessageDivEvent = new EventEmitter<{
     editMessage: boolean;
     openEdit: boolean;
   }>();
   @Output() addEmojiEvent = new EventEmitter<{ emoji }>();
+
   openEditMessageDiv() {
     this.editMessage = !this.editMessage;
     this.openEdit = !this.openEdit;
