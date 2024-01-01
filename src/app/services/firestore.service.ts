@@ -1,4 +1,3 @@
-import { DeclarationListEmitMode } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import {
   Firestore,
@@ -9,11 +8,12 @@ import {
   onSnapshot,
   setDoc,
   getDoc,
-  query,
   getDocs,
   QuerySnapshot,
+  DocumentChange,
 } from '@angular/fire/firestore';
-import { BehaviorSubject, Subject, distinctUntilChanged } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
+import { DabubbleUser } from '../classes/user.class';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +37,8 @@ export class FirestoreService {
   public sorted = [];
   public unsubUsers;
   userOnChannelCheck = [];
+  private defaultChannelCalled: boolean = false;
+
   constructor(private firestore: Firestore) {
     this.subscribeToCollection('pms', this.pmsCollectionDataSubject);
     this.subscribeToCollection('users', this.usersCollectionDataSubject);
@@ -245,44 +247,89 @@ export class FirestoreService {
     );
   }
 
+  /**
+   * Reads channel changes from Firestore and processes them.
+   * Initializes a Firestore query and registers an onSnapshot listener for channel updates.
+   */
   async readChannels() {
-    let defaultChannelCalled = false;
-    const q = query(collection(this.firestore, 'channels'));
-    let unsubscribe = onSnapshot(q, (snapshot) => {
+    this.defaultChannelCalled = false;
+    const colRef = this.getColRef('channels');
+
+    // Subscribe to snapshot changes in the 'channels' collection
+    let unsubscribe = onSnapshot(colRef, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
-        let channelToModifyIndex = this.channels.findIndex(
-          (channel) => channel.index === change.doc.data()['index']
-        );
-        if (change.type === 'added') {
-          if (channelToModifyIndex === -1) {
-            this.channels.push(change.doc.data());
-            this.checkIfUserOnChannel();
-          }
-        }
-        if (change.type === 'modified') {
-          this.channels[channelToModifyIndex] = change.doc.data();
-          if (
-            this.currentChannel &&
-            this.currentChannel.index ===
-              this.channels[channelToModifyIndex].index
-          ) {
-            this.currentChannel = this.channels[channelToModifyIndex];
-          }
-          this.checkIfUserOnChannel();
-        }
+        this.processChannelChange(change);
       });
-      if (!defaultChannelCalled && this.channels.length > 0) {
-        this.defaultChannel();
-        defaultChannelCalled = true;
-      }
+
+      // Handle processing of the default channel
+      this.handleDefaultChannel();
     });
+  }
+
+  /**
+   * Processes changes for an individual channel in the snapshot.
+   *
+   * @param {DocumentChange} change - The change object representing a channel modification.
+   */
+  processChannelChange(change: DocumentChange) {
+    const channelToModifyIndex = this.channels.findIndex(
+      (channel) => channel.index === change.doc.data()['index']
+    );
+
+    if (change.type === 'added') {
+      this.handleAddedChannel(channelToModifyIndex, change);
+    }
+
+    if (change.type === 'modified') {
+      this.handleModifiedChannel(channelToModifyIndex, change);
+    }
+  }
+
+  /**
+   * Handles the case when a new channel is added.
+   *
+   * @param {number} channelToModifyIndex - Index of the channel to modify in the local channels list.
+   * @param {DocumentChange} change - The change object representing an added channel.
+   */
+  handleAddedChannel(channelToModifyIndex: number, change: DocumentChange) {
+    if (channelToModifyIndex === -1) {
+      this.channels.push(change.doc.data());
+      this.checkIfUserOnChannel();
+    }
+  }
+
+  /**
+   * Handles the case when an existing channel is modified.
+   *
+   * @param {number} channelToModifyIndex - Index of the channel to modify in the local channels list.
+   * @param {DocumentChange} change - The change object representing a modified channel.
+   */
+  handleModifiedChannel(channelToModifyIndex: number, change: DocumentChange) {
+    this.channels[channelToModifyIndex] = change.doc.data();
+    if (
+      this.currentChannel &&
+      this.currentChannel.index === this.channels[channelToModifyIndex].index
+    ) {
+      this.currentChannel = this.channels[channelToModifyIndex];
+    }
+    this.checkIfUserOnChannel();
+  }
+
+  /**
+   * Handles the case when the default channel needs to be processed.
+   */
+  handleDefaultChannel() {
+    if (!this.defaultChannelCalled && this.channels.length > 0) {
+      this.defaultChannel();
+      this.defaultChannelCalled = true;
+    }
   }
 
   /**
    * Checks if the logged-in user is on each channel in the channels array.
    */
   async checkIfUserOnChannel() {
-    let userId;
+    let userId: string;
     this.loggedInUserDataSubject
       .pipe(distinctUntilChanged())
       .subscribe((data) => {
@@ -290,12 +337,11 @@ export class FirestoreService {
           userId = data.userId;
           this.userOnChannelCheck = [];
           this.channels.forEach((channel) => {
-            let index = channel.users.find((user) => user.userId === userId);
-            if (index !== undefined) {
-              this.userOnChannelCheck.push(true);
-            } else {
-              this.userOnChannelCheck.push(false);
-            }
+            let index = channel.users.find(
+              (user: DabubbleUser) => user.userId === userId
+            );
+            if (index !== undefined) this.userOnChannelCheck.push(true);
+            else this.userOnChannelCheck.push(false);
           });
         }
       });

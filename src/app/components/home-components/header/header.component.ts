@@ -174,10 +174,7 @@ export class HeaderComponent {
     this.pmsData.forEach((conversation: Conversation) => {
       const matchingMessages = conversation.messages.filter(
         (message: Message) => {
-          const contentMatches = message.content
-            .toLocaleLowerCase()
-            .includes(this.searchInput.toLowerCase());
-
+          const contentMatches = this.isContentMatching(message);
           const userIsInConversation = this.isUserInConversation(conversation);
           return contentMatches && userIsInConversation;
         }
@@ -186,6 +183,18 @@ export class HeaderComponent {
     });
 
     this.filterdPmsData = searchResult;
+  }
+
+  /**
+   * Checks if the content of a message matches the search input.
+   *
+   * @param {Message} message - The message to check.
+   * @returns {boolean} True if the content matches, false otherwise.
+   */
+  isContentMatching(message: Message) {
+    return message.content
+      .toLocaleLowerCase()
+      .includes(this.searchInput.toLowerCase());
   }
 
   /**
@@ -208,18 +217,12 @@ export class HeaderComponent {
 
     this.channelsData.forEach((channel: Channel) => {
       const matchingMessages = channel.messages.filter((message: Message) => {
-        const contentMatches = message.content
-          .toLocaleLowerCase()
-          .includes(this.searchInput.toLowerCase());
-
+        const contentMatches = this.isContentMatching(message);
         const userInChannel = this.isUserInChannel(channel);
-
         return contentMatches && userInChannel;
       });
-
       if (matchingMessages.length > 0) searchResult.push(...matchingMessages);
     });
-
     this.filterdChannelsData = searchResult;
   }
 

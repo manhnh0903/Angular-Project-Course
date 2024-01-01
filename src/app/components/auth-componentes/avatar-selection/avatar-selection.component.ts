@@ -70,8 +70,6 @@ export class AvatarSelectionComponent {
   }
 
   routeBackToSignUp() {
-    console.log('routeBackToSignUp');
-
     const name = this.user.name;
     const email = this.user.email;
     const password = this.user.password;

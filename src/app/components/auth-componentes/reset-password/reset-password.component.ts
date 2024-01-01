@@ -27,8 +27,6 @@ export class ResetPasswordComponent {
     this.route.queryParams.subscribe((params) => {
       this.authService.oobCode = params['oobCode'];
     });
-
-    console.log(this.authService.oobCode);
   }
 
   ngAfterViewInit() {
