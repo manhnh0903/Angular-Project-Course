@@ -1,8 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DabubbleUser } from 'src/app/classes/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
-
 import { UserService } from 'src/app/services/user.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -107,7 +106,6 @@ export class PmChatComponent {
   async getConversationData() {
     const ConversationsSnapshot = await this.firestoreService.getPmsSnapshot();
     let conversationFound = false;
-
     ConversationsSnapshot.forEach(async (doc) => {
       const docData = doc.data();
       const userId1 = docData['userId1'];
@@ -120,11 +118,16 @@ export class PmChatComponent {
         return;
       }
     });
+    if (!conversationFound) await this.createNewConversation();
+  }
 
-    if (!conversationFound) {
-      await this.setNewConversation();
-      await this.getConversationData();
-    }
+  /**
+   * Creates  new conversation involving the logged-in user and a recipient.
+   * after a conversation is created, it sets up the conversation.
+   */
+  async createNewConversation() {
+    await this.setNewConversation();
+    await this.getConversationData();
   }
 
   /**
@@ -174,13 +177,19 @@ export class PmChatComponent {
             const message = new Message(msg);
             this.conversation.messages.push(message);
           });
-
-          this.loading = false;
-          setTimeout(() => {
-            this.scrollToBottom();
-          }, 1);
+          this.handleMessagesUpdate();
         }
       });
+  }
+
+  /**
+   * Handles logic after updating the conversation messages, such as stopping loading and scrolling to the bottom.
+   */
+  handleMessagesUpdate() {
+    this.loading = false;
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 1);
   }
 
   /**
