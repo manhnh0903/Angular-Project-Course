@@ -246,6 +246,7 @@ export class FirestoreService {
   }
 
   async readChannels() {
+
     let defaultChannelCalled = false;
     const q = query(collection(this.firestore, 'channels'));
     let unsubscribe = onSnapshot(q, (snapshot) => {
@@ -264,7 +265,7 @@ export class FirestoreService {
           if (
             this.currentChannel &&
             this.currentChannel.index ===
-              this.channels[channelToModifyIndex].index
+            this.channels[channelToModifyIndex].index
           ) {
             this.currentChannel = this.channels[channelToModifyIndex];
           }
@@ -276,6 +277,7 @@ export class FirestoreService {
         defaultChannelCalled = true;
       }
     });
+ 
   }
 
   /**
