@@ -69,6 +69,10 @@ export class AvatarSelectionComponent {
     }, 800);
   }
 
+  /**
+   * Navigates back to the sign-up page with user information.
+   * Preserves user data (name, email, password) for form pre-filling.
+   */
   routeBackToSignUp() {
     const name = this.user.name;
     const email = this.user.email;
