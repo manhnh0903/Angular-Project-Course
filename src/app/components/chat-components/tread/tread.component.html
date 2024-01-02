@@ -1,0 +1,51 @@
+<section>
+  <div class="thread-header">
+    <div>
+      <h3>Thread</h3>
+      <span># {{ parentMessage.sender }}</span>
+    </div>
+    <img
+      (click)="this.homeNav.toggleThread()"
+      src="./assets/img/close.png"
+      alt="close-icon"
+    />
+  </div>
+  <div class="chat-area">
+    <app-message
+      [sender]="parentMessage.sender"
+      [profileImg]="parentMessage.profileImg"
+      [content]="parentMessage.content"
+      [currentMessage]="parentMessage"
+
+    ></app-message>
+    <div class="seperator-wrapper">
+      <span>{{ parentMessage.thread.length ?? 0 }} Antworten</span>
+      <div></div>
+    </div>
+    <app-message
+      *ngFor="let message of parentMessage.thread; let i = index"
+      [sender]="message.sender"
+      [profileImg]="message.profileImg"
+      [content]="message.content"
+      [creationDate]="message.creationDate"
+      [creationTime]="message.creationTime"
+      [creationDay]="message.creationDay"
+      [id]="message.id"
+      [index]="i"
+      [currentMessage]="message"
+      [thread]="parentMessage.thread"
+      [parentMessage]="parentMessage"
+      [type]="'thread'"
+      [reactions]="message.reactions"
+    ></app-message>
+  </div>
+
+  <footer>
+    <app-footer-input
+      [type]="'thread'"
+      [openThreadConversation]="opendThreadConversation"
+      [parentMessage]="parentMessage"
+      [threadCollection]="threadCollection"
+    ></app-footer-input>
+  </footer>
+</section>

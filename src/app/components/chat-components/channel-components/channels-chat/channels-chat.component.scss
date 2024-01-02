@@ -1,0 +1,263 @@
+.channelsContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 30px;
+  padding-bottom: 5px;
+
+  @media (max-width: 900px) {
+    height: calc(100% - 106px);
+    border-radius: unset;
+  }
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 45px;
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
+  height: 100px;
+
+  @media screen and (max-width: 1300px) {
+    padding: 20px 8px;
+  }
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  .tagImg {
+    height: 20px;
+  }
+
+  .arrowImg {
+    height: 20px;
+  }
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  p {
+    margin-left: 7px;
+  }
+}
+
+.usersImg {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  position: absolute;
+  top: -4px;
+}
+
+.messageUsersImg {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+.addUserIcon {
+  margin-left: 17px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.ifNoMessagesDiv {
+  margin-left: 60px;
+  margin-bottom: 35px;
+  display: flex;
+  flex-direction: column;
+
+  .channelsName {
+    font-weight: bold;
+  }
+
+  p {
+    color: blue;
+    margin-left: 10px;
+  }
+}
+
+input {
+  width: 100%;
+  outline: none;
+  border: none;
+  height: 50px;
+  font-size: 20px;
+}
+
+.sendIcon {
+  position: absolute;
+  bottom: 5%;
+  right: 20px;
+  background: white;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+.choosePeopleInput {
+  border-radius: 40px;
+  border: 1px solid rgb(173, 176, 217);
+  display: flex;
+  padding: 10px 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  align-self: stretch;
+  outline: none;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  width: 90%;
+
+  .channelsName {
+    color: blue;
+  }
+}
+
+.inputDiv {
+  position: relative;
+}
+
+.peopleToAdd {
+  position: absolute;
+  top: 68px;
+  left: -38px;
+  border-radius: 20px 0 20px 20px;
+  border: 1px solid #d5d7f3;
+  padding: 15px 20px;
+  z-index: 999;
+  background-color: white;
+}
+
+.filteredUser {
+  display: flex;
+  align-items: center;
+  margin-bottom: 7px;
+  cursor: pointer;
+}
+
+
+.profileImg {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.addPeopleDialog {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9;
+}
+
+.addPeopleDialogContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  position: absolute;
+  top: 120px;
+  right: 40px;
+  height: 222px;
+  min-height: 20%;
+  min-width: 25%;
+  border-radius: 30px 0px 30px 30px;
+  background-color: #ffffff;
+  padding: 20px;
+
+  .menuSpan {
+    font-size: 22px;
+    cursor: pointer;
+  }
+}
+
+.createButton {
+  color: rgb(255, 255, 255);
+  border-radius: 20px;
+
+  padding: 12px 25px;
+  border: none;
+  text-align: center;
+  width: fit-content;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.messagesOnChannel {
+  flex: 1;
+  padding: 16px 45px;
+  overflow-y: auto;
+  display: flex;
+  gap: 32px;
+  flex-flow: column nowrap;
+
+  @media screen and (max-width: 1300px) {
+    padding: 20px 8px;
+  }
+}
+
+.messagesOnChannel> :first-child {
+  margin-top: auto !important;
+}
+
+.selectedUsersDiv {
+  position: absolute;
+  right: 0;
+  left: 50%;
+  top: 7px;
+}
+
+.selectedUsers {
+  position: absolute;
+  top: 25px;
+  overflow-x: hidden;
+
+  div {
+    display: flex;
+    align-items: center;
+    border-radius: 50%;
+
+    p {
+      white-space: nowrap;
+    }
+  }
+}
+
+.ifAllUsersAdded {
+  color: green;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+@media(max-width:400px) {
+  .addPeopleDialogContent {
+    width: 100%;
+    right: 0;
+    left: 0;
+  }
+
+}

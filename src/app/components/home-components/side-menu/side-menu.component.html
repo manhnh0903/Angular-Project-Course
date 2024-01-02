@@ -1,0 +1,90 @@
+<div class="sideMenu">
+  <div class="sideMenuContent">
+    <div class="logoContainer">
+      <img class="logoMenu" src="assets/img/menu_logo.png" />
+      <h1>Code learning</h1>
+    </div>
+
+    <div class="channels">
+      <div class="channelsSpans">
+        <div class="channelHeaders">
+          <div class="channel-headline" (click)="openChannels()">
+            <img class="dropDownIcon" src="assets/img/arrow_drop_down.png" />
+            <img class="icon" src="assets/img/workspaces.png" />
+            <span class="forHover">Channels</span>
+          </div>
+
+          <div (click)="openCreateChannelDialog()" class="addIconDiv">
+            <img class="addIcon" src="./assets/img/add.png" />
+          </div>
+        </div>
+        <div *ngIf="channelsClicked" class="dropDownContent">
+          <div (click)="openCreateChannelDialog()" class="dropDownSubDiv">
+            <img class="subIcon" src="assets/img/add_circle.png" />
+            <p>Channel hinzufügen</p>
+          </div>
+
+          <div
+            *ngFor="let channel of fireService.channels; let i = index"
+            (click)="
+              fireService.userOnChannelCheck[i]
+                ? openChanelChat(channel.id)
+                : null
+            "
+            class="dropDownSubDiv"
+          >
+            <p class="tag" *ngIf="fireService.userOnChannelCheck[i]">#</p>
+            <img
+              *ngIf="!fireService.userOnChannelCheck[i]"
+              class="subIcon"
+              src="assets/img/padlock-16.png"
+            />
+            <p>{{ channel.name }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="channels">
+      <div class="subChannels">
+        <div style="display: flex; align-items: flex-start">
+          <div class="channelsSpans">
+            <div class="channelHeaders">
+              <div class="channel-headline" (click)="openPM()">
+                <img
+                  class="dropDownIcon"
+                  src="assets/img/arrow_drop_down.png"
+                />
+                <img class="icon" src="assets/img/account_icon.png" />
+                <span class="forHover">Direktnachrichten</span>
+              </div>
+            </div>
+
+            <div *ngIf="PMclicked" class="dropDownContent">
+              <div
+                *ngFor="let user of fireService.allUsers"
+                class="dropDownSubDiv"
+                (click)="openPmChat(user.userId)"
+              >
+                <img class="profilePic" src="{{ user.profileImg }}" />
+                <img
+                  *ngIf="user.onlineStatus === true"
+                  class="online-status-img"
+                  src="./assets/img/online.png"
+                  alt="online.img"
+                />
+                <img
+                  *ngIf="user.onlineStatus === false"
+                  class="online-status-img"
+                  src="./assets/img/offline.png"
+                  alt="online.img"
+                />
+                <p>{{ user.name }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

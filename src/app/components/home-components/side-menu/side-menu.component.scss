@@ -1,0 +1,226 @@
+.sideMenu {
+  width: 420px;
+  height: 100%;
+  border-radius: 30px;
+  background: var(--White, #fff);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  overflow-y: auto;
+
+  @media screen and (max-width: 1300px) {
+    width: 280px;
+  }
+}
+
+.sideMenuContent {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  flex-shrink: 0;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+
+  h1 {
+    color: var(--Black, #000);
+    font-family: Nunito;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+}
+
+.logoMenu {
+  height: 60px;
+}
+
+.edit_square {
+  height: 15px;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%)
+      hue-rotate(164deg) brightness(104%) contrast(98%);
+  }
+}
+
+.channels {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.subChannels {
+  display: flex;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.channelHeaders {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+  .channel-headline {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    &:hover {
+      filter: brightness(0) saturate(100%) invert(29%) sepia(14%)
+        saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
+    }
+  }
+
+  .dropDownIcon {
+    height: 20px;
+  }
+}
+
+.addIcon {
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%)
+      hue-rotate(164deg) brightness(104%) contrast(98%);
+  }
+}
+
+.addIconDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid transparent;
+
+  &:hover {
+    background-color: var(--main-bg-color);
+  }
+}
+
+.channelsSpans {
+  width: 100%;
+
+  .forHover {
+    font-size: 22px;
+    line-height: 1.1;
+    cursor: pointer;
+    font-weight: bold;
+  }
+}
+
+.dropDownContent {
+  margin-left: 63px;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding-top: 12px;
+  gap: 12px;
+  line-height: 2.8;
+
+  @media screen and (max-width: 1300px) {
+    margin-left: 12px;
+  }
+}
+
+.account_icon {
+  height: 24px;
+  width: 24px;
+}
+
+.icons {
+  display: flex;
+}
+
+.icon {
+  height: 21px;
+}
+
+.subIcon {
+  height: 19px;
+}
+
+.dropDownSubDiv {
+  display: flex;
+  gap: 17px;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 30px;
+  position: relative;
+  width: fit-content;
+  min-width: 200px;
+
+  .online-status-img {
+    position: absolute;
+    bottom: 5px;
+    left: 45px;
+  }
+
+  p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &:hover {
+    p {
+      filter: brightness(0) saturate(100%) invert(29%) sepia(14%)
+        saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
+    }
+
+    background-color: var(--main-bg-color);
+  }
+}
+
+.profilePic {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+@media (max-width: 900px) {
+  .sideMenu {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .dropDownContent {
+    margin-left: 20px;
+  }
+
+  .logoContainer {
+    display: none;
+  }
+
+  .channelHeaders {
+    margin-left: -12px;
+  }
+  .channelsSpans {
+    padding-left: 40px;
+  }
+
+  .forHover {
+    font-size: 18px !important;
+  }
+  .dropDownSubDiv {
+    line-height: 1.6;
+  }
+  .icon {
+    margin-left: 0;
+  }
+}

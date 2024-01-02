@@ -1,0 +1,145 @@
+.homeContainer {
+  width: 100%;
+  height: calc(100% - 120px);
+  display: flex;
+  gap: 16px;
+  padding: 0 25px 25px 25px;
+
+  @media screen and (max-width: 1300px) {
+    gap: 8px;
+  }
+
+  @media screen and (max-width: 900px) {
+    padding: 0;
+  }
+}
+
+.sideMenuButton {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  left: -110px;
+  bottom: 30%;
+  transform: rotate(270deg);
+  border-radius: 0px 0px 30px 30px;
+  background: var(--White, #fff);
+  box-shadow: 4px 4px 7px 0px rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  cursor: pointer;
+  z-index: 1;
+
+  &:hover .showMenuIcon,
+  &:hover span {
+    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%)
+      hue-rotate(164deg) brightness(104%) contrast(98%);
+  }
+}
+
+.showMenuIcon {
+  transform: rotate(90deg);
+  height: 30px;
+  margin-left: 8px;
+}
+
+.hideMenu {
+  animation: hideMenu 0.2s ease-in-out forwards;
+}
+
+.showMenu {
+  transform: translateX(0);
+  transition: all 0.6s ease-in-out;
+  width: min-content;
+}
+
+.message {
+  position: absolute;
+  right: 30%;
+  top: 30%;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatContainer {
+  flex-grow: 1;
+}
+
+.pm-recipient-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(0, 0, 0, 0.2);
+
+  z-index: 1000;
+}
+
+@keyframes hideMenu {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .homeContainer {
+    width: 100vw;
+  }
+
+  .sideMenuButton {
+    position: relative;
+    display: none;
+  }
+
+  .chatContainer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 100%;
+    display: none;
+  }
+
+  .showMenu {
+    width: 100%;
+  }
+
+  .pmContainer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 100%;
+    display: none;
+  }
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  background-color: #eceefe;
+  padding: 23px;
+
+  h1 {
+    color: var(--Black, #000);
+    font-family: Nunito;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+}
+
+.logoMenu {
+  height: 60px;
+}

@@ -1,0 +1,76 @@
+<section>
+  <div class="header">
+    <div *ngIf="recipient" (click)="openUserDetails()" class="user-info">
+      <img
+        class="profilePic"
+        src="{{ recipient.profileImg }}"
+        alt="profileImg"
+      />
+      <img
+        *ngIf="recipient.onlineStatus === true"
+        class="online-status-img"
+        src="./assets/img/online.png"
+        alt="online.img"
+      />
+      <img
+        *ngIf="recipient.onlineStatus === false"
+        class="online-status-img"
+        src="./assets/img/offline.png"
+        alt="online.img"
+      />
+      <span>{{ recipient.name }}</span>
+    </div>
+  </div>
+  <div #chatArea id="chat-area">
+    <div
+      class="no-msg-wrapper"
+      *ngIf="conversation.messages.length === 0 && !loading"
+    >
+      <div class="no-msg-header">
+        <img src="{{ recipient.profileImg }}" alt="profileImg" />
+        <span
+          >{{ recipient.name }}
+          <span *ngIf="recipient.name === userService.user.name"
+            >(Du)</span
+          ></span
+        >
+      </div>
+      <p *ngIf="recipient.name !== userService.user.name">
+        Diese Unterhaltung findet nur zwischen
+        <span (click)="openUserDetails()">&commat;{{ recipient.name }}</span>
+        und dir statt.
+      </p>
+      <p *ngIf="recipient.name === userService.user.name">
+        Dieser Raum ist nur für dich da. Mache dir Notizen, liste deine To-dos
+        auf oder bewahre Links und Dateien griffbereit auf. Du kannst hier auch
+        gerne Dinge mit dir selbst besprechen.
+      </p>
+    </div>
+    <app-message
+      *ngFor="let message of conversation.messages; let i = index"
+      [sender]="message.sender"
+      [profileImg]="message.profileImg"
+      [content]="message.content"
+      [creationDate]="message.creationDate"
+      [creationTime]="message.creationTime"
+      [creationDay]="message.creationDay"
+      [currentMessage]="message"
+      [conversation]="conversation"
+      [thread]="message.thread"
+      [index]="i"
+      [type]="'pm'"
+      [collectionId]="message.collectionId"
+      [reactions]="message.reactions"
+    ></app-message>
+  </div>
+
+  <footer>
+    <app-footer-input
+      *ngIf="recipient"
+      [type]="'pm'"
+      [pmRecipient]="recipient.userId"
+      [conversationId]="conversationId"
+      [conversation]="conversation"
+    ></app-footer-input>
+  </footer>
+</section>
