@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 import { EditChannelComponent } from 'src/app/components/chat-components/channel-components/edit-channel/edit-channel.component';
+import { DabubbleUser } from 'src/app/classes/user.class';
 
 @Component({
   selector: 'app-channels-chat',
@@ -23,7 +24,8 @@ export class ChannelsChatComponent implements AfterViewInit {
   public emojiOpened: boolean = false;
   public content: string;
   public filteredUsers: any[] = [];
-  private selectedUsers: string[] = [];
+  public selectedUsers: DabubbleUser[] = [];
+  public selectedUser: DabubbleUser;
   public usersName: string;
   public addPeople: boolean = false;
   public isButtonDisabled: boolean = true;
@@ -61,10 +63,11 @@ export class ChannelsChatComponent implements AfterViewInit {
       this.fireService.currentChannel.id
     );
     this.fireService.currentChannel.users =
-      this.fireService.currentChannel.users.concat(this.selectedUsers);
+      this.fireService.currentChannel.users.concat(this.selectedUser);
     await updateDoc(docReference, {
       users: this.fireService.currentChannel.users,
     });
+    this.closeAddPeople();
   }
 
   /**
@@ -85,37 +88,33 @@ export class ChannelsChatComponent implements AfterViewInit {
   }
 
   /**
-   * Adds a filtered user to the 'selectedUsers' array if not already included.
-   * Updates the button state based on the number of selected users.
-   * @param filteredUser - The user to be added to the selected users.
+   * Sets the selected user to the specified filtered user.
+   * Clears the search input and filtered users.
+   *
+   * @param {DabubbleUser} filteredUser - The user to be set as the selected user.
    */
-  addToSelectedUsers(filteredUser) {
-    if (!this.selectedUsers.includes(filteredUser)) {
-      this.selectedUsers.push(filteredUser);
-      if (this.selectedUsers.length > 0) {
-        this.isButtonDisabled = false;
-        this.buttonColor = 'blue';
-      }
-    }
+  addToSelectedUsers(filteredUser: DabubbleUser) {
+    this.selectedUser = filteredUser;
+    this.usersName = '';
+    this.filteredUsers = [];
   }
 
   /**
-   * Toggles the 'addPeople' flag and updates the button color based on its state.
+   * Toggles the 'addPeople' flag.
    */
   openAddPeople() {
-    this.buttonColor = this.isButtonDisabled ? 'gray' : 'blue';
-    if (this.addPeople == false) {
-      this.addPeople = true;
-    } else {
-      this.addPeople = true;
-    }
+    this.addPeople = true;
   }
 
   /**
-   * Closes the 'Add People' feature by setting the 'addPeople' flag to false.
+   * Closes the 'Add People' feature.
+   * Resets the search input, filtered users, and selected user.
    */
   closeAddPeople() {
     this.addPeople = false;
+    this.usersName = '';
+    this.filteredUsers = [];
+    this.selectedUser = null;
   }
 
   /**

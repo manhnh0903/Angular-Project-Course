@@ -4,11 +4,22 @@
       <span>Leute hinzufügen</span>
       <span class="channelsName">#{{ fireService.currentChannel.name }}</span>
       <input
+        *ngIf="!selectedUser"
         placeholder="Name eingeben"
         class="choosePeopleInput"
         [(ngModel)]="usersName"
         (ngModelChange)="showFilteredUsers()"
       />
+      <div class="selectet-users-container" *ngIf="selectedUser">
+        <div>
+          <span>{{ selectedUser.name }}</span>
+          <img
+            (click)="selectedUser = null"
+            src="./assets/img/close.png"
+            alt="close.img"
+          />
+        </div>
+      </div>
       <div *ngIf="filteredUsers.length > 0" class="peopleToAdd">
         <div
           *ngFor="let filteredUser of filteredUsers"
@@ -21,8 +32,7 @@
       </div>
       <button
         (click)="addUsersToCurrentChannel()"
-        [disabled]="isButtonDisabled"
-        [ngStyle]="{ 'background-color': buttonColor }"
+        [disabled]="!selectedUser"
         class="createButton"
       >
         Hinzufügen
