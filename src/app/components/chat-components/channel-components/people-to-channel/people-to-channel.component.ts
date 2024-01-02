@@ -39,7 +39,7 @@ export class PeopleToChannelComponent {
   selectedUsers = [];
   usersToAddOpen = false;
 
-  constructor(public fireService: FirestoreService) {}
+  constructor(public fireService: FirestoreService) { }
 
   /**
    * Toggles the state of usersToAddOpen.
@@ -101,8 +101,8 @@ export class PeopleToChannelComponent {
   calculateNextChannelIndex(): number {
     return this.fireService.channels.length === 0
       ? 0
-      : this.fireService.channels[this.fireService.channels.length - 1].index +
-          1;
+      : this.currentChannel.index = this.fireService.channels[this.fireService.channels.length - 1].index +
+      1;
   }
 
   /**

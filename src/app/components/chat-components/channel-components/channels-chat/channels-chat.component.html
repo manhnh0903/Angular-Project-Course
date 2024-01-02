@@ -4,6 +4,7 @@
     <div class="inputContainer">
       <span>Leute hinzufügen</span>
       <span class="channelsName">#{{ fireService.currentChannel.name }}</span>
+      <div class="inputDiv">
       <input
         *ngIf="!selectedUser"
         placeholder="Name eingeben"
@@ -11,6 +12,9 @@
         [(ngModel)]="usersName"
         (ngModelChange)="showFilteredUsers()"
       />
+      <span class="ifAllUsersAdded" *ngIf="fireService.currentChannel.users.length===fireService.allUsers.length">Alle Mitglieder sind schon
+        drin</span>
+    </div>
       <div class="selectet-users-container" *ngIf="selectedUser">
         <div>
           <span>{{ selectedUser.name }}</span>
@@ -31,6 +35,7 @@
           <p>{{ filteredUser.name }}</p>
         </div>
       </div>
+     
       <button
         (click)="addUsersToCurrentChannel()"
         [disabled]="!selectedUser"

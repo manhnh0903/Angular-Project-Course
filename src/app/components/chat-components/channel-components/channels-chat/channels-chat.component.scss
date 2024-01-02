@@ -159,7 +159,7 @@ input {
   border: 1px solid var(--main-dark-blue);
   border-radius: 28px;
 
-  > div {
+  >div {
     display: flex;
     align-items: center;
     gap: 16px;
@@ -273,6 +273,10 @@ input {
       white-space: nowrap;
     }
   }
+}
+
+.inputDiv {
+  position: relative;
 }
 
 .ifAllUsersAdded {
