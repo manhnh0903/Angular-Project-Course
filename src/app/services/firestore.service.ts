@@ -28,14 +28,14 @@ export class FirestoreService {
   public channelsCollectionDataSubject = new BehaviorSubject<any>(null);
   public conversation: any;
   private unsubUserData: Function;
-  private usnubThreadDocument;
+  private usnubThreadDocument: Function;
   public currentChannel;
   public channels = [];
   public allUsers = [];
   public emailsForReactions = [];
   private currentDate;
   public sorted = [];
-  public unsubUsers;
+  public unsubUsers: Function;
   userOnChannelCheck = [];
   private defaultChannelCalled: boolean = false;
 

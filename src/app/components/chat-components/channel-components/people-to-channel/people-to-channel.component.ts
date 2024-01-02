@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import {
   CollectionReference,
+  DocumentData,
+  DocumentReference,
   Firestore,
   addDoc,
   doc,
@@ -108,7 +110,9 @@ export class PeopleToChannelComponent {
    *
    * @returns {DocumentReference} - The reference to the newly created channel document.
    */
-  async createChannelDocument() {
+  async createChannelDocument(): Promise<
+    DocumentReference<DocumentData, DocumentData>
+  > {
     const createdChannel = await addDoc(
       this.getChannelsRef(),
       this.currentChannel.toJSON()

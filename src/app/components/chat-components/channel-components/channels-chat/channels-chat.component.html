@@ -4,33 +4,38 @@
     <div class="inputContainer">
       <span>Leute hinzufügen</span>
       <span class="channelsName">#{{ fireService.currentChannel.name }}</span>
-      <div class="inputDiv">
-        <input placeholder="Name eingeben" class="choosePeopleInput" [(ngModel)]="usersName"
-          (ngModelChange)="showFilteredUsers()" />
-        <div class="selectedUsersDiv">
-          <div [ngStyle]="{ 'left.px':10+ i * 12 }" *ngFor="let selected of selectedUsers; let i = index"
-            class="selectedUsers">
-            <div *ngIf="selectedUsers.length > 0">
-              <img class="profileImg" src="{{ selected.profileImg }}" />
-            </div>
-          </div>
-        </div>
-        <span class="ifAllUsersAdded" *ngIf="fireService.currentChannel.users.length===fireService.allUsers.length">Alle Mitglieder sind schon
-          drin</span>
-        <div *ngIf="filteredUsers.length > 0 && usersToAddOpen && usersName" class="peopleToAdd">
-          <div *ngFor="let filteredUser of filteredUsers" class="filteredUser"
-            (click)="addToSelectedUsers(filteredUser)">
-            <img class="profileImg" src="{{ filteredUser.profileImg }}" />
-            <p>{{ filteredUser.name }}</p>
-          </div>
+      <input
+        *ngIf="!selectedUser"
+        placeholder="Name eingeben"
+        class="choosePeopleInput"
+        [(ngModel)]="usersName"
+        (ngModelChange)="showFilteredUsers()"
+      />
+      <div class="selectet-users-container" *ngIf="selectedUser">
+        <div>
+          <span>{{ selectedUser.name }}</span>
+          <img
+            (click)="selectedUser = null"
+            src="./assets/img/close.png"
+            alt="close.img"
+          />
         </div>
       </div>
-
-
-
-
-      <button (click)="addUsersToCurrentChannel()" [disabled]="isButtonDisabled"
-        [ngStyle]="{ 'background-color': buttonColor }" class="createButton">
+      <div *ngIf="filteredUsers.length > 0" class="peopleToAdd">
+        <div
+          *ngFor="let filteredUser of filteredUsers"
+          class="filteredUser"
+          (click)="addToSelectedUsers(filteredUser)"
+        >
+          <img class="profileImg" src="{{ filteredUser.profileImg }}" />
+          <p>{{ filteredUser.name }}</p>
+        </div>
+      </div>
+      <button
+        (click)="addUsersToCurrentChannel()"
+        [disabled]="!selectedUser"
+        class="createButton"
+      >
         Hinzufügen
       </button>
     </div>
