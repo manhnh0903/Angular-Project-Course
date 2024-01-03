@@ -115,14 +115,14 @@ input {
   gap: 20px;
   align-self: stretch;
   outline: none;
-  margin-top: 20px;
   width: 100%;
 }
 
-.inputContainer {
+.input-container {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  gap: 8px;
   height: 100%;
   width: 90%;
 
@@ -131,19 +131,19 @@ input {
   }
 }
 
-.inputDiv {
-  position: relative;
-}
-
 .peopleToAdd {
   position: absolute;
-  top: 68px;
+  top: 135px;
   left: -38px;
   border-radius: 20px 0 20px 20px;
   border: 1px solid #d5d7f3;
   padding: 15px 20px;
   z-index: 999;
   background-color: white;
+
+  @media screen and (max-width: 400px) {
+    left: 0;
+  }
 }
 
 .filteredUser {
@@ -159,7 +159,7 @@ input {
   border: 1px solid var(--main-dark-blue);
   border-radius: 28px;
 
-  >div {
+  > div {
     display: flex;
     align-items: center;
     gap: 16px;
@@ -199,7 +199,6 @@ input {
   position: absolute;
   top: 120px;
   right: 40px;
-  height: 222px;
   min-height: 20%;
   min-width: 25%;
   border-radius: 30px 0px 30px 30px;
@@ -209,6 +208,11 @@ input {
   .menuSpan {
     font-size: 22px;
     cursor: pointer;
+  }
+
+  .ifAllUsersAdded {
+    color: green;
+    font-size: 12px;
   }
 }
 
@@ -248,7 +252,7 @@ input {
   }
 }
 
-.messagesOnChannel> :first-child {
+.messagesOnChannel > :first-child {
   margin-top: auto !important;
 }
 
@@ -275,24 +279,10 @@ input {
   }
 }
 
-.inputDiv {
-  position: relative;
-}
-
-.ifAllUsersAdded {
-  color: green;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
-@media(max-width:400px) {
+@media (max-width: 400px) {
   .addPeopleDialogContent {
     width: 100%;
     right: 0;
     left: 0;
   }
-
 }

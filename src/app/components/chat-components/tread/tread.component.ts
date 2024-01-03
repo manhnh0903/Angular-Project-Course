@@ -39,10 +39,19 @@ export class TreadComponent {
     this.destroy$.complete();
   }
 
+  /**
+   * Getter method to access the 'message' form control from the sendMessageForm.
+   *
+   * @returns {AbstractControl} - The 'message' form control.
+   */
   get message() {
     return this.sendMessageForm.get('message');
   }
 
+  /**
+   * Subscribes to message data for the selected message in the home navigation.
+   * Updates the parent message and initiates the subscription to thread data.
+   */
   subMessageData() {
     this.homeNav.selectedMessageSubject
       .pipe(takeUntil(this.destroy$))
@@ -52,6 +61,11 @@ export class TreadComponent {
       });
   }
 
+  /**
+   * Subscribes to thread data from the Firestore service.
+   * Updates the open thread conversation based on the received data.
+   * Determines the thread collection type (pms or channels) and updates the current message.
+   */
   subThreadData() {
     this.firestoreService.threadDataSubject
       .pipe(takeUntil(this.destroy$))
@@ -69,14 +83,31 @@ export class TreadComponent {
       });
   }
 
-  isConversation(data: {}) {
+  /**
+   * Checks whether the provided data represents a conversation.
+   *
+   * @param {Object} data - The data to be checked.
+   * @returns {boolean} - True if the data represents a conversation, false otherwise.
+   */
+  isConversation(data: {}): boolean {
     return 'userId1' in data && 'userId2' in data && 'messages' in data;
   }
 
-  isChannel(data: {}) {
+  /**
+   * Checks whether the provided data represents a channel.
+   *
+   * @param {Object} data - The data to be checked.
+   * @returns {boolean} - True if the data represents a channel, false otherwise.
+   */
+  isChannel(data: {}): boolean {
     return 'name' in data && 'description' in data;
   }
 
+  /**
+   * Updates the current message in the open thread conversation.
+   * Iterates through the messages, creating new instances of each message.
+   * Sets the parent message to the corresponding message in the updated messages array.
+   */
   updateCurrentMessage() {
     this.opendThreadConversation.messages.forEach(
       (message: Message, index: number) => {
