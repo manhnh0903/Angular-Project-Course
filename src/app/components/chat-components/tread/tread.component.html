@@ -16,7 +16,9 @@
       [profileImg]="parentMessage.profileImg"
       [content]="parentMessage.content"
       [currentMessage]="parentMessage"
-
+      [reactions]="parentMessage.reactions"
+      [type]="'thread-parent'"
+      [id]="parentMessage.id"
     ></app-message>
     <div class="seperator-wrapper">
       <span>{{ parentMessage.thread.length ?? 0 }} Antworten</span>

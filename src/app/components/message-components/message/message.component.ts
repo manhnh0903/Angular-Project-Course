@@ -28,7 +28,7 @@ export class MessageComponent {
   @Input() collectionId;
   @Input() conversation;
   @Input() parentMessage;
-  @Input() type: 'channel' | 'pm' | 'thread';
+  @Input() type: 'channel' | 'pm' | 'thread' | 'thread-parent';
   @ViewChild('inputEditMessage') inputEditMessage: ElementRef<HTMLInputElement>;
   @ViewChild('contentContainer') contentContainer: ElementRef;
   @ViewChild(ReactionsComponent, { static: false })
@@ -104,7 +104,7 @@ export class MessageComponent {
   async updateMessageContent() {
     let messageToUpdate;
     let docRef;
-    if (this.type === 'channel' || this.type === 'thread') {
+    if (this.type === 'channel' || this.type === 'thread' || this.type === 'thread-parent') {
       ({ messageToUpdate, docRef } = this.checkForChannels(
         messageToUpdate,
         docRef
@@ -120,7 +120,7 @@ export class MessageComponent {
     if (this.type === 'channel') {
       messageToUpdate = this.fireService.currentChannel.messages[this.index];
     }
-    if (this.type === 'thread') {
+    if (this.type === 'thread' || this.type === 'thread-parent') {
       messageToUpdate =
         this.fireService.currentChannel.messages[
           this.reactionsComponent.indexParentMessage()
@@ -151,7 +151,7 @@ export class MessageComponent {
       );
       if (this.type === 'pm') {
         messages[indexOfMessageToUpdate].content = messageToUpdate.content;
-      } else if (this.type === 'thread') {
+      } else if (this.type === 'thread' || this.type === 'thread-parent') {
         messages[this.reactionsComponent.indexParentMessage()].thread[
           this.reactionsComponent.indexMessageOnThread()
         ].content = messageToUpdate.content;
@@ -273,7 +273,7 @@ export class MessageComponent {
   }
 
   conditionsForHandlingExistingEmojis(docReference) {
-    if (this.type === 'thread') {
+    if (this.type === 'thread' || this.type === 'thread-parent') {
       this.existingEmojiOnThread(docReference);
     }
     if (this.type === 'channel') {
@@ -339,11 +339,11 @@ export class MessageComponent {
       wordWithoutMention
         .toLowerCase()
         .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '') ===
-        user.name.toLowerCase().split(' ')[0] &&
+      user.name.toLowerCase().split(' ')[0] &&
       splitted[j + 1]
         .toLowerCase()
         .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '') ===
-        user.name.toLowerCase().split(' ')[1]
+      user.name.toLowerCase().split(' ')[1]
     );
   }
 

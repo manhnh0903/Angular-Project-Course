@@ -39,7 +39,7 @@ export class ReactionsComponent {
     public userService: UserService,
     private el: ElementRef,
     private homeNav: HomeNavigationService
-  ) {}
+  ) { }
 
   @Output() openEditMessageDivEvent = new EventEmitter<{
     editMessage: boolean;
@@ -66,7 +66,7 @@ export class ReactionsComponent {
 
   async addEmoji(event) {
     let docReference;
-    if (this.type === 'channel' || this.type === 'thread') {
+    if (this.type === 'channel' || this.type === 'thread' || this.type === 'thread-parent') {
       docReference = this.fireService.getDocRef(
         'channels',
         this.fireService.currentChannel.id
@@ -91,10 +91,10 @@ export class ReactionsComponent {
         this.currentMessage;
       this.updateDoc(docReference, this.fireService.currentChannel.messages);
     }
-    if (this.type === 'thread') {
+    if (this.type === 'thread' || this.type === 'thread-parent') {
       this.fireService.currentChannel.messages[
         this.indexParentMessage()
-      ].thread[this.indexMessageOnThread()] = this.currentMessage;
+      ] = this.currentMessage;
       this.updateDoc(docReference, this.fireService.currentChannel.messages);
     }
     if (this.type === 'pm') {
@@ -171,6 +171,10 @@ export class ReactionsComponent {
   }
 
   indexParentMessage() {
+    this.parentMessage = this.currentMessage
+    if (this.type === 'thread-parent') {
+      this.parentMessage = this.currentMessage
+    }
     return this.fireService.currentChannel.messages.findIndex(
       (message) => message.id === this.parentMessage.id
     );
@@ -179,7 +183,8 @@ export class ReactionsComponent {
   indexMessageOnThread() {
     return this.fireService.currentChannel.messages[
       this.indexParentMessage()
-    ].thread.findIndex((message) => message.id === this.currentMessage.id);
+    ]/* .thread.findIndex((message) => message.id === this.currentMessage.id); */
+
   }
 
   async updateDoc(docReference, obj) {
