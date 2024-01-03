@@ -7,6 +7,7 @@ import { HomeNavigationService } from 'src/app/services/home-navigation.service'
 import { ReactionsComponent } from '../reactions/reactions.component';
 import { CursorPositionService } from 'src/app/services/cursor-position.service';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { Message } from 'src/app/classes/message.class';
 
 @Component({
   selector: 'app-message',
@@ -102,9 +103,15 @@ export class MessageComponent {
   }
 
   async updateMessageContent() {
-    let messageToUpdate;
+    let messageToUpdate: Message;
     let docRef;
-    if (this.type === 'channel' || this.type === 'thread' || this.type === 'thread-parent') {
+    if (
+      this.type === 'channel' ||
+      this.type === 'thread' ||
+      this.type === 'thread-parent'
+    ) {
+      console.log(this.type);
+
       ({ messageToUpdate, docRef } = this.checkForChannels(
         messageToUpdate,
         docRef
@@ -112,6 +119,7 @@ export class MessageComponent {
     } else {
       ({ messageToUpdate, docRef } = this.checkForPMs(messageToUpdate, docRef));
     }
+    console.log(messageToUpdate);
     messageToUpdate.content = this.content;
     this.saveUpdatedInFirestore(docRef, messageToUpdate);
   }
@@ -134,14 +142,6 @@ export class MessageComponent {
     return { messageToUpdate, docRef };
   }
 
-  checkForPMs(messageToUpdate, docRef) {
-    if (this.type === 'pm') {
-      messageToUpdate = this.conversation.messages[this.index];
-      docRef = doc(this.firestore, 'pms', this.collectionId);
-    }
-    return { messageToUpdate, docRef };
-  }
-
   async saveUpdatedInFirestore(docRef, messageToUpdate) {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
@@ -161,6 +161,14 @@ export class MessageComponent {
       await updateDoc(docRef, { messages });
       this.closeEdit();
     }
+  }
+
+  checkForPMs(messageToUpdate, docRef) {
+    if (this.type === 'pm') {
+      messageToUpdate = this.conversation.messages[this.index];
+      docRef = doc(this.firestore, 'pms', this.collectionId);
+    }
+    return { messageToUpdate, docRef };
   }
 
   getReactionsPeople(emoji) {
@@ -339,11 +347,11 @@ export class MessageComponent {
       wordWithoutMention
         .toLowerCase()
         .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '') ===
-      user.name.toLowerCase().split(' ')[0] &&
+        user.name.toLowerCase().split(' ')[0] &&
       splitted[j + 1]
         .toLowerCase()
         .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '') ===
-      user.name.toLowerCase().split(' ')[1]
+        user.name.toLowerCase().split(' ')[1]
     );
   }
 

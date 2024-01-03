@@ -31,7 +31,7 @@ export class ChannelsChatComponent implements AfterViewInit {
   public isButtonDisabled: boolean = true;
   public buttonColor: string = 'gray';
   public type: string = 'channel';
-  usersToAddOpen = false;
+
   @ViewChild('inputFooter') inputFooter: ElementRef<HTMLInputElement>;
   @ViewChild('sendIcon', { static: false }) sendIcon: ElementRef;
   @ViewChild('messagesOnChannel', { static: false })
@@ -43,7 +43,7 @@ export class ChannelsChatComponent implements AfterViewInit {
     public userService: UserService,
     private el: ElementRef,
     public dialog: MatDialog
-  ) { }
+  ) {}
 
   ngAfterViewInit() {
     this.el.nativeElement.addEventListener('click', (event) => {
@@ -75,7 +75,6 @@ export class ChannelsChatComponent implements AfterViewInit {
    * Updates the 'filteredUsers' array with the matching users.
    */
   async showFilteredUsers() {
-    this.usersToAddOpen = true;
     this.filteredUsers = this.fireService.allUsers.filter((filteredUser) => {
       let indexOfUser = this.fireService.currentChannel.users.findIndex(
         (user) => user.email === filteredUser.email
