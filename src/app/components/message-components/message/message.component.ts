@@ -353,11 +353,11 @@ export class MessageComponent {
       wordWithoutMention
         .toLowerCase()
         .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '') ===
-      user.name.toLowerCase().split(' ')[0] &&
+        user.name.toLowerCase().split(' ')[0] &&
       splitted[j + 1]
         .toLowerCase()
         .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '') ===
-      user.name.toLowerCase().split(' ')[1]
+        user.name.toLowerCase().split(' ')[1]
     );
   }
 

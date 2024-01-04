@@ -43,7 +43,7 @@ export class ReactionsComponent {
     public userService: UserService,
     private el: ElementRef,
     private homeNav: HomeNavigationService
-  ) { }
+  ) {}
 
   @Output() openEditMessageDivEvent = new EventEmitter<{
     editMessage: boolean;
