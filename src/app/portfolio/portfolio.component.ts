@@ -8,11 +8,12 @@ import { Component } from '@angular/core';
 export class PortfolioComponent {
   scrolledBy: boolean = false;
 
-  headlines: string[] = ['Join', 'Space-Shooter', 'Ring-of-Fire'];
+  headlines: string[] = ['Join', 'Space-Shooter', 'Ring-of-Fire', 'DABubble'];
 
   technologies: string[] = [
     'JavaScript | HTML | CSS',
     'JavaScript | HTML | CSS',
+    'Angular | TypeScript | HTML | CSS | Firebase',
     'Angular | TypeScript | HTML | CSS | Firebase',
   ];
 
@@ -20,24 +21,28 @@ export class PortfolioComponent {
     'Task manager inspired by the Kanban System. Create and organize tasks using drag and drop functions, assign users and categories.',
     'A side-scrolling space shooter game based on an object-oriented approach. Navigate your spacecraft through the vast expanse of outer space, confronting space pirates and ultimately vanquishing their leader at the end of your galactic journey.',
     'The popular drinking game has been developed using Angular and seamlessly integrated with a Google Firebase database, allowing for online multiplayer functionality.',
+    'Chat messanger dabubble beschreibung hier einfügen....',
   ];
 
   projectLinks: string[] = [
     'https://join.tobias-bayer.dev/',
     'https://space-shooter.tobias-bayer.dev/',
     'https://ring-of-fire.tobias-bayer.dev/',
+    'https://dabubble.tobias-bayer.dev/',
   ];
 
   githubLinks: string[] = [
     'https://github.com/BayerTobias/join',
     'https://github.com/BayerTobias/SpaceGame',
     'https://github.com/BayerTobias/Ring-of-Fire',
+    'https://github.com/BayerTobias/Ring-of-Fire', // ändern für dabubble
   ];
 
   images: string[] = [
     './assets/img/portfolio_join.png',
     './assets/img/spaceshooter.png',
     './assets/img/ringoffire.png',
+    './assets/img/portfolio_join.png', // ändern für dabubble
   ];
 
   /**
