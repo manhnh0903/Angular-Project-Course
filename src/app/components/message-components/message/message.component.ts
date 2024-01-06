@@ -22,7 +22,7 @@ export class MessageComponent {
   @Input() reactions: Reaction[];
   @Input() creationDate: string;
   @Input() creationDay: string;
-  @Input() creationTime: number;
+  @Input() creationTime: string;
   @Input() id: number;
   @Input() index: number;
   @Input() currentMessage: {};
