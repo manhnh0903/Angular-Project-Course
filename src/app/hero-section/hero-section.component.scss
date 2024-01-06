@@ -145,6 +145,11 @@ section {
     justify-content: center;
     align-items: center;
     position: relative;
+    max-width: 450px;
+
+    @media screen and (max-width: 1050px) {
+      max-width: 300px;
+    }
 
     .shadow-hero-img {
       position: absolute;
@@ -161,12 +166,15 @@ section {
 
     .hero-img {
       height: 50vh;
-      max-width: 350px;
+      width: 100%;
       object-fit: cover;
       z-index: 1;
 
+      @media screen and (max-width: 1050px) {
+        object-fit: contain;
+      }
+
       @media screen and (max-width: 900px) {
-        width: unset;
         height: 30vh;
       }
 
@@ -255,6 +263,10 @@ section {
     top: calc(50px - 270px + 48vh);
   }
 
+  @media screen and (max-width: 1050px) {
+    top: calc(50px - 270px + 38vh);
+  }
+
   @media screen and (max-width: 900px) {
     display: none;
   }
@@ -268,8 +280,7 @@ section {
   }
 
   @media screen and (max-width: 900px) and (orientation: landscape) {
-    display: none !important
-    ;
+    display: none !important;
   }
 }
 
