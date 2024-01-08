@@ -78,7 +78,9 @@
             [ngClass]="isYou ? 'borderForMessageIfYou' : 'borderForMessage'"
             #contentContainer
             class="messageContent"
-          ></div>
+          >
+            {{ content }}
+          </div>
 
           <div class="reactions" *ngIf="reactions?.length > 0">
             <div
