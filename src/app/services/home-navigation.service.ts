@@ -15,9 +15,9 @@ export class HomeNavigationService {
   public threadOpen: boolean = false;
   public profileOverlay: boolean = false;
   public editProfileOpen: boolean = false;
-  public typeOfThread: string
-  public pmCollectionId
-  constructor(private firestoreService: FirestoreService) { }
+  public typeOfThread: string;
+  public pmCollectionId;
+  constructor(private firestoreService: FirestoreService) {}
 
   /**
    * Sets the main chat path.
@@ -41,6 +41,7 @@ export class HomeNavigationService {
    * @param messageData - The data related to the selected message.
    */
   async selectMessage(messageData: {}) {
+    this.threadOpen = false;
     this.selectedMessageSubject.next(messageData);
 
     await this.firestoreService.subscribeToThreadDocument(

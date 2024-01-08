@@ -101,14 +101,13 @@ export class MessageComponent {
     this.editMessage = !this.editMessage;
   }
 
-
   getNewContent(newContent: string) {
     this.content = newContent;
   }
 
   /**
- * Asynchronously updates the content of a message in Firestore based on the message type.
- */
+   * Asynchronously updates the content of a message in Firestore based on the message type.
+   */
   async updateMessageContent() {
     let messageToUpdate: Message;
     let docRef;
@@ -131,7 +130,8 @@ export class MessageComponent {
     return (
       this.type === 'channel' ||
       (this.type === 'thread' && this.homeNav.typeOfThread === 'channels') ||
-      (this.type === 'thread-parent' && this.homeNav.typeOfThread === 'channels')
+      (this.type === 'thread-parent' &&
+        this.homeNav.typeOfThread === 'channels')
     );
   }
 
@@ -145,17 +145,29 @@ export class MessageComponent {
 
     if (this.type === 'channel') {
       messageToUpdate = this.fireService.currentChannel.messages[this.index];
-    } else if (this.type === 'thread-parent' && this.homeNav.typeOfThread === 'channels') {
-      messageToUpdate = this.fireService.currentChannel.messages[
-        this.reactionsComponent.indexParentMessage()
-      ];
-    } else if (this.type === 'thread' && this.homeNav.typeOfThread === 'channels') {
-      messageToUpdate = this.fireService.currentChannel.messages[
-        this.reactionsComponent.indexParentMessage()
-      ].thread[this.reactionsComponent.indexMessageOnThread()];
+    } else if (
+      this.type === 'thread-parent' &&
+      this.homeNav.typeOfThread === 'channels'
+    ) {
+      messageToUpdate =
+        this.fireService.currentChannel.messages[
+          this.reactionsComponent.indexParentMessage()
+        ];
+    } else if (
+      this.type === 'thread' &&
+      this.homeNav.typeOfThread === 'channels'
+    ) {
+      messageToUpdate =
+        this.fireService.currentChannel.messages[
+          this.reactionsComponent.indexParentMessage()
+        ].thread[this.reactionsComponent.indexMessageOnThread()];
     }
 
-    docRef = doc(this.firestore, 'channels', this.fireService.currentChannel.id);
+    docRef = doc(
+      this.firestore,
+      'channels',
+      this.fireService.currentChannel.id
+    );
     return { messageToUpdate, docRef };
   }
 
@@ -169,7 +181,10 @@ export class MessageComponent {
 
     if (docSnap.exists()) {
       const messages = docSnap.data()['messages'] || [];
-      const updatedMessages = this.updateContentInMessagesArray(messages, messageToUpdate);
+      const updatedMessages = this.updateContentInMessagesArray(
+        messages,
+        messageToUpdate
+      );
       await updateDoc(docRef, { messages: updatedMessages });
       this.closeEdit();
     }
@@ -182,7 +197,9 @@ export class MessageComponent {
    * @returns {Array} - Updated array of messages.
    */
   updateContentInMessagesArray(messages, messageToUpdate) {
-    const indexOfMessageToUpdate = messages.findIndex((message) => message.id === messageToUpdate.id);
+    const indexOfMessageToUpdate = messages.findIndex(
+      (message) => message.id === messageToUpdate.id
+    );
 
     if (this.type === 'pm') {
       messages[indexOfMessageToUpdate].content = messageToUpdate.content;
@@ -191,7 +208,8 @@ export class MessageComponent {
         this.reactionsComponent.indexMessageOnThread()
       ].content = messageToUpdate.content;
     } else if (this.type === 'thread-parent') {
-      messages[this.reactionsComponent.indexParentMessage()].content = messageToUpdate.content;
+      messages[this.reactionsComponent.indexParentMessage()].content =
+        messageToUpdate.content;
     } else {
       messages[indexOfMessageToUpdate].content = messageToUpdate.content;
     }
@@ -211,19 +229,20 @@ export class MessageComponent {
       messageToUpdate = this.conversation.messages[this.index];
       docRef = doc(this.firestore, 'pms', this.collectionId);
     } else if (this.type === 'thread' && this.typeOfThread === 'pms') {
-      messageToUpdate = this.opendThreadConversation.messages[
-        this.reactionsComponent.indexParentMessage()
-      ].thread[this.reactionsComponent.indexMessageOnThread()];
+      messageToUpdate =
+        this.opendThreadConversation.messages[
+          this.reactionsComponent.indexParentMessage()
+        ].thread[this.reactionsComponent.indexMessageOnThread()];
     } else if (this.type === 'thread-parent' && this.typeOfThread === 'pms') {
-      messageToUpdate = this.opendThreadConversation.messages[
-        this.reactionsComponent.indexParentMessage()
-      ];
+      messageToUpdate =
+        this.opendThreadConversation.messages[
+          this.reactionsComponent.indexParentMessage()
+        ];
     }
 
     docRef = doc(this.firestore, 'pms', this.homeNav.pmCollectionId);
     return { messageToUpdate, docRef };
   }
-
 
   /**
    * Retrieves the names of users who reacted with a specific emoji.
@@ -262,12 +281,12 @@ export class MessageComponent {
   }
 
   /**
-  * Checks if the creation date at the given index is different from the previous message's creation date.
-  * @param {string} creationDate - The creation date of the current message.
-  * @param {number} i - The index of the current message in the messages array.
-  * @param {string} type - The type of message (e.g., 'channel', 'pm', 'thread').
-  * @returns {boolean} - True if the creation date is different, false otherwise.
-  */
+   * Checks if the creation date at the given index is different from the previous message's creation date.
+   * @param {string} creationDate - The creation date of the current message.
+   * @param {number} i - The index of the current message in the messages array.
+   * @param {string} type - The type of message (e.g., 'channel', 'pm', 'thread').
+   * @returns {boolean} - True if the creation date is different, false otherwise.
+   */
   isDifferentDate(creationDate, i: number, type): boolean {
     // Check if the current message is the first message.
     if (i === 0) {
@@ -313,7 +332,10 @@ export class MessageComponent {
    * @returns {boolean} - True if the creation date is different, false otherwise.
    */
   compareChannelCreationDate(creationDate, i: number): boolean {
-    return creationDate !== this.fireService.currentChannel.messages[i - 1].creationDate;
+    return (
+      creationDate !==
+      this.fireService.currentChannel.messages[i - 1].creationDate
+    );
   }
 
   /**
@@ -341,9 +363,8 @@ export class MessageComponent {
     return creationDate !== this.thread[i - 1].creationDate;
   }
 
-
   async openThread() {
-    this.homeNav.typeOfThread = this.typeOfThread
+    this.homeNav.typeOfThread = this.typeOfThread;
     await this.homeNav.selectMessage(this.currentMessage);
   }
 
@@ -371,7 +392,6 @@ export class MessageComponent {
     // Open the emoji picker after adding the emoji.
     this.openEmojiOnEdit();
   }
-
 
   getEmojiPickerStyle() {
     return {
@@ -459,7 +479,10 @@ export class MessageComponent {
    */
   getDeterminedDocReference() {
     if (this.homeNav.typeOfThread === 'channels') {
-      return this.fireService.getDocRef('channels', this.fireService.currentChannel.id);
+      return this.fireService.getDocRef(
+        'channels',
+        this.fireService.currentChannel.id
+      );
     } else {
       return doc(this.firestore, 'pms', this.homeNav.pmCollectionId);
     }
@@ -506,7 +529,6 @@ export class MessageComponent {
     }
   }
 
-
   existingEmojiOnChannel(docReference) {
     docReference = this.fireService.getDocRef(
       'channels',
@@ -536,40 +558,40 @@ export class MessageComponent {
         let wordWithoutMention = word.substring(1);
         if (this.checkIfMentionExists(wordWithoutMention, splitted, j, user)) {
           this.ifMentionExists(word, j, splitted);
+          this.assignToHTML(splitted);
         }
       }
     }
-    this.assignToHTML(splitted);
   }
 
   /**
- * Checks if a mention exists in the given word at the specified index by comparing with user details.
- * @param {string} wordWithoutMention - The word without the mention symbol.
- * @param {Array<string>} splitted - The array of words being processed.
- * @param {number} j - The index of the current word in the array.
- * @param {User} user - The user details to compare with.
- * @returns {boolean} - True if the mention exists, false otherwise.
- */
+   * Checks if a mention exists in the given word at the specified index by comparing with user details.
+   * @param {string} wordWithoutMention - The word without the mention symbol.
+   * @param {Array<string>} splitted - The array of words being processed.
+   * @param {number} j - The index of the current word in the array.
+   * @param {User} user - The user details to compare with.
+   * @returns {boolean} - True if the mention exists, false otherwise.
+   */
   checkIfMentionExists(wordWithoutMention, splitted, j, user) {
     return (
       wordWithoutMention
         .toLowerCase()
         .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '') ===
-      user.name.toLowerCase().split(' ')[0] &&
+        user.name.toLowerCase().split(' ')[0] &&
       splitted[j + 1]
         .toLowerCase()
         .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '') ===
-      user.name.toLowerCase().split(' ')[1]
+        user.name.toLowerCase().split(' ')[1]
     );
   }
 
   /**
-  * Checks if a mention exists in the given word at the specified index.
-  * If a mention is found, it is replaced with HTML styling.
-  * @param {string} word - The word being checked for a mention.
-  * @param {number} j - The index of the current word in the array.
-  * @param {Array<string>} splitted - The array of words being processed.
-  */
+   * Checks if a mention exists in the given word at the specified index.
+   * If a mention is found, it is replaced with HTML styling.
+   * @param {string} word - The word being checked for a mention.
+   * @param {number} j - The index of the current word in the array.
+   * @param {Array<string>} splitted - The array of words being processed.
+   */
   ifMentionExists(word, j, splitted) {
     // Initialize variables for first name, last name, and index.
     let firstName;
@@ -589,14 +611,15 @@ export class MessageComponent {
     );
   }
 
-
   assignToHTML(splitted) {
     let result = splitted.join(' ');
     this.contentContainer.nativeElement.innerHTML = result;
   }
 
   pmMessagesToJson() {
-    return this.opendThreadConversation.messages.map(message => this.pmMessageToJson(message))
+    return this.opendThreadConversation.messages.map((message) =>
+      this.pmMessageToJson(message)
+    );
   }
 
   pmMessageToJson(message: Message): any {
@@ -611,7 +634,7 @@ export class MessageComponent {
       id: message.id,
       collectionId: message.collectionId,
       messageType: message.messageType,
-      thread: message.thread
+      thread: message.thread,
     };
   }
 }
