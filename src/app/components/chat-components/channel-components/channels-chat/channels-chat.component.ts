@@ -31,7 +31,7 @@ export class ChannelsChatComponent implements AfterViewInit {
   public isButtonDisabled: boolean = true;
   public buttonColor: string = 'gray';
   public type: string = 'channel';
-
+  public typeOfThread='channels'
   @ViewChild('inputFooter') inputFooter: ElementRef<HTMLInputElement>;
   @ViewChild('sendIcon', { static: false }) sendIcon: ElementRef;
   @ViewChild('messagesOnChannel', { static: false })
@@ -43,7 +43,7 @@ export class ChannelsChatComponent implements AfterViewInit {
     public userService: UserService,
     private el: ElementRef,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngAfterViewInit() {
     this.el.nativeElement.addEventListener('click', (event) => {

@@ -19,8 +19,8 @@ export class TreadComponent {
   public type = 'thread';
   public opendThreadConversation: Conversation | Channel;
   public threadCollection: string;
-  public parentMessage: Message = new Message();
-
+  public parentMessage : Message = new Message();
+  public data
   constructor(
     public homeNav: HomeNavigationService,
     private fb: FormBuilder,

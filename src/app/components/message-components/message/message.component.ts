@@ -29,6 +29,9 @@ export class MessageComponent {
   @Input() collectionId;
   @Input() conversation;
   @Input() parentMessage;
+  @Input() typeOfThread;
+  @Input() opendThreadConversation;
+  @Input() conversationID;
   @Input() type: 'channel' | 'pm' | 'thread' | 'thread-parent';
   @ViewChild('inputEditMessage') inputEditMessage: ElementRef<HTMLInputElement>;
   @ViewChild('contentContainer') contentContainer: ElementRef;
@@ -98,79 +101,135 @@ export class MessageComponent {
     this.editMessage = !this.editMessage;
   }
 
+
   getNewContent(newContent: string) {
     this.content = newContent;
   }
 
+  /**
+ * Asynchronously updates the content of a message in Firestore based on the message type.
+ */
   async updateMessageContent() {
     let messageToUpdate: Message;
     let docRef;
-    if (
-      this.type === 'channel' ||
-      this.type === 'thread' ||
-      this.type === 'thread-parent'
-    ) {
-      console.log(this.type);
 
-      ({ messageToUpdate, docRef } = this.checkForChannels(
-        messageToUpdate,
-        docRef
-      ));
+    if (this.isChannelMessage()) {
+      ({ messageToUpdate, docRef } = this.checkForChannels());
     } else {
-      ({ messageToUpdate, docRef } = this.checkForPMs(messageToUpdate, docRef));
+      ({ messageToUpdate, docRef } = this.checkForPMs());
     }
-    console.log(messageToUpdate);
+
     messageToUpdate.content = this.content;
-    this.saveUpdatedInFirestore(docRef, messageToUpdate);
+    await this.saveUpdatedInFirestore(docRef, messageToUpdate);
   }
 
-  checkForChannels(messageToUpdate, docRef) {
+  /**
+   * Checks if the message type is a channel-related message.
+   * @returns {boolean} - True if the message type is channel-related.
+   */
+  isChannelMessage() {
+    return (
+      this.type === 'channel' ||
+      (this.type === 'thread' && this.homeNav.typeOfThread === 'channels') ||
+      (this.type === 'thread-parent' && this.homeNav.typeOfThread === 'channels')
+    );
+  }
+
+  /**
+   * Checks for channels, determines the message to update, and returns the message and document reference.
+   * @returns {Object} - Object containing the updated message and document reference.
+   */
+  checkForChannels() {
+    let messageToUpdate: Message;
+    let docRef;
+
     if (this.type === 'channel') {
       messageToUpdate = this.fireService.currentChannel.messages[this.index];
+    } else if (this.type === 'thread-parent' && this.homeNav.typeOfThread === 'channels') {
+      messageToUpdate = this.fireService.currentChannel.messages[
+        this.reactionsComponent.indexParentMessage()
+      ];
+    } else if (this.type === 'thread' && this.homeNav.typeOfThread === 'channels') {
+      messageToUpdate = this.fireService.currentChannel.messages[
+        this.reactionsComponent.indexParentMessage()
+      ].thread[this.reactionsComponent.indexMessageOnThread()];
     }
-    if (this.type === 'thread' || this.type === 'thread-parent') {
-      messageToUpdate =
-        this.fireService.currentChannel.messages[
-          this.reactionsComponent.indexParentMessage()
-        ].thread[this.reactionsComponent.indexMessageOnThread()];
-    }
-    docRef = doc(
-      this.firestore,
-      'channels',
-      this.fireService.currentChannel.id
-    );
+
+    docRef = doc(this.firestore, 'channels', this.fireService.currentChannel.id);
     return { messageToUpdate, docRef };
   }
 
+  /**
+   * Asynchronously saves the updated message content in Firestore.
+   * @param {any} docRef - Document reference.
+   * @param {Message} messageToUpdate - Message to update.
+   */
   async saveUpdatedInFirestore(docRef, messageToUpdate) {
     const docSnap = await getDoc(docRef);
+
     if (docSnap.exists()) {
       const messages = docSnap.data()['messages'] || [];
-      const indexOfMessageToUpdate = messages.findIndex(
-        (message) => message.id === messageToUpdate.id
-      );
-      if (this.type === 'pm') {
-        messages[indexOfMessageToUpdate].content = messageToUpdate.content;
-      } else if (this.type === 'thread' || this.type === 'thread-parent') {
-        messages[this.reactionsComponent.indexParentMessage()].thread[
-          this.reactionsComponent.indexMessageOnThread()
-        ].content = messageToUpdate.content;
-      } else {
-        messages[indexOfMessageToUpdate].content = messageToUpdate.content;
-      }
-      await updateDoc(docRef, { messages });
+      const updatedMessages = this.updateContentInMessagesArray(messages, messageToUpdate);
+      await updateDoc(docRef, { messages: updatedMessages });
       this.closeEdit();
     }
   }
 
-  checkForPMs(messageToUpdate, docRef) {
+  /**
+   * Updates the content of a message in the messages array.
+   * @param {Array} messages - Array of messages.
+   * @param {Message} messageToUpdate - Message to update.
+   * @returns {Array} - Updated array of messages.
+   */
+  updateContentInMessagesArray(messages, messageToUpdate) {
+    const indexOfMessageToUpdate = messages.findIndex((message) => message.id === messageToUpdate.id);
+
+    if (this.type === 'pm') {
+      messages[indexOfMessageToUpdate].content = messageToUpdate.content;
+    } else if (this.type === 'thread') {
+      messages[this.reactionsComponent.indexParentMessage()].thread[
+        this.reactionsComponent.indexMessageOnThread()
+      ].content = messageToUpdate.content;
+    } else if (this.type === 'thread-parent') {
+      messages[this.reactionsComponent.indexParentMessage()].content = messageToUpdate.content;
+    } else {
+      messages[indexOfMessageToUpdate].content = messageToUpdate.content;
+    }
+
+    return [...messages];
+  }
+
+  /**
+   * Checks for private messages, determines the message to update, and returns the message and document reference.
+   * @returns {Object} - Object containing the updated message and document reference.
+   */
+  checkForPMs() {
+    let messageToUpdate: Message;
+    let docRef;
+
     if (this.type === 'pm') {
       messageToUpdate = this.conversation.messages[this.index];
       docRef = doc(this.firestore, 'pms', this.collectionId);
+    } else if (this.type === 'thread' && this.typeOfThread === 'pms') {
+      messageToUpdate = this.opendThreadConversation.messages[
+        this.reactionsComponent.indexParentMessage()
+      ].thread[this.reactionsComponent.indexMessageOnThread()];
+    } else if (this.type === 'thread-parent' && this.typeOfThread === 'pms') {
+      messageToUpdate = this.opendThreadConversation.messages[
+        this.reactionsComponent.indexParentMessage()
+      ];
     }
+
+    docRef = doc(this.firestore, 'pms', this.homeNav.pmCollectionId);
     return { messageToUpdate, docRef };
   }
 
+
+  /**
+   * Retrieves the names of users who reacted with a specific emoji.
+   * @param {Object} emoji - The emoji object containing userIDs of users who reacted.
+   * @returns {Array} - An array of user names corresponding to the provided userIDs.
+   */
   getReactionsPeople(emoji) {
     let names = [];
     emoji.userIDs.forEach((id) => {
@@ -188,6 +247,11 @@ export class MessageComponent {
     return names;
   }
 
+  /**
+   * Checks if the current user has reacted with a specific emoji.
+   * @param {Object} emoji - The emoji object containing userIDs of users who reacted.
+   * @returns {boolean} - True if the current user has reacted, false otherwise.
+   */
   ifYouReacted(emoji) {
     return emoji.userIDs.some((id) => {
       const index = this.fireService.allUsers.findIndex(
@@ -197,31 +261,89 @@ export class MessageComponent {
     });
   }
 
+  /**
+  * Checks if the creation date at the given index is different from the previous message's creation date.
+  * @param {string} creationDate - The creation date of the current message.
+  * @param {number} i - The index of the current message in the messages array.
+  * @param {string} type - The type of message (e.g., 'channel', 'pm', 'thread').
+  * @returns {boolean} - True if the creation date is different, false otherwise.
+  */
   isDifferentDate(creationDate, i: number, type): boolean {
+    // Check if the current message is the first message.
     if (i === 0) {
       return true;
     }
+
+    // Check if there is a creation date, and if it's not the first message or a thread type.
     if ((creationDate && i > 0) || type === 'thread') {
-      if (type === 'channel') {
-        return (
-          creationDate !==
-          this.fireService.currentChannel.messages[i - 1].creationDate
-        );
-      }
-      if (type === 'pm') {
-        return creationDate !== this.conversation.messages[i - 1].creationDate;
-      }
-      if (type === 'thread') {
-        if (i === 0) {
-          return true;
-        }
-        return creationDate !== this.thread[i - 1].creationDate;
-      }
+      return this.compareCreationDate(creationDate, i, type);
     }
+
+    // Return false if conditions are not met.
     return false;
   }
 
+  /**
+   * Compares the creation date with the previous message's creation date based on the message type.
+   * @param {string} creationDate - The creation date of the current message.
+   * @param {number} i - The index of the current message in the messages array.
+   * @param {string} type - The type of message (e.g., 'channel', 'pm', 'thread').
+   * @returns {boolean} - True if the creation date is different, false otherwise.
+   */
+  compareCreationDate(creationDate, i: number, type): boolean {
+    switch (type) {
+      case 'channel':
+        return this.compareChannelCreationDate(creationDate, i);
+
+      case 'pm':
+        return this.comparePMCreationDate(creationDate, i);
+
+      case 'thread':
+        return this.compareThreadCreationDate(creationDate, i);
+
+      default:
+        return false;
+    }
+  }
+
+  /**
+   * Compares the creation date with the previous message's creation date in a channel.
+   * @param {string} creationDate - The creation date of the current message.
+   * @param {number} i - The index of the current message in the messages array.
+   * @returns {boolean} - True if the creation date is different, false otherwise.
+   */
+  compareChannelCreationDate(creationDate, i: number): boolean {
+    return creationDate !== this.fireService.currentChannel.messages[i - 1].creationDate;
+  }
+
+  /**
+   * Compares the creation date with the previous message's creation date in a private message.
+   * @param {string} creationDate - The creation date of the current message.
+   * @param {number} i - The index of the current message in the messages array.
+   * @returns {boolean} - True if the creation date is different, false otherwise.
+   */
+  comparePMCreationDate(creationDate, i: number): boolean {
+    return creationDate !== this.conversation.messages[i - 1].creationDate;
+  }
+
+  /**
+   * Compares the creation date with the previous message's creation date in a thread.
+   * @param {string} creationDate - The creation date of the current message.
+   * @param {number} i - The index of the current message in the messages array.
+   * @returns {boolean} - True if the creation date is different, false otherwise.
+   */
+
+  compareThreadCreationDate(creationDate, i: number): boolean {
+    // Check if the current message is the first message in a thread.
+    if (i === 0) {
+      return true;
+    }
+    return creationDate !== this.thread[i - 1].creationDate;
+  }
+
+
   async openThread() {
+    this.homeNav.typeOfThread = this.typeOfThread
     await this.homeNav.selectMessage(this.currentMessage);
   }
 
@@ -229,15 +351,27 @@ export class MessageComponent {
     this.emojiOpenedOnEdit = !this.emojiOpenedOnEdit;
   }
 
+  /**
+   * Adds an emoji to the content at the current cursor position when editing a message.
+   * @param {Event} event - The event containing the selected emoji.
+   * @param {HTMLInputElement} inputElement - The input element representing the message editor.
+   */
   addEmojiOnEdit(event, inputElement: HTMLInputElement) {
+    // Get the current message content and cursor position.
     const currentMessage = this.content || '';
     const cursorPosition = this.cursorService.getCursorPosition(inputElement);
+    // Split the current message into an array of characters.
     const messageArray = currentMessage.split('');
+    // Insert the emoji at the cursor position in the array.
     messageArray.splice(cursorPosition, 0, event.emoji.native);
+    // Join the array back into a string to update the content.
     const updatedMessage = messageArray.join('');
+    // Update the content with the message containing the added emoji.
     this.content = updatedMessage;
+    // Open the emoji picker after adding the emoji.
     this.openEmojiOnEdit();
   }
+
 
   getEmojiPickerStyle() {
     return {
@@ -265,6 +399,12 @@ export class MessageComponent {
     );
   }
 
+  /**
+   * Checks if an emoji from the current user exists in the reactions of the current message.
+   * If it exists, removes the user's ID from the emoji's userIDs, decreases the counter,
+   * and removes the emoji if the counter becomes zero.
+   * @param {number} indexOfEmoji - The index of the emoji in the reactions array.
+   */
   ifEmojiFromUserExists(indexOfEmoji) {
     this.reactionsComponent.currentMessage.reactions[
       indexOfEmoji
@@ -280,6 +420,11 @@ export class MessageComponent {
       this.reactionsComponent.removeEmojiIfCounter0(indexOfEmoji);
   }
 
+  /**
+   * Determines the conditions for handling existing emojis based on the message type.
+   * Calls specific functions for handling existing emojis in threads, channels, or private messages.
+   * @param {any} docReference - The document reference for the Firestore database.
+   */
   conditionsForHandlingExistingEmojis(docReference) {
     if (this.type === 'thread' || this.type === 'thread-parent') {
       this.existingEmojiOnThread(docReference);
@@ -292,26 +437,75 @@ export class MessageComponent {
     }
   }
 
-  existingEmojiOnThread(docReference) {
-    docReference = this.fireService.getDocRef(
-      'channels',
-      this.fireService.currentChannel.id
-    );
+  /**
+   * Handles existing emojis for thread messages.
+   * @param {any} docReference - The document reference for the Firestore database.
+   */
+  async existingEmojiOnThread(docReference) {
+    // Determine the document reference based on the type of thread.
+    docReference = this.getDeterminedDocReference();
+
+    // Check the message type and update the current message in the thread accordingly.
     if (this.type === 'thread') {
-      this.fireService.currentChannel.messages[
-        this.reactionsComponent.indexParentMessage()
-      ].thread[this.reactionsComponent.indexMessageOnThread()] =
-        this.currentMessage;
+      this.updateThreadMessage(docReference);
     } else if (this.type === 'thread-parent') {
-      this.fireService.currentChannel.messages[
-        this.reactionsComponent.indexParentMessage()
-      ] = this.currentMessage;
+      this.updateThreadParentMessage(docReference);
     }
-    this.reactionsComponent.updateDoc(
-      docReference,
-      this.fireService.currentChannel.messages
-    );
   }
+
+  /**
+   * Determines the document reference based on the type of thread.
+   * @returns {any} - The determined document reference.
+   */
+  getDeterminedDocReference() {
+    if (this.homeNav.typeOfThread === 'channels') {
+      return this.fireService.getDocRef('channels', this.fireService.currentChannel.id);
+    } else {
+      return doc(this.firestore, 'pms', this.homeNav.pmCollectionId);
+    }
+  }
+
+  /**
+   * Updates the current message in a thread and updates the Firestore document.
+   * @param {any} docReference - The document reference for the Firestore database.
+   */
+  updateThreadMessage(docReference) {
+    if (this.homeNav.typeOfThread === 'channels') {
+      const channelMessages = this.fireService.currentChannel.messages;
+      const threadIndex = this.reactionsComponent.indexMessageOnThread();
+      const parentIndex = this.reactionsComponent.indexParentMessage();
+      channelMessages[parentIndex].thread[threadIndex] = this.currentMessage;
+      this.reactionsComponent.updateDoc(docReference, channelMessages);
+    } else {
+      const pmMessages = this.opendThreadConversation.messages;
+      const threadIndex = this.reactionsComponent.indexMessageOnThread();
+      const parentIndex = this.reactionsComponent.indexParentMessage();
+
+      pmMessages[parentIndex].thread[threadIndex] = this.currentMessage;
+      this.reactionsComponent.updateDoc(docReference, this.pmMessagesToJson());
+    }
+  }
+
+  /**
+   * Updates the current message in a thread-parent and updates the Firestore document.
+   * @param {any} docReference - The document reference for the Firestore database.
+   */
+  updateThreadParentMessage(docReference) {
+    if (this.homeNav.typeOfThread === 'channels') {
+      const channelMessages = this.fireService.currentChannel.messages;
+      const parentIndex = this.reactionsComponent.indexParentMessage();
+
+      channelMessages[parentIndex] = this.currentMessage;
+      this.reactionsComponent.updateDoc(docReference, channelMessages);
+    } else {
+      const pmMessages = this.opendThreadConversation.messages;
+      const parentIndex = this.reactionsComponent.indexParentMessage();
+
+      pmMessages[parentIndex] = this.currentMessage;
+      this.reactionsComponent.updateDoc(docReference, this.pmMessagesToJson());
+    }
+  }
+
 
   existingEmojiOnChannel(docReference) {
     docReference = this.fireService.getDocRef(
@@ -348,27 +542,46 @@ export class MessageComponent {
     this.assignToHTML(splitted);
   }
 
+  /**
+ * Checks if a mention exists in the given word at the specified index by comparing with user details.
+ * @param {string} wordWithoutMention - The word without the mention symbol.
+ * @param {Array<string>} splitted - The array of words being processed.
+ * @param {number} j - The index of the current word in the array.
+ * @param {User} user - The user details to compare with.
+ * @returns {boolean} - True if the mention exists, false otherwise.
+ */
   checkIfMentionExists(wordWithoutMention, splitted, j, user) {
     return (
       wordWithoutMention
         .toLowerCase()
         .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '') ===
-        user.name.toLowerCase().split(' ')[0] &&
+      user.name.toLowerCase().split(' ')[0] &&
       splitted[j + 1]
         .toLowerCase()
         .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '') ===
-        user.name.toLowerCase().split(' ')[1]
+      user.name.toLowerCase().split(' ')[1]
     );
   }
 
+  /**
+  * Checks if a mention exists in the given word at the specified index.
+  * If a mention is found, it is replaced with HTML styling.
+  * @param {string} word - The word being checked for a mention.
+  * @param {number} j - The index of the current word in the array.
+  * @param {Array<string>} splitted - The array of words being processed.
+  */
   ifMentionExists(word, j, splitted) {
+    // Initialize variables for first name, last name, and index.
     let firstName;
     let lastName;
     let index;
+
+    // Assign values for first name, last name, and index.
     firstName = word;
     index = j;
     lastName = splitted[j + 1];
 
+    // Replace the mention with HTML styling in the array of words.
     splitted.splice(
       index,
       2,
@@ -376,8 +589,29 @@ export class MessageComponent {
     );
   }
 
+
   assignToHTML(splitted) {
     let result = splitted.join(' ');
     this.contentContainer.nativeElement.innerHTML = result;
+  }
+
+  pmMessagesToJson() {
+    return this.opendThreadConversation.messages.map(message => this.pmMessageToJson(message))
+  }
+
+  pmMessageToJson(message: Message): any {
+    return {
+      sender: message.sender,
+      profileImg: message.profileImg,
+      content: message.content,
+      reactions: message.reactions,
+      creationDate: message.creationDate,
+      creationTime: message.creationTime,
+      creationDay: message.creationDay,
+      id: message.id,
+      collectionId: message.collectionId,
+      messageType: message.messageType,
+      thread: message.thread
+    };
   }
 }

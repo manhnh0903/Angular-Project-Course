@@ -19,6 +19,9 @@
       [reactions]="parentMessage.reactions"
       [type]="'thread-parent'"
       [id]="parentMessage.id"
+      [typeOfThread]="homeNav.typeOfThread"
+      [opendThreadConversation]="opendThreadConversation"
+      [parentMessage]="parentMessage"
     ></app-message>
     <div class="seperator-wrapper">
       <span>{{ parentMessage.thread.length ?? 0 }} Antworten</span>
@@ -39,6 +42,8 @@
       [parentMessage]="parentMessage"
       [type]="'thread'"
       [reactions]="message.reactions"
+      [typeOfThread]="homeNav.typeOfThread"
+      [opendThreadConversation]="opendThreadConversation"
     ></app-message>
   </div>
 

@@ -9,12 +9,14 @@ import {
 import {
   DocumentReference,
   Firestore,
+  doc,
   updateDoc,
 } from '@angular/fire/firestore';
 import { FirestoreService } from '../../../services/firestore.service';
 import { Reaction } from '../../../classes/reaction.class';
 import { UserService } from '../../../services/user.service';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
+import { Message } from 'src/app/classes/message.class';
 
 @Component({
   selector: 'app-reactions',
@@ -33,7 +35,9 @@ export class ReactionsComponent {
   @Input() collectionId;
   @Input() isYou;
   @Input() parentMessage;
+  @Input() typeOfThread;
   @Input() emojiFunction: () => void;
+  @Input() opendThreadConversation;
   emoji;
   openEdit = false;
   editMessage = true;
@@ -43,7 +47,7 @@ export class ReactionsComponent {
     public userService: UserService,
     private el: ElementRef,
     private homeNav: HomeNavigationService
-  ) {}
+  ) { }
 
   @Output() openEditMessageDivEvent = new EventEmitter<{
     editMessage: boolean;
@@ -74,56 +78,105 @@ export class ReactionsComponent {
     }
   }
 
+  /**
+ * Adds an emoji to the current message and updates the corresponding Firestore document.
+ * @param {Event} event - The event object representing the emoji addition.
+ */
   async addEmoji(event) {
     let docReference;
-    if (
-      this.type === 'channel' ||
-      this.type === 'thread' ||
-      this.type === 'thread-parent'
-    ) {
-      docReference = this.fireService.getDocRef(
-        'channels',
-        this.fireService.currentChannel.id
-      );
+
+    // Set document reference based on the current context
+    if (this.type === 'channel' ||
+      (this.homeNav.typeOfThread === 'channels' &&
+        (this.type === 'thread' || this.type === 'thread-parent'))) {
+      docReference = this.fireService.getDocRef('channels', this.fireService.currentChannel.id);
     }
     if (this.type === 'pm') {
       docReference = this.fireService.getDocRef('pms', this.collectionId);
-      /*       this.conversation.messages[this.index] = this.currentMessage; */
-      await updateDoc(docReference, {
-        messages: this.conversation.toJSON().messages,
-      });
+      await this.updatePMFirestore(docReference);
+    }
+    if (this.homeNav.typeOfThread === 'pms' && (this.type === 'thread' || this.type === 'thread-parent')) {
+      docReference = doc(this.firestore, 'pms', this.homeNav.pmCollectionId);
     }
 
+    // Create and add the emoji to the current message
     this.createEmoji(event);
-    let indexOfEmoji = this.currentMessage.reactions.findIndex(
-      (reaction) => reaction.id === this.emoji.id
-    ); //I check if the selected emoji already exists on the message
+    let indexOfEmoji = this.currentMessage.reactions.findIndex((reaction) => reaction.id === this.emoji.id);
+    this.checkForEmoji(indexOfEmoji);
 
-    this.checkForEmoji(indexOfEmoji)
+    // Update Firestore document based on the current message type
+    await this.updateFirestoreDoc(docReference);
 
-
-    //I change the selected message
-    if (this.type === 'channel') {
-      this.fireService.currentChannel.messages[this.index] =
-        this.currentMessage;
-      this.updateDoc(docReference, this.fireService.currentChannel.messages);
-    }
-    if (this.type === 'thread') {
-      this.fireService.currentChannel.messages[this.indexParentMessage()].thread[this.indexMessageOnThread()] =
-        this.currentMessage;
-      this.updateDoc(docReference, this.fireService.currentChannel.messages);
-    }
-    if (this.type === 'thread-parent') {
-      this.fireService.currentChannel.messages[this.indexParentMessage()] =
-        this.currentMessage;
-      this.updateDoc(docReference, this.fireService.currentChannel.messages);
-    }
-    if (this.type === 'pm') {
-      this.conversation.messages[this.index] = this.currentMessage;
-      this.updateDoc(docReference, this.conversation.toJSON().messages);
-    }
+    // Open the emoji panel
     this.openEmoji();
   }
+
+  /**
+   * Updates the Firestore document for private messages (PMs).
+   * @param {DocumentReference} docReference - The Firestore document reference.
+   */
+  async updatePMFirestore(docReference) {
+    await updateDoc(docReference, {
+      messages: this.conversation.toJSON().messages,
+    });
+  }
+
+  /**
+   * Updates the Firestore document based on the current message type.
+   * @param {DocumentReference} docReference - The Firestore document reference.
+   */
+  async updateFirestoreDoc(docReference) {
+    if (this.type === 'channel') {
+      this.fireService.currentChannel.messages[this.index] = this.currentMessage;
+    } else if (this.type === 'thread') {
+      this.updateThreadFirestore(docReference);
+    } else if (this.type === 'thread-parent') {
+      this.updateThreadParentFirestore(docReference);
+    } else if (this.type === 'pm') {
+      this.conversation.messages[this.index] = this.currentMessage;
+    }
+
+    await this.updateDoc(docReference, this.getUpdatedMessages());
+  }
+
+  /**
+   * Updates the Firestore document for threads within channels.
+   * @param {DocumentReference} docReference - The Firestore document reference.
+   */
+  updateThreadFirestore(docReference) {
+    if (this.homeNav.typeOfThread === 'channels') {
+      this.fireService.currentChannel.messages[this.indexParentMessage()].thread[this.indexMessageOnThread()] = this.currentMessage;
+    } else {
+      this.opendThreadConversation.messages[this.indexParentMessage()].thread[this.indexMessageOnThread()] = this.currentMessage;
+    }
+  }
+
+  /**
+   * Updates the Firestore document for thread-parent messages within channels.
+   * @param {DocumentReference} docReference - The Firestore document reference.
+   */
+  updateThreadParentFirestore(docReference) {
+    if (this.homeNav.typeOfThread === 'channels') {
+      this.fireService.currentChannel.messages[this.indexParentMessage()] = this.currentMessage;
+    } else {
+      this.opendThreadConversation.messages[this.indexParentMessage()] = this.currentMessage;
+    }
+  }
+
+  /**
+   * Gets the updated messages based on the current context.
+   * @returns {Array} - The updated messages array.
+   */
+  getUpdatedMessages() {
+    if (this.type === 'channel') {
+      return this.fireService.currentChannel.messages;
+    } else if (this.type === 'pm') {
+      return this.conversation.toJSON().messages;
+    } else {
+      return this.pmMessagesToJson();
+    }
+  }
+
 
   /**
    * Creates a new Emoji Reaction based on the provided event.
@@ -240,18 +293,35 @@ export class ReactionsComponent {
    * @return {number} - The index of the parent message in the messages array.
    */
   indexParentMessage(): number {
- /*    this.parentMessage = this.currentMessage; */
+    let index
     if (this.type === 'thread-parent') {
       this.parentMessage = this.currentMessage;
     }
-    let index = this.fireService.currentChannel.messages.findIndex(
-      (message) => message.id === this.parentMessage.id);
+    if (this.homeNav.typeOfThread === 'channels') {
+      index = this.fireService.currentChannel.messages.findIndex(
+        (message) => message.id === this.parentMessage.id);
+    } else {
+      index = this.opendThreadConversation.messages.findIndex(
+        (message) => message.id === this.parentMessage.id);
+    }
     return index
   }
 
+
+    /**
+   * Indexes the position of the message on thread in the current channel's parent messages array.
+   * @return {number} - The index of the message in the thread array.
+   */
   indexMessageOnThread() {
-    let index = this.fireService.currentChannel.messages[
-      this.indexParentMessage()].thread.findIndex((message) => message.id === this.currentMessage.id);
+    let index
+    if (this.homeNav.typeOfThread === 'channels') {
+      index = this.fireService.currentChannel.messages[
+        this.indexParentMessage()].thread.findIndex((message) => message.id === this.currentMessage.id);
+    } else {
+      index = this.opendThreadConversation.messages[
+        this.indexParentMessage()].thread.findIndex(
+          (message) => message.id === this.currentMessage.id);
+    }
     return index
   }
 
@@ -278,6 +348,29 @@ export class ReactionsComponent {
    * Initiates the thread by selecting the current message.
    */
   startThread() {
+    this.homeNav.typeOfThread = this.typeOfThread
     this.homeNav.selectMessage(this.currentMessage);
+  }
+
+
+  pmMessagesToJson() {
+    return this.opendThreadConversation.messages.map(message => this.pmMessageToJson(message))
+  }
+
+
+  pmMessageToJson(message: Message): any {
+    return {
+      sender: message.sender,
+      profileImg: message.profileImg,
+      content: message.content,
+      reactions: message.reactions,
+      creationDate: message.creationDate,
+      creationTime: message.creationTime,
+      creationDay: message.creationDay,
+      id: message.id,
+      collectionId: message.collectionId,
+      messageType: message.messageType,
+      thread: message.thread
+    };
   }
 }

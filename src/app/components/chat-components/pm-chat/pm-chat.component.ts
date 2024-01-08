@@ -22,6 +22,7 @@ export class PmChatComponent {
   private destroy$ = new Subject<void>();
   public loading: boolean = true;
   public type = 'pm';
+  public typeOfThread = 'pms'
   @ViewChild('chatArea', { static: false }) chatArea: ElementRef;
 
   constructor(

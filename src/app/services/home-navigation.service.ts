@@ -15,8 +15,9 @@ export class HomeNavigationService {
   public threadOpen: boolean = false;
   public profileOverlay: boolean = false;
   public editProfileOpen: boolean = false;
-
-  constructor(private firestoreService: FirestoreService) {}
+  public typeOfThread: string
+  public pmCollectionId
+  constructor(private firestoreService: FirestoreService) { }
 
   /**
    * Sets the main chat path.
@@ -46,6 +47,8 @@ export class HomeNavigationService {
       messageData['messageType'],
       messageData['collectionId']
     );
+    this.pmCollectionId = messageData['collectionId'];
+    console.log(this.pmCollectionId);
 
     this.threadOpen = true;
   }

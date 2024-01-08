@@ -38,6 +38,7 @@ export class FirestoreService {
   public unsubUsers: Function;
   userOnChannelCheck = [];
   private defaultChannelCalled: boolean = false;
+  public conversationId
 
   constructor(private firestore: Firestore) {
     this.subscribeToCollection('pms', this.pmsCollectionDataSubject);
@@ -341,8 +342,13 @@ export class FirestoreService {
             let index = channel.users.find(
               (user: DabubbleUser) => user.userId === userId
             );
-            if (index !== undefined) this.userOnChannelCheck.push(true);
-            else this.userOnChannelCheck.push(false);
+            if (channel.name === 'Backend') {
+              if (index !== undefined) {
+                this.userOnChannelCheck.push(true);
+              } else { this.userOnChannelCheck.push(false); }
+            } else {
+              this.userOnChannelCheck.push(true);
+            }
           });
         }
       });
