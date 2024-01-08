@@ -1,8 +1,9 @@
+@import "./../../../mixin.scss";
+
 .homeContainer {
   width: 100%;
   height: calc(100% - 120px);
-  display: flex;
-  gap: 16px;
+  @include dFlex($jc: flex-start, $ai: stretch, $gp: 16px);
   padding: 0 25px 25px 25px;
 
   @media screen and (max-width: 1300px) {
@@ -15,8 +16,7 @@
 }
 
 .sideMenuButton {
-  display: flex;
-  align-items: center;
+  @include dFlex($jc: flex-start);
   position: fixed;
   left: -110px;
   bottom: 30%;
@@ -69,12 +69,8 @@
   right: 0;
   top: 0;
   bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
+  @include dFlex();
   background-color: rgba(0, 0, 0, 0.2);
-
   z-index: 1000;
 }
 
@@ -123,9 +119,7 @@
 }
 
 .logoContainer {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+  @include dFlex($jc: space-evenly);
   width: 100%;
   background-color: #eceefe;
   padding: 23px;

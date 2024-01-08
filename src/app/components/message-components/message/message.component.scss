@@ -1,3 +1,5 @@
+@import "./../../../mixin.scss";
+
 .messageUsersImg {
   height: 50px;
   width: 50px;
@@ -5,8 +7,7 @@
 }
 
 .messagesSection {
-  display: flex;
-  justify-content: space-between;
+  @include dFlex($jc: space-between, $ai: stretch);
   position: relative;
   padding: 20px 0;
   cursor: pointer;
@@ -46,9 +47,7 @@
   }
 
   .tread-info {
-    display: flex;
-    grid-gap: 20px;
-    align-items: center;
+    @include dFlex($jc: flex-start, $gp: 20px);
     margin-top: 8px;
     cursor: pointer;
 
@@ -70,8 +69,7 @@
 }
 
 .reactions {
-  display: flex;
-  align-items: center;
+  @include dFlex($jc: flex-start);
 }
 
 .odd-message .messagesSection {
@@ -87,8 +85,7 @@
 }
 
 .reaction {
-  display: flex;
-  align-items: center;
+  @include dFlex($jc: flex-start);
   margin-left: 4px;
   margin-top: 4px;
   background: white;
@@ -189,10 +186,8 @@
 }
 
 .editButtons {
-  display: flex;
+  @include dFlex($jc: space-between);
   width: 97%;
-  justify-content: space-between;
-  align-items: center;
   margin-left: auto;
   margin-right: auto;
 }

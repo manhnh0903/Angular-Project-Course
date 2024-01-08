@@ -1,3 +1,5 @@
+@import "./../../../mixin.scss";
+
 section {
   display: flex;
   flex-direction: column;
@@ -13,9 +15,7 @@ section {
   }
 
   .thread-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include dFlex($jc: space-between);
     box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
     padding: 32px 40px;
     height: 100px;
@@ -25,9 +25,7 @@ section {
     }
 
     div {
-      display: flex;
-      gap: 8px;
-      align-items: center;
+      @include dFlex($gp: 8px);
 
       h3 {
         font-size: 24px;
@@ -49,9 +47,7 @@ section {
     gap: 32px;
 
     .seperator-wrapper {
-      display: flex;
-      gap: 20px;
-      align-items: center;
+      @include dFlex($gp: 20px);
 
       span {
         font-size: 18px;

@@ -1,3 +1,5 @@
+@import "./../../../../mixin.scss";
+
 form {
   margin-top: auto;
   border: 1px solid blue;
@@ -82,14 +84,12 @@ input {
 }
 
 .messageIcons {
-  display: flex;
-  align-items: center;
+  @include dFlex($jc: flex-start);
 }
 
 .addFile {
   position: relative;
-  display: flex;
-  align-items: center;
+  @include dFlex($jc: flex-start);
 
   .messageIcon {
     height: 20px;
@@ -151,7 +151,6 @@ input {
 }
 
 .templateLine {
-  display: flex;
-  align-items: center;
+  @include dFlex($jc: flex-start);
   gap: 10px;
 }
