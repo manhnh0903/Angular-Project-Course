@@ -22,6 +22,7 @@
       [typeOfThread]="homeNav.typeOfThread"
       [opendThreadConversation]="opendThreadConversation"
       [parentMessage]="parentMessage"
+      [creationTime]="parentMessage.creationTime"
     ></app-message>
     <div class="seperator-wrapper">
       <span>{{ parentMessage.thread.length ?? 0 }} Antworten</span>
