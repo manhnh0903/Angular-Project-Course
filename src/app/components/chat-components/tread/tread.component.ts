@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { HomeNavigationService } from 'src/app/services/home-navigation.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Message } from 'src/app/classes/message.class';
@@ -19,12 +19,12 @@ export class TreadComponent {
   public type = 'thread';
   public opendThreadConversation: Conversation | Channel;
   public threadCollection: string;
-  public parentMessage : Message = new Message();
-  public data
+  public parentMessage: Message = new Message();
+  public data;
+  @ViewChild('threadCatArea', { static: false }) threadCatArea: ElementRef;
   constructor(
     public homeNav: HomeNavigationService,
     private fb: FormBuilder,
-
     private firestoreService: FirestoreService
   ) {
     this.sendMessageForm = this.fb.group({
@@ -32,6 +32,7 @@ export class TreadComponent {
     });
 
     this.subMessageData();
+    this.scrollToBottom();
   }
 
   noOnDestroy() {
@@ -79,8 +80,29 @@ export class TreadComponent {
             this.threadCollection = 'channels';
           }
           this.updateCurrentMessage();
+          this.handleMessagesUpdate();
         }
       });
+  }
+
+  /**
+   * Handles logic after updating the conversation messages, such as stopping loading and scrolling to the bottom.
+   */
+  handleMessagesUpdate() {
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 1);
+  }
+
+  /**
+   * Scrolls the chat area to the bottom, ensuring the latest messages are visible.
+   * Uses the native element properties to set the scrollTop to the scrollHeight.
+   */
+  scrollToBottom() {
+    if (this.threadCatArea && this.threadCatArea.nativeElement) {
+      this.threadCatArea.nativeElement.scrollTop =
+        this.threadCatArea.nativeElement.scrollHeight;
+    }
   }
 
   /**
