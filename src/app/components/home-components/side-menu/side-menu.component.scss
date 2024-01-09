@@ -79,7 +79,12 @@
 
   .dropDownIcon {
     height: 20px;
+    transition: all 225ms ease;
   }
+}
+
+.rotate-90deg {
+  transform: rotate(-90deg);
 }
 
 .addIcon {

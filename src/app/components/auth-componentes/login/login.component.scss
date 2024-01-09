@@ -302,6 +302,11 @@ section {
       padding: 11px 32px;
       cursor: pointer;
 
+      @media screen and (max-width: 450px) {
+        padding: 11px 12px;
+        gap: 8px;
+      }
+
       &:hover {
         border: 1px solid var(--main-dark-blue);
         font-weight: 700;
@@ -325,6 +330,10 @@ section {
         border-radius: 25px;
         cursor: pointer;
         transition: all 225ms ease-in-out;
+
+        @media screen and (max-width: 450px) {
+          padding: 12px 12px;
+        }
 
         @media screen and (max-width: 600px) and (max-height: 850px) {
           font-size: 15px;
