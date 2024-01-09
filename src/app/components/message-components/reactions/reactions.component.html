@@ -2,7 +2,7 @@
   <div class="reactionDiv">
     <img (click)="openEmoji()" src="assets/img/add_reaction.png" />
     <img
-      *ngIf="type !== 'thread'"
+      *ngIf="type !== 'thread' && type !== 'thread-parent'"
       (click)="startThread()"
       src="assets/img/comment.png"
     />

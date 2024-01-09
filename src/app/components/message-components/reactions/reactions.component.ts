@@ -84,11 +84,8 @@ export class ReactionsComponent {
  */
   async addEmoji(event) {
     let docReference;
-
-    // Set document reference based on the current context
     if (this.type === 'channel' ||
-      (this.homeNav.typeOfThread === 'channels' &&
-        (this.type === 'thread' || this.type === 'thread-parent'))) {
+      (this.homeNav.typeOfThread === 'channels' && (this.type === 'thread' || this.type === 'thread-parent'))) {
       docReference = this.fireService.getDocRef('channels', this.fireService.currentChannel.id);
     }
     if (this.type === 'pm') {
@@ -98,16 +95,19 @@ export class ReactionsComponent {
     if (this.homeNav.typeOfThread === 'pms' && (this.type === 'thread' || this.type === 'thread-parent')) {
       docReference = doc(this.firestore, 'pms', this.homeNav.pmCollectionId);
     }
+    await this.forAddEmojiAfterTypeSet(docReference, event)
+  }
 
-    // Create and add the emoji to the current message
+
+  /**
+   * Functions to be executed after type and docRef are set on AddEmoji()
+   *  @param {Event} event - The event object representing the emoji addition.
+   */
+  async forAddEmojiAfterTypeSet(docReference, event) {
     this.createEmoji(event);
     let indexOfEmoji = this.currentMessage.reactions.findIndex((reaction) => reaction.id === this.emoji.id);
     this.checkForEmoji(indexOfEmoji);
-
-    // Update Firestore document based on the current message type
     await this.updateFirestoreDoc(docReference);
-
-    // Open the emoji panel
     this.openEmoji();
   }
 
@@ -135,7 +135,6 @@ export class ReactionsComponent {
     } else if (this.type === 'pm') {
       this.conversation.messages[this.index] = this.currentMessage;
     }
-
     await this.updateDoc(docReference, this.getUpdatedMessages());
   }
 
@@ -210,15 +209,12 @@ export class ReactionsComponent {
     }
   }
 
-
-
-
   /**
-   * Handles the scenario when the emoji is not present in the current message's reactions.
-   * Adds the emoji to the reactions array and updates user-related information.
-   * @param {number} indexOfEmoji - The index of the emoji in the reactions array.
-   * Should be -1 when calling this function.
-   */
+     * Handles the scenario when the emoji is not present in the current message's reactions.
+     * Adds the emoji to the reactions array and updates user-related information.
+     * @param {number} indexOfEmoji - The index of the emoji in the reactions array.
+     * Should be -1 when calling this function.
+     */
   ifEmojiIsNotOnMessage(indexOfEmoji: number) {
     this.currentMessage.reactions.push(this.emoji.toJSON());
     indexOfEmoji = this.currentMessage.reactions.findIndex(
@@ -237,14 +233,9 @@ export class ReactionsComponent {
   ifEmojiIsOnMessage(indexOfEmoji: number) {
     if (this.checkForUsersIdForEmoji(indexOfEmoji) === -1) {
       this.increaseCounterOfExistingEmoji(indexOfEmoji);
-      this.currentMessage.reactions[indexOfEmoji].userIDs.push(
-        this.userService.user.userId
-      );
+      this.currentMessage.reactions[indexOfEmoji].userIDs.push(this.userService.user.userId);
     } else {
-      this.currentMessage.reactions[indexOfEmoji].userIDs.splice(
-        this.checkForUsersIdForEmoji(indexOfEmoji),
-        1
-      );
+      this.currentMessage.reactions[indexOfEmoji].userIDs.splice(this.checkForUsersIdForEmoji(indexOfEmoji), 1);
       this.decreaseCounterOfExistingEmoji(indexOfEmoji);
       if (this.currentMessage.reactions[indexOfEmoji].counter === 0)
         this.removeEmojiIfCounter0(indexOfEmoji);
@@ -298,29 +289,24 @@ export class ReactionsComponent {
       this.parentMessage = this.currentMessage;
     }
     if (this.homeNav.typeOfThread === 'channels') {
-      index = this.fireService.currentChannel.messages.findIndex(
-        (message) => message.id === this.parentMessage.id);
+      index = this.fireService.currentChannel.messages.findIndex((message) => message.id === this.parentMessage.id);
     } else {
-      index = this.opendThreadConversation.messages.findIndex(
-        (message) => message.id === this.parentMessage.id);
+      index = this.opendThreadConversation.messages.findIndex((message) => message.id === this.parentMessage.id);
     }
     return index
   }
 
 
-    /**
-   * Indexes the position of the message on thread in the current channel's parent messages array.
-   * @return {number} - The index of the message in the thread array.
-   */
+  /**
+ * Indexes the position of the message on thread in the current channel's parent messages array.
+ * @return {number} - The index of the message in the thread array.
+ */
   indexMessageOnThread() {
     let index
     if (this.homeNav.typeOfThread === 'channels') {
-      index = this.fireService.currentChannel.messages[
-        this.indexParentMessage()].thread.findIndex((message) => message.id === this.currentMessage.id);
+      index = this.fireService.currentChannel.messages[this.indexParentMessage()].thread.findIndex((message) => message.id === this.currentMessage.id);
     } else {
-      index = this.opendThreadConversation.messages[
-        this.indexParentMessage()].thread.findIndex(
-          (message) => message.id === this.currentMessage.id);
+      index = this.opendThreadConversation.messages[this.indexParentMessage()].thread.findIndex((message) => message.id === this.currentMessage.id);
     }
     return index
   }
@@ -332,9 +318,7 @@ export class ReactionsComponent {
    * @return {Promise<void>} - A promise that resolves when the document is successfully updated.
    */
   async updateDoc(docReference: DocumentReference, obj: {}) {
-    await updateDoc(docReference, {
-      messages: obj,
-    });
+    await updateDoc(docReference, { messages: obj, });
   }
 
   /**
