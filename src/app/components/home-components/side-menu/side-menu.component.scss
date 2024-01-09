@@ -1,3 +1,5 @@
+@import "./../../../mixin.scss";
+
 .sideMenu {
   width: 420px;
   height: 100%;
@@ -25,9 +27,7 @@
 }
 
 .logoContainer {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+  @include dFlex($jc: space-evenly);
   width: 100%;
 
   h1 {
@@ -55,28 +55,21 @@
 }
 
 .channels {
-  display: flex;
-  align-items: flex-start;
+  @include dFlex($jc: space-between, $ai: flex-start);
   width: 100%;
-  justify-content: space-between;
 }
 
 .subChannels {
-  display: flex;
-  align-items: flex-start;
+  @include dFlex($jc: flex-start, $ai: flex-start);
   cursor: pointer;
 }
 
 .channelHeaders {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include dFlex($jc: space-between);
   cursor: pointer;
 
   .channel-headline {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    @include dFlex($jc: flex-start, $gp: 16px);
 
     &:hover {
       filter: brightness(0) saturate(100%) invert(29%) sepia(14%)
@@ -99,9 +92,7 @@
 }
 
 .addIconDiv {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include dFlex();
   border-radius: 50%;
   border: 1px solid transparent;
 
@@ -155,9 +146,7 @@
 }
 
 .dropDownSubDiv {
-  display: flex;
-  gap: 17px;
-  align-items: center;
+  @include dFlex($jc: flex-start, $gp: 17px);
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 30px;

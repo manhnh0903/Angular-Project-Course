@@ -1,3 +1,5 @@
+@import "./../../../mixin.scss";
+
 app-dialog-edit-profile {
   overflow-y: hidden;
 }
@@ -32,9 +34,7 @@ form {
 }
 
 .profileFlex {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include dFlex($jc: space-between);
   margin-left: auto;
   margin-right: auto;
   width: 80%;
@@ -58,12 +58,10 @@ form {
   right: 0;
   bottom: 0;
   left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include dFlex();
   background-color: rgba(0, 0, 0, 0.2);
 
-  >div {
+  > div {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -83,16 +81,13 @@ form {
     }
 
     .img-container {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
+      @include dFlex($gp: 16px);
       flex-wrap: wrap;
     }
 
     .button-wrapper {
       width: 100%;
-      display: flex;
-      justify-content: space-between;
+      @include dFlex($jc: space-between);
     }
   }
 }
@@ -111,9 +106,7 @@ form {
 
 .emailDiv {
   width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  @include dFlex($jc: flex-start);
 
   .adresseSpan {
     margin-left: 10px;
@@ -159,8 +152,7 @@ form {
 }
 
 .buttons {
-  display: flex;
-  justify-content: space-around;
+  @include dFlex($jc: space-around);
   margin-left: auto;
   margin-right: auto;
   width: 80%;
@@ -194,8 +186,7 @@ form {
   line-height: 21.6px;
 }
 
-
-@media(max-width:900px) {
+@media (max-width: 900px) {
   form {
     top: 30px !important;
     right: 30px !important;

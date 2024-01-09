@@ -1,3 +1,5 @@
+@import "./../../../mixin.scss";
+
 section {
   display: flex;
   flex-direction: column;
@@ -18,15 +20,13 @@ section {
     width: 100%;
 
     @media screen and (max-width: 600px) {
-      display: flex;
+      @include dFlex();
       padding: 0;
-      justify-content: center;
     }
   }
 
   .legal-wrapper {
-    display: flex;
-    gap: 16px;
+    @include dFlex($gp: 16px);
     padding-bottom: 25px;
   }
 
@@ -123,8 +123,7 @@ section {
     }
 
     .input-wrapper {
-      display: flex;
-      align-items: center;
+      @include dFlex();
       width: 100%;
       height: 60px;
       position: relative;
@@ -147,10 +146,7 @@ section {
 
     .privacy-wrapper {
       width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 8px;
+      @include dFlex($jc: flex-start, $gp: 8px);
 
       img {
         cursor: pointer;
@@ -159,8 +155,7 @@ section {
 
     .button-wrapper {
       width: 100%;
-      display: flex;
-      justify-content: flex-end;
+      @include dFlex($jc: flex-end);
 
       button {
         font-size: 18px;

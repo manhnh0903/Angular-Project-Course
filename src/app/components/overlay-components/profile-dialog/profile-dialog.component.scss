@@ -1,3 +1,5 @@
+@import "./../../../mixin.scss";
+
 .profileContainer {
   position: absolute;
   top: 0;
@@ -28,9 +30,7 @@
 }
 
 .profileFlex {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include dFlex($jc: space-between);
   margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
@@ -48,7 +48,8 @@
   border-radius: 50%;
 
   &:hover {
-    fill: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
+    fill: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%)
+      hue-rotate(164deg) brightness(104%) contrast(98%);
   }
 }
 
@@ -59,12 +60,10 @@
 }
 
 .emailContainer {
+  @include dFlex($jc: flex-start);
   margin-left: auto;
   margin-right: auto;
   width: 80%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
 
   .adresseSpan {
     margin-left: 10px;
@@ -83,7 +82,7 @@
   cursor: pointer;
 }
 
-@media(max-width:900px) {
+@media (max-width: 900px) {
   .profileContent {
     top: 30px !important;
     right: 30px !important;

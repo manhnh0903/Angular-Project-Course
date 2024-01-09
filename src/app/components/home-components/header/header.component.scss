@@ -1,9 +1,8 @@
+@import "./../../../mixin.scss";
+
 .container {
+  @include dFlex($jc: space-between, $gp: 100px);
   padding: 25px;
-  display: flex;
-  gap: 100px;
-  align-items: center;
-  justify-content: space-between;
   height: 120px;
 
   @media screen and (max-width: 1200px) {
@@ -12,8 +11,7 @@
 }
 
 .searchBarContainer {
-  display: flex;
-  align-items: center;
+  @include dFlex($jc: flex-start);
   flex-grow: 1;
   position: relative;
 
@@ -52,12 +50,12 @@
 
   z-index: 100;
 
-  >div {
+  > div {
     display: flex;
     flex-direction: column;
     gap: 8px;
 
-    >span {
+    > span {
       color: gray;
       padding: 0 8px 0 8px;
     }
@@ -65,8 +63,7 @@
 
   .user-results-container {
     .user-result {
-      display: flex;
-      align-items: center;
+      @include dFlex($jc: flex-start);
       cursor: pointer;
       padding: 0 8px 0 8px;
       border: 1px solid transparent;
@@ -85,9 +82,7 @@
   }
 
   .message {
-    display: flex;
-    gap: 16px;
-    align-items: center;
+    @include dFlex($jc: flex-start, $gp: 16px);
     cursor: pointer;
     padding: 0 8px 0 8px;
     border: 1px solid transparent;
@@ -97,16 +92,15 @@
       border: 1px solid var(--main-dark-blue);
     }
 
-    >div {
+    > div {
       display: flex;
       flex-direction: column;
 
       .sender-wrapper {
-        display: flex;
-        gap: 8px;
+        @include dFlex($jc: flex-start, $gp: 8px);
 
         font-size: 12px;
-        color: gray; // andere farbe
+        color: gray;
       }
     }
 
@@ -125,14 +119,11 @@
 
 .logoSearchBar {
   width: 70%;
-  display: flex;
-  align-items: center;
+  @include dFlex($jc: flex-start);
 }
 
 .user {
-  display: flex;
-  gap: 8px;
-  align-items: center;
+  @include dFlex($jc: flex-start, $gp: 8px);
 
   .userName {
     font-weight: 700;
@@ -142,8 +133,7 @@
 
   .usersPicDiv {
     position: relative;
-    display: flex;
-    align-items: center;
+    @include dFlex($jc: flex-start);
 
     .usersPic {
       height: 70px;
@@ -162,7 +152,8 @@
     cursor: pointer;
 
     &:hover {
-      filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
+      filter: brightness(0) saturate(100%) invert(29%) sepia(14%)
+        saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
     }
   }
 }
@@ -216,28 +207,26 @@
   cursor: pointer;
 }
 
-@media(max-width:650px) {
+@media (max-width: 650px) {
   .userName {
     display: none;
   }
 }
 
-
-@media(max-width:1200px) {
-
+@media (max-width: 1200px) {
   .searchBar,
   .searchBar::placeholder {
     font-size: 14px;
   }
 }
 
-@media(max-width:975px) {
+@media (max-width: 975px) {
   .search_icon {
     display: none;
   }
 }
 
-@media(max-width:900px) {
+@media (max-width: 900px) {
   .menuProfileContent {
     left: 0;
     bottom: 0;
@@ -253,8 +242,7 @@
   }
 
   .subdiv {
-    display: flex;
-    align-items: center;
+    @include dFlex($jc: flex-start);
     width: 60%;
     margin-left: auto;
   }
@@ -279,7 +267,6 @@
   .usersPic {
     max-height: 50px !important;
     width: auto !important;
-
   }
 
   .logo {

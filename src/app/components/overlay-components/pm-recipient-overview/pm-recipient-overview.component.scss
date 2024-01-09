@@ -1,3 +1,5 @@
+@import "./../../../mixin.scss";
+
 section {
   display: flex;
   flex-direction: column;
@@ -10,8 +12,7 @@ section {
   width: 500px;
 
   .header {
-    display: flex;
-    justify-content: space-between;
+    @include dFlex($jc: space-between);
 
     span {
       font-weight: 700;
@@ -30,8 +31,7 @@ section {
   }
 
   .profile-img-wrapper {
-    display: flex;
-    justify-content: center;
+    @include dFlex();
 
     img {
       width: 200px;
@@ -51,9 +51,7 @@ section {
     }
 
     div {
-      display: flex;
-      gap: 15px;
-      align-items: center;
+      @include dFlex($jc: flex-start, $gp: 15px);
 
       span {
         font-size: 20px;
@@ -75,8 +73,7 @@ section {
     gap: 15px;
 
     div {
-      display: flex;
-      gap: 20px;
+      @include dFlex($jc: flex-start, $gp: 20px);
 
       img {
         height: 30px;
@@ -99,14 +96,10 @@ section {
   }
 
   .button-wrapper {
-    display: flex;
-    justify-content: center;
+    @include dFlex($jc: flex-start);
 
     button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
+      @include dFlex($gp: 10px);
       color: white;
       background-color: var(--main-dark-blue);
       border-radius: 50px;
