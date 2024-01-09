@@ -1,11 +1,7 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import {
   Component,
-  ElementRef,
-  HostListener,
   OnInit,
-  ViewChild,
-  inject,
 } from '@angular/core';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';

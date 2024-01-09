@@ -49,8 +49,6 @@ export class HomeNavigationService {
       messageData['collectionId']
     );
     this.pmCollectionId = messageData['collectionId'];
-    console.log(this.pmCollectionId);
-
     this.threadOpen = true;
   }
 }

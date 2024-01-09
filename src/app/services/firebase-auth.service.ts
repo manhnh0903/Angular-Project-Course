@@ -66,8 +66,6 @@ export class FirebaseAuthService {
         email,
         password
       );
-
-      console.log('login successful:', userCredential.user.uid);
     } catch (err) {
       console.error(err);
       throw err;
@@ -111,7 +109,6 @@ export class FirebaseAuthService {
         console.error('Ungültiger oder fehlender oobCode.');
       }
       await confirmPasswordReset(this.auth, this.oobCode, newPassword);
-      console.log('neues Passwort gesetzt');
     } catch (err) {
       console.error(err);
     }
