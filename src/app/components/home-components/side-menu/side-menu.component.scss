@@ -49,8 +49,7 @@
   cursor: pointer;
 
   &:hover {
-    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%)
-      hue-rotate(164deg) brightness(104%) contrast(98%);
+    color: blue;
   }
 }
 
@@ -72,8 +71,7 @@
     @include dFlex($jc: flex-start, $gp: 16px);
 
     &:hover {
-      filter: brightness(0) saturate(100%) invert(29%) sepia(14%)
-        saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
+      filter: invert(9%) sepia(100%) saturate(5845%) hue-rotate(246deg) brightness(102%) contrast(149%);
     }
   }
 
@@ -86,8 +84,7 @@
   cursor: pointer;
 
   &:hover {
-    filter: brightness(0) saturate(100%) invert(29%) sepia(14%) saturate(2736%)
-      hue-rotate(164deg) brightness(104%) contrast(98%);
+    filter: invert(9%) sepia(100%) saturate(5845%) hue-rotate(246deg) brightness(102%) contrast(149%);
   }
 }
 
@@ -143,6 +140,10 @@
 
 .subIcon {
   height: 19px;
+
+  &:hover {
+    color: #0000ff;
+  }
 }
 
 .dropDownSubDiv {
@@ -167,8 +168,7 @@
 
   &:hover {
     p {
-      filter: brightness(0) saturate(100%) invert(29%) sepia(14%)
-        saturate(2736%) hue-rotate(164deg) brightness(104%) contrast(98%);
+      color: blue
     }
 
     background-color: var(--main-bg-color);
@@ -199,6 +199,7 @@
   .channelHeaders {
     margin-left: -12px;
   }
+
   .channelsSpans {
     padding-left: 40px;
   }
@@ -206,9 +207,11 @@
   .forHover {
     font-size: 18px !important;
   }
+
   .dropDownSubDiv {
     line-height: 1.6;
   }
+
   .icon {
     margin-left: 0;
   }

@@ -39,7 +39,7 @@ export class FooterInputComponent {
     public fireService: FirestoreService,
     public userService: UserService,
     private cursorService: CursorPositionService
-  ) {}
+  ) { }
   fileName = '';
   @ViewChild('contentContainer') contentContainer: ElementRef;
   @ViewChild('inputFooter', { static: true }) inputFooter: ElementRef;
@@ -159,6 +159,7 @@ export class FooterInputComponent {
   }
 
   createMessage() {
+
     this.newMessage = new Message();
     this.newMessage.sender = this.userService.user.name;
     this.newMessage.profileImg = this.userService.user.profileImg;
@@ -167,25 +168,27 @@ export class FooterInputComponent {
     } else {
       this.newMessage.content = this.sendMessageForm.value;
     }
-    this.newMessage.thread = [];
-    this.newMessage.reactions = [];
-    this.newMessage.creationDate = this.fireService.getCurrentDate();
-    this.newMessage.creationTime = this.fireService.getCurrentTime();
-    this.newMessage.creationDay = this.fireService.getDaysName();
-    this.newMessage.id = this.addMessageId();
+    if (this.newMessage.content !== "") {
+      this.newMessage.thread = [];
+      this.newMessage.reactions = [];
+      this.newMessage.creationDate = this.fireService.getCurrentDate();
+      this.newMessage.creationTime = this.fireService.getCurrentTime();
+      this.newMessage.creationDay = this.fireService.getDaysName();
+      this.newMessage.id = this.addMessageId();
 
-    if (this.type === 'channel') {
-      this.newMessage.collectionId = this.fireService.currentChannel.id;
-      this.newMessage.messageType = 'channels';
-      this.addMessageToChannel();
-    } else if (this.type === 'pm') {
-      this.newMessage.collectionId = this.conversationId;
-      this.newMessage.messageType = 'pms';
-      this.newMessage.senderId = this.userService.user.userId;
-      this.newMessage.recipientId = this.pmRecipient;
-      this.addMessageToPM();
-    } else if (this.type === 'thread') {
-      this.addMessageToThread();
+      if (this.type === 'channel') {
+        this.newMessage.collectionId = this.fireService.currentChannel.id;
+        this.newMessage.messageType = 'channels';
+        this.addMessageToChannel();
+      } else if (this.type === 'pm') {
+        this.newMessage.collectionId = this.conversationId;
+        this.newMessage.messageType = 'pms';
+        this.newMessage.senderId = this.userService.user.userId;
+        this.newMessage.recipientId = this.pmRecipient;
+        this.addMessageToPM();
+      } else if (this.type === 'thread') {
+        this.addMessageToThread();
+      }
     }
   }
 

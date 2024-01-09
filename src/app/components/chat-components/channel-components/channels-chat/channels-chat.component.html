@@ -3,49 +3,28 @@
     <div class="input-container">
       <span>Leute hinzufügen</span>
       <span class="channelsName">#{{ fireService.currentChannel.name }}</span>
-      <span
-        class="ifAllUsersAdded"
-        *ngIf="
+      <span class="ifAllUsersAdded" *ngIf="
           fireService.currentChannel.users.length ===
           fireService.allUsers.length
-        "
-        >es sind bereits alle User in diesem Channel</span
-      >
+        ">es sind bereits alle User in diesem Channel</span>
       <div class="inputDiv">
-        <input
-          *ngIf="!selectedUser"
-          placeholder="Name eingeben"
-          class="choosePeopleInput"
-          [(ngModel)]="usersName"
-          (ngModelChange)="showFilteredUsers()"
-        />
+        <input *ngIf="!selectedUser" placeholder="Name eingeben" class="choosePeopleInput" [(ngModel)]="usersName"
+          (ngModelChange)="showFilteredUsers()" />
       </div>
       <div class="selectet-users-container" *ngIf="selectedUser">
         <div>
           <span>{{ selectedUser.name }}</span>
-          <img
-            (click)="selectedUser = null"
-            src="./assets/img/close.png"
-            alt="close.img"
-          />
+          <img (click)="selectedUser = null" src="./assets/img/close.png" alt="close.img" />
         </div>
       </div>
       <div *ngIf="filteredUsers.length > 0" class="peopleToAdd">
-        <div
-          *ngFor="let filteredUser of filteredUsers"
-          class="filteredUser"
-          (click)="addToSelectedUsers(filteredUser)"
-        >
+        <div *ngFor="let filteredUser of filteredUsers" class="filteredUser" (click)="addToSelectedUsers(filteredUser)">
           <img class="profileImg" src="{{ filteredUser.profileImg }}" />
           <p>{{ filteredUser.name }}</p>
         </div>
       </div>
 
-      <button
-        (click)="addUsersToCurrentChannel()"
-        [disabled]="!selectedUser"
-        class="createButton"
-      >
+      <button (click)="addUsersToCurrentChannel()" [disabled]="!selectedUser" class="createButton">
         Hinzufügen
       </button>
     </div>
@@ -58,54 +37,35 @@
       <img class="tagImg" src="assets/img/tag.png" />
       <span *ngIf="fireService.currentChannel">{{
         fireService.currentChannel.name
-      }}</span>
+        }}</span>
       <img class="arrowImg" src="assets/img/arrow_drop_down.png" />
     </div>
     <div *ngIf="fireService.currentChannel" class="headerRight">
-      <img
-        [ngStyle]="{ left: -28 - i * 10 + 'px' }"
-        class="usersImg"
-        *ngFor="let user of fireService.currentChannel.users; let i = index"
-        src="{{ user.profileImg }}"
-      />
-
+      <img [ngStyle]="{ left: -28 - i * 10 + 'px' }" class="usersImg"
+        *ngFor="let user of fireService.currentChannel.users; let i = index" src="{{ user.profileImg }}" />
       <p>{{ fireService.currentChannel.users.length }}</p>
-      <img
-        (click)="openAddPeople()"
-        class="addUserIcon"
-        src="assets/img/person_add.png"
-      />
+      <img (click)="openAddPeople()" class="addUserIcon" src="assets/img/person_add.png" />
+      <div class="selectedUsersDropdown">
+        <div *ngFor="let user of fireService.currentChannel.users; let i = index" class="selectedUsersDropdownSubdiv">
+          <img src="{{ user.profileImg }}">
+          <span>{{ user.name }}</span>
+        </div>
+      </div>
     </div>
   </header>
 
-  <div
-    *ngIf="fireService.currentChannel && fireService.currentChannel.messages"
-    #channelsChatArea
-    class="messagesOnChannel"
-  >
-    <app-message
-      *ngFor="let message of fireService.currentChannel.messages; let i = index"
-      [sender]="message.sender"
-      [profileImg]="message.profileImg"
-      [content]="message.content"
-      [creationDate]="message.creationDate"
-      [creationTime]="message.creationTime"
-      [creationDay]="message.creationDay"
-      [currentMessage]="message"
-      [reactions]="message.reactions"
-      [type]="'channel'"
-      [index]="i"
-      [thread]="message.thread"
-      [typeOfThread]="typeOfThread"
-    ></app-message>
+  <div *ngIf="fireService.currentChannel && fireService.currentChannel.messages" #channelsChatArea
+    class="messagesOnChannel">
+    <app-message *ngFor="let message of fireService.currentChannel.messages; let i = index" [sender]="message.sender"
+      [profileImg]="message.profileImg" [content]="message.content" [creationDate]="message.creationDate"
+      [creationTime]="message.creationTime" [creationDay]="message.creationDay" [currentMessage]="message"
+      [reactions]="message.reactions" [type]="'channel'" [index]="i" [thread]="message.thread"
+      [typeOfThread]="typeOfThread"></app-message>
   </div>
-  <div
-    class="ifNoMessagesDiv"
-    *ngIf="
+  <div class="ifNoMessagesDiv" *ngIf="
       fireService.currentChannel &&
       fireService.currentChannel.messages.length === 0
-    "
-  >
+    ">
     <span class="channelsName"># {{ fireService.currentChannel.name }}</span>
     <div style="display: flex">
       Das ist der Anfang des Channels
