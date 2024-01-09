@@ -9,7 +9,11 @@
       <div class="channelsSpans">
         <div class="channelHeaders">
           <div class="channel-headline" (click)="openChannels()">
-            <img class="dropDownIcon" src="assets/img/arrow_drop_down.png" />
+            <img
+              class="dropDownIcon"
+              [ngClass]="{ 'rotate-90deg': !channelsClicked }"
+              src="assets/img/arrow_drop_down.png"
+            />
             <img class="icon" src="assets/img/workspaces.png" />
             <span class="forHover">Channels</span>
           </div>
@@ -53,6 +57,7 @@
               <div class="channel-headline" (click)="openPM()">
                 <img
                   class="dropDownIcon"
+                  [ngClass]="{ 'rotate-90deg': !PMclicked }"
                   src="assets/img/arrow_drop_down.png"
                 />
                 <img class="icon" src="assets/img/account_icon.png" />
