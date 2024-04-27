@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  box-sizing: border-box;
+  // font-family: Inter;
+}
+
+body,
+html {
+  width: 100vw;
+  width: 100svw;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow-x: hidden;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+h1 h2 h3 {
+  text-wrap: balance;
+}
