@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "video.apps.VideoConfig",
     "rest_framework",
     "debug_toolbar",
+    "django_rq",
 ]
 
 MIDDLEWARE = [
@@ -77,6 +78,20 @@ TEMPLATES = [
         },
     },
 ]
+
+RQ_QUEUES = {
+    "default": {
+        "HOST": "localhost",
+        "PORT": 6379,
+        "DB": 0,
+        # "USERNAME": "some-user",
+        "PASSWORD": "foobared",
+        "DEFAULT_TIMEOUT": 360,
+        # "REDIS_CLIENT_KWARGS": {  # Eventual additional Redis connection arguments
+        #     "ssl_cert_reqs": None,
+        # },
+    },
+}
 
 CACHES = {
     "default": {
