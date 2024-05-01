@@ -1,0 +1,6 @@
+@import "./../../../../mixin.scss";
+
+header {
+  @include dflex($jc: space-between);
+  padding: 16px;
+}
