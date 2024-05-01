@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "debug_toolbar",
     "django_rq",
+    "import_export",
 ]
 
 MIDDLEWARE = [
@@ -62,6 +63,8 @@ INTERNAL_IPS = [
 ]
 
 ROOT_URLCONF = "videoflix_backend.urls"
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 TEMPLATES = [
     {
@@ -158,6 +161,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, "static/staticfiles")
 STATIC_URL = "static/"
 
 # Default primary key field type
