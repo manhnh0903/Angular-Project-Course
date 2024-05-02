@@ -1,4 +1,15 @@
 import subprocess
+from django.conf import settings
+import os
+
+
+def create_thumbnail(source_path, time="00:00:05", width=320, height=240):
+    file_name = os.path.splitext(os.path.basename(source_path))[0]
+    thumbnail_path = os.path.join(settings.MEDIA_ROOT, "thumbnails", f"{file_name}.jpg")
+    cmd = 'ffmpeg -i "{}" -ss {} -vframes 1 -vf "scale={}:{}" -update 1 "{}"'.format(
+        source_path, time, width, height, thumbnail_path
+    )
+    subprocess.run(cmd, shell=True)
 
 
 def convert720p(source_path):
