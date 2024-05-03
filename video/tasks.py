@@ -10,6 +10,7 @@ def create_thumbnail(source_path, time="00:00:05", width=320, height=240):
         source_path, time, width, height, thumbnail_path
     )
     subprocess.run(cmd, shell=True)
+    return thumbnail_path
 
 
 def convert720p(source_path):
