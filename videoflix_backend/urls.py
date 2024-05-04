@@ -1,15 +1,14 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from authentication import views as auth_views
-from video.views import VideoView
 from django.conf import settings
 from django.conf.urls.static import static
-from authentication.views import LoginView
+from authentication.views import LoginView, UserViewSet
+from video.views import VideoView, VideoViewSet
 
 router = routers.DefaultRouter()
-router.register(r"users", auth_views.UserViewSet)
-# router.register(r"videos", video_views.VideoViewSet)
+router.register(r"users", UserViewSet)
+router.register(r"videos", VideoViewSet)
 
 
 urlpatterns = [

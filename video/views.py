@@ -1,5 +1,5 @@
 from django.conf import settings
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.authtoken.views import APIView
 from rest_framework.response import Response
 from .models import Video
@@ -9,12 +9,17 @@ from django.core.cache.backends.base import DEFAULT_TIMEOUT
 
 CACHE_TTL = getattr(settings, "CACHE_TTL", DEFAULT_TIMEOUT)
 
-# Create your views here.
+# Create your views here.#
 
 
-# @cache_page(CACHE_TTL)
+class VideoViewSet(viewsets.ModelViewSet):
+    queryset = Video.objects.all().order_by("created_at")
+    serializer_class = VideoSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
+
 class VideoView(APIView):
-
+    # @cache_page(CACHE_TTL)
     def get(self, request):
         videos = Video.objects.all()
         serializer = VideoSerializer(videos, many=True)

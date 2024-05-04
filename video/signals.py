@@ -4,6 +4,7 @@ from django.conf import settings
 from .models import Video
 from .tasks import convert720p, convert480p, convert_path, create_thumbnail
 import os
+from django_rq import enqueue
 import django_rq
 
 
@@ -11,10 +12,10 @@ import django_rq
 def video_post_save(sender, instance, created, **kwargs):
     print("video saved")
     if created:
-        print("video created")
-        thumbnail_path = create_thumbnail(instance.video_file.path)
-        instance.thumnail_file.name = thumbnail_path[len(settings.MEDIA_ROOT) + 1 :]
-        instance.save()
+        if not instance.thumnail_file.name:
+            thumbnail_path = create_thumbnail(instance.video_file.path)
+            instance.thumnail_file.name = thumbnail_path[len(settings.MEDIA_ROOT) + 1 :]
+            instance.save()
         queue = django_rq.get_queue("default", autocommit=True)
         queue.enqueue(convert720p, instance.video_file.path)
         queue.enqueue(convert480p, instance.video_file.path)
