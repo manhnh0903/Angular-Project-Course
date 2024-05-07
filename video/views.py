@@ -19,7 +19,7 @@ class VideoViewSet(viewsets.ModelViewSet):
 
 
 class VideoView(APIView):
-    # @cache_page(CACHE_TTL)
+    @cache_page(CACHE_TTL)
     def get(self, request):
         videos = Video.objects.all()
         serializer = VideoSerializer(videos, many=True)
