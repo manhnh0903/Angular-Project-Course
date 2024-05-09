@@ -1,9 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  private http = inject(HttpClient);
 
-  constructor() { }
+  constructor() {}
+
+  async loginWithUsernameAndPassword(username: string, password: string) {
+    const url = environment.baseUrl + '/auth/token/login';
+    const body = { username: username, password: password };
+
+    return lastValueFrom(this.http.post(url, body));
+  }
 }

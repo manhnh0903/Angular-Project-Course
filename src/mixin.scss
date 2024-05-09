@@ -4,3 +4,11 @@
   align-items: $ai;
   gap: $gp;
 }
+
+@mixin flexCol($jc: flex-start, $ai: normal, $gp: 0px) {
+  display: flex;
+  flex-direction: column;
+  justify-content: $jc;
+  align-items: $ai;
+  gap: $gp;
+}

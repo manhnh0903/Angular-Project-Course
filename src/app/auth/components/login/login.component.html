@@ -1,2 +1,14 @@
-<app-header></app-header>
-<span>LOGIN</span>
+<div class="wrapper">
+  <app-header></app-header>
+  <main>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <input type="text" placeholder="Username" formControlName="username" />
+      <input
+        type="password"
+        placeholder="Password"
+        formControlName="password"
+      />
+      <button type="submit">sub</button>
+    </form>
+  </main>
+</div>
