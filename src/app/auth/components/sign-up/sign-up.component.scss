@@ -1,0 +1,19 @@
+@import "./../../../../mixin.scss";
+
+.wrapper {
+  min-height: 100vh;
+  min-height: 100svh;
+  width: 100vw;
+  width: 100svw;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  @include dflex();
+  flex: 1;
+}
+
+form {
+  @include flexCol($gp: 16px);
+}

@@ -1,12 +1,87 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { HeaderComponent } from '../../../shared/components/header/header.component';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [],
+  imports: [HeaderComponent, FormsModule, ReactiveFormsModule],
   templateUrl: './sign-up.component.html',
-  styleUrl: './sign-up.component.scss'
+  styleUrl: './sign-up.component.scss',
 })
 export class SignUpComponent {
+  public signupForm: FormGroup;
 
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private authService = inject(AuthService);
+
+  constructor() {
+    this.signupForm = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      passwordRepeat: ['', Validators.required],
+    });
+  }
+
+  /**
+   * Getter method for the 'username' form control.
+   *
+   * @returns The 'username' form control.
+   */
+  get username() {
+    return this.signupForm.get('username');
+  }
+
+  /**
+   * Getter method for the 'email' form control.
+   *
+   * @returns The 'email' form control.
+   */
+  get email() {
+    return this.signupForm.get('email');
+  }
+
+  /**
+   * Getter method for the 'password' form control.
+   *
+   * @returns The 'password' form control.
+   */
+  get password() {
+    return this.signupForm.get('password');
+  }
+
+  /**
+   * Getter method for the 'passwordRepeat' form control.
+   *
+   * @returns The 'passwordRepeat' form control.
+   */
+  get passwordRepeat() {
+    return this.signupForm.get('passwordRepeat');
+  }
+
+  async signup() {
+    if (this.signupForm.valid) {
+      try {
+        this.authService.registerUser(
+          this.username?.value,
+          this.email?.value,
+          this.password?.value,
+          this.passwordRepeat?.value
+        );
+        // anzeige sign up erfogreich bitte email klick für aktivierung zum login Link
+      } catch (err) {
+        console.error(err);
+      }
+    } else this.signupForm.markAllAsTouched;
+  }
 }

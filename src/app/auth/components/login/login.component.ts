@@ -34,9 +34,9 @@ export class LoginComponent {
   }
 
   /**
-   * Getter method for the 'email' form control.
+   * Getter method for the 'username' form control.
    *
-   * @returns The 'email' form control.
+   * @returns The 'username' form control.
    */
   get username() {
     return this.loginForm.get('username');

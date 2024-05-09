@@ -1,1 +1,20 @@
-<p>sign-up works!</p>
+<div class="wrapper">
+  <app-header></app-header>
+  <main>
+    <form [formGroup]="signupForm" (ngSubmit)="signup()">
+      <input type="text" placeholder="Username" formControlName="username" />
+      <input type="email" placeholder="E-Mail" n formControlName="email" />
+      <input
+        type="password"
+        placeholder="Password"
+        formControlName="password"
+      />
+      <input
+        type="password"
+        placeholder="Repet your Password"
+        formControlName="passwordRepeat"
+      />
+      <button type="submit">sub</button>
+    </form>
+  </main>
+</div>

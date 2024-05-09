@@ -17,4 +17,21 @@ export class AuthService {
 
     return lastValueFrom(this.http.post(url, body));
   }
+
+  async registerUser(
+    username: string,
+    email: string,
+    password: string,
+    passwordRepeat: string
+  ) {
+    const url = environment.baseUrl + '/auth/users/';
+    const body = {
+      username: username,
+      email: email,
+      password: password,
+      re_password: passwordRepeat,
+    };
+
+    return lastValueFrom(this.http.post(url, body));
+  }
 }
