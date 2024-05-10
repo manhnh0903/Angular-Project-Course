@@ -34,4 +34,11 @@ export class AuthService {
 
     return lastValueFrom(this.http.post(url, body));
   }
+
+  async requestPasswordReset(email: string) {
+    const url = environment.baseUrl + '/auth/users/reset_password/';
+    const body = { email: email };
+
+    return lastValueFrom(this.http.post(url, body));
+  }
 }
