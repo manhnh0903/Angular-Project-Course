@@ -18,6 +18,18 @@ export class AuthService {
     return lastValueFrom(this.http.post(url, body));
   }
 
+  async checkAuth() {
+    const url = environment.baseUrl + '/auth/users/me';
+
+    try {
+      const resp: { id?: number } = await lastValueFrom(this.http.get(url));
+
+      return resp && resp.id;
+    } catch (err) {
+      return false;
+    }
+  }
+
   async registerUser(
     username: string,
     email: string,

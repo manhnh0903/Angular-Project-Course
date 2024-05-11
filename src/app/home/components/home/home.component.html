@@ -1,6 +1,5 @@
 <app-header></app-header>
 <p>home works!</p>
 @for (video of dataManager.videos; track $index) {
-<img src="{{ video.thumnail_file }}" alt="" />
-<span>{{ video.id }}</span>
+<video src="{{ video.video_file }}" controls="true"></video>
 }
