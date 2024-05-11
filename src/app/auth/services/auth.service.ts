@@ -41,4 +41,11 @@ export class AuthService {
 
     return lastValueFrom(this.http.post(url, body));
   }
+
+  async setNewPassword(uid: string, token: string, password: string) {
+    const url = environment.baseUrl + '/auth/users/reset_password_confirm/';
+    const body = { uid: uid, token: token, new_password: password };
+
+    return lastValueFrom(this.http.post(url, body));
+  }
 }
