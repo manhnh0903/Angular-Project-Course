@@ -35,6 +35,13 @@ export class AuthService {
     return lastValueFrom(this.http.post(url, body));
   }
 
+  async authenticateEmail(uid: string, token: string) {
+    const url = environment.baseUrl + '/auth/users/activation/';
+    const body = { uid: uid, token: token };
+
+    return lastValueFrom(this.http.post(url, body));
+  }
+
   async requestPasswordReset(email: string) {
     const url = environment.baseUrl + '/auth/users/reset_password/';
     const body = { email: email };
