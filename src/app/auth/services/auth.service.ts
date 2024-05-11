@@ -18,6 +18,13 @@ export class AuthService {
     return lastValueFrom(this.http.post(url, body));
   }
 
+  async logoutTokenEndpoint() {
+    const url = environment.baseUrl + '/auth/token/logout';
+    const body = {};
+
+    return lastValueFrom(this.http.post(url, body));
+  }
+
   async checkAuth() {
     const url = environment.baseUrl + '/auth/users/me';
 
