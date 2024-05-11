@@ -1,0 +1,11 @@
+<div class="input-wrapper" [class.error]="error">
+  <input
+    type="text"
+    [placeholder]="placeholder"
+    [value]="value"
+    (input)="updateValue($event)"
+  />
+  @if (error) {
+  <div class="error-message">{{ error }}</div>
+  }
+</div>

@@ -2,12 +2,25 @@
   <app-header></app-header>
   <main>
     <form [formGroup]="loginForm" (ngSubmit)="login()">
-      <input type="text" placeholder="Username" formControlName="username" />
-      <input
-        type="password"
-        placeholder="Password"
-        formControlName="password"
-      />
+      <h1>Login</h1>
+
+      <app-form-input-with-error
+        formControlName="username"
+        [placeholder]="'Username'"
+        [error]="'ERROR'"
+      ></app-form-input-with-error>
+
+      <!-- <div class="input-wrapper">
+        <input type="text" placeholder="Username" formControlName="username" />
+      </div> -->
+      <div class="input-wrapper">
+        <input
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+        />
+      </div>
+
       <button type="submit">sub</button>
     </form>
   </main>

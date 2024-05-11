@@ -11,11 +11,18 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { LoginResponse } from '../../interfaces/login-response';
 import { Router } from '@angular/router';
+import { FormInputWithErrorComponent } from '../../../shared/components/form-input-with-error/form-input-with-error.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [HeaderComponent, FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [
+    HeaderComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    FormInputWithErrorComponent,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -52,18 +59,20 @@ export class LoginComponent {
   }
 
   async login() {
-    if (this.loginForm.valid) {
-      try {
-        const resp: LoginResponse =
-          (await this.authService.loginWithUsernameAndPassword(
-            this.username?.value,
-            this.password?.value
-          )) as LoginResponse;
-        this.handleSuccessfullLogin(resp);
-      } catch (err) {
-        console.error('Login error:', err);
-      }
-    } else this.loginForm.markAllAsTouched();
+    console.log(this.username?.value);
+
+    // if (this.loginForm.valid) {
+    //   try {
+    //     const resp: LoginResponse =
+    //       (await this.authService.loginWithUsernameAndPassword(
+    //         this.username?.value,
+    //         this.password?.value
+    //       )) as LoginResponse;
+    //     this.handleSuccessfullLogin(resp);
+    //   } catch (err) {
+    //     console.error('Login error:', err);
+    //   }
+    // } else this.loginForm.markAllAsTouched();
   }
 
   async guestLogin() {
