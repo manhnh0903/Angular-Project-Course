@@ -18,12 +18,15 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class FormInputWithErrorComponent implements ControlValueAccessor {
   @Input() placeholder: string = '';
-  @Input() error: string | null = null;
+  @Input() type: string = 'text';
+  @Input() errorSet: string = '';
+
   value: string | null = null;
+  touched: boolean = false;
   onChange = (_: any) => {};
   onTouched = () => {};
 
-  writeValue(value: any): void {
+  writeValue(value: string): void {
     this.value = value;
   }
 
@@ -38,5 +41,10 @@ export class FormInputWithErrorComponent implements ControlValueAccessor {
   updateValue(event: Event): void {
     this.value = (event.target as HTMLInputElement).value;
     this.onChange(this.value);
+  }
+
+  onBlur() {
+    this.touched = true;
+    this.onTouched();
   }
 }

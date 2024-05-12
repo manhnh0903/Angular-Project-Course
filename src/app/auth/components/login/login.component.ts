@@ -12,6 +12,7 @@ import { AuthService } from '../../services/auth.service';
 import { LoginResponse } from '../../interfaces/login-response';
 import { Router } from '@angular/router';
 import { FormInputWithErrorComponent } from '../../../shared/components/form-input-with-error/form-input-with-error.component';
+import { ButtonWithoutIconComponent } from '../../../shared/components/button-without-icon/button-without-icon.component';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ import { FormInputWithErrorComponent } from '../../../shared/components/form-inp
     ReactiveFormsModule,
     CommonModule,
     FormInputWithErrorComponent,
+    ButtonWithoutIconComponent,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',

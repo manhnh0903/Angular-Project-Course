@@ -7,21 +7,35 @@
       <app-form-input-with-error
         formControlName="username"
         [placeholder]="'Username'"
-        [error]="'ERROR'"
+        [type]="'text'"
+        [errorSet]="'username'"
       ></app-form-input-with-error>
 
-      <!-- <div class="input-wrapper">
-        <input type="text" placeholder="Username" formControlName="username" />
-      </div> -->
-      <div class="input-wrapper">
-        <input
-          type="password"
-          placeholder="Password"
-          formControlName="password"
-        />
-      </div>
+      <app-form-input-with-error
+        formControlName="password"
+        [placeholder]="'Password'"
+        [type]="'password'"
+        [errorSet]="'password'"
+      ></app-form-input-with-error>
 
-      <button type="submit">sub</button>
+      <app-button-without-icon
+        [content]="'Login'"
+        [type]="'submit'"
+        [colorStyle]="'red'"
+        [height]="'40px'"
+        [width]="'100%'"
+        [fontWeight]="700"
+      ></app-button-without-icon>
+
+      <app-button-without-icon
+        (click)="guestLogin()"
+        [content]="'Guest Login'"
+        [type]="'button'"
+        [colorStyle]="'gray'"
+        [height]="'40px'"
+        [width]="'100%'"
+        [fontWeight]="700"
+      ></app-button-without-icon>
     </form>
   </main>
 </div>

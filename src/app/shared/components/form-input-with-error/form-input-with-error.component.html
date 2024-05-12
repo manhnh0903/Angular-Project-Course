@@ -1,11 +1,15 @@
-<div class="input-wrapper" [class.error]="error">
+<div class="input-wrapper">
   <input
-    type="text"
+    [type]="type"
     [placeholder]="placeholder"
     [value]="value"
     (input)="updateValue($event)"
+    (blur)="onBlur()"
   />
-  @if (error) {
-  <div class="error-message">{{ error }}</div>
+  @if (errorSet === 'username' ) { @if(touched && value === ''){
+  <div class="error-message">username error</div>
+  } } @if (errorSet === 'password' ){} @if (errorSet === 'email' ){} @if
+  (errorSet === 'repeat' ){
+  <div class="error-message">username error</div>
   }
 </div>
