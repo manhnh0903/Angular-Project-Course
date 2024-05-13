@@ -27,4 +27,26 @@ form {
   h1 {
     color: white;
   }
+
+  span {
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+  }
+
+  label {
+    @include dflex($jc: flex-start, $gp: 16px);
+
+    span {
+      color: white;
+    }
+  }
+
+  > div {
+    @include dflex($jc: flex-start);
+
+    a {
+      text-decoration: none;
+      color: white;
+    }
+  }
 }

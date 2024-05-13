@@ -9,6 +9,7 @@
         [placeholder]="'Username'"
         [type]="'text'"
         [errorSet]="'username'"
+        [httpError]="loginError"
       ></app-form-input-with-error>
 
       <app-form-input-with-error
@@ -16,6 +17,7 @@
         [placeholder]="'Password'"
         [type]="'password'"
         [errorSet]="'password'"
+        [httpError]="loginError"
       ></app-form-input-with-error>
 
       <app-button-without-icon
@@ -27,6 +29,8 @@
         [fontWeight]="700"
       ></app-button-without-icon>
 
+      <span>OR</span>
+
       <app-button-without-icon
         (click)="guestLogin()"
         [content]="'Guest Login'"
@@ -36,6 +40,17 @@
         [width]="'100%'"
         [fontWeight]="700"
       ></app-button-without-icon>
+
+      <label>
+        <input formControlName="rememberMe" type="checkbox" ngmo />
+        <span>Remember me</span>
+      </label>
+
+      <div>
+        <span>New to Videoflix?</span>
+        &nbsp;
+        <a [routerLink]="'/sign-up'">Register now.</a>
+      </div>
     </form>
   </main>
 </div>

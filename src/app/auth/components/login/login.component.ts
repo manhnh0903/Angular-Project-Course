@@ -10,7 +10,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { LoginResponse } from '../../interfaces/login-response';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormInputWithErrorComponent } from '../../../shared/components/form-input-with-error/form-input-with-error.component';
 import { ButtonWithoutIconComponent } from '../../../shared/components/button-without-icon/button-without-icon.component';
 
@@ -24,12 +24,14 @@ import { ButtonWithoutIconComponent } from '../../../shared/components/button-wi
     CommonModule,
     FormInputWithErrorComponent,
     ButtonWithoutIconComponent,
+    RouterModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
   public loginForm: FormGroup;
+  public loginError: boolean = false;
 
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
@@ -39,7 +41,12 @@ export class LoginComponent {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
+      rememberMe: [false],
     });
+  }
+
+  ngOnInit() {
+    this.checkLocalStorage();
   }
 
   /**
@@ -60,21 +67,31 @@ export class LoginComponent {
     return this.loginForm.get('password');
   }
 
-  async login() {
-    console.log(this.username?.value);
+  /**
+   * Getter method for the 'rememberMe' form control.
+   *
+   * @returns The 'rememberMe' form control.
+   */
+  get rememberMe() {
+    return this.loginForm.get('rememberMe');
+  }
 
-    // if (this.loginForm.valid) {
-    //   try {
-    //     const resp: LoginResponse =
-    //       (await this.authService.loginWithUsernameAndPassword(
-    //         this.username?.value,
-    //         this.password?.value
-    //       )) as LoginResponse;
-    //     this.handleSuccessfullLogin(resp);
-    //   } catch (err) {
-    //     console.error('Login error:', err);
-    //   }
-    // } else this.loginForm.markAllAsTouched();
+  async login() {
+    if (this.loginForm.valid) {
+      this.loginError = false;
+      this.setLocalStorage();
+      try {
+        const resp: LoginResponse =
+          (await this.authService.loginWithUsernameAndPassword(
+            this.username?.value,
+            this.password?.value
+          )) as LoginResponse;
+        this.handleSuccessfullLogin(resp);
+      } catch (err) {
+        this.loginError = true;
+        console.error('Login error:', err);
+      }
+    } else this.loginForm.markAllAsTouched();
   }
 
   async guestLogin() {
@@ -87,6 +104,29 @@ export class LoginComponent {
       this.handleSuccessfullLogin(resp);
     } catch (err) {
       console.error('Login error:', err);
+    }
+  }
+
+  setLocalStorage() {
+    if (this.rememberMe?.value === true) {
+      localStorage.setItem('username', this.username?.value);
+      localStorage.setItem('password', this.password?.value);
+    } else {
+      localStorage.removeItem('username');
+      localStorage.removeItem('password');
+    }
+  }
+
+  checkLocalStorage() {
+    const username = localStorage.getItem('username');
+    const password = localStorage.getItem('password');
+
+    if (username && password) {
+      this.loginForm.patchValue({
+        username: username,
+        password: password,
+        rememberMe: true,
+      });
     }
   }
 

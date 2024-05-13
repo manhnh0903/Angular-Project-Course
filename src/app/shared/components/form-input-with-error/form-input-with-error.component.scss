@@ -1,8 +1,29 @@
 .input-wrapper {
   position: relative;
 
+  input {
+    width: 100%;
+    padding: 8px 41px 8px 21px;
+    border-radius: 4px;
+    font-size: 21px;
+    border: 1px solid rgba(128, 128, 128, 0.4);
+
+    @media screen and (max-width: 850px) {
+      width: 100%;
+      padding: 8px 41px 8px 21px;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      font-size: 21px;
+    }
+  }
+
   .error-message {
-    font-size: 12px;
+    font-size: 14px;
     color: red;
   }
 }

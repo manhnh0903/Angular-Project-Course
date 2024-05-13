@@ -20,6 +20,7 @@ export class FormInputWithErrorComponent implements ControlValueAccessor {
   @Input() placeholder: string = '';
   @Input() type: string = 'text';
   @Input() errorSet: string = '';
+  @Input() httpError: boolean = false;
 
   value: string | null = null;
   touched: boolean = false;

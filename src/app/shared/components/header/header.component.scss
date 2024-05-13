@@ -3,4 +3,8 @@
 header {
   @include dflex($jc: space-between);
   padding: 16px;
+
+  img {
+    width: 150px;
+  }
 }
