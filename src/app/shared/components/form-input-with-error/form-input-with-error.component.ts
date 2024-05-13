@@ -1,6 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-form-input-with-error',
@@ -22,10 +26,19 @@ export class FormInputWithErrorComponent implements ControlValueAccessor {
   @Input() errorSet: string = '';
   @Input() httpError: boolean = false;
 
+  @Input() control: AbstractControl | null = null;
+
   value: string | null = null;
   touched: boolean = false;
   onChange = (_: any) => {};
   onTouched = () => {};
+
+  ngDoCheck() {
+    if (this.touched !== this.control?.touched) {
+      this.touched = this.control?.touched ?? false;
+      this.onTouched();
+    }
+  }
 
   writeValue(value: string): void {
     this.value = value;

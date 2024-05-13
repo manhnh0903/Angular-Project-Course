@@ -1,5 +1,13 @@
 <header>
   <img src="./../../../../assets/img/videoflix-logo.svg" alt="videoflix-logo" />
 
-  <p>header works!</p>
+  @if (signUpPage) {
+  <app-button-without-icon
+    [content]="'Login'"
+    [colorStyle]="'red'"
+    [height]="'32px'"
+    [width]="'90px'"
+    routerLink="/login"
+  ></app-button-without-icon>
+  }
 </header>

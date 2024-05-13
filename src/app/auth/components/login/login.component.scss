@@ -35,6 +35,11 @@ form {
 
   label {
     @include dflex($jc: flex-start, $gp: 16px);
+    cursor: pointer;
+
+    input {
+      cursor: pointer;
+    }
 
     span {
       color: white;
