@@ -9,11 +9,19 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { FormInputWithErrorComponent } from '../../../shared/components/form-input-with-error/form-input-with-error.component';
+import { ButtonWithoutIconComponent } from '../../../shared/components/button-without-icon/button-without-icon.component';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [HeaderComponent, FormsModule, ReactiveFormsModule],
+  imports: [
+    HeaderComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    FormInputWithErrorComponent,
+    ButtonWithoutIconComponent,
+  ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
 })

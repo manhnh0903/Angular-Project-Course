@@ -7,6 +7,11 @@
   width: 100svw;
   display: flex;
   flex-direction: column;
+  background-color: rgba(25, 25, 25, 1);
+  background-image: url("./../../../../assets/img/pop-corn.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: bottom right;
 }
 
 main {
@@ -16,4 +21,15 @@ main {
 
 form {
   @include flexCol($gp: 16px);
+  padding: 30px;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  h1 {
+    color: white;
+  }
+
+  // span {
+  //   color: rgba(255, 255, 255, 0.7);
+  //   text-align: center;
+  // }
 }

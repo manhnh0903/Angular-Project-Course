@@ -2,19 +2,46 @@
   <app-header></app-header>
   <main>
     <form [formGroup]="signupForm" (ngSubmit)="signup()">
-      <input type="text" placeholder="Username" formControlName="username" />
-      <input type="email" placeholder="E-Mail" n formControlName="email" />
-      <input
-        type="password"
-        placeholder="Password"
+      <app-form-input-with-error
+        formControlName="username"
+        [placeholder]="'Username'"
+        [type]="'text'"
+        [errorSet]="'username'"
+        [control]="signupForm"
+      ></app-form-input-with-error>
+
+      <app-form-input-with-error
+        formControlName="email"
+        [placeholder]="'E-Mail'"
+        [type]="'email'"
+        [errorSet]="'email'"
+        [control]="signupForm"
+      ></app-form-input-with-error>
+
+      <app-form-input-with-error
         formControlName="password"
-      />
-      <input
-        type="password"
-        placeholder="Repet your Password"
+        [placeholder]="'Password'"
+        [type]="'password'"
+        [errorSet]="'password'"
+        [control]="signupForm"
+      ></app-form-input-with-error>
+
+      <app-form-input-with-error
         formControlName="passwordRepeat"
-      />
-      <button type="submit">sub</button>
+        [placeholder]="'Repeat your Password'"
+        [type]="'password'"
+        [errorSet]="'passwordRepeat'"
+        [control]="signupForm"
+      ></app-form-input-with-error>
+
+      <app-button-without-icon
+        [content]="'Sign Up'"
+        [type]="'button'"
+        [colorStyle]="'red'"
+        [height]="'40px'"
+        [width]="'100%'"
+        [fontWeight]="700"
+      ></app-button-without-icon>
     </form>
   </main>
 </div>
