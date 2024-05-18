@@ -10,11 +10,20 @@ import {
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormInputWithErrorComponent } from '../../../shared/components/form-input-with-error/form-input-with-error.component';
+import { ButtonWithoutIconComponent } from '../../../shared/components/button-without-icon/button-without-icon.component';
 
 @Component({
   selector: 'app-reset-password',
   standalone: true,
-  imports: [HeaderComponent, FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [
+    HeaderComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    FormInputWithErrorComponent,
+    ButtonWithoutIconComponent,
+  ],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.scss',
 })
