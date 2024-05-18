@@ -12,6 +12,7 @@ import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormInputWithErrorComponent } from '../../../shared/components/form-input-with-error/form-input-with-error.component';
 import { ButtonWithoutIconComponent } from '../../../shared/components/button-without-icon/button-without-icon.component';
+import { CustomValidators } from '../../custom-validators';
 
 @Component({
   selector: 'app-reset-password',
@@ -39,8 +40,14 @@ export class ResetPasswordComponent {
 
   constructor() {
     this.resetPasswordForm = this.fb.group({
-      password: ['', Validators.required],
-      passwordRepeat: ['', Validators.required],
+      password: [
+        '',
+        [Validators.required, CustomValidators.passwordLengthValidator(8)],
+      ],
+      passwordRepeat: [
+        '',
+        [Validators.required, CustomValidators.passwordMatchValidator],
+      ],
     });
   }
 
@@ -73,16 +80,18 @@ export class ResetPasswordComponent {
   }
 
   async setNewPassword() {
-    if (this.resetPasswordForm.valid) {
-      try {
-        this.authService.setNewPassword(
-          this.uid,
-          this.token,
-          this.password?.value
-        );
-      } catch (err) {
-        console.error();
-      }
-    } else this.resetPasswordForm.markAllAsTouched();
+    console.log(this.resetPasswordForm);
+
+    // if (this.resetPasswordForm.valid) {
+    //   try {
+    //     this.authService.setNewPassword(
+    //       this.uid,
+    //       this.token,
+    //       this.password?.value
+    //     );
+    //   } catch (err) {
+    //     console.error();
+    //   }
+    // } else this.resetPasswordForm.markAllAsTouched();
   }
 }
