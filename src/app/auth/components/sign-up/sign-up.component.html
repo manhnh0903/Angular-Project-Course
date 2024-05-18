@@ -9,7 +9,7 @@
         [placeholder]="'Username'"
         [type]="'text'"
         [errorSet]="'username'"
-        [control]="signupForm"
+        [control]="username"
       ></app-form-input-with-error>
 
       <app-form-input-with-error
@@ -17,7 +17,7 @@
         [placeholder]="'E-Mail'"
         [type]="'email'"
         [errorSet]="'email'"
-        [control]="signupForm"
+        [control]="email"
       ></app-form-input-with-error>
 
       <app-form-input-with-error
@@ -25,28 +25,33 @@
         [placeholder]="'Password'"
         [type]="'password'"
         [errorSet]="'password'"
-        [control]="signupForm"
+        [control]="password"
       ></app-form-input-with-error>
 
       <app-form-input-with-error
         formControlName="passwordRepeat"
         [placeholder]="'Repeat your Password'"
         [type]="'password'"
-        [errorSet]="'passwordRepeat'"
-        [control]="signupForm"
+        [errorSet]="'repeat'"
+        [control]="passwordRepeat"
       ></app-form-input-with-error>
 
-      <label>
-        <input formControlName="privacyPolicy" type="checkbox" />
-        &nbsp;
-        <span>I have read and agree to the</span>
-        &nbsp;
-        <a target="_blank" routerLink="/privacy-policy">Privacy Policy.</a>
-      </label>
+      <div>
+        <label>
+          <input formControlName="privacyPolicy" type="checkbox" />
+          &nbsp;
+          <span>I have read and agree to the</span>
+          &nbsp;
+          <a target="_blank" routerLink="/privacy-policy">Privacy Policy.</a>
+        </label>
+        @if (privacyPolicy?.touched && privacyPolicy?.value === false) {
+        <div class="error-message">Please accept our privacy policy</div>
+        }
+      </div>
 
       <app-button-without-icon
         [content]="'Sign Up'"
-        [type]="'button'"
+        [type]="'subbmit'"
         [colorStyle]="'red'"
         [height]="'40px'"
         [width]="'100%'"

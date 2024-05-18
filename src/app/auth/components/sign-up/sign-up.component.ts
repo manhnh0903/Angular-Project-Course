@@ -39,7 +39,7 @@ export class SignUpComponent {
       email: ['', Validators.required],
       password: ['', Validators.required],
       passwordRepeat: ['', Validators.required],
-      privacyPolicy: [false],
+      privacyPolicy: [false, Validators.requiredTrue],
     });
   }
 
@@ -90,6 +90,8 @@ export class SignUpComponent {
 
   async signup() {
     if (this.signupForm.valid) {
+      console.log('valid');
+
       try {
         this.authService.registerUser(
           this.username?.value,
@@ -101,6 +103,6 @@ export class SignUpComponent {
       } catch (err) {
         console.error(err);
       }
-    } else this.signupForm.markAllAsTouched;
+    } else this.signupForm.markAllAsTouched();
   }
 }

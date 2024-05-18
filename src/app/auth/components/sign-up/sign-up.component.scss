@@ -28,11 +28,6 @@ form {
     color: white;
   }
 
-  // span {
-  //   color: rgba(255, 255, 255, 0.7);
-  //   text-align: center;
-  // }
-
   label {
     @include dflex($jc: flex-start);
     cursor: pointer;
@@ -42,7 +37,18 @@ form {
     }
 
     span {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    a {
+      text-decoration: none;
+      font-weight: 700;
       color: white;
     }
+  }
+
+  .error-message {
+    font-size: 14px;
+    color: red;
   }
 }

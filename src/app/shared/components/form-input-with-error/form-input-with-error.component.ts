@@ -58,7 +58,6 @@ export class FormInputWithErrorComponent implements ControlValueAccessor {
   }
 
   onBlur() {
-    this.touched = true;
     this.onTouched();
   }
 }

@@ -10,7 +10,7 @@
         [type]="'text'"
         [errorSet]="'username'"
         [httpError]="loginError"
-        [control]="loginForm"
+        [control]="username"
       ></app-form-input-with-error>
 
       <app-form-input-with-error
@@ -19,7 +19,7 @@
         [type]="'password'"
         [errorSet]="'password'"
         [httpError]="loginError"
-        [control]="loginForm"
+        [control]="password"
       ></app-form-input-with-error>
 
       <app-button-without-icon
@@ -44,7 +44,7 @@
       ></app-button-without-icon>
 
       <label>
-        <input formControlName="rememberMe" type="checkbox"  />
+        <input formControlName="rememberMe" type="checkbox" />
         <span>Remember me</span>
       </label>
 
