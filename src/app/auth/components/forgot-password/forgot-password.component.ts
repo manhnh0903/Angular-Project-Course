@@ -9,11 +9,20 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { FormInputWithErrorComponent } from '../../../shared/components/form-input-with-error/form-input-with-error.component';
+import { ButtonWithoutIconComponent } from '../../../shared/components/button-without-icon/button-without-icon.component';
 
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [HeaderComponent, FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [
+    HeaderComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    FormInputWithErrorComponent,
+    ButtonWithoutIconComponent,
+  ],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
 })
@@ -31,6 +40,7 @@ export class ForgotPasswordComponent {
     if (this.email.valid) {
       try {
         await this.authService.requestPasswordReset(this.email.value);
+        // TODO: animate and route :)
       } catch (err) {
         console.error(err);
       }
