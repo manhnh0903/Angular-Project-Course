@@ -32,4 +32,17 @@ form {
   //   color: rgba(255, 255, 255, 0.7);
   //   text-align: center;
   // }
+
+  label {
+    @include dflex($jc: flex-start);
+    cursor: pointer;
+
+    input {
+      cursor: pointer;
+    }
+
+    span {
+      color: white;
+    }
+  }
 }

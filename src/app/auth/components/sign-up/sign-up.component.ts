@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FormInputWithErrorComponent } from '../../../shared/components/form-input-with-error/form-input-with-error.component';
 import { ButtonWithoutIconComponent } from '../../../shared/components/button-without-icon/button-without-icon.component';
@@ -21,6 +21,7 @@ import { ButtonWithoutIconComponent } from '../../../shared/components/button-wi
     ReactiveFormsModule,
     FormInputWithErrorComponent,
     ButtonWithoutIconComponent,
+    RouterModule,
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
@@ -38,6 +39,7 @@ export class SignUpComponent {
       email: ['', Validators.required],
       password: ['', Validators.required],
       passwordRepeat: ['', Validators.required],
+      privacyPolicy: [false],
     });
   }
 
@@ -75,6 +77,15 @@ export class SignUpComponent {
    */
   get passwordRepeat() {
     return this.signupForm.get('passwordRepeat');
+  }
+
+  /**
+   * Getter method for the 'privacyPolicy' form control.
+   *
+   * @returns The 'privacyPolicy' form control.
+   */
+  get privacyPolicy() {
+    return this.signupForm.get('privacyPolicy');
   }
 
   async signup() {
