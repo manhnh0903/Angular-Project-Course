@@ -1,6 +1,21 @@
 <div class="wrapper">
   <app-header></app-header>
   <main>
+    @if (sendSuccessful) {
+    <div class="success-wrapper">
+      <h1>Sign Up Successful</h1>
+
+      <p>
+        Please confirm your email address. We have sent you an email with a
+        confirmation link.
+      </p>
+
+      <p>
+        After confirming your email, you can
+        <a routerLink="/login">log in here</a>.
+      </p>
+    </div>
+    } @else {
     <form [formGroup]="signupForm" (ngSubmit)="signup()">
       <h1>Sign-Up</h1>
 
@@ -60,5 +75,6 @@
         [disable]="sending"
       ></app-button-without-icon>
     </form>
+    }
   </main>
 </div>

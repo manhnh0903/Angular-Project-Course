@@ -12,6 +12,7 @@ import { AuthService } from '../../services/auth.service';
 import { FormInputWithErrorComponent } from '../../../shared/components/form-input-with-error/form-input-with-error.component';
 import { ButtonWithoutIconComponent } from '../../../shared/components/button-without-icon/button-without-icon.component';
 import { CustomValidators } from '../../custom-validators';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
@@ -23,12 +24,16 @@ import { CustomValidators } from '../../custom-validators';
     CommonModule,
     FormInputWithErrorComponent,
     ButtonWithoutIconComponent,
+    RouterModule,
   ],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
 })
 export class ForgotPasswordComponent {
   public email: FormControl;
+  public sending: boolean = false;
+  public sendSuccessful = false;
+  public sendToMail: string = 'Test@Test.com';
 
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
@@ -44,7 +49,8 @@ export class ForgotPasswordComponent {
     if (this.email.valid) {
       try {
         await this.authService.requestPasswordReset(this.email.value);
-        // TODO: animate and route :)
+        this.sendToMail = this.email.value;
+        this.sendSuccessful = true;
       } catch (err) {
         console.error(err);
       }

@@ -52,3 +52,34 @@ form {
     color: red;
   }
 }
+
+.success-wrapper {
+  @include flexCol($gp: 16px);
+  padding: 30px;
+  background-color: rgba(0, 0, 0, 0.5);
+  max-width: 400px;
+
+  h1 {
+    color: white;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  span {
+    color: white;
+    font-weight: 700;
+  }
+
+  a {
+    text-decoration: none;
+    color: rgb(229, 9, 20);
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

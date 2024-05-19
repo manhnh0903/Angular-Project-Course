@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormInputWithErrorComponent } from '../../../shared/components/form-input-with-error/form-input-with-error.component';
 import { ButtonWithoutIconComponent } from '../../../shared/components/button-without-icon/button-without-icon.component';
 import { CustomValidators } from '../../custom-validators';
@@ -24,6 +24,7 @@ import { CustomValidators } from '../../custom-validators';
     CommonModule,
     FormInputWithErrorComponent,
     ButtonWithoutIconComponent,
+    RouterModule,
   ],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.scss',
@@ -33,11 +34,11 @@ export class ResetPasswordComponent {
   private uid: string = '';
   private token: string = '';
   public sending: boolean = false;
+  public sendSuccessful = false;
 
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
 
   constructor() {
     this.resetPasswordForm = this.fb.group(
@@ -81,8 +82,6 @@ export class ResetPasswordComponent {
   }
 
   async setNewPassword() {
-    console.log(this.resetPasswordForm);
-
     if (this.resetPasswordForm.valid) {
       this.sending = true;
       try {
@@ -92,6 +91,7 @@ export class ResetPasswordComponent {
           this.password?.value
         );
         this.sending = false;
+        this.sendSuccessful = true;
       } catch (err) {
         console.error();
         this.sending = false;

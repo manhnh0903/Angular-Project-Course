@@ -1,18 +1,19 @@
 import { Component, inject } from '@angular/core';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { AuthService } from '../../services/auth.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-authenticate-email',
   standalone: true,
-  imports: [HeaderComponent],
+  imports: [HeaderComponent, RouterModule],
   templateUrl: './authenticate-email.component.html',
   styleUrl: './authenticate-email.component.scss',
 })
 export class AuthenticateEmailComponent {
-  uid: string = '';
-  token: string = '';
+  private uid: string = '';
+  private token: string = '';
+  public sendSuccessful: boolean = false;
 
   private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
@@ -31,11 +32,9 @@ export class AuthenticateEmailComponent {
   async ngAfterViewInit() {
     try {
       await this.authService.authenticateEmail(this.uid, this.token);
-      //show message route to login?
+      this.sendSuccessful = true;
     } catch (err) {
       console.error(err);
-      //fehler 400 = fehler in uid oder token
-      //fehler 403 = fehler in detail
     }
   }
 }

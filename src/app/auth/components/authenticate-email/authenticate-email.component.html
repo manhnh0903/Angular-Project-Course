@@ -1,1 +1,26 @@
-<p>authenticate-email works!</p>
+<div class="wrapper">
+  <app-header></app-header>
+  <main>
+    @if (sendSuccessful) {
+    <div class="success-wrapper">
+      <h1>Email Confirmation Successful</h1>
+
+      <p>Your email address has been successfully confirmed.</p>
+
+      <p>You can now <a routerLink="/login">log in here</a>.</p>
+    </div>
+    }@else {
+    <div class="success-wrapper">
+      <h1>Email Confirmation Error</h1>
+
+      <p>There was an error confirming your email address. Please try again.</p>
+
+      <p>
+        If the problem persists, please contact our support team for assistance.
+      </p>
+
+      <p>You can return to the <a routerLink="/login">login page</a>.</p>
+    </div>
+    }
+  </main>
+</div>

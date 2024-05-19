@@ -30,6 +30,7 @@ import { CustomValidators } from '../../custom-validators';
 export class SignUpComponent {
   public signupForm: FormGroup;
   public sending: boolean = false;
+  public sendSuccessful = false;
 
   private fb = inject(FormBuilder);
   private router = inject(Router);
@@ -97,20 +98,17 @@ export class SignUpComponent {
   }
 
   async signup() {
-    console.log(this.signupForm);
-
     if (this.signupForm.valid) {
       this.sending = true;
-
       try {
-        // this.authService.registerUser(
-        //   this.username?.value,
-        //   this.email?.value,
-        //   this.password?.value,
-        //   this.passwordRepeat?.value
-        // );
+        this.authService.registerUser(
+          this.username?.value,
+          this.email?.value,
+          this.password?.value,
+          this.passwordRepeat?.value
+        );
         this.sending = false;
-        // anzeige sign up erfogreich bitte email klick für aktivierung zum login Link
+        this.sendSuccessful = true;
       } catch (err) {
         console.error(err);
         this.sending = false;
