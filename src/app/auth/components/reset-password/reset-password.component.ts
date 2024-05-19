@@ -39,16 +39,16 @@ export class ResetPasswordComponent {
   private router = inject(Router);
 
   constructor() {
-    this.resetPasswordForm = this.fb.group({
-      password: [
-        '',
-        [Validators.required, CustomValidators.passwordLengthValidator(8)],
-      ],
-      passwordRepeat: [
-        '',
-        [Validators.required, CustomValidators.passwordMatchValidator],
-      ],
-    });
+    this.resetPasswordForm = this.fb.group(
+      {
+        password: [
+          '',
+          [Validators.required, CustomValidators.passwordLengthValidator(8)],
+        ],
+        passwordRepeat: ['', [Validators.required]],
+      },
+      { validators: [CustomValidators.passwordMatchValidator] }
+    );
   }
 
   ngOnInit() {

@@ -14,6 +14,8 @@ export class CustomValidators {
     const password = control.get('password');
     const passwordRepeat = control.get('passwordRepeat');
 
+    console.log(password, passwordRepeat);
+
     return password && passwordRepeat && password.value === passwordRepeat.value
       ? null
       : { passwordMismatch: true };
