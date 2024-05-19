@@ -13,6 +13,7 @@ import { LoginResponse } from '../../interfaces/login-response';
 import { Router, RouterModule } from '@angular/router';
 import { FormInputWithErrorComponent } from '../../../shared/components/form-input-with-error/form-input-with-error.component';
 import { ButtonWithoutIconComponent } from '../../../shared/components/button-without-icon/button-without-icon.component';
+import { CustomValidators } from '../../custom-validators';
 
 @Component({
   selector: 'app-login',

@@ -34,6 +34,7 @@
         [type]="'password'"
         [errorSet]="'repeat'"
         [control]="passwordRepeat"
+        [parentControl]="signupForm"
       ></app-form-input-with-error>
 
       <div>
@@ -56,6 +57,7 @@
         [height]="'40px'"
         [width]="'100%'"
         [fontWeight]="700"
+        [disable]="sending"
       ></app-button-without-icon>
     </form>
   </main>

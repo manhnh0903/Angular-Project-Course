@@ -32,6 +32,7 @@ export class ResetPasswordComponent {
   public resetPasswordForm: FormGroup;
   private uid: string = '';
   private token: string = '';
+  public sending: boolean = false;
 
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
@@ -82,16 +83,19 @@ export class ResetPasswordComponent {
   async setNewPassword() {
     console.log(this.resetPasswordForm);
 
-    // if (this.resetPasswordForm.valid) {
-    //   try {
-    //     this.authService.setNewPassword(
-    //       this.uid,
-    //       this.token,
-    //       this.password?.value
-    //     );
-    //   } catch (err) {
-    //     console.error();
-    //   }
-    // } else this.resetPasswordForm.markAllAsTouched();
+    if (this.resetPasswordForm.valid) {
+      this.sending = true;
+      try {
+        await this.authService.setNewPassword(
+          this.uid,
+          this.token,
+          this.password?.value
+        );
+        this.sending = false;
+      } catch (err) {
+        console.error();
+        this.sending = false;
+      }
+    } else this.resetPasswordForm.markAllAsTouched();
   }
 }

@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { FormInputWithErrorComponent } from '../../../shared/components/form-input-with-error/form-input-with-error.component';
 import { ButtonWithoutIconComponent } from '../../../shared/components/button-without-icon/button-without-icon.component';
+import { CustomValidators } from '../../custom-validators';
 
 @Component({
   selector: 'app-forgot-password',
@@ -33,7 +34,10 @@ export class ForgotPasswordComponent {
   private authService = inject(AuthService);
 
   constructor() {
-    this.email = this.fb.control('', Validators.required);
+    this.email = this.fb.control('', [
+      Validators.required,
+      CustomValidators.emailValidator,
+    ]);
   }
 
   async requestPasswordResetEmail() {

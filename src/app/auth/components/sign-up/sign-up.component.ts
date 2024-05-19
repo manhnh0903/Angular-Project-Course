@@ -11,6 +11,7 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FormInputWithErrorComponent } from '../../../shared/components/form-input-with-error/form-input-with-error.component';
 import { ButtonWithoutIconComponent } from '../../../shared/components/button-without-icon/button-without-icon.component';
+import { CustomValidators } from '../../custom-validators';
 
 @Component({
   selector: 'app-sign-up',
@@ -28,19 +29,26 @@ import { ButtonWithoutIconComponent } from '../../../shared/components/button-wi
 })
 export class SignUpComponent {
   public signupForm: FormGroup;
+  public sending: boolean = false;
 
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private authService = inject(AuthService);
 
   constructor() {
-    this.signupForm = this.fb.group({
-      username: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      passwordRepeat: ['', Validators.required],
-      privacyPolicy: [false, Validators.requiredTrue],
-    });
+    this.signupForm = this.fb.group(
+      {
+        username: ['', Validators.required],
+        email: ['', [Validators.required, CustomValidators.emailValidator]],
+        password: [
+          '',
+          [Validators.required, CustomValidators.passwordLengthValidator(8)],
+        ],
+        passwordRepeat: ['', Validators.required],
+        privacyPolicy: [false, Validators.requiredTrue],
+      },
+      { validators: [CustomValidators.passwordMatchValidator] }
+    );
   }
 
   /**
@@ -89,19 +97,23 @@ export class SignUpComponent {
   }
 
   async signup() {
+    console.log(this.signupForm);
+
     if (this.signupForm.valid) {
-      console.log('valid');
+      this.sending = true;
 
       try {
-        this.authService.registerUser(
-          this.username?.value,
-          this.email?.value,
-          this.password?.value,
-          this.passwordRepeat?.value
-        );
+        // this.authService.registerUser(
+        //   this.username?.value,
+        //   this.email?.value,
+        //   this.password?.value,
+        //   this.passwordRepeat?.value
+        // );
+        this.sending = false;
         // anzeige sign up erfogreich bitte email klick für aktivierung zum login Link
       } catch (err) {
         console.error(err);
+        this.sending = false;
       }
     } else this.signupForm.markAllAsTouched();
   }

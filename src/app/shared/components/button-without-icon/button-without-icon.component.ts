@@ -15,6 +15,7 @@ export class ButtonWithoutIconComponent {
   @Input() width: string = '';
   @Input() fontSize: string = '16px';
   @Input() fontWeight: number = 400;
+  @Input() disable: boolean = false;
 
   getStyle() {
     return {

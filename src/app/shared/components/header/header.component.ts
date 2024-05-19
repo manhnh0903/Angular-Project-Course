@@ -12,9 +12,12 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class HeaderComponent {
   public signUpPage: boolean = false;
+  public forgotPasswordPage: boolean = false;
+
   private router = inject(Router);
 
   ngOnInit() {
     this.signUpPage = this.router.url.includes('/sign-up');
+    this.forgotPasswordPage = this.router.url.includes('/forgot-password');
   }
 }

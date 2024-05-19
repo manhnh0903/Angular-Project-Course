@@ -7,6 +7,11 @@
 
   transition: background-color 225ms ease-in-out;
 
+  &:disabled {
+    background-color: lightgrey;
+    pointer-events: none;
+  }
+
   &:hover {
     background-color: black;
   }
@@ -24,6 +29,11 @@
   border-radius: 4px;
 
   transition: background-color 225ms ease-in-out;
+
+  &:disabled {
+    background-color: lightgrey;
+    pointer-events: none;
+  }
 
   &:hover {
     background-color: black;
