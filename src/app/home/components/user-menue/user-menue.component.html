@@ -1,0 +1,13 @@
+<div class="wrapper">
+  <img
+    src="../../../../assets/img/user-icon.svg"
+    alt="user.img"
+    (click)="toggleMenue()"
+  />
+
+  @if (menueOpen) {
+  <div class="menue">
+    <div (click)="logout()">Logout</div>
+  </div>
+  }
+</div>

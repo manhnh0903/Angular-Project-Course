@@ -1,0 +1,38 @@
+@import "./../../../../mixin.scss";
+
+.wrapper {
+  min-height: 100vh;
+  min-height: 100svh;
+  width: 100vw;
+  width: 100svw;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(25, 25, 25, 1);
+}
+
+main {
+  @include flexCol($ai: flex-start);
+  flex: 1;
+  padding: 36px;
+}
+
+.video-row {
+  @include dflex($gp: 16px);
+
+  > div {
+    @include dflex();
+    height: 200px;
+    aspect-ratio: 16 / 9;
+    background-color: rgba(20, 20, 20, 1);
+    transition: transform 225ms ease-in-out;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  img {
+    height: 100%;
+    width: auto;
+  }
+}

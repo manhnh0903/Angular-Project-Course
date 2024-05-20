@@ -18,7 +18,7 @@ export class AuthService {
     return lastValueFrom(this.http.post(url, body));
   }
 
-  async logoutTokenEndpoint() {
+  async logoutWithTokenEndpoint() {
     const url = environment.baseUrl + '/auth/token/logout';
     const body = {};
 

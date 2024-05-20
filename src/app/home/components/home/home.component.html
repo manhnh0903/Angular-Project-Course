@@ -1,5 +1,14 @@
-<app-header></app-header>
-<p>home works!</p>
-@for (video of dataManager.videos; track $index) {
-<video src="{{ video.video_file }}" controls="true"></video>
-}
+<div class="wrapper">
+  <app-header></app-header>
+  <main>
+    <div class="video-row">
+      @for (video of dataManager.videos; track $index) {
+
+      <div>
+        <img src="{{ video.thumnail_file }}" alt="img" />
+      </div>
+
+      }
+    </div>
+  </main>
+</div>
