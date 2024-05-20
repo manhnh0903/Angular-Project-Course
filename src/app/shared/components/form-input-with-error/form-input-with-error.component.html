@@ -7,30 +7,30 @@
     (blur)="onBlur()"
   />
 
-  @if (control && control.touched ) { @if (errorSet ==='username' ) {
-  @if(control.errors && control.errors['required']){
-  <div class="error-message">Please enter your Username</div>
-  } @if( httpError ){
-  <div class="error-message">Wrong Username or Password</div>
-  } } @if (errorSet === 'password') { @if (control.errors
-  &&control.errors['required']) {
-  <div class="error-message">Error: required</div>
-  } @if (control.errors &&!control.errors['required'] &&
-  control.errors['minLength']) {
-  <div class="error-message">Error: minLength</div>
+  @if (control && control.touched) { @if (errorSet === 'username') { @if
+  (control.errors && control.errors['required']) {
+  <div class="error-message">Please enter your username.</div>
   } @if (httpError) {
-  <div class="error-message">Wrong Username or Password</div>
-  }} @if (errorSet === 'email') { @if (control.errors
-  &&control.errors['required']) {
-  <div class="error-message">Please enter your E-Mail</div>
-  } @if (control.errors &&!control.errors['required'] &&
+  <div class="error-message">Incorrect username or password.</div>
+  } } @else if (errorSet === 'password') { @if (control.errors &&
+  control.errors['required']) {
+  <div class="error-message">Please enter your password.</div>
+  } @if (control.errors && !control.errors['required'] &&
+  control.errors['minLength']) {
+  <div class="error-message">Password must be at least 8 characters long.</div>
+  } @if (httpError) {
+  <div class="error-message">Incorrect username or password.</div>
+  } } @else if (errorSet === 'email') { @if (control.errors &&
+  control.errors['required']) {
+  <div class="error-message">Please enter your email address.</div>
+  } @if (control.errors && !control.errors['required'] &&
   control.errors['invalidEmail']) {
-  <div class="error-message">Error not valid</div>
-  } } } @if (errorSet === 'repeat' && control && control.touched &&
+  <div class="error-message">Please enter a valid email address.</div>
+  } } @else if (errorSet === 'repeat' && control && control.touched &&
   parentControl) { @if (control.errors && control.errors['required']) {
-  <div class="error-message">Error: required</div>
-  } @if(!control.errors&& parentControl.errors &&
+  <div class="error-message">Please confirm your password.</div>
+  } @if (!control.errors && parentControl.errors &&
   parentControl.errors['passwordMismatch']) {
-  <div class="error-message">Error: passwordMismatch</div>
-  }}
+  <div class="error-message">Passwords do not match. Please try again.</div>
+  } } }
 </div>
