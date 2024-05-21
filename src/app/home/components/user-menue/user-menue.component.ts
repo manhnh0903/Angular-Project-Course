@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
+import { MenueStateService } from '../../services/menue-state.service';
 
 @Component({
   selector: 'app-user-menue',
@@ -14,10 +15,15 @@ export class UserMenueComponent {
   public menueOpen: boolean = true;
 
   private authService = inject(AuthService);
+  private menueService = inject(MenueStateService);
   private router = inject(Router);
 
   toggleMenue() {
     this.menueOpen = !this.menueOpen;
+  }
+
+  toggleUploadOverlay() {
+    this.menueService.uploadOverlayOpen = !this.menueService.uploadOverlayOpen;
   }
 
   async logout() {

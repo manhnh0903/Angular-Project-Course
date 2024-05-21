@@ -14,6 +14,7 @@ main {
   @include flexCol($ai: flex-start);
   flex: 1;
   padding: 36px;
+  position: relative;
 }
 
 .video-row {
