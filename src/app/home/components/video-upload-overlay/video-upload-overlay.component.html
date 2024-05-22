@@ -1,3 +1,48 @@
 <section>
-  <form></form>
+  <form
+    [formGroup]="uploadForm"
+    (ngSubmit)="uploadVideo()"
+    enctype="multipart/form-data"
+  >
+    <app-form-input-with-error
+      formControlName="title"
+      [placeholder]="'Title'"
+      [type]="'text'"
+      [errorSet]="'text-reqired'"
+      [control]="title"
+    ></app-form-input-with-error>
+
+    <app-form-input-with-error
+      formControlName="description"
+      [placeholder]="'Description'"
+      [type]="'text'"
+      [errorSet]="'text-reqired'"
+      [control]="description"
+    ></app-form-input-with-error>
+
+    <div>
+      <label for="video">Video</label>
+      <span>{{ selectedVideoFileName || "Select file" }}</span>
+      <input type="file" id="video" (change)="onFileChange($event, 'video')" />
+    </div>
+
+    <div>
+      <label for="thumbnail">Thubnail</label>
+      <span>{{ selectedThumbnailFileName || "Select file (optional)" }}</span>
+      <input
+        type="file"
+        id="thumbnail"
+        (change)="onFileChange($event, 'thumbnail')"
+      />
+    </div>
+
+    <app-button-without-icon
+      [content]="'Upload Video'"
+      [type]="'submit'"
+      [colorStyle]="'red'"
+      [height]="'40px'"
+      [width]="'100%'"
+      [fontWeight]="700"
+    ></app-button-without-icon>
+  </form>
 </section>

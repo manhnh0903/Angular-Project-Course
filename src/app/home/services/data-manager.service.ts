@@ -30,4 +30,11 @@ export class DataManagerService {
       console.error(err);
     }
   }
+
+  async uploadVideo(formData: FormData) {
+    const url = environment.baseUrl + '/videos/';
+    const body = formData;
+
+    return lastValueFrom(this.http.post(url, body));
+  }
 }
