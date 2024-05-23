@@ -21,14 +21,24 @@
     ></app-form-input-with-error>
 
     <div>
-      <label for="video">Video</label>
-      <span>{{ selectedVideoFileName || "Select file" }}</span>
-      <input type="file" id="video" (change)="onFileChange($event, 'video')" />
+      <div class="upload-input">
+        <label for="video">Video</label>
+        <span>{{ selectedVideoFileName || "Select file" }}</span>
+        <input
+          type="file"
+          id="video"
+          (change)="onFileChange($event, 'video')"
+        />
+      </div>
+      @if (video && video.touched && video.errors && video.errors['required']) {
+      <div class="error-message">This field is Reqired</div>
+      }
     </div>
 
-    <div>
+    <div class="upload-input">
       <label for="thumbnail">Thubnail</label>
       <span>{{ selectedThumbnailFileName || "Select file (optional)" }}</span>
+
       <input
         type="file"
         id="thumbnail"

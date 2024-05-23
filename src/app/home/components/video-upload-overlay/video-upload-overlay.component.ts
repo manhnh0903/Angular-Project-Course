@@ -93,14 +93,13 @@ export class VideoUploadOverlayComponent {
   }
 
   async uploadVideo() {
-    const formData = new FormData();
-    formData.append('title', this.title?.value);
-    formData.append('description', this.description?.value);
-    formData.append('video_file', this.video?.value);
-    formData.append('thumnail_file', this.thumbnail?.value);
-
-    console.log(formData);
-
-    await this.dataManager.uploadVideo(formData);
+    if (this.uploadForm.valid) {
+      const formData = new FormData();
+      formData.append('title', this.title?.value);
+      formData.append('description', this.description?.value);
+      formData.append('video_file', this.video?.value);
+      formData.append('thumnail_file', this.thumbnail?.value);
+      await this.dataManager.uploadVideo(formData);
+    } else this.uploadForm.markAllAsTouched();
   }
 }

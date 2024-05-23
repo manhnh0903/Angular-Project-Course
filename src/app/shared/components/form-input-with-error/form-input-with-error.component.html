@@ -32,5 +32,8 @@
   } @if (!control.errors && parentControl.errors &&
   parentControl.errors['passwordMismatch']) {
   <div class="error-message">Passwords do not match. Please try again.</div>
+  } } @else if (errorSet === 'text-reqired') { @if (control.errors &&
+  control.errors['required']) {
+  <div class="error-message">This field is Reqired</div>
   } } }
 </div>
