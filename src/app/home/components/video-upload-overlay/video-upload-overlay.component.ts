@@ -10,6 +10,7 @@ import {
 import { FormInputWithErrorComponent } from '../../../shared/components/form-input-with-error/form-input-with-error.component';
 import { ButtonWithoutIconComponent } from '../../../shared/components/button-without-icon/button-without-icon.component';
 import { DataManagerService } from '../../services/data-manager.service';
+import { MenueStateService } from '../../services/menue-state.service';
 
 @Component({
   selector: 'app-video-upload-overlay',
@@ -28,9 +29,11 @@ export class VideoUploadOverlayComponent {
   public uploadForm: FormGroup;
   public selectedVideoFileName: string = '';
   public selectedThumbnailFileName: string = '';
+  public isUploading: boolean = false;
 
   private fb = inject(FormBuilder);
   private dataManager = inject(DataManagerService);
+  private menueService = inject(MenueStateService);
 
   constructor() {
     this.uploadForm = this.fb.group({
@@ -99,7 +102,14 @@ export class VideoUploadOverlayComponent {
       formData.append('description', this.description?.value);
       formData.append('video_file', this.video?.value);
       formData.append('thumnail_file', this.thumbnail?.value);
+      this.isUploading = true;
       await this.dataManager.uploadVideo(formData);
+      await this.dataManager.getVideos();
+      this.closeOverlay();
     } else this.uploadForm.markAllAsTouched();
+  }
+
+  closeOverlay() {
+    this.menueService.uploadOverlayOpen = false;
   }
 }

@@ -25,6 +25,7 @@ export class FormInputWithErrorComponent implements ControlValueAccessor {
   @Input() type: string = 'text';
   @Input() errorSet: string = '';
   @Input() httpError: boolean = false;
+  @Input() isUploading: boolean = false;
 
   @Input() control: AbstractControl | null = null;
   @Input() parentControl: AbstractControl | null = null;

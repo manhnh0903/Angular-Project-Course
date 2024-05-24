@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-button-without-icon',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './button-without-icon.component.html',
   styleUrl: './button-without-icon.component.scss',
 })
@@ -16,6 +17,7 @@ export class ButtonWithoutIconComponent {
   @Input() fontSize: string = '16px';
   @Input() fontWeight: number = 400;
   @Input() disable: boolean = false;
+  @Input() isUploading: boolean = false;
 
   getStyle() {
     return {

@@ -1,5 +1,6 @@
-<section>
+<section (click)="closeOverlay()" [ngClass]="{ uploading: isUploading }">
   <form
+    (click)="$event.stopPropagation()"
     [formGroup]="uploadForm"
     (ngSubmit)="uploadVideo()"
     enctype="multipart/form-data"
@@ -10,6 +11,7 @@
       [type]="'text'"
       [errorSet]="'text-reqired'"
       [control]="title"
+      [isUploading]="isUploading"
     ></app-form-input-with-error>
 
     <app-form-input-with-error
@@ -18,6 +20,7 @@
       [type]="'text'"
       [errorSet]="'text-reqired'"
       [control]="description"
+      [isUploading]="isUploading"
     ></app-form-input-with-error>
 
     <div>
@@ -53,6 +56,7 @@
       [height]="'40px'"
       [width]="'100%'"
       [fontWeight]="700"
+      [isUploading]="isUploading"
     ></app-button-without-icon>
   </form>
 </section>

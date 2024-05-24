@@ -1,4 +1,5 @@
 <button
+  [ngClass]="{ uploading: isUploading }"
   [disabled]="disable"
   [style]="getStyle()"
   [class]="colorStyle"

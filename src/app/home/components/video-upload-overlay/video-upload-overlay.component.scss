@@ -57,3 +57,12 @@ form {
   font-size: 14px;
   color: red;
 }
+
+.uploading {
+  cursor: wait;
+}
+
+.uploading * {
+  cursor: wait !important;
+  pointer-events: none;
+}

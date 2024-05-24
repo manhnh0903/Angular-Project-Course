@@ -43,3 +43,8 @@
     background-color: white;
   }
 }
+
+.uploading {
+  cursor: wait;
+  pointer-events: none;
+}
