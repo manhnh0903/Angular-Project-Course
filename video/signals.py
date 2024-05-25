@@ -12,9 +12,11 @@ import django_rq
 def video_post_save(sender, instance, created, **kwargs):
     print("video saved")
     if created:
-        if not instance.thumnail_file.name:
+        if not instance.thumbnail_file.name:
             thumbnail_path = create_thumbnail(instance.video_file.path)
-            instance.thumnail_file.name = thumbnail_path[len(settings.MEDIA_ROOT) + 1 :]
+            instance.thumbnail_file.name = thumbnail_path[
+                len(settings.MEDIA_ROOT) + 1 :
+            ]
             instance.save()
         queue = django_rq.get_queue("default", autocommit=True)
         queue.enqueue(convert720p, instance.video_file.path)
@@ -29,6 +31,6 @@ def video_post_delete(sender, instance, **kwargs):
 
         if os.path.isfile(instance.video_file.path):
             os.remove(instance.video_file.path)
+            os.remove(instance.thumbnail_file.path)
             os.remove(path_720p)
             os.remove(path_480p)
-            os.remove(instance.thumnail_file.path)

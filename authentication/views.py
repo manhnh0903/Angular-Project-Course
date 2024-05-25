@@ -14,15 +14,4 @@ class UserViewSet(viewsets.ModelViewSet):
 
     queryset = User.objects.all().order_by("-date_joined")
     serializer_class = UserSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-
-
-class LoginView(ObtainAuthToken):
-
-    def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data["user"]
-        token, _ = Token.objects.get_or_create(user=user)
-
-        return Response({"token": token.key}, status=status.HTTP_200_OK)
+    permission_classes = [permissions.IsAuthenticated]
