@@ -26,6 +26,7 @@ export class DataManagerService {
         (videoData: VideoResponse) => new Video(videoData)
       );
       this.videos = videos;
+      console.log(videos);
     } catch (err) {
       console.error(err);
     }

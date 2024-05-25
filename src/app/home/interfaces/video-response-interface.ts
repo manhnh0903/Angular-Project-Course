@@ -3,6 +3,7 @@ export interface VideoResponse {
   created_at: string;
   title: string;
   description: string;
-  thumnail_file: string;
+  thumbnail_file: string;
   video_file: string;
+  visibility: string;
 }

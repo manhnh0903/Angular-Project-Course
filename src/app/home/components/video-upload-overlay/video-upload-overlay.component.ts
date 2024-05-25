@@ -101,7 +101,10 @@ export class VideoUploadOverlayComponent {
       formData.append('title', this.title?.value);
       formData.append('description', this.description?.value);
       formData.append('video_file', this.video?.value);
-      formData.append('thumnail_file', this.thumbnail?.value);
+      if (this.thumbnail && this.thumbnail.value !== null) {
+        formData.append('thumbnail_file', this.thumbnail?.value);
+      }
+      formData.append('visibility', 'private');
       this.isUploading = true;
       await this.dataManager.uploadVideo(formData);
       await this.dataManager.getVideos();
