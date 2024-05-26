@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from .models import Video
 from .serializers import VideoSerializer
 from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 
 CACHE_TTL = getattr(settings, "CACHE_TTL", DEFAULT_TIMEOUT)
@@ -21,12 +22,20 @@ class VideoViewSet(viewsets.ModelViewSet):
 class VideoView(APIView):
     permission_classes = [IsAuthenticated]
 
-    # @cache_page(CACHE_TTL)
+    @method_decorator(cache_page(CACHE_TTL))
     def get(self, request):
+        visibility = request.query_params.get("visibility")
 
-        videos = Video.objects.filter(Q(visibility="public") | Q(user=request.user))
+        if visibility == "public":
+            videos = Video.objects.filter(visibility="public")
+        elif visibility == "private":
+            videos = Video.objects.filter(user=request.user, visibility="private")
+        else:
+            return Response(
+                {"error": "Invalid visibility parameter"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         serializer = VideoSerializer(videos, many=True, context={"request": request})
-
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
