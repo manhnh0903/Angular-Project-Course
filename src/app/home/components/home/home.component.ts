@@ -19,6 +19,7 @@ export class HomeComponent {
   constructor() {}
 
   async ngOnInit() {
-    await this.dataManager.getVideos();
+    await this.dataManager.getPublicVideos();
+    await this.dataManager.getPrivateVideos();
   }
 }

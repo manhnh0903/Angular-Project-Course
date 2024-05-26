@@ -9,14 +9,15 @@ import { VideoResponse } from '../interfaces/video-response-interface';
   providedIn: 'root',
 })
 export class DataManagerService {
-  public videos: Video[] = [];
+  public publicVideos: Video[] = [];
+  public privateVideos: Video[] = [];
 
   private http = inject(HttpClient);
 
   constructor() {}
 
-  async getVideos() {
-    const url = environment.baseUrl + '/videos/';
+  async getPublicVideos() {
+    const url = environment.baseUrl + '/videos/?visibility=public';
 
     try {
       const resp = (await lastValueFrom(
@@ -25,7 +26,24 @@ export class DataManagerService {
       const videos = resp.map(
         (videoData: VideoResponse) => new Video(videoData)
       );
-      this.videos = videos;
+      this.publicVideos = videos;
+      console.log(videos);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getPrivateVideos() {
+    const url = environment.baseUrl + '/videos/?visibility=private';
+
+    try {
+      const resp = (await lastValueFrom(
+        this.http.get(url)
+      )) as Array<VideoResponse>;
+      const videos = resp.map(
+        (videoData: VideoResponse) => new Video(videoData)
+      );
+      this.privateVideos = videos;
       console.log(videos);
     } catch (err) {
       console.error(err);

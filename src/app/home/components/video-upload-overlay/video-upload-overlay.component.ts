@@ -107,7 +107,7 @@ export class VideoUploadOverlayComponent {
       formData.append('visibility', 'private');
       this.isUploading = true;
       await this.dataManager.uploadVideo(formData);
-      await this.dataManager.getVideos();
+      await this.dataManager.getPrivateVideos();
       this.closeOverlay();
     } else this.uploadForm.markAllAsTouched();
   }
