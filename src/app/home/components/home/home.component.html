@@ -1,18 +1,31 @@
 <div class="wrapper">
   <app-header></app-header>
+
+  @if (homeRoute) {
   <main>
     <div class="video-row">
       @for (video of dataManager.publicVideos; track $index) {
-
+      <app-video-card [video]="video"></app-video-card>
+      }
+    </div>
+  </main>
+  } @else if (privateRoute) {
+  <main>
+    <div class="video-row">
+      @for (video of dataManager.privateVideos; track $index) {
+      <app-video-card></app-video-card>
       <div>
         <img src="{{ video.thumbnail_file }}" alt="img" />
       </div>
 
       }
     </div>
-
-    @if(menueService.uploadOverlayOpen){
-    <app-video-upload-overlay></app-video-upload-overlay>
-    }
   </main>
+  }@else {
+  <main>
+    <div style="color: red">Param Error</div>
+  </main>
+  } @if(menueService.uploadOverlayOpen){
+  <app-video-upload-overlay></app-video-upload-overlay>
+  }
 </div>
