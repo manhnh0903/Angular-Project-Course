@@ -12,10 +12,36 @@ section {
 
   .video-player-container {
     background-color: rgba(25, 25, 25, 1);
-  }
 
-  video {
-    max-height: 400px;
-    max-width: 100%;
+    video {
+      max-height: 400px;
+      max-width: 100%;
+    }
+
+    .info-wrapper {
+      @include dflex($jc: space-between, $ai: flex-start);
+      padding: 16px;
+
+      .left {
+        h2 {
+          color: rgba(255, 255, 255, 0.9);
+        }
+
+        p {
+          color: rgba(255, 255, 255, 0.7);
+        }
+      }
+
+      .right {
+        span {
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 12px;
+        }
+      }
+
+      > div {
+        @include flexCol($gp: 16px);
+      }
+    }
   }
 }

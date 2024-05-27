@@ -1,5 +1,15 @@
 <section (click)="closeOverlay()">
   <div (click)="$event.stopPropagation()" class="video-player-container">
     <video [src]="video.video_file" controls="true"></video>
+    <div class="info-wrapper">
+      <div class="left">
+        <h2>{{ video.title }}</h2>
+        <p>{{ video.description }}</p>
+      </div>
+      <div class="right">
+        <span>Genre: {{ video.created_at }}</span>
+        <span>Uploaded: {{ video.created_at }}</span>
+      </div>
+    </div>
   </div>
 </section>
