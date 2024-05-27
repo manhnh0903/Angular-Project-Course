@@ -1,0 +1,5 @@
+<section (click)="closeOverlay()">
+  <div (click)="$event.stopPropagation()" class="video-player-container">
+    <video [src]="video.video_file" controls="true"></video>
+  </div>
+</section>

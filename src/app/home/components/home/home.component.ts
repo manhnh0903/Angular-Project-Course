@@ -6,6 +6,8 @@ import { MenueStateService } from '../../services/menue-state.service';
 import { VideoUploadOverlayComponent } from '../video-upload-overlay/video-upload-overlay.component';
 import { VideoCardComponent } from '../video-card/video-card.component';
 import { ActivatedRoute } from '@angular/router';
+import { VideoPlayerOverlayComponent } from '../video-player-overlay/video-player-overlay.component';
+import { Video } from '../../../models/video.model';
 
 @Component({
   selector: 'app-home',
@@ -15,17 +17,21 @@ import { ActivatedRoute } from '@angular/router';
     CommonModule,
     VideoUploadOverlayComponent,
     VideoCardComponent,
+    VideoPlayerOverlayComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-  public dataManager = inject(DataManagerService);
-  public menueService = inject(MenueStateService);
   public homeRoute: boolean = false;
   public privateRoute: boolean = false;
+  public videoPlayerOpen: boolean = true;
+  public selectedVideo?: Video;
+  public genre: string[] = ['Fitness', 'Animals', 'Landscapes'];
 
   private route = inject(ActivatedRoute);
+  public dataManager = inject(DataManagerService);
+  public menueService = inject(MenueStateService);
 
   constructor() {}
 
@@ -47,5 +53,14 @@ export class HomeComponent {
         this.privateRoute = true;
       }
     });
+  }
+
+  openVideoPlayer(video: Video) {
+    this.selectedVideo = video;
+    this.videoPlayerOpen = true;
+  }
+
+  closeVideoPlayer() {
+    this.videoPlayerOpen = false;
   }
 }

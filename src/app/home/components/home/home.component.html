@@ -3,17 +3,28 @@
 
   @if (homeRoute) {
   <main>
-    <div class="video-row">
-      @for (video of dataManager.publicVideos; track $index) {
-      <app-video-card [video]="video"></app-video-card>
-      }
+    @for (genre of genre; track $index) {
+    <div class="row-wrapper">
+      <h2>{{ genre }}</h2>
+      <div class="video-row">
+        @for (video of dataManager.publicVideos; track $index) {
+        <app-video-card
+          (click)="openVideoPlayer(video)"
+          [video]="video"
+        ></app-video-card>
+        }
+      </div>
     </div>
+    }
   </main>
   } @else if (privateRoute) {
   <main>
     <div class="video-row">
       @for (video of dataManager.privateVideos; track $index) {
-      <app-video-card></app-video-card>
+      <app-video-card
+        (click)="openVideoPlayer(video)"
+        [video]="video"
+      ></app-video-card>
       <div>
         <img src="{{ video.thumbnail_file }}" alt="img" />
       </div>
@@ -27,5 +38,10 @@
   </main>
   } @if(menueService.uploadOverlayOpen){
   <app-video-upload-overlay></app-video-upload-overlay>
+  } @if (videoPlayerOpen && selectedVideo) {
+  <app-video-player-overlay
+    [video]="selectedVideo"
+    (close)="closeVideoPlayer()"
+  ></app-video-player-overlay>
   }
 </div>

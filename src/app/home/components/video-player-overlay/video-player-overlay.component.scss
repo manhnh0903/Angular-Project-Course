@@ -1,0 +1,21 @@
+@import "./../../../../mixin.scss";
+
+section {
+  @include dflex();
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+
+  .video-player-container {
+    background-color: rgba(25, 25, 25, 1);
+  }
+
+  video {
+    max-height: 400px;
+    max-width: 100%;
+  }
+}

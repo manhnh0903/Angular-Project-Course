@@ -11,12 +11,23 @@
 }
 
 main {
-  @include flexCol($ai: flex-start);
+  @include flexCol($ai: flex-start, $gp: 36px);
   flex: 1;
   padding: 36px;
   // position: relative;
 }
 
-.video-row {
-  @include dflex($gp: 16px);
+.row-wrapper {
+  @include flexCol($ai: flex-start, $gp: 16px);
+  width: 100%;
+  // overflow-x: auto;
+
+  h2 {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .video-row {
+    @include dflex($gp: 16px);
+    max-height: 200px;
+  }
 }

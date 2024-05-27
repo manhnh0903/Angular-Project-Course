@@ -12,7 +12,7 @@ import { MenueStateService } from '../../services/menue-state.service';
   styleUrl: './user-menue.component.scss',
 })
 export class UserMenueComponent {
-  public menueOpen: boolean = true;
+  public menueOpen: boolean = false;
 
   private authService = inject(AuthService);
   private menueService = inject(MenueStateService);
