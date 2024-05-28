@@ -33,6 +33,10 @@ section {
       }
 
       .right {
+        .genre {
+          text-transform: capitalize;
+        }
+
         span {
           color: rgba(255, 255, 255, 0.7);
           font-size: 12px;

@@ -7,7 +7,8 @@
     <div class="row-wrapper">
       <h2>{{ genre }}</h2>
       <div class="video-row">
-        @for (video of dataManager.publicVideos; track $index) {
+        @for (video of dataManager.publicVideos[genre.toLowerCase()]; track
+        $index) {
         <app-video-card
           (click)="openVideoPlayer(video)"
           [video]="video"

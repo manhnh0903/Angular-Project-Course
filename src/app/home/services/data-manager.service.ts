@@ -9,7 +9,12 @@ import { VideoResponse } from '../interfaces/video-response-interface';
   providedIn: 'root',
 })
 export class DataManagerService {
-  public publicVideos: Video[] = [];
+  public publicVideos: { [key: string]: Array<Video> } = {
+    fitness: [],
+    animals: [],
+    landscapes: [],
+  };
+  // public publicVideos: Video[] = [];
   public privateVideos: Video[] = [];
 
   private http = inject(HttpClient);
@@ -26,11 +31,36 @@ export class DataManagerService {
       const videos = resp.map(
         (videoData: VideoResponse) => new Video(videoData)
       );
-      this.publicVideos = videos;
-      console.log(videos);
+      this.sortPublicVideos(videos);
     } catch (err) {
       console.error(err);
     }
+  }
+
+  sortPublicVideos(videos: Video[]) {
+    console.log(videos);
+
+    this.publicVideos = {
+      fitness: [],
+      animals: [],
+      landscapes: [],
+    };
+
+    videos.forEach((video) => {
+      switch (video.genre) {
+        case 'fitness':
+          this.publicVideos['fitness'].push(video);
+          break;
+        case 'animals':
+          this.publicVideos['animals'].push(video);
+          break;
+        case 'landscapes':
+          this.publicVideos['landscapes'].push(video);
+          break;
+        default:
+          break;
+      }
+    });
   }
 
   async getPrivateVideos() {
@@ -44,7 +74,6 @@ export class DataManagerService {
         (videoData: VideoResponse) => new Video(videoData)
       );
       this.privateVideos = videos;
-      console.log(videos);
     } catch (err) {
       console.error(err);
     }
