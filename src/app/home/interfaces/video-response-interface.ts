@@ -6,4 +6,5 @@ export interface VideoResponse {
   thumbnail_file: string;
   video_file: string;
   visibility: string;
+  genre: string;
 }

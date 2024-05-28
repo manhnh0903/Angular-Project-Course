@@ -13,6 +13,7 @@
     border-radius: 15px;
     overflow: hidden;
     cursor: pointer;
+    z-index: 5;
   }
 
   &:hover .info-container {

@@ -8,6 +8,7 @@ export class Video {
   thumbnail_file: string;
   video_file: string;
   visibility: string;
+  genre: string;
 
   constructor(data: VideoResponse) {
     this.id = data.id;
@@ -17,6 +18,7 @@ export class Video {
     this.thumbnail_file = data.thumbnail_file;
     this.video_file = data.video_file;
     this.visibility = data.visibility;
+    this.genre = data.genre;
   }
 
   asJson() {
@@ -28,6 +30,7 @@ export class Video {
       thumbnail_file: this.thumbnail_file,
       video_file: this.video_file,
       visibility: this.visibility,
+      genre: this.genre,
     };
   }
 }
