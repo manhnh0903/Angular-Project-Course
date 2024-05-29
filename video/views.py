@@ -10,7 +10,9 @@ from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 
-CACHE_TTL = getattr(settings, "CACHE_TTL", DEFAULT_TIMEOUT)
+from django.core.cache import cache
+
+# CACHE_TTL = getattr(settings, "CACHE_TTL", DEFAULT_TIMEOUT)
 
 
 class VideoViewSet(viewsets.ModelViewSet):
@@ -19,10 +21,19 @@ class VideoViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
 
-class VideoView(APIView):
+class ClearCacheView(APIView):
     permission_classes = [IsAuthenticated]
 
-    @method_decorator(cache_page(CACHE_TTL))
+    def post(self, request):
+        cache.clear()
+        print(cache)
+        return Response(status=status.HTTP_202_ACCEPTED)
+
+
+class VideoView(APIView):
+    # permission_classes = [IsAuthenticated]
+
+    @method_decorator(cache_page(60))
     def get(self, request):
         visibility = request.query_params.get("visibility")
 
@@ -43,6 +54,8 @@ class VideoView(APIView):
 
         if serializer.is_valid():
             serializer.save(user=request.user)
+            cache.clear()
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -7,6 +7,8 @@ import os
 from django_rq import enqueue
 import django_rq
 
+from django.core.cache import cache
+
 
 @receiver(post_save, sender=Video)
 def video_post_save(sender, instance, created, **kwargs):
@@ -34,3 +36,4 @@ def video_post_delete(sender, instance, **kwargs):
             os.remove(instance.thumbnail_file.path)
             os.remove(path_720p)
             os.remove(path_480p)
+            cache.clear()

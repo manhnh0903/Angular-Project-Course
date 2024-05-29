@@ -4,7 +4,7 @@ from rest_framework import routers
 from django.conf import settings
 from django.conf.urls.static import static
 from authentication.views import UserViewSet
-from video.views import VideoView, VideoViewSet
+from video.views import VideoView, VideoViewSet, ClearCacheView
 
 router = routers.DefaultRouter()
 router.register(r"users", UserViewSet)
@@ -21,4 +21,5 @@ urlpatterns = [
     path("django-rq/", include("django_rq.urls")),
     path("auth/", include("djoser.urls")),
     path("auth/", include("djoser.urls.authtoken")),
+    path("clear/", ClearCacheView.as_view(), name="clear_cache"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
