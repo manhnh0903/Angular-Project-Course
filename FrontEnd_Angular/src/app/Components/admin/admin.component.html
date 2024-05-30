@@ -1,0 +1,62 @@
+<mat-toolbar color="primary">
+
+
+    <button mat-mini-fab color="accent" (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    <span class="spacer"></span>
+
+    <button mat-button routerLink="home">Home</button>
+    <button mat-button routerLink="profile">Profile</button>
+    <button mat-button [matMenuTriggerFor]="importMenu">
+        <mat-icon iconPositionEnd> arrow_drop_down</mat-icon>
+        Import</button>
+    <mat-menu #importMenu>
+        <button mat-menu-item>Load Students</button>
+        <button mat-menu-item>Load Payments</button>
+    </mat-menu>
+    <button routerLink="login" mat-flat-button color="accent" style="border-radius: 50px;">Login</button>
+    <img src="../../../assets/_ (3).png" style="width: 50px; border-radius: 50%; margin-left: 10px;" alt="">
+
+
+
+
+
+
+</mat-toolbar>
+
+<mat-drawer-container>
+    <mat-drawer #drawer mode="side" position="start" opened="true">
+        <mat-nav-list>
+            <mat-list-item>
+                <button routerLink="dashboard" mat-button color="primary">
+                    <mat-icon>dashboard</mat-icon>
+                    Dashboard</button>
+            </mat-list-item>
+            <mat-list-item>
+                <button routerLink="students" mat-button color="primary">
+
+                    <mat-icon>people</mat-icon>
+                    Students</button>
+            </mat-list-item>
+            <mat-list-item>
+                <button routerLink="payment" mat-button color="primary">
+                    <mat-icon>payment</mat-icon>
+                    Payments</button>
+            </mat-list-item>
+
+
+        </mat-nav-list>
+    </mat-drawer>
+
+
+
+    <mat-drawer-content>
+        <div style="min-height: 600px;">
+            <router-outlet></router-outlet>
+
+        </div>
+
+    </mat-drawer-content>
+</mat-drawer-container>
