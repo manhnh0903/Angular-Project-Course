@@ -1,7 +1,73 @@
-/* Styliser le sous-titre */
+/* Nouvelle classe pour centrer le conteneur globalement */
+.outer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+
+}
+
+/* Centre le conteneur de la page */
+.container {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    height: 400px;
+    background-color: rgb(152, 207, 255);
+    box-shadow: 6px -5px 28px -1px rgb(3, 146, 255);
+}
+
+/* Stylise la carte */
+.custom-card {
+    width: 100%;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+/* Stylise l'en-tête de la carte */
+.custom-card-header {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 16px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+/* Stylise le titre de la carte */
+.custom-card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Stylise le sous-titre de la carte */
 .custom-card-subtitle {
     font-size: 1rem;
-    /* Taille de la police du sous-titre */
     color: #ced4da;
-    /* Couleur du sous-titre */
+    /* Ajustement de la couleur pour meilleure visibilité */
+}
+
+/* Stylise le contenu de la carte */
+.custom-card-content {
+    padding: 20px 0;
+
+}
+
+/* Applique la largeur complète aux champs de formulaire */
+.full-width {
+    width: 100%;
+}
+
+/* Stylise les actions de la carte */
+.custom-card-actions {
+    display: flex;
+    justify-content: center;
+    padding: 16px 0;
+}
+
+/* Assurez-vous que les champs de formulaire sont affichés en bloc */
+mat-form-field {
+    display: block;
 }

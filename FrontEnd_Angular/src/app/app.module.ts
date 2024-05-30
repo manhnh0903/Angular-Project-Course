@@ -17,7 +17,7 @@ import { StudentsComponent } from './Components/students/students.component';
 import { PaymentComponent } from './Components/payment/payment.component';
 import { LoginComponent } from './Components/login/login.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
-import { MatCardModule } from '@angular/material/card';
+import { MatCardActions, MatCardModule } from '@angular/material/card';
 import { LoadPaymentComponent } from './Components/load-payment/load-payment.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -26,6 +26,11 @@ import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/fo
 import { LoadstudentsComponent } from './Components/loadstudents/loadstudents.component';
 import { MatInput } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
+import { MatOption, MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { MatDividerModule } from '@angular/material/divider';
+import { FormGroup, FormGroupName, FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -59,7 +64,16 @@ import { RouterModule } from '@angular/router';
     MatLabel,
     MatFormFieldModule,
     MatInput,
-    RouterModule
+    MatDividerModule,
+    RouterModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatCardActions,
+    FormsModule,
+    ReactiveFormsModule,
+    
+   
+  
   ],
   providers: [
     provideClientHydration(),
