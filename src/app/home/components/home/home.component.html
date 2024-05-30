@@ -39,6 +39,8 @@
   </main>
   } @if(menueService.uploadOverlayOpen){
   <app-video-upload-overlay></app-video-upload-overlay>
+  }@if (menueService.userOverlayOpen) {
+  <app-user-overlay></app-user-overlay>
   } @if (videoPlayerOpen && selectedVideo) {
   <app-video-player-overlay
     [video]="selectedVideo"

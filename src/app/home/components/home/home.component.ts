@@ -8,6 +8,7 @@ import { VideoCardComponent } from '../video-card/video-card.component';
 import { ActivatedRoute } from '@angular/router';
 import { VideoPlayerOverlayComponent } from '../video-player-overlay/video-player-overlay.component';
 import { Video } from '../../../models/video.model';
+import { UserOverlayComponent } from '../user-overlay/user-overlay.component';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ import { Video } from '../../../models/video.model';
     VideoUploadOverlayComponent,
     VideoCardComponent,
     VideoPlayerOverlayComponent,
+    UserOverlayComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
