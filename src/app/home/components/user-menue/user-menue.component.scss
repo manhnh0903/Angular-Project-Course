@@ -1,8 +1,8 @@
 .wrapper {
-  cursor: pointer;
   position: relative;
 
   img {
+    cursor: pointer;
     height: 24px;
     width: 24px;
   }
@@ -17,6 +17,7 @@
     > div {
       color: white;
       width: max-content;
+      cursor: pointer;
     }
   }
 }

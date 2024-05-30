@@ -15,19 +15,36 @@ main {
   flex: 1;
   padding: 36px;
   // position: relative;
+
+  // overflow: hidden;
+  // height: calc(100svh - 60.5px);
+  // max-height: calc(100svh - 60.5px);
+  // width: 100vw;
+  // width: 100svw;
+}
+
+.stop-scroll {
+  overflow: hidden;
+  height: calc(100svh - 60.5px);
+  max-height: calc(100svh - 60.5px);
+  width: 100vw;
+  width: 100svw;
 }
 
 .row-wrapper {
   @include flexCol($ai: flex-start, $gp: 16px);
+
   width: 100%;
-  // overflow-x: auto;
 
   h2 {
     color: rgba(255, 255, 255, 0.7);
   }
 
   .video-row {
-    @include dflex($gp: 16px);
-    max-height: 200px;
+    @include dflex($jc: flex-start, $gp: 16px);
+    width: 100%;
+    overflow-x: auto;
+    transition: all 225ms ease-in-out;
+    padding: 8px;
   }
 }

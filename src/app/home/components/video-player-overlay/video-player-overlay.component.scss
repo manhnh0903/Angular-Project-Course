@@ -12,9 +12,16 @@ section {
 
   .video-player-container {
     background-color: rgba(25, 25, 25, 1);
+    max-width: 854px;
+    max-height: 90%;
+    overflow: auto;
+
+    @media screen and (max-width: 854px) {
+      max-width: 90%;
+    }
 
     video {
-      max-height: 400px;
+      max-height: 480px;
       max-width: 100%;
     }
 

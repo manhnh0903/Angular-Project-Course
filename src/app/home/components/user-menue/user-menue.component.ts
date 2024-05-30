@@ -26,6 +26,10 @@ export class UserMenueComponent {
     this.menueService.uploadOverlayOpen = !this.menueService.uploadOverlayOpen;
   }
 
+  toggleUserOverlay() {
+    this.menueService.userOverlayOpen = !this.menueService.userOverlayOpen;
+  }
+
   async logout() {
     try {
       await this.authService.logoutWithTokenEndpoint();

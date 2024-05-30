@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class MenueStateService {
   public uploadOverlayOpen: boolean = false;
+  public userOverlayOpen: boolean = false;
 
   constructor() {}
 }
