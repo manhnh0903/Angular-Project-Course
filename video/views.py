@@ -25,9 +25,15 @@ class ClearCacheView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        cache.set("key", "Value pogchamp")
         cache.clear()
-        print(cache)
-        return Response(status=status.HTTP_202_ACCEPTED)
+        value = cache.get("key")
+        if value is None:
+            print("Cache wurde erfolgreich gelöscht.")
+            return Response(status=status.HTTP_200_OK)
+        else:
+            print("Cache löschen hat nicht funktioniert. Der Wert ist noch:", value)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class VideoView(APIView):
@@ -54,7 +60,6 @@ class VideoView(APIView):
 
         if serializer.is_valid():
             serializer.save(user=request.user)
-            cache.clear()
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 

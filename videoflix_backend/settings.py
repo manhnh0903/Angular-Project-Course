@@ -103,10 +103,10 @@ REST_FRAMEWORK = {
 
 DJOSER = {
     "PASSWORD_RESET_CONFIRM_URL": "reset-password/{uid}/{token}",
-    "USERNAME_RESET_CONFIRM_URL": "username/reset/confirm/{uid}/{token}",
+    # "USERNAME_RESET_CONFIRM_URL": "username/reset/confirm/{uid}/{token}",
     "ACTIVATION_URL": "activate/{uid}/{token}",
     "SEND_ACTIVATION_EMAIL": True,
-    "SERIALIZERS": {},
+    "SERIALIZERS": {"current_user": "video.serializers.UserSerializer"},
 }
 
 # DOMAIN = "videoflix.tobias-bayer.dev"
