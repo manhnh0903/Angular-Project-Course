@@ -17,6 +17,14 @@ form {
   background-color: rgba(25, 25, 25, 1);
   max-width: 400px;
 
+  h2 {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
   .upload-input {
     @include dflex();
     width: 100%;

@@ -1,3 +1,47 @@
 <section (click)="closeOverlay()">
-  <div (click)="$event.stopPropagation()" class="user-container"></div>
+  <form
+    [formGroup]="updateUserForm"
+    (click)="$event.stopPropagation()"
+    class="user-container"
+    (ngSubmit)="updateUser()"
+  >
+    <h2>User Data</h2>
+    <p>If you want to update your information, you can do so here.</p>
+
+    <app-form-input-with-error
+      formControlName="username"
+      [placeholder]="'Username'"
+      [errorSet]="'username'"
+      [control]="username"
+    ></app-form-input-with-error>
+
+    <app-form-input-with-error
+      formControlName="email"
+      [placeholder]="'Email'"
+      [errorSet]="'email'"
+      [control]="email"
+    ></app-form-input-with-error>
+
+    <app-form-input-with-error
+      formControlName="first_name"
+      [placeholder]="'First name'"
+      [control]="username"
+    ></app-form-input-with-error>
+
+    <app-form-input-with-error
+      formControlName="last_name"
+      [placeholder]="'Last name'"
+      [control]="username"
+    ></app-form-input-with-error>
+
+    <app-button-without-icon
+      [content]="'Update'"
+      [type]="'submit'"
+      [colorStyle]="'red'"
+      [height]="'40px'"
+      [width]="'100%'"
+      [fontWeight]="700"
+      [disable]="sending"
+    ></app-button-without-icon>
+  </form>
 </section>
