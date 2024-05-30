@@ -18,6 +18,15 @@ import { PaymentComponent } from './Components/payment/payment.component';
 import { LoginComponent } from './Components/login/login.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { MatCardModule } from '@angular/material/card';
+import { LoadPaymentComponent } from './Components/load-payment/load-payment.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { LoadstudentsComponent } from './Components/loadstudents/loadstudents.component';
+import { MatInput } from '@angular/material/input';
+import { RouterModule } from '@angular/router';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +37,9 @@ import { MatCardModule } from '@angular/material/card';
     StudentsComponent,
     PaymentComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    LoadstudentsComponent,
+    LoadPaymentComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +52,14 @@ import { MatCardModule } from '@angular/material/card';
     MatListModule,
     MatSidenavModule,
     MatCardModule,
+    MatToolbarModule,
+    MatTableModule,
+    MatPaginator,
+    MatSortModule,
+    MatLabel,
+    MatFormFieldModule,
+    MatInput,
+    RouterModule
   ],
   providers: [
     provideClientHydration(),

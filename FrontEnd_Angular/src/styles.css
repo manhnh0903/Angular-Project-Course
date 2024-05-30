@@ -1,4 +1,82 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+.container {
+    padding: 15px;
+}
+
+/* Centrer le container dans la page */
+.page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* Prend toute la hauteur de la vue */
+    background-color: #e9ecef;
+    /* Couleur de fond de la page */
+    margin: 0;
+    /* Évite les marges par défaut */
+}
+
+/* Styliser le container */
+.custom-container {
+    background-color: #f8f9fa;
+    /* Couleur de fond */
+    padding: 20px;
+    /* Padding autour du container */
+    border-radius: 8px;
+    /* Bords arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Ombre pour un effet de profondeur */
+}
+
+/* Styliser le card */
+.custom-card {
+    background-color: #ffffff;
+    /* Couleur de fond du card */
+    border: 1px solid #dee2e6;
+    /* Bordure du card */
+    border-radius: 8px;
+    /* Bords arrondis */
+    overflow: hidden;
+    /* S'assurer que le contenu ne déborde pas */
+}
+
+/* Styliser l'en-tête du card */
+.custom-card-header {
+    background-color: #007bff;
+    /* Couleur de fond de l'en-tête */
+    color: #ffffff;
+    /* Couleur du texte de l'en-tête */
+    padding: 16px;
+    /* Padding dans l'en-tête */
+    border-bottom: 1px solid #dee2e6;
+    /* Bordure en bas de l'en-tête */
+}
+
+/* Styliser le titre */
+.custom-card-title {
+    font-size: 1.5rem;
+    /* Taille de la police du titre */
+    font-weight: bold;
+    /* Poids de la police du titre */
+}
+
+
+/* Styliser le sous-titre */
+.custom-card-subtitle {
+    font-size: 1rem;
+    /* Taille de la police du sous-titre */
+    color: #ced4da;
+    /* Couleur du sous-titre */
+}

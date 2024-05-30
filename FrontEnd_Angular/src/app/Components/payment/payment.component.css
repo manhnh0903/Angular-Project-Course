@@ -1,0 +1,7 @@
+/* Styliser le sous-titre */
+.custom-card-subtitle {
+    font-size: 1rem;
+    /* Taille de la police du sous-titre */
+    color: #ced4da;
+    /* Couleur du sous-titre */
+}

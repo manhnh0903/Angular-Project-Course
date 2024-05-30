@@ -1,1 +1,70 @@
-<p>students works!</p>
+<div class="container custom-container">
+    <mat-card class="custom-card">
+        <mat-card-header class="custom-card-header">
+            <mat-card-title class="custom-card-title">Students</mat-card-title>
+            <mat-card-subtitle class="custom-card-subtitle">Students</mat-card-subtitle>
+        </mat-card-header>
+    </mat-card>
+
+
+    <mat-card-content style="padding: 15px;">
+
+
+
+        <mat-form-field appearance="outline">
+            <mat-label>Rechercher</mat-label>
+            <input matInput (change)="searchStudents($event)">
+        </mat-form-field>
+
+        <table matSort mat-table [dataSource]="datasource" class="mat-elevation-z8 custom-table">
+
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef class="custom-header-cell" mat-sort-header> Id </th>
+                <td mat-cell *matCellDef="let element" class="custom-cell"> {{element.id}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef class="custom-header-cell" mat-sort-header> Name </th>
+                <td mat-cell *matCellDef="let element" class="custom-cell"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="lastname">
+                <th mat-header-cell *matHeaderCellDef class="custom-header-cell" mat-sort-header> LastName </th>
+                <td mat-cell *matCellDef="let element" class="custom-cell"> {{element.lastname}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="age">
+                <th mat-header-cell *matHeaderCellDef class="custom-header-cell" mat-sort-header> Age </th>
+                <td mat-cell *matCellDef="let element" class="custom-cell"> {{element.age}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Payment">
+                <th mat-header-cell *matHeaderCellDef class="custom-header-cell" mat-sort-header> Payment </th>
+                <td mat-cell *matCellDef="let element" class="custom-cell">
+                    <button (click)="getpayments(element)" style="border-radius: 20px;" mat-raised-button
+                        class="button">Payment</button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" class="custom-header-row"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="custom-row"></tr>
+
+
+        </table>
+
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 15,20]" showFirstLastButtons
+            aria-label="Select page of periodic elements">
+        </mat-paginator>
+
+    </mat-card-content>
+
+
+
+
+
+
+</div>
