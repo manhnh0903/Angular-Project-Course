@@ -22,7 +22,10 @@ export class DataManagerService {
   constructor() {}
 
   async getPublicVideos() {
-    const url = environment.baseUrl + '/videos/?visibility=public';
+    // const url = environment.baseUrl + '/videos/?visibility=public';
+    const url = `${
+      environment.baseUrl
+    }/videos/?visibility=public&_=${new Date().getTime()}`;
 
     try {
       const resp = (await lastValueFrom(
@@ -64,7 +67,9 @@ export class DataManagerService {
   }
 
   async getPrivateVideos() {
-    const url = environment.baseUrl + '/videos/?visibility=private';
+    const url = `${
+      environment.baseUrl
+    }/videos/?visibility=private&_=${new Date().getTime()}`;
 
     try {
       const resp = (await lastValueFrom(
@@ -74,6 +79,7 @@ export class DataManagerService {
         (videoData: VideoResponse) => new Video(videoData)
       );
       this.privateVideos = videos;
+      console.log(this.privateVideos);
     } catch (err) {
       console.error(err);
     }

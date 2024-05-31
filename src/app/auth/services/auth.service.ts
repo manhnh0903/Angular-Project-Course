@@ -2,12 +2,15 @@ import { Injectable, inject } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
+import { User } from '../../models/user.model';
+import { checkAuthResponse } from '../interfaces/check-auth-response';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private http = inject(HttpClient);
+  public user?: User;
 
   constructor() {}
 
@@ -29,12 +32,20 @@ export class AuthService {
     const url = environment.baseUrl + '/auth/users/me';
 
     try {
-      const resp: { id?: number } = await lastValueFrom(this.http.get(url));
+      const resp = await lastValueFrom(this.http.get<checkAuthResponse>(url));
+      this.user = new User(resp);
 
       return resp && resp.id;
     } catch (err) {
       return false;
     }
+  }
+
+  async updateUser(user: User) {
+    const url = environment.baseUrl + '/auth/users/me/';
+    const body = user.asJson();
+
+    return lastValueFrom(this.http.patch(url, body));
   }
 
   async registerUser(
