@@ -10,6 +10,7 @@ import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { LoadPaymentComponent } from './Components/load-payment/load-payment.component';
 import { LoadstudentsComponent } from './Components/loadstudents/loadstudents.component';
 import { AuthGuard } from './Guards/auth.guard';
+import { AuthorizationGuard } from './Guards/authorization.guard';
 
 
 const routes: Routes = [
@@ -20,13 +21,15 @@ const routes: Routes = [
   canActivate: [AuthGuard],
   
   children : [
-    { path: 'home', component: HomeComponent },
+   { path: 'home', component: HomeComponent },
    { path: 'profile', component: ProfileComponent },
    { path: 'dashboard', component: DashboardComponent },
    { path: 'students', component: StudentsComponent },
    { path: 'payment', component: PaymentComponent },
-   { path: 'loadpayment', component: LoadPaymentComponent },
-   { path: 'loadstudents', component: LoadstudentsComponent },
+   { path: 'loadpayment', component: LoadPaymentComponent , 
+   canActivate: [AuthorizationGuard] , data : {roles : ['ADMIN']}},
+   { path: 'loadstudents', component: LoadstudentsComponent ,
+    canActivate: [AuthorizationGuard] , data : {roles : ['ADMIN']}},
   
   ]},
  
