@@ -1,0 +1,44 @@
+<style>
+  img{
+    margin: 5px;
+  }
+  /* img{border:5px solid yellow;} */
+</style>
+
+<p style="color:blue">databinding works!</p>
+
+<div>My Name is: {{ name }}</div>
+<div>My Name is: <span [innerHTML]="name"></span></div>
+<div bind-innerHTML="name"></div>
+
+<input value="{{ name }}" />
+<input [value]="name" />
+<input bind-value="name" /> <br />
+
+<img
+  src="https://m.cricbuzz.com/a/img/v1/192x192/i1/c171004/sachin-tendulkar.jpg"
+  alt=""
+/>
+<img src="{{ img_url }}" alt="" />
+<img [src]="img_url" alt="" />
+<img bind-src="img_url" alt="" /><br />
+
+<button class="btn btn-danger" disabled="{{ flag }}">Btn-1</button>&nbsp;
+<button class="btn btn-danger" [disabled]="flag">Btn-2</button>&nbsp;
+<button class="btn btn-danger" bind-disabled="flag">Btn-3</button>&nbsp;
+<button (click)="f1()">Btn-1</button>
+<button on-click="f1()">Btn-1</button>
+<br />==============================================================<br />
+<input value="sachin Tendulkar" />
+1-way : <input value="{{ name }}" /> 1-way : <input [value]="name" /> 2-way :
+<input [(ngModel)]="name" />
+<br />==============================================================<br />
+<h1 [hidden]="!flag">Hellooooo, I am a paragraph</h1>
+<button (click)="flag=!flag">{{flag?'Hide':'Show'}}</button>
+<hr />
+Number1 : <input type="number" #num1 /> 
+Number2 : <input type="number" ref-num2 />
+<button (click)="addition(num1.value,num2.value)">Add</button>
+<p>Addition is: {{addResult}}</p>
+<hr>
+<app-databinding-child></app-databinding-child>

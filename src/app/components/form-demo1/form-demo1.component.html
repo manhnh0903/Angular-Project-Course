@@ -1,0 +1,17 @@
+<h2 class="text-center">Template Driven Form</h2>
+
+<form #myForm="ngForm" (submit)="submitMyForm(myForm)">
+    <p>First Name:<input name="fName" ngModel required /></p>
+    <p>Last Name:<input name="lName" ngModel /></p>
+    <p>email:<input name="email" ngModel /></p>
+    <fieldset ngModelGroup="address">
+        <p>City: <input name="city" ngModel /></p>
+        <p>State: <input name="state" ngModel /></p>
+        <p>Pin: <input name="pin" ngModel /></p>
+    </fieldset>
+
+    <input type="submit" value="Submit" [disabled]="myForm.invalid" />&nbsp;
+    <input type="reset" value="Clear" />
+</form>
+
+<h3>{{myForm.value | json}}</h3>

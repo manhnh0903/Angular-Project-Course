@@ -1,0 +1,16 @@
+<p>message-list works!</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>SL No.</th>
+            <th>Message</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let msg of messages;let i=index">
+            <td>{{i+1}}</td>
+            <td>{{msg.text}}</td>
+        </tr>
+    </tbody>
+</table>

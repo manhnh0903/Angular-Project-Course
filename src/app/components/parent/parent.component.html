@@ -1,0 +1,20 @@
+<div class="parent container">
+    <div class="row">
+        <div>This is parent component</div>
+        <div>
+            my own data a is- {{a}}
+            <input type='number' [(ngModel)]="a" />
+        </div>
+        <div>my child data name is: {{myName}}</div>
+        <b *ngFor="let ele of arr">{{ele}}, &nbsp;</b>
+        <button (click)="arr.push(a)" class="btn btn-success col-sm-2">Add data to arr</button>
+    </div>
+    <div class="row">
+        <div class="col">
+            <app-child1 [aChild]="a" [name]="child2.name" [arr]="arr"></app-child1>
+        </div>
+        <div class="col">
+            <app-child2 [a]="a" [f1]="f1" #child2 (eventObj1)="receiveData($event)"></app-child2>
+        </div>
+    </div>
+</div>

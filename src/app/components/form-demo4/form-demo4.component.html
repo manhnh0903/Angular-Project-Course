@@ -1,0 +1,12 @@
+<p>form builder Demo</p>
+
+<form [formGroup]="registerForm">
+    <p>
+        First Name: <input formControlName="firstName" />
+    </p>
+    <p>
+        Last Name: <input formControlName="lastName" />
+    </p>
+    <p>Email: <input formControlName="email" /></p>
+</form>
+<h3>{{registerForm.value | json}}</h3>

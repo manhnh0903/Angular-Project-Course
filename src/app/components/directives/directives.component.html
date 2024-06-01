@@ -1,0 +1,106 @@
+<p appHighlight>directives works!</p>
+
+<p>Please enter Num value: <input type="number" [(ngModel)]="num" /></p>
+
+<div *ngIf="num % 2 == 0" appHighlight>{{ num }} is Even</div>
+<div *ngIf="num % 2 !== 0">{{ num }} is Odd</div>
+
+<div *ngIf="num % 2 == 0; else oddContent">{{ num }} is Even</div>
+<ng-template #oddContent>
+  <div>{{ num }} is Odd</div>
+</ng-template>
+<hr />
+
+<h2 [style.color]="num % 2 == 0 ? 'blue' : 'red'">
+  {{ num }} is {{ num % 2 == 0 ? "even" : "odd" }}
+</h2>
+<div [ngStyle]="
+    num % 2 == 0
+      ? { color: 'blue', background: 'red' }
+      : { color: 'red', background: 'blue' }
+  ">
+  {{ num }} is {{ num % 2 == 0 ? "even" : "odd" }}
+</div>
+<button class="btn btn-lg" [ngClass]="num % 2 == 0 ? 'btn-success' : 'btn-danger'">
+  {{ num % 2 == 0 ? "even" : "odd" }}
+</button>
+
+<p>Please Change Day Nmber: <input type="number" [(ngModel)]="dayNum" /></p>
+<div [ngSwitch]="dayNum">
+  <p *ngSwitchCase="1">Today is Monday</p>
+  <p *ngSwitchCase="2">Today is Tuesday</p>
+  <p *ngSwitchCase="3">Today is Wednesday</p>
+  <p *ngSwitchCase="4">Today is Thursday</p>
+  <p *ngSwitchCase="5">Today is Friday</p>
+  <p *ngSwitchCase="6">Today is Saturday</p>
+  <p *ngSwitchCase="0">Today is Sunday</p>
+  <p *ngSwitchDefault>Not a valid number</p>
+</div>
+<hr />
+
+<ul>
+  <li *ngFor="let car of cars">{{ car }}</li>
+</ul>
+<select [(ngModel)]="selectedState">
+  <option *ngFor="let state of states">{{ state }}</option>
+</select>
+<div>Selected state: {{ selectedState }}</div>
+<hr />
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>SL No.</th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Salary</th>
+      <th>Gender</th>
+      <th>isFirst</th>
+      <th>isLast</th>
+      <th>is Even</th>
+      <th>is Odd</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="employees.length == 0; else tableData">
+      <tr>
+        <td colspan="5" class="text-center">No Data Found</td>
+      </tr>
+    </ng-container>
+    <ng-template #tableData>
+      <tr *ngFor="
+          let emp of employees;
+          let i = index;
+          let f = first;
+          let l = last;
+          let e = even;
+          let o = odd;
+          trackBy: trackByempId
+        ">
+        <td>{{ i + 1 }}</td>
+        <td>{{ emp.eId }}</td>
+        <td>{{ emp.name }}</td>
+        <td>{{ emp.sal }}</td>
+        <td>{{ emp["gender"] }}</td>
+        <td>{{ f }}</td>
+        <td>{{ l }}</td>
+        <td>{{ e }}</td>
+        <td>{{ o }}</td>
+      </tr>
+    </ng-template>
+  </tbody>
+</table>
+
+<button class="btn btn-primary" (click)="addNewEmployee()">
+  Add New Employee
+</button>
+<button class="btn btn-secondary" (click)="employees[0].sal = 5500">
+  change a field
+</button>
+<hr />
+<input numberonly />
+<p appHighlight>This is a paragraph, it uses highlight directive</p>
+<button counting>btn 1</button>
+<button counting>btn 2</button>
+
+<button (click)="openAlert()">sweet alert</button>

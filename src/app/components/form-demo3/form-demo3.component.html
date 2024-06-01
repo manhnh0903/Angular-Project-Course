@@ -1,0 +1,23 @@
+<h3>Model Driven Form</h3>
+
+<form [formGroup]="registerForm">
+    <p>
+        First Name: <input formControlName="firstName" />
+        <span *ngIf="registerForm.controls.firstName.hasError('required')">firstName is required</span>
+        <span *ngIf="registerForm.controls.firstName.hasError('minlength')">minimum 5 chars</span>
+    </p>
+    <p>
+        Last Name: <input formControlName="lastName" />
+        <span *ngIf="registerForm.controls.lastName.hasError('required')">lastName is required</span>
+    </p>
+    <p>Email: <input formControlName="email" /></p>
+
+    <fieldset formGroupName="address">
+        <p>City: <input formControlName="city" /></p>
+        <p>State: <input formControlName="state" /></p>
+        <p>Pin: <input formControlName="pin" /></p>
+    </fieldset>
+
+    <input type="submit" value="submit">
+    <input type="reset" value="clear">
+</form>

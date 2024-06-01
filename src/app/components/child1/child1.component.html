@@ -1,0 +1,11 @@
+<div class="child">
+    <div id="div1" #div1>This is child-1 component</div>
+    <div>My own data age is:{{age}}
+        <input type="number" [(ngModel)]="age" #myAge />
+        <input type="number" [(ngModel)]="age" #myAge />
+    </div>
+    <div>my parent's data a is- {{aChild}}</div>
+    <div>My sibling's data name is: {{name}}</div>
+    <b *ngFor="let ele of arr">{{ele}}, &nbsp;</b>
+    <button (click)="changeDetectorObj.markForCheck()">Refresh</button>
+</div>

@@ -1,0 +1,51 @@
+<h3 class="text-center bg-success text-white">Employee CRUD</h3>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8">
+            <h3>Employee List</h3>
+            <button (click)="getAllEmployees()" class="btn btn-primary">Fetch Date</button>
+            <table class="table table-bordered table-striped" *ngIf="!isLoading">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>First_name</th>
+                        <th>last_name</th>
+                        <th>Full name</th>
+                        <th>Sal</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let emp of employees">
+                        <td>{{emp.id}}</td>
+                        <td>{{emp.firstName}}</td>
+                        <td>{{emp.lastName}}</td>
+                        <td>{{emp.getFullName()}}</td>
+                        <td>{{emp.getYearlySalary()}}</td>
+                        <td>
+                            <button class="btn btn-danger" (click)="deleteEmp(emp.id)">
+                                DEL
+                            </button>
+                            <button class="btn btn-secondary" (click)="editEmp(emp)">
+                                EDIT
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="spinner-border text-primary" role="status" *ngIf="isLoading">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <h3>Employee Add</h3>
+            <p>firstName: <input #firstName></p>
+            <p>lastName: <input #lastName></p>
+            <p>email: <input #email></p>
+
+            <button (click)="addEmp(firstName.value,lastName.value,email.value)" class="btn btn-secondary">Add New
+                Emp</button>
+        </div>
+    </div>
+</div>

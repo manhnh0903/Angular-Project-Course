@@ -1,0 +1,19 @@
+<h2 class="text-center bg-primary text-white">User List</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3" *ngFor="let user of users">
+            <div class="card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHeu1JU1avFzQtN-az4HZqEpR1VvEBN-SEXfEuOtt8Xg&s"
+                    class="card-img-top" height="200px" />
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ user.username }}</h5>
+                    <p class="card-text">Name: {{ user.name }}</p>
+                    <p class="card-text">Email: {{ user.email }}</p>
+                    <p class="card-text">Phone: {{ user.phone }}</p>
+                    <button class="btn btn-primary">View Details</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

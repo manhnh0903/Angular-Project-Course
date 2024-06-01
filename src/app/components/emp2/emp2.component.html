@@ -1,0 +1,20 @@
+<p>emp2 works!</p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Eid</th>
+            <th>Name</th>
+            <th>Sal</th>
+            <th>Gender</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let emp of employees">
+            <td>{{emp.eId}}</td>
+            <td>{{emp.name}}</td>
+            <td>{{emp.sal}}</td>
+            <td>{{emp.gender}}</td>
+        </tr>
+    </tbody>
+</table>
+<button (click)="empService.addNewEmployee({ eId: 105, name: 'abc', sal: 8000, gender: 'female' })">Add a new Emp</button>

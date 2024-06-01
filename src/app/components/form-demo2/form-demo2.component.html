@@ -1,0 +1,23 @@
+<h3 class="text-center">Template Driven Form With Validation</h3>
+
+<form #myForm="ngForm" (submit)="submitMyForm(myForm)">
+    <p>
+        First Name:
+        <input autofocus name="fName" #fName="ngModel" [(ngModel)]="user.fName" required minlength="5" />
+        <span *ngIf="fName.dirty && fName.hasError('required')" class="text-danger">Name is Required Field</span>
+        <span *ngIf="fName.dirty && fName.hasError('minlength')" class="text-danger">Min 5 chars required</span>
+    </p>
+    <p>Last Name:<input name="lName" [(ngModel)]="user.lName" /></p>
+    <p>email:<input name="email" [(ngModel)]="user.email" /></p>
+    <fieldset ngModelGroup="address">
+        <p>City: <input name="city" [(ngModel)]="user.add.city" /></p>
+        <p>State: <input name="state" [(ngModel)]="user.add.state" /></p>
+        <p>Pin: <input name="pin" [(ngModel)]="user.add.pin" /></p>
+    </fieldset>
+
+    <input type="submit" value="Submit" [disabled]="myForm.invalid" />&nbsp;
+    <input type="reset" value="Clear" />
+</form>
+
+<h4>{{myForm.value|json}}</h4>
+<h4>{{user|json}}</h4>

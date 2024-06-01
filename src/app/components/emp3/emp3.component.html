@@ -1,0 +1,19 @@
+<p>emp3 works!</p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Eid</th>
+            <th>Name</th>
+            <th>Sal</th>
+            <th>Gender</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let emp of employees">
+            <td>{{emp.eId}}</td>
+            <td>{{emp.name}}</td>
+            <td>{{emp.sal}}</td>
+            <td>{{emp.gender}}</td>
+        </tr>
+    </tbody>
+</table>

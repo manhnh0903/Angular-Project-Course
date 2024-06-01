@@ -1,0 +1,19 @@
+<p>ToDos works!</p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>User Id</th>
+            <th>Title</th>
+            <th>Completed</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let todo of allTodos">
+            <td>{{todo.id}}</td>
+            <td>{{todo.userId}}</td>
+            <td>{{todo.title}}</td>
+            <td>{{todo.completed}}</td>
+        </tr>
+    </tbody>
+</table>
