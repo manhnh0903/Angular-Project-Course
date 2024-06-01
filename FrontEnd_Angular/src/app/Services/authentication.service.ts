@@ -28,9 +28,14 @@ export class AuthenticationService {
 
     if(this.users[username] && password == '1234'){
       this.username=username;
-      this.roles=this.username[username]
+      this.roles=this.users[username]
       this.authenticated=true;
+
+      console.log(this.roles)
       return true;
+
+     
+
     }else{
       return false;
     }
