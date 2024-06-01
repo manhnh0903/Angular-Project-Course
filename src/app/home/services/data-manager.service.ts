@@ -14,7 +14,7 @@ export class DataManagerService {
     animals: [],
     landscapes: [],
   };
-  // public publicVideos: Video[] = [];
+
   public privateVideos: Video[] = [];
 
   private http = inject(HttpClient);

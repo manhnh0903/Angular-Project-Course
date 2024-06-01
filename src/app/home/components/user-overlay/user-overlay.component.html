@@ -43,6 +43,18 @@
       [disable]="sending"
     ></app-button-without-icon>
 
+    <div class="seperator"></div>
+
+    <app-button-without-icon
+      [content]="'Delete your account'"
+      [type]="'button'"
+      [colorStyle]="'gray'"
+      [height]="'40px'"
+      [width]="'100%'"
+      [fontWeight]="700"
+      (click)="openDeleteUserOverlay()"
+    ></app-button-without-icon>
+
     @if (success) {
     <span>Your user data has been updated successfully.</span>
     } @if (noChanges) {

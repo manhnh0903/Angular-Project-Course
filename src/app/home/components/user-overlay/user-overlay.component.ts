@@ -134,6 +134,11 @@ export class UserOverlayComponent {
     return JSON.stringify(user) === JSON.stringify(authUser);
   }
 
+  openDeleteUserOverlay() {
+    this.menueService.deleteUserOverlayOpen = true;
+    this.closeOverlay();
+  }
+
   closeOverlay() {
     this.menueService.userOverlayOpen = false;
   }

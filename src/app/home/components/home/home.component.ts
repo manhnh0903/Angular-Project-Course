@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { VideoPlayerOverlayComponent } from '../video-player-overlay/video-player-overlay.component';
 import { Video } from '../../../models/video.model';
 import { UserOverlayComponent } from '../user-overlay/user-overlay.component';
+import { DeleteUserOverlayComponent } from '../delete-user-overlay/delete-user-overlay.component';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,7 @@ import { UserOverlayComponent } from '../user-overlay/user-overlay.component';
     VideoCardComponent,
     VideoPlayerOverlayComponent,
     UserOverlayComponent,
+    DeleteUserOverlayComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

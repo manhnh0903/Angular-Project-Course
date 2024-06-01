@@ -28,6 +28,13 @@ export class AuthService {
     return lastValueFrom(this.http.post(url, body));
   }
 
+  async deleteUser(password: string) {
+    const url = environment.baseUrl + '/auth/users/me/';
+    const body = { current_password: password };
+
+    return lastValueFrom(this.http.request('delete', url, { body }));
+  }
+
   async checkAuth() {
     const url = `${environment.baseUrl}/auth/users/me/?${new Date().getTime()}`;
 

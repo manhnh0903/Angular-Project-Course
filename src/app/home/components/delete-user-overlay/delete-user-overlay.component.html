@@ -1,0 +1,38 @@
+<section (click)="closeOverlay()">
+  <form (click)="$event.stopPropagation()" (ngSubmit)="deleteAccount()">
+    <h2>Confirm Account Deletion</h2>
+    <p>
+      Are you sure you want to permanently delete your account? Please enter
+      your password to confirm. This action cannot be undone.
+    </p>
+
+    <app-form-input-with-error
+      [formControl]="password"
+      [placeholder]="'Password'"
+      [type]="'password'"
+      [errorSet]="'password'"
+      [control]="password"
+      [httpError]="httpError"
+    >
+    </app-form-input-with-error>
+
+    <app-button-without-icon
+      [content]="'Yes delete account'"
+      [type]="'submit'"
+      [colorStyle]="'red'"
+      [height]="'40px'"
+      [width]="'100%'"
+      [fontWeight]="700"
+    ></app-button-without-icon>
+
+    <app-button-without-icon
+      [content]="'Cancel'"
+      [type]="'button'"
+      [colorStyle]="'gray'"
+      [height]="'40px'"
+      [width]="'100%'"
+      [fontWeight]="700"
+      (click)="closeOverlay()"
+    ></app-button-without-icon>
+  </form>
+</section>

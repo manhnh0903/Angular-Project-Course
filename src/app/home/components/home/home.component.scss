@@ -41,10 +41,10 @@ main {
   }
 
   .video-row {
-    @include dflex($jc: flex-start, $gp: 16px);
+    @include dflex($jc: flex-start, $gp: 16px, $ai: flex-start);
     width: 100%;
     overflow-x: auto;
     transition: all 225ms ease-in-out;
-    padding: 8px;
+    padding: 0 0 8px 0;
   }
 }
