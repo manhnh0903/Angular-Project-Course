@@ -30,6 +30,9 @@ import { MatOption, MatSelect, MatSelectModule } from '@angular/material/select'
 import { MatOptionModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { FormGroup, FormGroupName, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthGuard } from './Guards/auth.guard';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthorizationGuard } from './Guards/authorization.guard';
 
 
 
@@ -71,13 +74,14 @@ import { FormGroup, FormGroupName, FormsModule, ReactiveFormsModule } from '@ang
     MatCardActions,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule
     
    
   
   ],
   providers: [
     provideClientHydration(),
-    provideAnimationsAsync()
+    AuthGuard,AuthorizationGuard
   ],
   bootstrap: [AppComponent]
 })

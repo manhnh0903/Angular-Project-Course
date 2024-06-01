@@ -29,7 +29,7 @@
 
 /* Stylise l'en-tête de la carte */
 .custom-card-header {
-    background-color: #007bff;
+    background-color: #419dff;
     color: #ffffff;
     padding: 16px;
     border-top-left-radius: 8px;
@@ -70,4 +70,17 @@
 /* Assurez-vous que les champs de formulaire sont affichés en bloc */
 mat-form-field {
     display: block;
+}
+
+.button {
+    width: 200px;
+    padding: 10px;
+    background-color: #419dff;
+    border-radius: 40px;
+    -webkit-border-radius: 40px;
+    -moz-border-radius: 40px;
+    -ms-border-radius: 40px;
+    -o-border-radius: 40px;
+    color: #ffffff;
+    border: 3px solid #419dff;
 }

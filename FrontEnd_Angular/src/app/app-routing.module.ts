@@ -9,17 +9,27 @@ import { LoginComponent } from './Components/login/login.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { LoadPaymentComponent } from './Components/load-payment/load-payment.component';
 import { LoadstudentsComponent } from './Components/loadstudents/loadstudents.component';
+import { AuthGuard } from './Guards/auth.guard';
 
 
 const routes: Routes = [
-      { path: 'home', component: HomeComponent },
+  { path: '', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'admin', component: AdminComponent , 
+
+  canActivate: [AuthGuard],
+  
+  children : [
+    { path: 'home', component: HomeComponent },
    { path: 'profile', component: ProfileComponent },
-   { path: 'login', component: LoginComponent },
    { path: 'dashboard', component: DashboardComponent },
    { path: 'students', component: StudentsComponent },
    { path: 'payment', component: PaymentComponent },
    { path: 'loadpayment', component: LoadPaymentComponent },
    { path: 'loadstudents', component: LoadstudentsComponent },
+  
+  ]},
+ 
   
 ];
 
