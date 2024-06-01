@@ -9,7 +9,7 @@
 
     <button mat-button routerLink="/admin/home">Home</button>
     <button mat-button routerLink="/admin/profile">Profile</button>
-    <button mat-button [matMenuTriggerFor]="importMenu">
+    <button *ngIf="authservice.roles.includes('ADMIN')" mat-button [matMenuTriggerFor]="importMenu">
         <mat-icon iconPositionEnd> arrow_drop_down</mat-icon>
         Import</button>
     <mat-menu #importMenu>
