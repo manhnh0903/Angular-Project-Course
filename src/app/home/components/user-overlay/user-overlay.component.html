@@ -42,5 +42,11 @@
       [fontWeight]="700"
       [disable]="sending"
     ></app-button-without-icon>
+
+    @if (success) {
+    <span>Your user data has been updated successfully.</span>
+    } @if (noChanges) {
+    <span>No changes have been made to your data.</span>
+    }
   </form>
 </section>

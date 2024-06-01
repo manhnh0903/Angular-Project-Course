@@ -35,6 +35,7 @@ export class UserOverlayComponent {
   public updateUserForm: FormGroup;
   public sending: boolean = false;
   public success: boolean = false;
+  public noChanges: boolean = false;
 
   constructor() {
     this.updateUserForm = this.fb.group({
@@ -95,15 +96,21 @@ export class UserOverlayComponent {
   async updateUser() {
     if (this.updateUserForm.valid) {
       this.sending = true;
-      try {
-        const user = this.getUser();
-        await this.authService.updateUser(user);
-        this.success = true;
-        this.sending = false;
-      } catch (err) {
-        console.error(err);
-        this.sending = false;
+      this.noChanges = false;
+
+      if (this.noFormChanges()) {
+        this.noChanges = true;
+      } else {
+        try {
+          const user = this.getUser();
+          await this.authService.updateUser(user);
+          await this.authService.checkAuth();
+          this.success = true;
+        } catch (err) {
+          console.error(err);
+        }
       }
+      this.sending = false;
     } else {
       this.updateUserForm.markAllAsTouched();
     }
@@ -118,6 +125,13 @@ export class UserOverlayComponent {
     user.last_name = this.last_name?.value;
 
     return user;
+  }
+
+  noFormChanges() {
+    const user = this.getUser();
+    const authUser = this.authService.user;
+
+    return JSON.stringify(user) === JSON.stringify(authUser);
   }
 
   closeOverlay() {

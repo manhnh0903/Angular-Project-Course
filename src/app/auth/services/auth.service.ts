@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   async checkAuth() {
-    const url = environment.baseUrl + '/auth/users/me';
+    const url = `${environment.baseUrl}/auth/users/me/?${new Date().getTime()}`;
 
     try {
       const resp = await lastValueFrom(this.http.get<checkAuthResponse>(url));

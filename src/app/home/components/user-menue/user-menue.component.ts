@@ -30,6 +30,11 @@ export class UserMenueComponent {
     this.menueService.userOverlayOpen = !this.menueService.userOverlayOpen;
   }
 
+  toggleDeleteuserOverlay() {
+    this.menueService.deleteUserOverlayOpen =
+      !this.menueService.deleteUserOverlayOpen;
+  }
+
   async logout() {
     try {
       await this.authService.logoutWithTokenEndpoint();

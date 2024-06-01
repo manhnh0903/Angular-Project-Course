@@ -22,10 +22,11 @@ export class DataManagerService {
   constructor() {}
 
   async getPublicVideos() {
-    // const url = environment.baseUrl + '/videos/?visibility=public';
-    const url = `${
-      environment.baseUrl
-    }/videos/?visibility=public&_=${new Date().getTime()}`;
+    const url = environment.baseUrl + '/videos/?visibility=public';
+
+    // const url = `${
+    //   environment.baseUrl
+    // }/videos/?visibility=public&_=${new Date().getTime()}`;
 
     try {
       const resp = (await lastValueFrom(
